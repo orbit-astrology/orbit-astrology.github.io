@@ -15,8 +15,8 @@
 // the left instead.
 // ---------------------------------------------------------------
 
-import { SIGNS as SIGN_NAMES } from './astro/settings.js?v=202610111755';
-import { PLANETS } from './content/basics.js?v=202610111755';
+import { SIGNS as SIGN_NAMES } from './astro/settings.js?v=202610111757';
+import { PLANETS } from './content/basics.js?v=202610111757';
 
 const C = 300;           // centre of the 600 × 600 drawing
 const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -104,7 +104,9 @@ export function drawWheel(chart, options = {}) {
   const screen = (lon) => ((180 + lon - left) % 360 + 360) % 360;
 
   const svg = el('svg', { viewBox: '0 0 600 600', class: 'wheel', role: 'img' });
-  svg.append(el('title', {}, options.label || 'Chart wheel'));
+  // A description for screen readers. (aria-label instead of <title>,
+  // because browsers show a <title> as a tooltip that covers the wheel.)
+  svg.setAttribute('aria-label', options.label || 'Chart wheel');
 
   // Rings
   for (const [r, cls] of [[290, 'ring'], [232, 'ring soft'], [192, 'ring soft'], [122, 'ring faint']]) {
