@@ -278,3 +278,9 @@ One entry per work session: what was done, what was decided, what went wrong, an
 **AI vs me**
 - Me: asked for the Profile page; the three parts come from my specification.
 - Claude: wrote the code and texts, and suggested Download my data and the honest "your data" section.
+
+---
+
+## 11 October 2026 (night) · Footer
+
+**My feedback:** remove "ORBIT · a student project for Webs & Apps Design, 2026" from the footer. Done on every page; the credit for the planet-position library stays.
