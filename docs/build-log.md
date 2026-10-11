@@ -309,3 +309,9 @@ One entry per work session: what was done, what was decided, what went wrong, an
 - The small spaced capitals: weight 650 → 700 and 12.5 → 13 px, on every page.
 - The wheel: sign names bolder, bigger and brighter; house numbers and ASC/MC bolder; rings, dividers, house lines, constellations and aspect lines all more visible. Same on My Universe, My Chart and Connections.
 - The topic question on Explore (italic) is a little heavier too.
+
+---
+
+## 11 October 2026 (night) · Sign names the right way up
+
+**My question:** should we turn the sign names that are upside down? Yes: the names on the bottom half of the wheel (Sagittarius, Capricorn, Aquarius, Pisces…) are now turned round so they read normally, like on most chart sites. This works on every wheel, wherever your Rising sign puts each sign.

@@ -11,13 +11,13 @@
 // (localStorage) and the page says so honestly.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610112058';
-import { setUpGlossary } from '../glossary.js?v=202610112058';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610112058';
-import { setUpBirthForm } from '../birth-form.js?v=202610112058';
-import { placements } from '../readings.js?v=202610112058';
-import { topicById } from '../content/topics.js?v=202610112058';
-import { loadBirth, saveBirth, loadPeople, loadSaved, saveSaved, ALL_KEYS } from '../store.js?v=202610112058';
+import { calculateChart } from '../astro/chart.js?v=202610112101';
+import { setUpGlossary } from '../glossary.js?v=202610112101';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610112101';
+import { setUpBirthForm } from '../birth-form.js?v=202610112101';
+import { placements } from '../readings.js?v=202610112101';
+import { topicById } from '../content/topics.js?v=202610112101';
+import { loadBirth, saveBirth, loadPeople, loadSaved, saveSaved, ALL_KEYS } from '../store.js?v=202610112101';
 
 const $ = (id) => document.getElementById(id);
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];

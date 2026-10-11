@@ -10,17 +10,17 @@
 // the address means the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610112058';
-import { drawWheel } from '../wheel.js?v=202610112058';
-import { placeTip } from '../tip-position.js?v=202610112058';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610112058';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610112058';
-import { setUpBirthForm } from '../birth-form.js?v=202610112058';
-import { makeShareLink, readShareCode } from '../share.js?v=202610112058';
-import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202610112058';
-import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610112058';
-import { PERSONAL, LENSES, LENS_HINT, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610112058';
-import { PLANETS, SIGNS } from '../content/basics.js?v=202610112058';
+import { calculateChart } from '../astro/chart.js?v=202610112101';
+import { drawWheel } from '../wheel.js?v=202610112101';
+import { placeTip } from '../tip-position.js?v=202610112101';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610112101';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610112101';
+import { setUpBirthForm } from '../birth-form.js?v=202610112101';
+import { makeShareLink, readShareCode } from '../share.js?v=202610112101';
+import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202610112101';
+import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610112101';
+import { PERSONAL, LENSES, LENS_HINT, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610112101';
+import { PLANETS, SIGNS } from '../content/basics.js?v=202610112101';
 
 const $ = (id) => document.getElementById(id);
 const nameOf = (id) => id[0].toUpperCase() + id.slice(1);

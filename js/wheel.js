@@ -15,8 +15,8 @@
 // the left instead.
 // ---------------------------------------------------------------
 
-import { SIGNS as SIGN_NAMES } from './astro/settings.js?v=202610112058';
-import { PLANETS } from './content/basics.js?v=202610112058';
+import { SIGNS as SIGN_NAMES } from './astro/settings.js?v=202610112101';
+import { PLANETS } from './content/basics.js?v=202610112101';
 
 const C = 300;           // centre of the 600 × 600 drawing
 const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -157,7 +157,10 @@ export function drawWheel(chart, options = {}) {
     }
 
     const [tx, ty] = point(212, mid);
-    const rotation = 90 - mid; // keep the name running along the circle
+    // Keep the name running along the circle. On the bottom half it
+    // would be upside down, so turn it round (180°) to read normally.
+    const bottomHalf = mid > 180 && mid < 360;
+    const rotation = 90 - mid + (bottomHalf ? 180 : 0);
     signs.append(el('text', {
       x: tx.toFixed(1), y: ty.toFixed(1), class: 'sign-name',
       transform: `rotate(${rotation.toFixed(1)} ${tx.toFixed(1)} ${ty.toFixed(1)})`,
