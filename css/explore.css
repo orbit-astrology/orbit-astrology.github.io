@@ -67,7 +67,7 @@
 /* --- One topic --- */
 .topic-head { padding-top: 28px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
 .topic-head .back { margin-bottom: 10px; }
-.topic-head .topic-big-question { font: italic 500 clamp(1.15rem, 1.7vw, 1.4rem)/1.3 var(--serif); color: var(--champagne); margin: 0; }
+.topic-head .topic-big-question { font: italic 600 clamp(1.15rem, 1.7vw, 1.4rem)/1.3 var(--serif); color: var(--champagne); margin: 0; }
 .topic-head .lede { margin-top: 6px; }
 .time-note { margin: 0; max-width: 60ch; }
 

@@ -19,7 +19,7 @@
 .placement { flex: 1 1 240px; padding-top: 28px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
 .placement:nth-child(2) { padding-top: 52px; }
 .placement:nth-child(3) { padding-top: 76px; }
-.placement .eyebrow { letter-spacing: 0.26em; font-size: 12px; }
+.placement .eyebrow { letter-spacing: 0.26em; font-size: 12.5px; }
 .placement-sign { font: 500 clamp(2.2rem, 3.2vw, 2.9rem)/1 var(--serif); margin: 0; }
 .placement-sign.unknown { font-size: clamp(1.8rem, 2.6vw, 2.3rem); color: var(--bone-soft); }
 .placement p { margin: 0; max-width: 32ch; }

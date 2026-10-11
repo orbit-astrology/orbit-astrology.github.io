@@ -42,7 +42,7 @@
 .wheel .planets.them .leader { stroke: var(--lilac); }
 .wheel .planets.them .planet:focus-visible .planet-hit,
 .wheel .planets.them .planet.active .planet-hit { stroke: var(--lilac); }
-.wheel .aspect { stroke-opacity: 0.7; }
+.wheel .aspect { stroke-opacity: 0.85; }
 
 /* Side by side + the explanations */
 .pair-explained { display: flex; flex-wrap: wrap; gap: 40px 64px; align-items: flex-start; }

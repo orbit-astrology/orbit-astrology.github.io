@@ -297,3 +297,15 @@ One entry per work session: what was done, what was decided, what went wrong, an
 - Fixed on phones: a tap sometimes opened the box and closed it again immediately. Now a tap opens it and it stays until you tap something else; signs open and close with a second tap. No blue flash when tapping the wheel.
 
 **Testing:** measured the box against the wheel at four screen sizes (1920, 1280, 900 wide, and a 375 px phone) for signs, planets and lines on both pages: no overlap at any size. All earlier page tests still pass.
+
+---
+
+## 11 October 2026 (night) · Easier to read
+
+**My feedback:** (1) the words in italics in brackets on My Chart were very hard to read; (2) the small spaced capitals ("YOUR BIRTH CHART") still needed to be a bit bolder; (3) the words and lines on the wheel needed to be a bit bolder too.
+
+**What changed**
+- The notes in brackets ("(how you feel)", "(boldly and directly)") are no longer thin italic serif: they're now in the same clear font as the body text (Manrope), slightly heavier.
+- The small spaced capitals: weight 650 → 700 and 12.5 → 13 px, on every page.
+- The wheel: sign names bolder, bigger and brighter; house numbers and ASC/MC bolder; rings, dividers, house lines, constellations and aspect lines all more visible. Same on My Universe, My Chart and Connections.
+- The topic question on Explore (italic) is a little heavier too.
