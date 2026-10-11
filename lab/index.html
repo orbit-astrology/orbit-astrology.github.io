@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ORBIT · Calculation lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="lab.css">
+</head>
+<body>
+  <main>
+    <header class="masthead">
+      <p class="eyebrow">ORBIT · development test page</p>
+      <h1>Calculation lab</h1>
+      <p class="lede">A plain page for checking that ORBIT calculates real charts correctly, before any design is built on top. Enter birth details, or load a published example.</p>
+    </header>
+
+    <section aria-labelledby="form-title">
+      <h2 id="form-title">Birth details</h2>
+      <form id="birth-form" novalidate>
+        <div class="field">
+          <label for="birth-date">Date of birth</label>
+          <input id="birth-date" name="date" type="date" required>
+        </div>
+
+        <div class="field">
+          <label for="birth-time">Local time of birth</label>
+          <input id="birth-time" name="time" type="time">
+          <label class="check"><input id="time-unknown" type="checkbox"> I don’t know my birth time</label>
+        </div>
+
+        <div class="field">
+          <label for="place-query">Birthplace</label>
+          <div class="row">
+            <input id="place-query" type="text" autocomplete="off" placeholder="e.g. Madrid">
+            <button type="button" id="place-search">Search</button>
+          </div>
+          <p id="place-status" class="hint" role="status"></p>
+          <fieldset id="place-results" hidden>
+            <legend>Choose the right place</legend>
+            <div id="place-options"></div>
+          </fieldset>
+          <p id="place-chosen" class="chosen" hidden></p>
+        </div>
+
+        <fieldset id="ambiguous" hidden>
+          <legend>This time happened twice that night (the clocks went back). Which one?</legend>
+          <div id="ambiguous-options"></div>
+        </fieldset>
+
+        <p id="form-error" class="error" role="alert"></p>
+
+        <div class="actions">
+          <button type="submit" class="primary">Calculate chart</button>
+          <button type="button" data-example="0">Example: Barack Obama</button>
+          <button type="button" data-example="1">Example: Rafael Nadal</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="result" aria-live="polite" hidden></section>
+
+    <section aria-labelledby="checks-title">
+      <h2 id="checks-title">Reference checks</h2>
+      <p>Compares ORBIT’s results with published charts from Astrotheme and Astro-Charts, plus tricky time-zone cases. A result passes if it is within a few arcminutes (1° = 60′).</p>
+      <button type="button" id="run-checks">Run the reference checks</button>
+      <div id="checks"></div>
+    </section>
+  </main>
+
+  <script type="module" src="lab.js"></script>
+</body>
+</html>
