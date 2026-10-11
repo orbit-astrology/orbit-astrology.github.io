@@ -8,11 +8,11 @@
 //   3. go to My Universe, which reads them and shows your chart
 // ---------------------------------------------------------------
 
-import { skyAt } from '../astro/sky.js?v=202610111909';
-import { drawWheel } from '../wheel.js?v=202610111909';
-import { setUpGlossary } from '../glossary.js?v=202610111909';
-import { setUpBirthForm } from '../birth-form.js?v=202610111909';
-import { saveBirth, loadBirth, SAMPLE_BIRTH } from '../store.js?v=202610111909';
+import { skyAt } from '../astro/sky.js?v=202610111915';
+import { drawWheel } from '../wheel.js?v=202610111915';
+import { setUpGlossary } from '../glossary.js?v=202610111915';
+import { setUpBirthForm } from '../birth-form.js?v=202610111915';
+import { saveBirth, loadBirth, SAMPLE_BIRTH } from '../store.js?v=202610111915';
 
 const $ = (id) => document.getElementById(id);
 

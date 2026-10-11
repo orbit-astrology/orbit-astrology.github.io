@@ -13,9 +13,9 @@
 // if it doesn't hold all day, it's marked "might not be exact".
 // ---------------------------------------------------------------
 
-import { findCrossAspects } from './astro/aspects.js?v=202610111909';
-import { PLANETS } from './content/basics.js?v=202610111909';
-import { PERSONAL, PAIRS, LINK_TYPES, THEIR_WHAT, pairKey } from './content/connections.js?v=202610111909';
+import { findCrossAspects } from './astro/aspects.js?v=202610111915';
+import { PLANETS } from './content/basics.js?v=202610111915';
+import { PERSONAL, PAIRS, LINK_TYPES, THEIR_WHAT, pairKey } from './content/connections.js?v=202610111915';
 
 const nameOf = (id) => id[0].toUpperCase() + id.slice(1);
 const personal = (bodies) => bodies.filter((b) => PERSONAL.includes(b.id));
@@ -58,6 +58,8 @@ export function explainLink(link, you, them, theirName, lens) {
     label: type.label,
     strong: link.orb <= 1.5,
     uncertain: Boolean(link.uncertain),
+    plain: type.plain,
+    theme,
     title: `Your ${nameOf(link.from)} · ${theirName}’s ${nameOf(link.to)}`,
     symbols: [PLANETS[link.from].symbol, PLANETS[link.to].symbol],
     text: `Your ${nameOf(link.from)} (${PLANETS[link.from].what}) in ${signText(mine)} and ${theirName}’s ${nameOf(link.to)} (${THEIR_WHAT[link.to]}) in ${signText(theirs)} are ${type.plain}. This link is about ${theme}. ${type.feel[0].toUpperCase() + type.feel.slice(1)}.`,

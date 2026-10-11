@@ -10,15 +10,15 @@
 // the address means the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610111909';
-import { drawWheel } from '../wheel.js?v=202610111909';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610111909';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610111909';
-import { setUpBirthForm } from '../birth-form.js?v=202610111909';
-import { loadBirth, loadPeople, savePeople } from '../store.js?v=202610111909';
-import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610111909';
-import { PERSONAL, LENSES, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610111909';
-import { PLANETS, SIGNS } from '../content/basics.js?v=202610111909';
+import { calculateChart } from '../astro/chart.js?v=202610111915';
+import { drawWheel } from '../wheel.js?v=202610111915';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610111915';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610111915';
+import { setUpBirthForm } from '../birth-form.js?v=202610111915';
+import { loadBirth, loadPeople, savePeople } from '../store.js?v=202610111915';
+import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610111915';
+import { PERSONAL, LENSES, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610111915';
+import { PLANETS, SIGNS } from '../content/basics.js?v=202610111915';
 
 const $ = (id) => document.getElementById(id);
 const nameOf = (id) => id[0].toUpperCase() + id.slice(1);
@@ -195,6 +195,7 @@ function showComparison(person, theirChart) {
   const svg = drawWheel(myChart, {
     aspects: false,
     houses: false,
+    hoverAreas: true,
     only: PERSONAL,
     partner: { chart: theirChart, aspects: links },
     label: `Your personal planets on the outer ring and ${name}’s on the inner ring, with ${links.length} links between them.`,
@@ -301,6 +302,7 @@ const area = $('pair-area');
 let lastPointer = 'mouse';
 let tipOwner = null;
 let tipBeforeTap = null;
+let tappedSign = null; // the sign whose box was opened by the last tap or click
 area.addEventListener('pointerdown', (e) => { lastPointer = e.pointerType; tipBeforeTap = tipOwner; }, true);
 
 const sameLink = (line, link) => line.dataset.from === link.from && line.dataset.to === link.to;
@@ -339,26 +341,66 @@ function unlight() {
   document.querySelectorAll('.lit').forEach((n) => n.classList.remove('lit'));
 }
 
-function showTip(owner, person, id) {
+// What the box says about one planet (yours or theirs).
+function planetTip(person, id) {
   const chart = person === 'you' ? myChart : current.theirChart;
   const body = chart.bodies.find((b) => b.id === id);
   const who = person === 'you' ? 'Your' : `${current.person.name}’s`;
   const what = person === 'you' ? PLANETS[id].what : THEIR_WHAT[id];
-  const own = linksOf(person, id);
-  const others = own.map((l) => {
+  const others = linksOf(person, id).map((l) => {
     const other = person === 'you' ? `${current.person.name}’s ${nameOf(l.to)}` : `your ${nameOf(l.from)}`;
     return `${other} (${LINK_TYPES[l.type].label.toLowerCase()})`;
   });
+  return {
+    title: `${who} ${nameOf(id)} in ${signText(body)}`,
+    meta: body.uncertain ? 'Depends on the birth time' : `${nameOf(id)}: ${what}`,
+    text: body.uncertain ? `${nameOf(id)}: ${what}.` : `Working ${SIGNS[body.sign].how}.`,
+    action: others.length
+      ? `Linked to ${others.join(', ')}. ${lastPointer === 'touch' ? 'Tap again' : 'Click'} to read about it ↓`
+      : 'No strong links with this planet.',
+  };
+}
+
+// What the box says about one line (a link between you and them).
+function linkTip(link) {
+  const e = explainLink(link, myChart, current.theirChart, current.person.name, lens);
+  const meta = [e.label];
+  if (e.strong) meta.push('Strong link');
+  if (e.uncertain) meta.push('Might not be exact');
+  return {
+    title: e.title.replace(' · ', ' & '),
+    meta: meta.join(' · '),
+    text: `They’re ${e.plain}. This link is about ${e.theme}.`,
+    action: `${lastPointer === 'touch' ? 'Tap again' : 'Click'} to read the full explanation ↓`,
+  };
+}
+
+// What the box says about one sign, and whose planets are in it.
+function signTip(sign) {
+  const inSign = (chart) => chart.bodies.filter((b) => PERSONAL.includes(b.id) && !b.uncertain && b.sign === sign).map((b) => nameOf(b.id));
+  const yours = inSign(myChart);
+  const theirs = inSign(current.theirChart);
+  const here = [];
+  if (yours.length) here.push(`Yours: ${yours.join(', ')}`);
+  if (theirs.length) here.push(`${current.person.name}’s: ${theirs.join(', ')}`);
+  return {
+    title: sign,
+    meta: 'Signs describe how',
+    text: `Planets here work ${SIGNS[sign].how}.`,
+    action: here.length ? `${here.join('. ')}.` : 'None of your personal planets are in this sign.',
+  };
+}
+
+function showTip(owner, content) {
   tipOwner = owner;
   tip.replaceChildren(
-    make('h3', '', `${who} ${nameOf(id)} in ${signText(body)}`),
-    make('p', 'tip-meta', body.uncertain ? 'Depends on the birth time' : `${nameOf(id)}: ${what}`),
-    make('p', '', body.uncertain ? `${nameOf(id)}: ${what}.` : `Working ${SIGNS[body.sign].how}.`),
-    make('p', 'tip-action', others.length
-      ? `Linked to ${others.join(', ')}. ${lastPointer === 'touch' ? 'Tap again' : 'Click'} to read about it ↓`
-      : 'No strong links with this planet.'),
+    make('h3', '', content.title),
+    make('p', 'tip-meta', content.meta),
+    make('p', '', content.text),
+    make('p', 'tip-action', content.action),
   );
   tip.hidden = false;
+  // Place the box next to the thing, on whichever side has more room.
   const a = area.getBoundingClientRect();
   const o = owner.getBoundingClientRect();
   const left = o.left - a.left + o.width / 2 > a.width / 2 ? o.left - a.left - tip.offsetWidth - 12 : o.right - a.left + 12;
@@ -370,12 +412,12 @@ function showTip(owner, person, id) {
 function hideTip() {
   tip.hidden = true;
   tipOwner = null;
+  tappedSign = null;
 }
 
-// Scroll to the first explanation for this planet, and highlight it.
-function goToLinks(person, id) {
-  const first = linksOf(person, id)[0];
-  const card = first && $(`link-${first.id}`);
+// Scroll to an explanation in the list, and highlight it.
+function goToCard(link) {
+  const card = link && $(`link-${link.id}`);
   if (!card) return;
   card.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
   card.focus({ preventScroll: true });
@@ -391,7 +433,7 @@ function setUpWheel() {
     g.setAttribute('tabindex', '0');
     g.setAttribute('role', 'button');
     g.setAttribute('aria-label', `${who} ${nameOf(body)} in ${signText(chart.bodies.find((b) => b.id === body))}. Show its links.`);
-    const enter = () => { showTip(g, person, body); lightPlanet(person, body); };
+    const enter = () => { showTip(g, planetTip(person, body)); lightPlanet(person, body); };
     const leave = () => { hideTip(); unlight(); };
     g.addEventListener('mouseenter', enter);
     g.addEventListener('mouseleave', leave);
@@ -400,10 +442,43 @@ function setUpWheel() {
     g.addEventListener('click', () => {
       // On a phone, the first tap shows the box; the second goes to the explanation.
       if (lastPointer === 'touch' && tipBeforeTap !== g) { enter(); return; }
-      goToLinks(person, body);
+      goToCard(linksOf(person, body)[0]);
     });
     g.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goToLinks(person, body); }
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goToCard(linksOf(person, body)[0]); }
+    });
+  }
+
+  // The lines between you: hover, focus or tap to read about that link.
+  for (const hit of svg.querySelectorAll('.aspect-hit')) {
+    const link = current.links.find((l) => l.id === hit.dataset.aspect);
+    hit.setAttribute('tabindex', '0');
+    hit.setAttribute('role', 'button');
+    hit.setAttribute('aria-label', `${explainLink(link, myChart, current.theirChart, current.person.name, lens).title}. Read about this link.`);
+    const enter = () => { showTip(hit, linkTip(link)); lightLink(link); $(`link-${link.id}`)?.classList.add('lit'); };
+    const leave = () => { hideTip(); unlight(); };
+    hit.addEventListener('mouseenter', enter);
+    hit.addEventListener('mouseleave', leave);
+    hit.addEventListener('focus', enter);
+    hit.addEventListener('blur', leave);
+    hit.addEventListener('click', () => {
+      if (lastPointer === 'touch' && tipBeforeTap !== hit) { enter(); return; }
+      goToCard(link);
+    });
+    hit.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goToCard(link); }
+    });
+  }
+
+  // The signs: hover or tap to see what they mean and whose planets are there.
+  for (const slice of svg.querySelectorAll('[data-sign]')) {
+    slice.addEventListener('mouseenter', () => showTip(slice, signTip(slice.dataset.sign)));
+    slice.addEventListener('mouseleave', hideTip);
+    slice.addEventListener('click', () => {
+      // A tap or click opens the box; doing it again on the same sign closes it.
+      if (tappedSign === slice) { hideTip(); return; }
+      showTip(slice, signTip(slice.dataset.sign));
+      tappedSign = slice;
     });
   }
 }

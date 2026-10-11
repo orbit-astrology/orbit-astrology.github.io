@@ -201,3 +201,20 @@ One entry per work session: what was done, what was decided, what went wrong, an
 **AI vs me**
 - Me: the Connections idea, the Friendship / Romance switch, no compatibility scores, asking for permission, a made-up sample instead of real people, keeping the same editorial style in mauve.
 - Claude: wrote the code, picked the five personal planets and the orbs, and drafted the pair texts for me to review (`js/content/connections.js`).
+
+---
+
+## 11 October 2026 (night) · Connections: hover everything on the wheel
+
+**My feedback:** on "You & Juan Pablo" I wanted to be able to hover over the wheel and read it, not only the list underneath.
+
+**What changed**
+- **Lines** between your planets and theirs can now be hovered (or tapped on a phone): a box says which two planets, whether the link is easy or tense, and what it's about (following the Friendship / Romance switch). Clicking jumps to the full explanation in the list. Each line has a wider invisible copy so it's easy to hit.
+- **Signs** can be hovered or tapped too: what the sign means and whose planets are in it ("Sam's: Sun, Mercury, Venus").
+- **Planets** already worked; they still show their links.
+- A small hint sits **above** the wheel, "Hover or tap a planet, a line or a sign to read about it", so it's noticed straight away (before, it was at the bottom of the side column).
+- Fixed: on phones, tapping a sign opened and closed the box in the same tap. Now one tap opens it and a second tap closes it.
+
+**Testing:** hovering lines, signs and planets on a laptop; tapping on a phone (375 px); keyboard (Tab reaches the lines, Enter jumps to the explanation). No errors; 79/79 calculation checks.
+
+**AI vs me:** Me: the idea of reading the wheel by hovering. Claude: the code and the box texts.

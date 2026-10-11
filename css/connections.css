@@ -82,7 +82,7 @@
 
 /* The two-person wheel: slightly bigger symbols (there are fewer of
    them), and always small enough to fit on the screen with the title. */
-#pair-wheel { width: min(540px, calc(100vh - 330px), 100%); }
+#pair-wheel { width: min(520px, calc(100vh - 370px), 100%); }
 #pair-wheel .planets.you .planet-symbol { font-size: 22px; }
 #pair-wheel .planets.them .planet-symbol { font-size: 19px; }
 .wheel .planet { -webkit-tap-highlight-color: transparent; }
@@ -90,3 +90,8 @@
   display: inline-block; width: 24px; font-size: 17px; color: var(--champagne);
   font-family: 'Segoe UI Symbol', 'Apple Symbols', 'Noto Sans Symbols', var(--serif);
 }
+
+/* Hovering the lines and signs on the two-person wheel */
+.wheel-hint { margin: 0 0 12px; text-align: center; font-size: 14px; font-weight: 600; color: var(--champagne); }
+.wheel .aspect-hit { stroke: transparent; stroke-width: 12; cursor: pointer; outline: none; }
+.wheel .aspect-hit:focus-visible { stroke: rgba(205, 187, 146, 0.35); }

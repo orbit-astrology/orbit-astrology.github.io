@@ -15,8 +15,8 @@
 // the left instead.
 // ---------------------------------------------------------------
 
-import { SIGNS as SIGN_NAMES } from './astro/settings.js?v=202610111909';
-import { PLANETS } from './content/basics.js?v=202610111909';
+import { SIGNS as SIGN_NAMES } from './astro/settings.js?v=202610111915';
+import { PLANETS } from './content/basics.js?v=202610111915';
 
 const C = 300;           // centre of the 600 × 600 drawing
 const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -128,7 +128,7 @@ export function drawWheel(chart, options = {}) {
     SIGN_NAMES.forEach((name, i) => {
       areas.append(el('path', { d: slice(192, 290, screen(i * 30), screen(i * 30 + 30)), class: 'hit', 'data-sign': name }));
     });
-    if (chart.houses) {
+    if (showHouses && chart.houses) {
       chart.houses.forEach((h, i) => {
         const next = chart.houses[(i + 1) % 12].longitude;
         areas.append(el('path', { d: slice(122, 192, screen(h.longitude), screen(next)), class: 'hit', 'data-house': String(h.number) }));
@@ -212,13 +212,16 @@ export function drawWheel(chart, options = {}) {
     const yours = Object.fromEntries(chart.bodies.map((b) => [b.id, b.longitude]));
     const theirs = Object.fromEntries(partner.chart.bodies.map((b) => [b.id, b.longitude]));
     const lines = el('g', { class: 'aspects' });
+    const hits = el('g', { class: 'aspect-hits' });
     for (const a of partner.aspects) {
       if (a.type === 'conjunction') continue;
       const [x1, y1] = point(80, screen(yours[a.from]));
       const [x2, y2] = point(80, screen(theirs[a.to]));
       lines.append(el('line', { x1, y1, x2, y2, class: `aspect ${a.type}`, 'data-aspect': a.id, 'data-from': a.from, 'data-to': a.to }));
+      // A wider invisible copy of the line, so it's easy to hover or tap.
+      hits.append(el('line', { x1, y1, x2, y2, class: 'aspect-hit', 'data-aspect': a.id }));
     }
-    svg.append(lines);
+    svg.append(lines, hits);
   }
 
   svg.append(drawPlanets(chart.bodies.filter(keep), screen, { dot: 122, symbol: 160, leader: 146, person: 'you' }));

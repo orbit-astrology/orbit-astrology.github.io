@@ -7,14 +7,14 @@
 // so the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610111909';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610111909';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610111909';
-import { loadBirth, saveBirth, SAMPLE_BIRTH } from '../store.js?v=202610111909';
-import { setUpPlayground } from '../playground.js?v=202610111909';
-import { TOPICS, topicById } from '../content/topics.js?v=202610111909';
-import { PLANETS, PLANET_DETAIL, SIGNS, SIGN_DETAIL, HOUSES, ASPECT_TEXT, SIGN_TRAITS } from '../content/basics.js?v=202610111909';
-import { placements, connections, degreeText, ordinal } from '../readings.js?v=202610111909';
+import { calculateChart } from '../astro/chart.js?v=202610111915';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610111915';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610111915';
+import { loadBirth, saveBirth, SAMPLE_BIRTH } from '../store.js?v=202610111915';
+import { setUpPlayground } from '../playground.js?v=202610111915';
+import { TOPICS, topicById } from '../content/topics.js?v=202610111915';
+import { PLANETS, PLANET_DETAIL, SIGNS, SIGN_DETAIL, HOUSES, ASPECT_TEXT, SIGN_TRAITS } from '../content/basics.js?v=202610111915';
+import { placements, connections, degreeText, ordinal } from '../readings.js?v=202610111915';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
