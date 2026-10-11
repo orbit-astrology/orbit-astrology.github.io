@@ -15,8 +15,8 @@
 // the left instead.
 // ---------------------------------------------------------------
 
-import { SIGNS as SIGN_NAMES } from './astro/settings.js?v=202610111855';
-import { PLANETS } from './content/basics.js?v=202610111855';
+import { SIGNS as SIGN_NAMES } from './astro/settings.js?v=202610111909';
+import { PLANETS } from './content/basics.js?v=202610111909';
 
 const C = 300;           // centre of the 600 × 600 drawing
 const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -73,6 +73,7 @@ function el(tag, attrs = {}, text) {
 // closer than `gap` degrees, nudge them apart. Their exact dots stay
 // put; a thin line joins each symbol to its real position.
 function spread(items, gap = 8) {
+  if (items.length < 2) return items;
   const sorted = [...items].sort((a, b) => a.angle - b.angle);
   for (let pass = 0; pass < 8; pass++) {
     for (let i = 0; i < sorted.length; i++) {
@@ -92,7 +93,15 @@ function spread(items, gap = 8) {
 
 /**
  * chart   – the object from calculateChart()
- * options – { aspects: true, houses: true, label: 'text for screen readers' }
+ * options – {
+ *   aspects: true,        draw the chart's own aspect lines
+ *   houses: true,         draw the houses (when the birth time is known)
+ *   only: ['sun', …],     draw only these planets (default: all)
+ *   label: 'text for screen readers',
+ *   partner: { chart, aspects }   a second person (Connections):
+ *       their planets go on an inner ring, and `aspects` (from
+ *       findCrossAspects) are drawn as lines between the two people.
+ * }
  * Returns an <svg> element.
  */
 export function drawWheel(chart, options = {}) {
@@ -194,25 +203,52 @@ export function drawWheel(chart, options = {}) {
     svg.append(lines);
   }
 
-  // Planets: an exact dot, a symbol nearby, and a thin line between
-  // them when the symbol had to be nudged sideways.
-  const planets = el('g', { class: 'planets' });
-  const placed = spread(chart.bodies.map((b) => ({ body: b, angle: screen(b.longitude), shown: screen(b.longitude) })));
+  // The second person (Connections): an inner ring with their planets,
+  // and lines between the two people's planets.
+  const keep = (b) => !options.only || options.only.includes(b.id);
+  const partner = options.partner;
+  if (partner) {
+    svg.append(el('circle', { cx: C, cy: C, r: 80, class: 'ring partner-ring' }));
+    const yours = Object.fromEntries(chart.bodies.map((b) => [b.id, b.longitude]));
+    const theirs = Object.fromEntries(partner.chart.bodies.map((b) => [b.id, b.longitude]));
+    const lines = el('g', { class: 'aspects' });
+    for (const a of partner.aspects) {
+      if (a.type === 'conjunction') continue;
+      const [x1, y1] = point(80, screen(yours[a.from]));
+      const [x2, y2] = point(80, screen(theirs[a.to]));
+      lines.append(el('line', { x1, y1, x2, y2, class: `aspect ${a.type}`, 'data-aspect': a.id, 'data-from': a.from, 'data-to': a.to }));
+    }
+    svg.append(lines);
+  }
+
+  svg.append(drawPlanets(chart.bodies.filter(keep), screen, { dot: 122, symbol: 160, leader: 146, person: 'you' }));
+  if (partner) {
+    svg.append(drawPlanets(partner.chart.bodies.filter(keep), screen, { dot: 80, symbol: 101, leader: 92, person: 'them', gap: 12 }));
+  }
+
+  return svg;
+}
+
+// Planets: an exact dot, a symbol nearby, and a thin line between
+// them when the symbol had to be nudged sideways.
+// `at` says how far from the centre each part goes, and whose planets
+// these are ('you' or 'them'), so the page can tell them apart.
+function drawPlanets(bodies, screen, at) {
+  const planets = el('g', { class: `planets ${at.person}` });
+  const placed = spread(bodies.map((b) => ({ body: b, angle: screen(b.longitude), shown: screen(b.longitude) })), at.gap);
   for (const { body, angle, shown } of placed) {
-    const g = el('g', { class: 'planet', 'data-body': body.id });
-    const [dx, dy] = point(122, angle);
-    const [sx, sy] = point(160, shown);
+    const g = el('g', { class: 'planet', 'data-body': body.id, 'data-person': at.person });
+    const [dx, dy] = point(at.dot, angle);
+    const [sx, sy] = point(at.symbol, shown);
     if (Math.abs(shown - angle) > 0.5) {
-      const [lx, ly] = point(146, shown);
+      const [lx, ly] = point(at.leader, shown);
       g.append(el('line', { x1: dx.toFixed(1), y1: dy.toFixed(1), x2: lx.toFixed(1), y2: ly.toFixed(1), class: 'leader' }));
     }
     g.append(el('circle', { cx: dx.toFixed(1), cy: dy.toFixed(1), r: 2.6, class: 'planet-dot' }));
     // A larger invisible circle around the symbol, so it's easy to hover or tap.
-    g.append(el('circle', { cx: sx.toFixed(1), cy: sy.toFixed(1), r: 15, class: 'planet-hit' }));
+    g.append(el('circle', { cx: sx.toFixed(1), cy: sy.toFixed(1), r: at.person === 'them' ? 12 : 15, class: 'planet-hit' }));
     g.append(el('text', { x: sx.toFixed(1), y: sy.toFixed(1), class: 'planet-symbol', 'text-anchor': 'middle', 'dominant-baseline': 'central' }, PLANETS[body.id].symbol + TEXT));
     planets.append(g);
   }
-  svg.append(planets);
-
-  return svg;
+  return planets;
 }

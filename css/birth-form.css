@@ -1,0 +1,36 @@
+/* birth-form.css: the birth details form (date, time, place).
+   Shared by the Welcome page and the "Add a connection" form, so both
+   look and work exactly the same. */
+
+.birth-form { display: flex; flex-direction: column; gap: 18px; }
+.birth-form fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.birth-form legend { margin-bottom: 6px; }
+
+.small-label { display: block; font-size: 12px; color: var(--bone-soft); margin-bottom: 4px; letter-spacing: 0.04em; }
+
+.date-row { display: grid; grid-template-columns: 1fr 1.6fr 1.2fr; gap: 10px; }
+.time-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: end; margin-bottom: 12px; }
+.time-colon { font-size: 22px; padding-bottom: 10px; color: var(--bone-soft); }
+
+/* Hide the little up/down arrows on number boxes. */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+input[type="number"] { -moz-appearance: textfield; }
+.birth-form input, .birth-form select { min-height: 44px; padding: 10px 12px; }
+
+/* Place search list */
+.combobox { position: relative; }
+.place-list {
+  list-style: none; margin: 0; padding: 0;
+  border: 1px solid var(--champagne); border-top: 0;
+  background: var(--page); max-height: 260px; overflow-y: auto;
+}
+.place-list li { padding: 11px 14px; cursor: pointer; font-size: 15px; border-top: 1px solid var(--line); }
+.place-list li:first-child { border-top: 0; }
+.place-list li[aria-selected="true"], .place-list li:hover { background: rgba(233, 227, 216, 0.1); }
+.place-list .place-detail { color: var(--bone-soft); font-size: 13px; }
+
+.choice-list { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.choice-list label { display: flex; gap: 10px; align-items: baseline; font-size: 15px; cursor: pointer; }
+.choice-list input { accent-color: var(--champagne); }
+

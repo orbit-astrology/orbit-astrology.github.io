@@ -10,7 +10,7 @@
 // recalculated from them every time, so it's always correct.
 // ---------------------------------------------------------------
 
-import { SETTINGS } from './astro/settings.js?v=202610111855';
+import { SETTINGS } from './astro/settings.js?v=202610111909';
 
 const KEY = 'orbit.birth';
 
@@ -42,4 +42,28 @@ export function loadBirth() {
 
 export function clearBirth() {
   try { localStorage.removeItem(KEY); } catch { /* nothing to clear */ }
+}
+
+// --- The people you've added on Connections ---------------------
+// A list of { id, name, birth, isSample }. Only their birth DETAILS
+// are saved (in this browser), never a calculated chart.
+
+const PEOPLE_KEY = 'orbit.connections';
+
+export function loadPeople() {
+  try {
+    const list = JSON.parse(localStorage.getItem(PEOPLE_KEY) || '[]');
+    return Array.isArray(list) ? list : [];
+  } catch {
+    return [];
+  }
+}
+
+export function savePeople(list) {
+  try {
+    localStorage.setItem(PEOPLE_KEY, JSON.stringify(list));
+    return true;
+  } catch {
+    return false;
+  }
 }

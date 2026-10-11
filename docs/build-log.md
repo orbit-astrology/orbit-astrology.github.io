@@ -171,3 +171,33 @@ One entry per work session: what was done, what was decided, what went wrong, an
 - Fixed two bugs I spotted in my screenshots: a huge empty gap under "Who am I?" on topic pages (two different elements shared a style name), and "birth chart" not matching the spaced capitals in "YOUR BIRTH CHART".
 
 **Testing:** screenshots of every page at a laptop size (1440 × 900): all titles fit on one line. Phone, keyboard and touch tests still pass; 79/79 calculation checks.
+
+---
+
+## 11 October 2026 (night) · Stage 5: Connections
+
+**What we built** (`connections.html`, `js/pages/connections.js`, `js/compare.js`, `js/content/connections.js`)
+- **Your people**: a list of the people you've added, each with their Sun, Moon and Rising, a Compare button and Remove (which asks "are you sure?" right in the list, no pop-up).
+- **Add a person**: name, birth date, time (or "I don't know their birth time") and birthplace, plus a box to tick confirming **they're happy for you to use their birth details**. Their details are saved only in this browser.
+- **Try it with a sample person**: "Sam", a made-up person, clearly labelled, so anyone can see how it works without typing someone else's details.
+- **You & Sam**: both charts on one wheel. You on the outer ring in gold, them on the inner ring in lilac, and lines between your planets and theirs (dashed = easy, solid = tense, same as My Chart). Hover or tap a planet to see its links; hover a link in the list to see it on the wheel.
+- **Side by side**: a small table with each planet's sign for both people.
+- **How your charts talk to each other**: every link explained in plain words: your planet (what part of you), their planet (what part of them), the angle, what this pair is about and how it tends to feel. "Strong link" (almost exact angle) is explained with a hover.
+- **Friendship / Romance switch**: changes only the *words* (for example Venus with Mars is "a playful, energising pull" for friends and "attraction: how affection and desire meet" for a couple). The planets and angles never change.
+- **No scores or percentages.** The summary only counts the links ("3 easy, 2 tense and 2 blending") and says a mix is normal and tense links aren't bad.
+- No birth time for either person: the Moon could be a few degrees off, so each link is checked at the very start and the very end of that day. If it doesn't hold all day it says **"Might not be exact"**. No Rising sign is invented.
+- You need your own chart first; without one the page explains that and links to the form.
+
+**Decisions**
+- We only compare the five **personal planets** (Sun, Moon, Mercury, Venus, Mars). They describe everyday personality, feelings, talking, love and energy, and comparing all ten planets would make dozens of links and overwhelm a beginner.
+- Tighter orbs for comparing two people (6°/5°/4°), as most astrologers use.
+- The birth form now lives in one shared file (`js/birth-form.js` and `css/birth-form.css`), so Welcome and Connections work exactly the same way and a fix in one place fixes both.
+
+**Testing**
+- Empty state, sample person, adding a person (every check: no name, permission not ticked, missing date), unknown birth time, Back button, remove with cancel and confirm, both lenses, hovering planets and links, phone width (375 px, no sideways scrolling) and tapping on a touch screen. No errors.
+- A name typed with HTML in it shows as plain text, so it can't break the page.
+- The Welcome page tests still pass after moving the form into its own file; 79/79 calculation checks pass.
+
+**AI vs me**
+- Me: the Connections idea, the Friendship / Romance switch, no compatibility scores, asking for permission, a made-up sample instead of real people, keeping the same editorial style in mauve.
+- Claude: wrote the code, picked the five personal planets and the orbs, and drafted the pair texts for me to review (`js/content/connections.js`).

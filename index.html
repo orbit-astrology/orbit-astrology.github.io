@@ -8,10 +8,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Manrope:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/tokens.css?v=202610111855">
-  <link rel="stylesheet" href="css/base.css?v=202610111855">
-  <link rel="stylesheet" href="css/wheel.css?v=202610111855">
-  <link rel="stylesheet" href="css/welcome.css?v=202610111855">
+  <link rel="stylesheet" href="css/tokens.css?v=202610111909">
+  <link rel="stylesheet" href="css/base.css?v=202610111909">
+  <link rel="stylesheet" href="css/wheel.css?v=202610111909">
+  <link rel="stylesheet" href="css/birth-form.css?v=202610111909">
+  <link rel="stylesheet" href="css/welcome.css?v=202610111909">
 </head>
 <body class="page-welcome">
   <a class="skip-link" href="#create">Skip to the form</a>
@@ -38,7 +39,7 @@
 
     <!-- Right: the birth form -->
     <section class="welcome-form" aria-labelledby="create-title">
-      <form id="create" novalidate>
+      <form id="create" class="birth-form" novalidate>
         <h2 id="create-title" class="eyebrow">Create your chart</h2>
 
         <fieldset class="field">
@@ -66,8 +67,8 @@
             <span aria-hidden="true" class="time-colon">:</span>
             <div><label for="birth-minute" class="small-label">Minute</label><input id="birth-minute" type="number" inputmode="numeric" min="0" max="59" placeholder="MM"></div>
           </div>
-          <label class="checkbox"><input id="time-unknown" type="checkbox"> I don’t know my birth time</label>
-          <p class="hint" id="time-hint" hidden>No problem. Your Sun and planets will still be correct, but your Rising sign and houses need an exact time, so ORBIT will leave them out rather than guess.
+          <label class="checkbox"><input id="birth-time-unknown" type="checkbox"> I don’t know my birth time</label>
+          <p class="hint" id="birth-time-hint" hidden>No problem. Your Sun and planets will still be correct, but your Rising sign and houses need an exact time, so ORBIT will leave them out rather than guess.
             <button type="button" class="term" data-term="unknown-time">Why?</button></p>
         </fieldset>
 
@@ -75,19 +76,19 @@
           <label for="birth-place">Place of birth</label>
           <div class="combobox">
             <input id="birth-place" type="text" autocomplete="off" placeholder="Start typing a city…"
-                   role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="place-list" aria-describedby="place-status">
-            <ul id="place-list" role="listbox" aria-label="Matching places" hidden></ul>
+                   role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="birth-place-list" aria-describedby="birth-place-status">
+            <ul id="birth-place-list" class="place-list" role="listbox" aria-label="Matching places" hidden></ul>
           </div>
-          <p id="place-status" class="hint" aria-live="polite">Type at least two letters, then choose your city from the list.</p>
+          <p id="birth-place-status" class="hint" aria-live="polite">Type at least two letters, then choose your city from the list.</p>
         </div>
 
-        <fieldset class="field" id="ambiguous" hidden>
+        <fieldset class="field" id="birth-ambiguous" hidden>
           <legend>That time happened twice that night</legend>
           <p class="hint">The clocks went back an hour that night, so this time came round twice. Which one were you born in?</p>
-          <div id="ambiguous-options" class="choice-list"></div>
+          <div id="birth-ambiguous-options" class="choice-list"></div>
         </fieldset>
 
-        <p id="form-error" class="error-text" role="alert"></p>
+        <p id="birth-form-error" class="error-text" role="alert"></p>
 
         <button type="submit" class="button" id="submit">Generate my chart</button>
         <p class="form-footnote quiet">Your details are saved only in this browser. Accounts are coming soon.</p>
@@ -103,6 +104,6 @@
     </div>
   </footer>
 
-  <script type="module" src="js/pages/welcome.js?v=202610111855"></script>
+  <script type="module" src="js/pages/welcome.js?v=202610111909"></script>
 </body>
 </html>

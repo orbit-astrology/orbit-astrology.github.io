@@ -72,6 +72,18 @@ export const GLOSSARY = {
     term: 'Transit',
     text: 'Where a planet is in the sky right now, compared with where it was in your birth chart.',
   },
+  synastry: {
+    term: 'Comparing charts',
+    text: 'Putting two people’s birth charts on one wheel to see the angles between their planets. Astrologers call this synastry.',
+  },
+  'personal-planets': {
+    term: 'Personal planets',
+    text: 'The Sun, Moon, Mercury, Venus and Mars. They describe everyday things like your personality, feelings, how you talk, how you love and how you act, so they matter most when comparing two people.',
+  },
+  'strong-link': {
+    term: 'Strong link',
+    text: 'The angle between the two planets is almost exact (within 1.5°). Astrologers say the closer the angle, the more you notice it.',
+  },
   'unknown-time': {
     term: 'Why we need your birth time',
     text: 'The Moon moves through a whole sign in about two and a half days, and the Rising sign changes every two hours or so. Without your birth time, ORBIT can’t know these for sure, so it tells you instead of guessing.',

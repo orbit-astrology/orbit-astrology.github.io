@@ -4,12 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Connections · ORBIT</title>
+  <meta name="description" content="Compare your birth chart with a friend’s or partner’s, explained in plain words.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Manrope:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/tokens.css?v=202610111855">
-  <link rel="stylesheet" href="css/base.css?v=202610111855">
-  <link rel="stylesheet" href="css/coming-soon.css?v=202610111855">
+  <link rel="stylesheet" href="css/tokens.css?v=202610111909">
+  <link rel="stylesheet" href="css/base.css?v=202610111909">
+  <link rel="stylesheet" href="css/wheel.css?v=202610111909">
+  <link rel="stylesheet" href="css/birth-form.css?v=202610111909">
+  <link rel="stylesheet" href="css/chart.css?v=202610111909">
+  <link rel="stylesheet" href="css/connections.css?v=202610111909">
 </head>
 <body class="page-connections">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -28,17 +32,166 @@
       </nav>
     </div>
   </header>
-  <main id="main" class="coming-soon wrap">
-    <p class="eyebrow">Connections</p>
-    <h1 class="title">You <em>and the people in your life</em></h1>
-    <p class="lede">Coming soon: add a friend or partner and see how your two charts talk to each other, explained in plain words, never as a compatibility score.</p>
-    <a class="text-link" href="universe.html">← Back to My Universe</a>
+
+  <main id="main">
+
+    <!-- 1. No chart yet: you need your own chart before comparing. -->
+    <section id="need-chart" class="wrap conn-intro" hidden>
+      <p class="eyebrow">Connections</p>
+      <h1 class="title">First, <em>your own chart</em></h1>
+      <p class="lede">To compare your chart with someone else’s, ORBIT needs your birth details first. It only takes a minute.</p>
+      <p><a class="button" href="index.html#create">Create my chart</a></p>
+    </section>
+
+    <!-- 2. Your people, and the form to add someone. -->
+    <section id="people-view" hidden>
+      <div class="wrap conn-intro">
+        <p class="eyebrow">Connections</p>
+        <h1 class="title">You <em>and the people in your life</em></h1>
+        <p class="lede">Add a friend, partner or family member and see how your two charts
+          <button type="button" class="term" data-term="synastry">talk to each other</button>, in plain words.
+          There are no scores here: every pair of people has easy links and tense ones.</p>
+      </div>
+
+      <div class="wrap people-layout">
+        <section class="people-area" aria-labelledby="people-title">
+          <h2 id="people-title" class="eyebrow" tabindex="-1">Your people</h2>
+          <ul id="people-list" class="people-list"></ul>
+          <div id="people-empty" class="people-empty">
+            <p class="quiet">No one here yet. Add someone with the form, or try it first with a made-up person.</p>
+            <button type="button" class="button button-outline" id="add-sample">Try it with a sample person</button>
+          </div>
+          <p id="people-error" class="error-text" role="alert"></p>
+        </section>
+
+        <section class="add-person" aria-labelledby="add-title">
+          <form id="add" class="birth-form" novalidate>
+            <h2 id="add-title" class="eyebrow">Add a person</h2>
+
+            <div class="field">
+              <label for="friend-name">Their name</label>
+              <input id="friend-name" type="text" maxlength="40" autocomplete="off" placeholder="A first name or nickname is enough">
+            </div>
+
+            <fieldset class="field">
+              <legend>Their date of birth</legend>
+              <div class="date-row">
+                <div><label for="friend-day" class="small-label">Day</label><input id="friend-day" type="number" inputmode="numeric" min="1" max="31" placeholder="DD"></div>
+                <div>
+                  <label for="friend-month" class="small-label">Month</label>
+                  <select id="friend-month">
+                    <option value="">Month</option>
+                    <option value="1">January</option><option value="2">February</option><option value="3">March</option>
+                    <option value="4">April</option><option value="5">May</option><option value="6">June</option>
+                    <option value="7">July</option><option value="8">August</option><option value="9">September</option>
+                    <option value="10">October</option><option value="11">November</option><option value="12">December</option>
+                  </select>
+                </div>
+                <div><label for="friend-year" class="small-label">Year</label><input id="friend-year" type="number" inputmode="numeric" min="1900" max="2100" placeholder="YYYY"></div>
+              </div>
+            </fieldset>
+
+            <fieldset class="field">
+              <legend>Their time of birth <span class="quiet">(local time where they were born)</span></legend>
+              <div class="time-row">
+                <div><label for="friend-hour" class="small-label">Hour (0–23)</label><input id="friend-hour" type="number" inputmode="numeric" min="0" max="23" placeholder="HH"></div>
+                <span aria-hidden="true" class="time-colon">:</span>
+                <div><label for="friend-minute" class="small-label">Minute</label><input id="friend-minute" type="number" inputmode="numeric" min="0" max="59" placeholder="MM"></div>
+              </div>
+              <label class="checkbox"><input id="friend-time-unknown" type="checkbox"> I don’t know their birth time</label>
+              <p class="hint" id="friend-time-hint" hidden>That’s fine. Their planets will still be right, but their Moon moves fast, so any link with it is marked “might not be exact”.
+                <button type="button" class="term" data-term="unknown-time">Why?</button></p>
+            </fieldset>
+
+            <div class="field">
+              <label for="friend-place">Their place of birth</label>
+              <div class="combobox">
+                <input id="friend-place" type="text" autocomplete="off" placeholder="Start typing a city…"
+                       role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="friend-place-list" aria-describedby="friend-place-status">
+                <ul id="friend-place-list" class="place-list" role="listbox" aria-label="Matching places" hidden></ul>
+              </div>
+              <p id="friend-place-status" class="hint" aria-live="polite">Type at least two letters, then choose the city from the list.</p>
+            </div>
+
+            <fieldset class="field" id="friend-ambiguous" hidden>
+              <legend>That time happened twice that night</legend>
+              <p class="hint">The clocks went back an hour that night, so this time came round twice. Which one were they born in?</p>
+              <div id="friend-ambiguous-options" class="choice-list"></div>
+            </fieldset>
+
+            <label class="checkbox permission"><input id="friend-permission" type="checkbox"> They’re happy for me to use their birth details</label>
+
+            <p id="friend-form-error" class="error-text" role="alert"></p>
+
+            <button type="submit" class="button">Add and compare</button>
+            <p class="form-footnote quiet">Their details are saved only in this browser, so only you can see them.</p>
+          </form>
+        </section>
+      </div>
+    </section>
+
+    <!-- 3. You & someone: both charts on one wheel. -->
+    <section id="compare-view" hidden>
+      <div class="wrap conn-intro compare-intro">
+        <div class="compare-intro-text">
+          <a class="text-link" href="connections.html">← All your people</a>
+          <h1 class="title" id="compare-title" tabindex="-1"></h1>
+          <p class="lede" id="compare-lede"></p>
+        </div>
+        <div>
+          <div class="view-switch" role="group" aria-label="Read the links as">
+            <button type="button" data-lens="friendship" aria-pressed="true">Friendship</button>
+            <button type="button" data-lens="romance" aria-pressed="false">Romance</button>
+          </div>
+          <p class="lens-note quiet" id="lens-note"></p>
+        </div>
+      </div>
+
+      <div class="wrap chart-stage">
+        <div class="wheel-area" id="pair-area">
+          <div class="wheel-box" id="pair-wheel"></div>
+          <div class="tip" id="tip" hidden></div>
+        </div>
+        <aside class="how-to-read" aria-labelledby="how-title">
+          <h2 id="how-title" class="how-title">How to read it</h2>
+          <dl>
+            <div><dt><span class="gold">Outer ring:</span> you</dt><dd>Your five <button type="button" class="term" data-term="personal-planets">personal planets</button>, in gold.</dd></div>
+            <div><dt><span class="lilac" id="key-them">Inner ring:</span> <span id="key-name"></span></dt><dd>Their five personal planets, in lilac.</dd></div>
+            <div><dt><span class="dash-key">Dashed line:</span> an easy link</dt><dd>Your planet and theirs work together naturally.</dd></div>
+            <div><dt><span class="solid-key">Solid line:</span> a tense link</dt><dd>Some friction, which is often where you grow.</dd></div>
+          </dl>
+          <p class="time-note">Hover or tap a planet to see its links.</p>
+        </aside>
+      </div>
+
+      <section class="explained" aria-labelledby="links-title">
+        <div class="wrap pair-explained">
+          <div class="side-by-side">
+            <h2 class="eyebrow" id="side-title">Side by side</h2>
+            <div class="table-wrap">
+              <table class="placements-table" aria-labelledby="side-title">
+                <thead><tr><th scope="col">Planet</th><th scope="col">You</th><th scope="col" id="side-them"></th></tr></thead>
+                <tbody id="side-body"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="links-area">
+            <h2 id="links-title" class="section-title">How your charts <em>talk to each other</em></h2>
+            <p id="links-summary" class="links-summary"></p>
+            <ol id="links-list" class="links-list"></ol>
+          </div>
+        </div>
+      </section>
+    </section>
   </main>
-  <script type="module">
-    import { setUpMenu, showSampleBanner } from './js/layout.js?v=202610111855';
-    import { loadBirth } from './js/store.js?v=202610111855';
-    setUpMenu();
-    showSampleBanner(loadBirth());
-  </script>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>ORBIT · a student project for Webs &amp; Apps Design, 2026</p>
+      <p>Planet positions: Astronomy Engine · Tropical zodiac, Placidus houses</p>
+    </div>
+  </footer>
+
+  <script type="module" src="js/pages/connections.js?v=202610111909"></script>
 </body>
 </html>

@@ -4,7 +4,7 @@ An interactive personal astrology atlas: a website where you enter your birth de
 
 Individual Web Project · Webs & Apps Design · 2026
 
-**Status:** stage 4. Welcome, My Universe, My Chart and Explore work with real charts. Connections and Profile are coming next. The developer test page is at `/lab/`.
+**Status:** stage 5. Welcome, My Universe, My Chart, Explore and Connections work with real charts. Profile is coming next. The developer test page is at `/lab/`.
 
 ## Pages
 
@@ -14,8 +14,8 @@ Individual Web Project · Webs & Apps Design · 2026
 | My Universe | `universe.html` | Working |
 | My Chart | `chart.html` | Working |
 | Explore | `explore.html` | Working |
-| Connections | `connections.html` | Coming next |
-| Profile | `profile.html` | Coming soon |
+| Connections | `connections.html` | Working |
+| Profile | `profile.html` | Coming next |
 
 ## How it works so far
 
@@ -35,6 +35,8 @@ birth form → birthplace search → exact UTC moment → planet positions
 | `js/astro/houses.js` | Ascendant, Midheaven and the 12 Placidus house cusps |
 | `js/astro/aspects.js` | Finds the angles between planets (conjunction, sextile, square, trine, opposition) |
 | `js/astro/zodiac.js` | Small helpers: which sign a degree is in, and how to write it (12°33′ Leo) |
+| `js/birth-form.js` | The birth form (place search, checks, the "time happened twice" question), shared by Welcome and Connections |
+| `js/compare.js` | Compares two people's charts: the angles between their personal planets, explained in plain words |
 | `js/vendor/astronomy.js` | Astronomy Engine by Don Cross (MIT license), which calculates where the planets are |
 | `lab/` | The test page |
 | `tests/` | Published reference charts and the checks that compare ORBIT against them |
@@ -51,7 +53,7 @@ ORBIT is compared with published charts (Astrotheme, Astro-Charts) for four peop
 
 ## Settings
 
-Tropical zodiac · Placidus houses · Sun to Pluto · major aspects with orbs of 8° (conjunction, opposition), 7° (square, trine) and 5° (sextile). Supported dates: 1900–2100.
+Tropical zodiac · Placidus houses · Sun to Pluto · major aspects with orbs of 8° (conjunction, opposition), 7° (square, trine) and 5° (sextile). When comparing two people, tighter orbs: 6°, 5° and 4°. Supported dates: 1900–2100.
 
 ## Credits
 

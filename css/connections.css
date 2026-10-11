@@ -1,0 +1,92 @@
+/* connections.css: the Connections page (your people, and "You & Sam"). */
+
+.conn-intro { display: flex; flex-direction: column; gap: 12px; padding-top: 32px; }
+#need-chart { padding-bottom: 48px; }
+
+/* --- Your people + the form, side by side --- */
+.people-layout { display: flex; flex-wrap: wrap; gap: 40px 64px; padding-block: 32px 24px; align-items: flex-start; }
+.people-area { flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+.add-person { flex: 1 1 380px; max-width: 520px; padding-left: 64px; border-left: 1px solid var(--line); }
+
+.people-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.people-list:empty { display: none; }
+.person {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px;
+  padding: 18px 0; border-bottom: 1px solid var(--line);
+}
+.person-main { flex: 1 1 260px; min-width: 0; }
+.person-name { font-size: 26px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; overflow-wrap: anywhere; }
+.person-tag { font: 600 11px/1 var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--champagne); }
+.person-signs { margin: 4px 0 0; font-size: 15px; color: var(--bone-soft); }
+.person-actions { display: flex; align-items: center; gap: 20px; }
+.person-confirm { flex-basis: 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; }
+.person-confirm p { flex-basis: 100%; margin: 0; font-size: 15px; }
+
+/* A quiet button that looks like a text link (Remove, Cancel). */
+.link-button {
+  font: 600 15px var(--sans); color: var(--bone); background: none; border: 0; padding: 10px 0;
+  cursor: pointer; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--line);
+}
+.link-button:hover { color: var(--champagne); text-decoration-color: currentColor; }
+
+.people-empty { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+.people-empty p { margin: 0; max-width: 46ch; }
+
+.permission { color: var(--bone); font-weight: 600; }
+.form-footnote { font-size: 13px; margin: -10px 0 0; }
+
+/* --- You & Sam --- */
+.compare-intro { flex-direction: row; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 40px; }
+.compare-intro-text { flex: 1 1 560px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+.lens-note { font-size: 14px; margin: 8px 0 0; max-width: 34ch; }
+.lilac { color: var(--lilac); }
+
+/* Their planets (inner ring) are lilac; yours stay gold. */
+.wheel .partner-ring { stroke: var(--lilac); stroke-opacity: 0.45; }
+.wheel .planets.them .planet-dot { fill: var(--lilac); }
+.wheel .planets.them .planet-symbol { fill: var(--lilac); font-size: 15px; }
+.wheel .planets.them .leader { stroke: var(--lilac); }
+.wheel .planets.them .planet:focus-visible .planet-hit,
+.wheel .planets.them .planet.active .planet-hit { stroke: var(--lilac); }
+.wheel .aspect { stroke-opacity: 0.7; }
+
+/* Side by side + the explanations */
+.pair-explained { display: flex; flex-wrap: wrap; gap: 40px 64px; align-items: flex-start; }
+.side-by-side { flex: 1 1 300px; max-width: 400px; display: flex; flex-direction: column; gap: 12px; }
+.side-by-side th[scope="row"] { font: 600 15px var(--sans); letter-spacing: 0; text-transform: none; color: var(--bone); border-bottom: 1px solid var(--line); padding: 13px 16px 13px 0; text-align: left; }
+.side-by-side td:last-child { color: var(--lilac); }
+.links-area { flex: 1 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+.links-summary { margin: 0; max-width: 70ch; color: var(--bone-soft); }
+
+.links-list { list-style: none; margin: 8px 0 0; padding: 0; border-top: 1px solid var(--line); }
+.link-card { padding: 18px 0 18px 18px; border-bottom: 1px solid var(--line); border-left: 2px solid transparent; outline: none; transition: border-color 0.2s, background 0.2s; }
+.link-card:focus-visible, .link-card.lit, .link-card:hover { border-left-color: var(--champagne); background: rgba(233, 227, 216, 0.04); }
+.link-meta { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 0 0 6px; font: 650 11.5px/1.4 var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--bone-soft); }
+.link-kind.easy::before, .link-kind.tense::before, .link-kind.blend::before {
+  content: ''; display: inline-block; width: 18px; margin-right: 8px; vertical-align: middle;
+}
+.link-kind.easy::before  { border-top: 2px dashed var(--champagne); }
+.link-kind.tense::before { border-top: 2px solid var(--bone); }
+.link-kind.blend::before { width: 8px; height: 8px; border-radius: 50%; background: var(--champagne); box-shadow: 5px 0 0 var(--lilac); margin-right: 13px; }
+.link-maybe { color: var(--error); }
+.link-title { font-size: 22px; line-height: 1.25; }
+.link-symbol { color: var(--champagne); font-family: 'Segoe UI Symbol', 'Apple Symbols', 'Noto Sans Symbols', var(--serif); margin-right: 8px; }
+.link-symbol.them { color: var(--lilac); margin: 0 0 0 8px; }
+.link-and { font-style: italic; color: var(--bone-soft); }
+.link-text { margin: 6px 0 0; max-width: 72ch; }
+
+@media (max-width: 900px) {
+  .add-person { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); padding-top: 32px; max-width: none; }
+  .side-by-side { max-width: none; }
+}
+
+/* The two-person wheel: slightly bigger symbols (there are fewer of
+   them), and always small enough to fit on the screen with the title. */
+#pair-wheel { width: min(540px, calc(100vh - 330px), 100%); }
+#pair-wheel .planets.you .planet-symbol { font-size: 22px; }
+#pair-wheel .planets.them .planet-symbol { font-size: 19px; }
+.wheel .planet { -webkit-tap-highlight-color: transparent; }
+.side-by-side .symbol {
+  display: inline-block; width: 24px; font-size: 17px; color: var(--champagne);
+  font-family: 'Segoe UI Symbol', 'Apple Symbols', 'Noto Sans Symbols', var(--serif);
+}
