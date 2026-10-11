@@ -10,17 +10,17 @@
 // the address means the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610112311';
-import { drawWheel } from '../wheel.js?v=202610112311';
-import { placeTip } from '../tip-position.js?v=202610112311';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610112311';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610112311';
-import { setUpBirthForm } from '../birth-form.js?v=202610112311';
-import { makeShareLink, readShareCode } from '../share.js?v=202610112311';
-import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202610112311';
-import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610112311';
-import { PERSONAL, LENSES, LENS_HINT, LENS_TAGS, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610112311';
-import { PLANETS, SIGNS } from '../content/basics.js?v=202610112311';
+import { calculateChart } from '../astro/chart.js?v=202610112316';
+import { drawWheel } from '../wheel.js?v=202610112316';
+import { placeTip } from '../tip-position.js?v=202610112316';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610112316';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610112316';
+import { setUpBirthForm } from '../birth-form.js?v=202610112316';
+import { makeShareLink, readShareCode } from '../share.js?v=202610112316';
+import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202610112316';
+import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610112316';
+import { PERSONAL, LENS_TAGS, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610112316';
+import { PLANETS, SIGNS } from '../content/basics.js?v=202610112316';
 
 const $ = (id) => document.getElementById(id);
 const nameOf = (id) => id[0].toUpperCase() + id.slice(1);
@@ -356,24 +356,14 @@ for (const button of document.querySelectorAll('[data-lens]')) {
 }
 
 // Show the chosen lens. `changed` is true when you just clicked the
-// switch: then the explanations briefly light up, so you can see that
-// they changed (they're further down the page).
+// switch: then the changed parts briefly light up.
 function showLens(changed = false) {
   for (const button of document.querySelectorAll('[data-lens]')) {
     button.setAttribute('aria-pressed', String(button.dataset.lens === lens));
   }
-  const note = $('lens-note');
-  const jump = make('a', 'text-link', 'See the explanations ↓');
-  jump.href = '#links-title';
-  // Scroll instead of changing the address (the address decides which person is shown).
-  jump.addEventListener('click', (e) => {
-    e.preventDefault();
-    $('links-title').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-  });
-  note.replaceChildren(make('span', 'quiet', `${LENSES[lens]} ${LENS_HINT} `), jump);
   renderLinks();
   if (changed) {
-    for (const node of [note, ...document.querySelectorAll('.link-card')]) {
+    for (const node of document.querySelectorAll('.link-meaning')) {
       node.classList.remove('flash');
       void node.offsetWidth; // restart the highlight if you click quickly
       node.classList.add('flash');

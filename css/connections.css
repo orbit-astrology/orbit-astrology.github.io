@@ -31,8 +31,6 @@
 /* --- You & Sam --- */
 .compare-intro { flex-direction: row; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 40px; }
 .compare-intro-text { flex: 1 1 560px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
-.lens-note { font-size: 14px; margin: 8px 0 0; max-width: 40ch; }
-.lens-note .text-link { font-size: 14px; white-space: nowrap; }
 .lilac { color: var(--lilac); }
 
 /* Their planets (inner ring) are lilac; yours stay gold. */

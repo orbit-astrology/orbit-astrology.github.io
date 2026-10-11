@@ -332,3 +332,11 @@ One entry per work session: what was done, what was decided, what went wrong, an
 - Checked in the browser: all 7 explanations in the sample change when switching.
 
 **AI vs me:** Me: spotted that the switch still felt like it did nothing. Claude: rewrote the explanations into facts + meaning and drafted the new texts for me to review.
+
+---
+
+## 12 October 2026 · One Friendship / Romance switch
+
+**My feedback:** keep only the switch right above the explanations. The one at the top of the page didn't change anything you could see there; it only told you to look further down.
+
+**What changed:** removed the top switch and its note. The switch now lives only above "How your charts talk to each other", next to the explanations it changes, and the changed parts glow for a moment when you switch.

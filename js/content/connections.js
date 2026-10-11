@@ -147,17 +147,9 @@ export const LINK_TYPES = {
       romance: 'you’re opposites here: it can draw you to each other or pull you apart, and you learn to meet in the middle' } },
 };
 
-// Short introductions for the two ways of reading.
-// The planets never change, only the words.
 // The little label in front of the part of each explanation that
-// changes with the switch.
+// changes with the Friendship / Romance switch (the planets never change).
 export const LENS_TAGS = { friendship: 'As friends', romance: 'As a couple' };
-
-export const LENSES = {
-  friendship: 'Reading as friends: how you get on, talk, have fun and support each other.',
-  romance: 'Reading as a couple: attraction, affection, feelings and how you handle conflict.',
-};
-export const LENS_HINT = 'The planets stay the same; the explanations change.';
 
 // The made-up sample person, so anyone can try Connections without
 // typing someone else's details. Clearly labelled as made up.
