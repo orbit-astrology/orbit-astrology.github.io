@@ -67,7 +67,13 @@
 .link-symbol { color: var(--champagne); font-family: 'Segoe UI Symbol', 'Apple Symbols', 'Noto Sans Symbols', var(--serif); margin-right: 8px; }
 .link-symbol.them { color: var(--lilac); margin: 0 0 0 8px; }
 .link-and { font-style: italic; color: var(--bone-soft); }
-.link-text { margin: 6px 0 0; max-width: 72ch; }
+.link-text { margin: 6px 0 0; max-width: 72ch; color: var(--bone-soft); }
+/* The part that changes with Friendship / Romance, with a small label. */
+.link-meaning { margin: 8px 0 0; max-width: 72ch; }
+.lens-tag {
+  display: inline-block; margin-right: 10px;
+  font: 700 11px/1 var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--champagne);
+}
 
 @media (max-width: 900px) {
   .add-person { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); padding-top: 32px; max-width: none; }

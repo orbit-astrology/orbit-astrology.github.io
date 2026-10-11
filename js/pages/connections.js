@@ -10,17 +10,17 @@
 // the address means the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610112101';
-import { drawWheel } from '../wheel.js?v=202610112101';
-import { placeTip } from '../tip-position.js?v=202610112101';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610112101';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610112101';
-import { setUpBirthForm } from '../birth-form.js?v=202610112101';
-import { makeShareLink, readShareCode } from '../share.js?v=202610112101';
-import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202610112101';
-import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610112101';
-import { PERSONAL, LENSES, LENS_HINT, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610112101';
-import { PLANETS, SIGNS } from '../content/basics.js?v=202610112101';
+import { calculateChart } from '../astro/chart.js?v=202610112311';
+import { drawWheel } from '../wheel.js?v=202610112311';
+import { placeTip } from '../tip-position.js?v=202610112311';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610112311';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610112311';
+import { setUpBirthForm } from '../birth-form.js?v=202610112311';
+import { makeShareLink, readShareCode } from '../share.js?v=202610112311';
+import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202610112311';
+import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610112311';
+import { PERSONAL, LENSES, LENS_HINT, LENS_TAGS, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610112311';
+import { PLANETS, SIGNS } from '../content/basics.js?v=202610112311';
 
 const $ = (id) => document.getElementById(id);
 const nameOf = (id) => id[0].toUpperCase() + id.slice(1);
@@ -416,7 +416,9 @@ function renderLinks() {
     const heading = make('h3', 'link-title');
     heading.append(make('span', 'link-symbol', e.symbols[0]), `Your ${nameOf(link.from)} `, make('span', 'link-and', '&'), ` ${person.name}’s ${nameOf(link.to)}`, make('span', 'link-symbol them', e.symbols[1]));
 
-    li.append(meta, heading, make('p', 'link-text', e.text));
+    const meaning = make('p', 'link-meaning');
+    meaning.append(make('span', 'lens-tag', LENS_TAGS[lens]), e.meaning);
+    li.append(meta, heading, make('p', 'link-text', e.facts), meaning);
     li.addEventListener('mouseenter', () => lightLink(link));
     li.addEventListener('mouseleave', unlight);
     li.addEventListener('focus', () => lightLink(link));

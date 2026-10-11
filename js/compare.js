@@ -13,9 +13,9 @@
 // if it doesn't hold all day, it's marked "might not be exact".
 // ---------------------------------------------------------------
 
-import { findCrossAspects } from './astro/aspects.js?v=202610112101';
-import { PLANETS } from './content/basics.js?v=202610112101';
-import { PERSONAL, PAIRS, LINK_TYPES, THEIR_WHAT, pairKey } from './content/connections.js?v=202610112101';
+import { findCrossAspects } from './astro/aspects.js?v=202610112311';
+import { PLANETS } from './content/basics.js?v=202610112311';
+import { PERSONAL, PAIRS, LINK_TYPES, THEIR_WHAT, pairKey } from './content/connections.js?v=202610112311';
 
 const nameOf = (id) => id[0].toUpperCase() + id.slice(1);
 const personal = (bodies) => bodies.filter((b) => PERSONAL.includes(b.id));
@@ -51,7 +51,8 @@ export function explainLink(link, you, them, theirName, lens) {
   const mine = you.bodies.find((b) => b.id === link.from);
   const theirs = them.bodies.find((b) => b.id === link.to);
   const type = LINK_TYPES[link.type];
-  const theme = PAIRS[pairKey(link.from, link.to)][lens];
+  const pair = PAIRS[pairKey(link.from, link.to)][lens];
+  const feel = type.feel[lens];
   return {
     id: link.id,
     kind: type.kind,
@@ -59,10 +60,13 @@ export function explainLink(link, you, them, theirName, lens) {
     strong: link.orb <= 1.5,
     uncertain: Boolean(link.uncertain),
     plain: type.plain,
-    theme,
+    theme: pair.about,
     title: `Your ${nameOf(link.from)} · ${theirName}’s ${nameOf(link.to)}`,
     symbols: [PLANETS[link.from].symbol, PLANETS[link.to].symbol],
-    text: `Your ${nameOf(link.from)} (${PLANETS[link.from].what}) in ${signText(mine)} and ${theirName}’s ${nameOf(link.to)} (${THEIR_WHAT[link.to]}) in ${signText(theirs)} are ${type.plain}. This link is about ${theme}. ${type.feel[0].toUpperCase() + type.feel.slice(1)}.`,
+    // The facts: the same whichever way you read it.
+    facts: `Your ${nameOf(link.from)} (${PLANETS[link.from].what}) in ${signText(mine)} and ${theirName}’s ${nameOf(link.to)} (${THEIR_WHAT[link.to]}) in ${signText(theirs)} are ${type.plain}.`,
+    // The meaning: changes with the Friendship / Romance switch.
+    meaning: `This link is about ${pair.about}. ${pair.tip} ${feel[0].toUpperCase() + feel.slice(1)}.`,
   };
 }
 

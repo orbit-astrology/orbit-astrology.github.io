@@ -25,69 +25,100 @@ export const THEIR_WHAT = {
   mars: 'how they act',
 };
 
-// What each pair of planets is about. The key is the two planets in
+// What each pair of planets is about (`about`), and what it can look
+// like in real life (`tip`), once for friends and once for couples. The key is the two planets in
 // the order of PERSONAL, so "venus-mars" covers your Venus with their
 // Mars AND your Mars with their Venus.
 export const PAIRS = {
   'sun-sun': {
-    friendship: 'how your personalities and goals sit side by side',
-    romance: 'how your personalities and life goals fit together as a couple',
+    friendship: { about: 'how your personalities and goals sit side by side',
+      tip: 'Notice whether you enjoy the same kinds of plans, or bring each other new ones.' },
+    romance: { about: 'how your personalities and life goals fit together as a couple',
+      tip: 'Talk about where you each want your lives to go: this link shows how easily those plans fit together.' },
   },
   'sun-moon': {
-    friendship: 'how one of you shines and the other feels looked after',
-    romance: 'a deep kind of bond: how who one of you is meets what the other needs to feel safe',
+    friendship: { about: 'how one of you shines and the other feels looked after',
+      tip: 'One of you often ends up cheering the other up or making them feel at home.' },
+    romance: { about: 'a deep kind of bond: how who one of you is meets what the other needs to feel safe',
+      tip: 'Often one of you feels truly seen and the other feels safe. Couples tend to feel this link strongly.' },
   },
   'sun-mercury': {
-    friendship: 'how one of you sees the other’s ideas',
-    romance: 'how well you understand each other’s minds and support each other’s plans',
+    friendship: { about: 'how one of you sees the other’s ideas',
+      tip: 'It’s good for swapping ideas, giving honest advice and making plans together.' },
+    romance: { about: 'how well you understand each other’s minds and support each other’s plans',
+      tip: 'Notice how you listen to each other’s ideas and dreams, and whether you both feel heard.' },
   },
   'sun-venus': {
-    friendship: 'how much you simply enjoy and appreciate each other',
-    romance: 'affection: how much one of you admires who the other is',
+    friendship: { about: 'how much you simply enjoy and appreciate each other',
+      tip: 'You probably like spending time together and saying nice things about each other.' },
+    romance: { about: 'affection: how much one of you admires who the other is',
+      tip: 'It often shows as admiration and affection: one of you simply likes who the other is.' },
   },
   'sun-mars': {
-    friendship: 'the energy between you: how you push each other on',
-    romance: 'spark and chemistry: how one of you fires the other up',
+    friendship: { about: 'the energy between you: how you push each other on',
+      tip: 'You can motivate each other to try things, like a sport, a project or an adventure.' },
+    romance: { about: 'spark and chemistry: how one of you fires the other up',
+      tip: 'It’s about physical spark and energy: you can fire each other up, in good ways and in arguments.' },
   },
   'moon-moon': {
-    friendship: 'whether you feel relaxed around each other’s moods',
-    romance: 'your emotional rhythm: how naturally you understand each other’s feelings and needs',
+    friendship: { about: 'whether you feel relaxed around each other’s moods',
+      tip: 'It shows how easy it is to be around each other on bad days, or to just do nothing together.' },
+    romance: { about: 'your emotional rhythm: how naturally you understand each other’s feelings and needs',
+      tip: 'It shows how comfortable you’d feel living side by side: moods, routines and what home feels like.' },
   },
   'moon-mercury': {
-    friendship: 'how easy it is to talk about feelings together',
-    romance: 'how you talk about feelings together',
+    friendship: { about: 'how easy it is to talk about feelings together',
+      tip: 'It shows whether you can talk about how you feel without it getting awkward.' },
+    romance: { about: 'how you talk about feelings together',
+      tip: 'Pay attention to how you talk when one of you is upset: words can soothe or sting here.' },
   },
   'moon-venus': {
-    friendship: 'warmth and kindness between you',
-    romance: 'tenderness: one of you feels cared for by the way the other loves',
+    friendship: { about: 'warmth and kindness between you',
+      tip: 'You tend to be gentle and kind with each other.' },
+    romance: { about: 'tenderness: one of you feels cared for by the way the other loves',
+      tip: 'Small gestures of care matter a lot here: you can make each other feel truly loved.' },
   },
   'moon-mars': {
-    friendship: 'how one person’s energy lands on the other’s feelings',
-    romance: 'how passion and feelings mix between you',
+    friendship: { about: 'how one person’s energy lands on the other’s feelings',
+      tip: 'One of you may be more direct and the other more sensitive, so a little care goes a long way.' },
+    romance: { about: 'how passion and feelings mix between you',
+      tip: 'There can be real passion, but also hurt feelings if one of you rushes ahead before the other is ready.' },
   },
   'mercury-mercury': {
-    friendship: 'how you think and talk together: chats, jokes and debates',
-    romance: 'how you talk as a couple, from everyday plans to disagreements',
+    friendship: { about: 'how you think and talk together: chats, jokes and debates',
+      tip: 'It shows whether you get each other’s sense of humour and enjoy talking for hours.' },
+    romance: { about: 'how you talk as a couple, from everyday plans to disagreements',
+      tip: 'It shows how you handle everyday plans, decisions and disagreements together.' },
   },
   'mercury-venus': {
-    friendship: 'easy, pleasant conversations and shared taste',
-    romance: 'sweet talk: flirting, compliments and kind words',
+    friendship: { about: 'easy, pleasant conversations and shared taste',
+      tip: 'You may share taste in music, films or style, and conversations feel easy.' },
+    romance: { about: 'sweet talk: flirting, compliments and kind words',
+      tip: 'Flirting, compliments and kind messages come into play here.' },
   },
   'mercury-mars': {
-    friendship: 'lively discussions and debates',
-    romance: 'how you argue and make decisions together',
+    friendship: { about: 'lively discussions and debates',
+      tip: 'Debates can get lively, so it helps to remember you’re on the same side.' },
+    romance: { about: 'how you argue and make decisions together',
+      tip: 'Quick words can turn into heated ones, so it helps to slow down when you disagree.' },
   },
   'venus-venus': {
-    friendship: 'shared taste: what you both enjoy and find beautiful',
-    romance: 'how your ways of showing love and affection match',
+    friendship: { about: 'shared taste: what you both enjoy and find beautiful',
+      tip: 'You may love the same places, things and ways of having fun.' },
+    romance: { about: 'how your ways of showing love and affection match',
+      tip: 'It shows whether you show love in similar ways, like gifts, time together or words.' },
   },
   'venus-mars': {
-    friendship: 'a playful, energising pull between you',
-    romance: 'attraction: how affection and desire meet',
+    friendship: { about: 'a playful, energising pull between you',
+      tip: 'You might enjoy teasing each other, having adventures or making things together.' },
+    romance: { about: 'attraction: how affection and desire meet',
+      tip: 'Astrologers see this as one of the main signs of attraction between two people.' },
   },
   'mars-mars': {
-    friendship: 'how you get things done together',
-    romance: 'how your energy and tempers meet',
+    friendship: { about: 'how you get things done together',
+      tip: 'You might make a great team for sports, games or projects, or end up competing a lot.' },
+    romance: { about: 'how your energy and tempers meet',
+      tip: 'When you agree you make a strong team; when you don’t, sparks can fly.' },
   },
 };
 
@@ -100,19 +131,28 @@ export function pairKey(a, b) {
 // "kind" groups them for the little label and the line style.
 export const LINK_TYPES = {
   conjunction: { label: 'Blending',   kind: 'blend', plain: 'side by side (0°)',
-    feel: 'these two parts of you blend, so this link feels strong and familiar' },
+    feel: { friendship: 'these two parts of you blend, so this side of your friendship feels strong and familiar',
+      romance: 'these two parts of you blend, so this feels strong and intense between you' } },
   sextile:     { label: 'Friendly',   kind: 'easy',  plain: 'at a friendly angle (60°)',
-    feel: 'there’s an easy opening here that grows when you both make an effort' },
+    feel: { friendship: 'there’s an easy opening here that grows the more time you spend together',
+      romance: 'there’s a gentle opening here that grows when you both make an effort' } },
   trine:       { label: 'Easy',       kind: 'easy',  plain: 'at an easy angle (120°)',
-    feel: 'this tends to flow naturally between you, without much effort' },
+    feel: { friendship: 'this tends to flow naturally between you as friends',
+      romance: 'this tends to flow naturally between you as a couple, without much effort' } },
   square:      { label: 'Tense',      kind: 'tense', plain: 'at a tense angle (90°)',
-    feel: 'this can cause friction, and working through it is often how you grow closer' },
+    feel: { friendship: 'it can cause friction, and working through it can make your friendship stronger',
+      romance: 'it can cause friction, and working through it is often how couples grow closer' } },
   opposition:  { label: 'Opposite',   kind: 'tense', plain: 'on opposite sides (180°)',
-    feel: 'you’re opposites here: it can attract you or pull you apart, and you learn to meet in the middle' },
+    feel: { friendship: 'you’re opposites here: you can balance each other out or clash, and you learn to meet in the middle',
+      romance: 'you’re opposites here: it can draw you to each other or pull you apart, and you learn to meet in the middle' } },
 };
 
 // Short introductions for the two ways of reading.
 // The planets never change, only the words.
+// The little label in front of the part of each explanation that
+// changes with the switch.
+export const LENS_TAGS = { friendship: 'As friends', romance: 'As a couple' };
+
 export const LENSES = {
   friendship: 'Reading as friends: how you get on, talk, have fun and support each other.',
   romance: 'Reading as a couple: attraction, affection, feelings and how you handle conflict.',

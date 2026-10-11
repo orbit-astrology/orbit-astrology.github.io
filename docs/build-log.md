@@ -315,3 +315,20 @@ One entry per work session: what was done, what was decided, what went wrong, an
 ## 11 October 2026 (night) · Sign names the right way up
 
 **My question:** should we turn the sign names that are upside down? Yes: the names on the bottom half of the wheel (Sagittarius, Capricorn, Aquarius, Pisces…) are now turned round so they read normally, like on most chart sites. This works on every wheel, wherever your Rising sign puts each sign.
+
+---
+
+## 12 October 2026 · Friendship / Romance really changes the reading
+
+**My feedback:** pressing Friendship or Romance didn't seem to change the information.
+
+**What was wrong:** it did change, but only one short phrase in each explanation, so the two versions looked almost the same.
+
+**What changed**
+- Each link now has two parts:
+  1. **The facts** (in softer text): which planets, which signs, and the angle. These never change, because the planets are the same whichever way you read it.
+  2. **The meaning**, with a small label **AS FRIENDS** or **AS A COUPLE**: what this pair of planets is about, what it can look like in real life, and how the angle tends to feel. All three sentences are different for friends and for couples.
+- New "what it can look like" sentences for all 15 planet pairs, once for friends and once for couples (`js/content/connections.js`), plus a friends and a couple version of how each kind of angle feels.
+- Checked in the browser: all 7 explanations in the sample change when switching.
+
+**AI vs me:** Me: spotted that the switch still felt like it did nothing. Claude: rewrote the explanations into facts + meaning and drafted the new texts for me to review.
