@@ -23,6 +23,24 @@ export const PLANETS = {
   pluto:   { symbol: '♇', what: 'how you transform',      short: 'deep change, power and starting again' },
 };
 
+// A fuller sentence about each planet, for the explanations on My Chart.
+export const PLANET_DETAIL = {
+  sun:     'The Sun is the centre of your chart: your core self, what gives you energy and what you want to become.',
+  moon:    'The Moon is your emotional side: how you react, what comforts you and what you need to feel safe.',
+  mercury: 'Mercury is your mind: how you think, learn, talk and make sense of things.',
+  venus:   'Venus is about love and pleasure: what you’re drawn to, what you find beautiful and how you show affection.',
+  mars:    'Mars is your drive: how you go after what you want, how you handle anger and where your energy goes.',
+  jupiter: 'Jupiter is about growth and luck: where you feel generous, hopeful and open to more.',
+  saturn:  'Saturn is about effort and lessons: where you need patience, take responsibility and build something solid over time.',
+  uranus:  'Uranus is about change and freedom: where you need to do things your own way and expect the unexpected.',
+  neptune: 'Neptune is about dreams and imagination: where you’re intuitive, idealistic, and sometimes a little lost in a fog.',
+  pluto:   'Pluto is about deep change: where you go through endings and new beginnings and discover your inner strength.',
+};
+
+// The slow outer planets stay in one sign for years, so everyone born
+// around the same time shares them. Saying so is part of being honest.
+export const SLOW_PLANETS = ['uranus', 'neptune', 'pluto'];
+
 // "how" each sign does things, in a few words
 export const SIGNS = {
   Aries:       { symbol: '♈', how: 'boldly and directly' },
@@ -38,6 +56,38 @@ export const SIGNS = {
   Aquarius:    { symbol: '♒', how: 'independently, in your own way' },
   Pisces:      { symbol: '♓', how: 'gently and imaginatively' },
 };
+
+// A sentence about each sign's personality.
+export const SIGN_DETAIL = {
+  Aries:       'Aries is the first sign: brave, impatient and full of energy, always ready to start.',
+  Taurus:      'Taurus is calm, loyal and grounded, and loves comfort, beauty and things that last.',
+  Gemini:      'Gemini is curious, quick and chatty, always collecting new ideas and people.',
+  Cancer:      'Cancer is caring, sensitive and protective, with a strong need for closeness and home.',
+  Leo:         'Leo is warm, proud and generous, and loves to create, play and be seen.',
+  Virgo:       'Virgo is thoughtful, practical and helpful, with an eye for detail and improvement.',
+  Libra:       'Libra is kind, social and fair-minded, always looking for balance and harmony.',
+  Scorpio:     'Scorpio is deep, private and all-or-nothing, with strong instincts about people.',
+  Sagittarius: 'Sagittarius is free, honest and optimistic, always looking for the next adventure or big idea.',
+  Capricorn:   'Capricorn is patient, responsible and ambitious, and takes the long road to success.',
+  Aquarius:    'Aquarius is independent, original and idealistic, and cares about doing things differently.',
+  Pisces:      'Pisces is gentle, imaginative and compassionate, and feels the world very deeply.',
+};
+
+// How the five main angles between planets feel, in plain words.
+export const ASPECT_TEXT = {
+  conjunction: { name: 'conjunction', angle: 0,   plain: 'side by side', meaning: 'they blend together and act as one' },
+  sextile:     { name: 'sextile',     angle: 60,  plain: 'at a friendly angle', meaning: 'they support each other when you make the effort' },
+  square:      { name: 'square',      angle: 90,  plain: 'at a tense angle', meaning: 'they rub against each other, which can push you to grow' },
+  trine:       { name: 'trine',       angle: 120, plain: 'at an easy angle', meaning: 'they work together naturally' },
+  opposition:  { name: 'opposition',  angle: 180, plain: 'on opposite sides', meaning: 'they pull in different directions, and you learn to balance them' },
+};
+
+// Where a degree sits inside its sign (each sign is 30°).
+export function degreePlace(degree) {
+  if (degree < 10) return 'early in the sign';
+  if (degree < 20) return 'around the middle of the sign';
+  return 'late in the sign';
+}
 
 // "where": the 12 areas of life
 export const HOUSES = {

@@ -44,6 +44,18 @@ export const GLOSSARY = {
     term: 'Midheaven',
     text: 'The highest point of the sky when you were born. It’s linked to your direction in life and how you want to be seen in the world.',
   },
+  'chart-angles': {
+    term: 'ASC and MC',
+    text: 'Two key points on the wheel. ASC (Ascendant) is your Rising sign, on the left. MC (Midheaven) is the top of the chart, linked to your direction in life.',
+  },
+  'slow-planet': {
+    term: 'Slow planets',
+    text: 'Uranus, Neptune and Pluto move so slowly that they stay in one sign for many years, so everyone your age shares them. The house they’re in is more personal.',
+  },
+  'how-we-know': {
+    term: 'How we know this',
+    text: 'ORBIT turns your birth time and place into an exact moment, then calculates where each planet was with an astronomy library accurate to about 1/60 of a degree.',
+  },
   aspect: {
     term: 'Aspect',
     text: 'The angle between two planets. Certain angles mean the planets “talk” to each other, easily or with tension.',

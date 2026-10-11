@@ -23,5 +23,23 @@
 .wheel .planet-symbol { fill: var(--champagne); font: 18px/1 'Segoe UI Symbol', 'Apple Symbols', 'Noto Sans Symbols', var(--serif); }
 .wheel .leader        { stroke: var(--champagne); stroke-opacity: 0.5; stroke-width: 0.6; }
 
+/* --- Interactive wheel (My Chart) --- */
+/* Lines and labels let the mouse pass through to the hover areas underneath. */
+.wheel .signs, .wheel .aspects, .wheel .cusp, .wheel .house-number, .wheel .ring { pointer-events: none; }
+.wheel .hit         { fill: transparent; cursor: help; }
+.wheel .hit:hover   { fill: rgba(233, 227, 216, 0.07); }
+.wheel .planet-hit  { fill: transparent; }
+.wheel .planet      { cursor: pointer; outline: none; }
+.wheel .planet:focus-visible .planet-hit,
+.wheel .planet.active .planet-hit { stroke: var(--champagne); stroke-width: 1.2; }
+.wheel .planet.active .planet-symbol { fill: var(--bone); }
+.wheel .angle-label[data-angle] { cursor: help; }
+
+/* When a planet is hovered or chosen, its aspect lines light up and
+   the others fade back. */
+.wheel.focusing .aspect { stroke-opacity: 0.08; }
+.wheel.focusing .aspect.lit { stroke-opacity: 0.95; stroke-width: 1.6; }
+.wheel.focusing .planet:not(.lit) { opacity: 0.45; }
+
 /* A quieter version, used as a background drawing (Welcome page). */
 .wheel-faint .wheel { opacity: 0.3; }

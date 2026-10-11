@@ -98,3 +98,33 @@ One entry per work session: what was done, what was decided, what went wrong, an
 **To do (me)**
 - Read `js/content/basics.js` and `js/content/glossary.js` and change anything that doesn't sound right.
 - Try the site with my own birth details and compare with Astro.com.
+
+---
+
+## 11 October 2026 (late) · Stage 3: My Chart (the carta astral)
+
+**What we built** (`chart.html`, `js/pages/chart.js`, `js/readings.js`)
+- The big constellation wheel, drawn from my real chart. **Hover over anything** to see what it means for me: a planet (sign, degree, house and one line), a sign (what it means and which of my planets are in it), a house (which area of life, which planets), or ASC/MC.
+- Hovering a planet **lights up its lines** (aspects) and fades the rest, so you can see what it's connected to.
+- **Click a planet** (or press Enter on it with the keyboard) to jump to its full explanation. On a phone: first tap shows the box, second tap jumps.
+- **Wheel view / List view** switch: the list is a plain table for people who find the wheel hard to read.
+- **"How to read the wheel"** next to it (signs = how, planets = what, houses = where, lines = aspects; dashed = easy, solid = tense).
+- **"Your chart, explained"**: one section per placement (Sun, Moon, Rising, Mercury … Pluto, Midheaven), each with:
+  - the grammar sentence: *Your Venus (how you love) in Cancer (tenderly and protectively) in your 8th house (deep bonds…)*
+  - a paragraph built from the planet, the sign and the house
+  - "How it connects to the rest of your chart": its aspects in plain words
+  - **"How we know this"**: the steps from my birth time to that exact degree
+- Honest extras: slow planets (Uranus, Neptune, Pluto) say that everyone my age shares their sign; retrograde planets are explained.
+- No birth time: no houses, Rising or Midheaven on the wheel or in the list, with a note explaining why; a Moon that changed sign that day shows both options.
+
+**Decisions**
+- The explanations stay on the page's own slate colour (a slightly darker band) instead of a cream "paper" section, to avoid the big colour jump I didn't like.
+- Readings are built from parts (planet + sign + house + aspects), so every chart gets its own text without writing 120+ separate articles.
+
+**Testing**
+- Mouse hover on planets, signs and houses; keyboard (Tab to a planet, Enter jumps to its section); phone taps; List view; a chart with no birth time; phone width. 79/79 calculation checks still pass.
+- Fixed: Enter key didn't work on planets (SVG shapes don't have `.click()`); the first tap on a phone jumped down instead of showing the box; "are at side by side" → "are side by side".
+
+**AI vs me**
+- Me: the idea of hovering for info with detailed explanations underneath (from my own frustration with chart sites), the beginner-first rule, the colours.
+- Claude: wrote the code and the draft texts (`js/content/basics.js`, `js/readings.js`) for me to review.

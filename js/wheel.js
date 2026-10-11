@@ -47,6 +47,21 @@ const CONSTELLATIONS = [
   [[-14, -6], [-4, 0], [4, 2], [14, 8], [4, 2], [10, -6]],
 ];
 
+// The outline of one slice of a ring (for example, the Scorpio part
+// of the sign ring), from angle a1 to a2 between radius inner and outer.
+// Used as an invisible shape you can hover.
+function slice(inner, outer, a1, a2) {
+  const span = ((a2 - a1) % 360 + 360) % 360;
+  const large = span > 180 ? 1 : 0;
+  const [ox1, oy1] = point(outer, a1);
+  const [ox2, oy2] = point(outer, a1 + span);
+  const [ix2, iy2] = point(inner, a1 + span);
+  const [ix1, iy1] = point(inner, a1);
+  const f = (n) => n.toFixed(1);
+  return `M${f(ox1)} ${f(oy1)} A${outer} ${outer} 0 ${large} 0 ${f(ox2)} ${f(oy2)} ` +
+         `L${f(ix2)} ${f(iy2)} A${inner} ${inner} 0 ${large} 1 ${f(ix1)} ${f(iy1)} Z`;
+}
+
 function el(tag, attrs = {}, text) {
   const node = document.createElementNS(SVG_NS, tag);
   for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, v);
@@ -96,6 +111,21 @@ export function drawWheel(chart, options = {}) {
     svg.append(el('circle', { cx: C, cy: C, r, class: cls }));
   }
 
+  // Invisible hover areas for each sign and house (My Chart page only).
+  if (options.hoverAreas) {
+    const areas = el('g', { class: 'hover-areas' });
+    SIGN_NAMES.forEach((name, i) => {
+      areas.append(el('path', { d: slice(192, 290, screen(i * 30), screen(i * 30 + 30)), class: 'hit', 'data-sign': name }));
+    });
+    if (chart.houses) {
+      chart.houses.forEach((h, i) => {
+        const next = chart.houses[(i + 1) % 12].longitude;
+        areas.append(el('path', { d: slice(122, 192, screen(h.longitude), screen(next)), class: 'hit', 'data-house': String(h.number) }));
+      });
+    }
+    svg.append(areas);
+  }
+
   // Signs: dividers, constellations and names
   const signs = el('g', { class: 'signs' });
   SIGN_NAMES.forEach((name, i) => {
@@ -140,10 +170,10 @@ export function drawWheel(chart, options = {}) {
       houses.append(el('text', { x: nx.toFixed(1), y: ny.toFixed(1), class: 'house-number', 'text-anchor': 'middle', 'dominant-baseline': 'central' }, String(h.number)));
     });
     const [ax, ay] = point(296, 180);
-    houses.append(el('text', { x: (ax - 4).toFixed(1), y: ay.toFixed(1), class: 'angle-label', 'text-anchor': 'end', 'dominant-baseline': 'central' }, 'ASC'));
+    houses.append(el('text', { x: (ax - 4).toFixed(1), y: ay.toFixed(1), class: 'angle-label', 'text-anchor': 'end', 'dominant-baseline': 'central', 'data-angle': 'rising' }, 'ASC'));
     const mcAngle = screen(chart.angles.midheaven.longitude);
     const [mx, my] = point(300, mcAngle);
-    houses.append(el('text', { x: mx.toFixed(1), y: (my - 6).toFixed(1), class: 'angle-label', 'text-anchor': 'middle' }, 'MC'));
+    houses.append(el('text', { x: mx.toFixed(1), y: (my - 6).toFixed(1), class: 'angle-label', 'text-anchor': 'middle', 'data-angle': 'midheaven' }, 'MC'));
     svg.append(houses);
   }
 
@@ -157,7 +187,7 @@ export function drawWheel(chart, options = {}) {
       if (a.type === 'conjunction') continue; // same spot: nothing to draw
       const [x1, y1] = point(122, screen(lonOf[a.from]));
       const [x2, y2] = point(122, screen(lonOf[a.to]));
-      lines.append(el('line', { x1, y1, x2, y2, class: `aspect ${a.type}`, 'data-aspect': a.id }));
+      lines.append(el('line', { x1, y1, x2, y2, class: `aspect ${a.type}`, 'data-aspect': a.id, 'data-from': a.from, 'data-to': a.to }));
     }
     svg.append(lines);
   }
@@ -175,6 +205,8 @@ export function drawWheel(chart, options = {}) {
       g.append(el('line', { x1: dx.toFixed(1), y1: dy.toFixed(1), x2: lx.toFixed(1), y2: ly.toFixed(1), class: 'leader' }));
     }
     g.append(el('circle', { cx: dx.toFixed(1), cy: dy.toFixed(1), r: 2.6, class: 'planet-dot' }));
+    // A larger invisible circle around the symbol, so it's easy to hover or tap.
+    g.append(el('circle', { cx: sx.toFixed(1), cy: sy.toFixed(1), r: 15, class: 'planet-hit' }));
     g.append(el('text', { x: sx.toFixed(1), y: sy.toFixed(1), class: 'planet-symbol', 'text-anchor': 'middle', 'dominant-baseline': 'central' }, PLANETS[body.id].symbol + TEXT));
     planets.append(g);
   }
