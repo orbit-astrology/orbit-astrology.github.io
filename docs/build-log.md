@@ -233,3 +233,26 @@ One entry per work session: what was done, what was decided, what went wrong, an
 - When you switch, the explanations glow for a moment to show they've changed (no glow for people who turn off animations on their device).
 
 **AI vs me:** Me: spotted that the switch looked like it did nothing. Claude: the fix.
+
+---
+
+## 11 October 2026 (night) · Connections: share links
+
+**My idea:** add friends by their username if they're also on ORBIT, so it becomes a friendship.
+
+**What we decided:** usernames need real accounts, which means a server and a database to store everyone's details safely, with logins and privacy settings. That's a big step for later. For now we built a **"share my chart" link**, which gives most of the same experience without accounts.
+
+**How it works**
+- On Connections, under your people: **Share your chart**. Type your name, press *Create my link*, then *Copy* and send it to a friend.
+- When your friend opens the link, ORBIT shows "Juan Pablo shared their chart with you", their birth details and Big Three, and asks: **Add Juan Pablo to my people** or *No thanks*. Nothing is saved until they say yes.
+- People added this way are labelled "Shared with you". They don't need to tick the permission box, because sharing the link *is* the permission.
+- If your friend has no chart yet, they're saved and the page asks them to create their own chart so they can compare.
+- Opening your own link says "This is your own link". Opening the same person twice offers to compare instead of adding a duplicate. A broken or edited link says "This link doesn't work" (every value in the link is checked).
+- The birth details travel in the part of the address after `#`, which browsers never send to the website's server.
+- The sample chart can't be shared, because it's not a real person.
+
+**Also fixed:** a link opened in a fresh tab showed an empty page at first (the page tried to draw before it had finished loading).
+
+**Testing:** three separate browsers (one person sharing, one adding them, one with no chart on a phone), the copy button, own link, duplicate, broken link; earlier Connections and Welcome tests still pass. No errors.
+
+**AI vs me:** Me: the idea of friends connecting with each other, and choosing the share link for now. Claude: suggested the link as a no-accounts version, wrote the code.

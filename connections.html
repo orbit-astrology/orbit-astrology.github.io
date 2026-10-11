@@ -8,12 +8,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Manrope:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/tokens.css?v=202610111917">
-  <link rel="stylesheet" href="css/base.css?v=202610111917">
-  <link rel="stylesheet" href="css/wheel.css?v=202610111917">
-  <link rel="stylesheet" href="css/birth-form.css?v=202610111917">
-  <link rel="stylesheet" href="css/chart.css?v=202610111917">
-  <link rel="stylesheet" href="css/connections.css?v=202610111917">
+  <link rel="stylesheet" href="css/tokens.css?v=202610111920">
+  <link rel="stylesheet" href="css/base.css?v=202610111920">
+  <link rel="stylesheet" href="css/wheel.css?v=202610111920">
+  <link rel="stylesheet" href="css/birth-form.css?v=202610111920">
+  <link rel="stylesheet" href="css/chart.css?v=202610111920">
+  <link rel="stylesheet" href="css/connections.css?v=202610111920">
 </head>
 <body class="page-connections">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -43,6 +43,19 @@
       <p><a class="button" href="index.html#create">Create my chart</a></p>
     </section>
 
+    <!-- A friend's share link was opened: ask before adding them. -->
+    <section id="shared-view" class="wrap conn-intro shared-view" hidden>
+      <p class="eyebrow">Connections</p>
+      <h1 class="title" id="shared-title" tabindex="-1"></h1>
+      <p class="lede" id="shared-details"></p>
+      <p class="hint" id="shared-hint">Their details will be saved only in this browser.</p>
+      <div class="shared-actions" id="shared-actions">
+        <button type="button" class="button" id="shared-add"></button>
+        <a class="link-button" href="connections.html">No thanks</a>
+      </div>
+      <p id="shared-error" class="error-text" role="alert"></p>
+    </section>
+
     <!-- 2. Your people, and the form to add someone. -->
     <section id="people-view" hidden>
       <div class="wrap conn-intro">
@@ -62,6 +75,27 @@
             <button type="button" class="button button-outline" id="add-sample">Try it with a sample person</button>
           </div>
           <p id="people-error" class="error-text" role="alert"></p>
+
+          <div class="share-box" aria-labelledby="share-title">
+            <h2 id="share-title" class="eyebrow">Share your chart</h2>
+            <p class="quiet" id="share-intro">Send a friend a link. When they open it, ORBIT asks if they want to add you to their Connections, so they don’t have to type your details.</p>
+            <div id="share-form">
+              <div class="field">
+                <label for="share-name">Your name, as your friend will see it</label>
+                <input id="share-name" type="text" maxlength="40" autocomplete="given-name">
+              </div>
+              <button type="button" class="button button-outline" id="share-make">Create my link</button>
+              <div id="share-result" class="share-result" hidden>
+                <label for="share-link" class="small-label">Your link</label>
+                <div class="share-row">
+                  <input id="share-link" type="text" readonly>
+                  <button type="button" class="button" id="share-copy">Copy</button>
+                </div>
+                <p class="hint" id="share-status" aria-live="polite">Anyone with this link can see your birth details, so only send it to people you trust.</p>
+              </div>
+              <p id="share-error" class="error-text" role="alert"></p>
+            </div>
+          </div>
         </section>
 
         <section class="add-person" aria-labelledby="add-title">
@@ -199,6 +233,6 @@
     </div>
   </footer>
 
-  <script type="module" src="js/pages/connections.js?v=202610111917"></script>
+  <script type="module" src="js/pages/connections.js?v=202610111920"></script>
 </body>
 </html>

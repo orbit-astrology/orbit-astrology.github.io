@@ -103,3 +103,17 @@
 /* After switching, the changed texts glow for a moment. */
 @keyframes lens-flash { from { background: rgba(205, 187, 146, 0.18); } to { background: transparent; } }
 .flash { animation: lens-flash 1.4s ease-out; }
+
+/* A friend's share link */
+.shared-view { padding-bottom: 48px; }
+.shared-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: 8px; }
+
+/* Share your chart */
+.share-box { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 14px; }
+.share-box p { margin: 0; max-width: 52ch; }
+#share-form { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+#share-form .field, .share-result { width: 100%; max-width: 520px; }
+.share-row { display: flex; gap: 0; }
+.share-row input { min-width: 0; font-size: 14px; color: var(--bone-soft); }
+.share-row .button { flex: none; }
+.share-result .hint { margin-top: 8px; }

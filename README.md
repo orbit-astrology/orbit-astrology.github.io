@@ -36,6 +36,7 @@ birth form → birthplace search → exact UTC moment → planet positions
 | `js/astro/aspects.js` | Finds the angles between planets (conjunction, sextile, square, trine, opposition) |
 | `js/astro/zodiac.js` | Small helpers: which sign a degree is in, and how to write it (12°33′ Leo) |
 | `js/birth-form.js` | The birth form (place search, checks, the "time happened twice" question), shared by Welcome and Connections |
+| `js/share.js` | “Share my chart” links: your birth details in the part of the address after #, which never reaches the server |
 | `js/compare.js` | Compares two people's charts: the angles between their personal planets, explained in plain words |
 | `js/vendor/astronomy.js` | Astronomy Engine by Don Cross (MIT license), which calculates where the planets are |
 | `lab/` | The test page |

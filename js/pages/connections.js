@@ -10,15 +10,16 @@
 // the address means the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610111917';
-import { drawWheel } from '../wheel.js?v=202610111917';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610111917';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610111917';
-import { setUpBirthForm } from '../birth-form.js?v=202610111917';
-import { loadBirth, loadPeople, savePeople } from '../store.js?v=202610111917';
-import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610111917';
-import { PERSONAL, LENSES, LENS_HINT, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610111917';
-import { PLANETS, SIGNS } from '../content/basics.js?v=202610111917';
+import { calculateChart } from '../astro/chart.js?v=202610111920';
+import { drawWheel } from '../wheel.js?v=202610111920';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610111920';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610111920';
+import { setUpBirthForm } from '../birth-form.js?v=202610111920';
+import { makeShareLink, readShareCode } from '../share.js?v=202610111920';
+import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202610111920';
+import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610111920';
+import { PERSONAL, LENSES, LENS_HINT, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610111920';
+import { PLANETS, SIGNS } from '../content/basics.js?v=202610111920';
 
 const $ = (id) => document.getElementById(id);
 const nameOf = (id) => id[0].toUpperCase() + id.slice(1);
@@ -40,18 +41,26 @@ showSampleBanner(me);
 const mine = me ? calculateChart(me) : null;
 const myChart = mine?.status === 'ok' ? mine.chart : null;
 
-if (!myChart) {
-  $('need-chart').hidden = false;
-} else {
-  setUpAddForm();
-  route();
-  window.addEventListener('hashchange', route);
-}
-setUpGlossary();
 
-// Show the list or a comparison, depending on the address.
+// Show the right part of the page, depending on the address:
+//   #add=…    a friend's share link
+//   #with=id  you & that person
+//   nothing   your people (or "create your chart first")
 function route() {
-  const id = new URLSearchParams(location.hash.slice(1)).get('with');
+  const params = new URLSearchParams(location.hash.slice(1));
+  for (const id of ['need-chart', 'shared-view', 'people-view', 'compare-view']) $(id).hidden = true;
+
+  if (params.has('add')) {
+    showShared(params.get('add'));
+    setUpGlossary();
+    return;
+  }
+  if (!myChart) {
+    $('need-chart').hidden = false;
+    return;
+  }
+
+  const id = params.get('with');
   const person = id ? loadPeople().find((p) => p.id === id) : null;
   const chart = person ? calculateChart(person.birth) : null;
   const comparing = chart?.status === 'ok';
@@ -90,6 +99,7 @@ function showPeople() {
     const main = make('div', 'person-main');
     const name = make('h3', 'person-name', person.name);
     if (person.isSample) name.append(make('span', 'person-tag', 'Made-up sample'));
+    if (person.shared) name.append(make('span', 'person-tag', 'Shared with you'));
     main.append(name, make('p', 'person-signs', result.status === 'ok' ? bigThree(result.chart) : 'These birth details can’t be read. Please remove and add them again.'));
 
     const actions = make('div', 'person-actions');
@@ -158,6 +168,110 @@ function setUpAddForm() {
       form.reset();
       location.hash = `with=${person.id}`;
     },
+  });
+}
+
+// =====================================================================
+// Share links
+// =====================================================================
+
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const two = (n) => String(n).padStart(2, '0');
+
+// "4 August 2001 at 14:30 in Valencia, Spain"
+function bornText(birth) {
+  const time = birth.timeKnown ? ` at ${two(birth.hour)}:${two(birth.minute)}` : ' (birth time unknown)';
+  return `${birth.day} ${MONTHS[birth.month - 1]} ${birth.year}${time} in ${birth.place.label}`;
+}
+
+// Two sets of birth details are the same person if date, time and place match.
+const samePerson = (a, b) => a.year === b.year && a.month === b.month && a.day === b.day
+  && Boolean(a.timeKnown) === Boolean(b.timeKnown) && (!a.timeKnown || (a.hour === b.hour && a.minute === b.minute))
+  && a.place.label === b.place.label;
+
+// Someone opened a friend's link: show who it is and ask before adding.
+function showShared(code) {
+  $('shared-view').hidden = false;
+  const shared = readShareCode(code);
+  const result = shared ? calculateChart(shared.birth) : null;
+  const title = $('shared-title');
+  const actions = $('shared-actions');
+  $('shared-error').textContent = '';
+
+  if (result?.status !== 'ok') {
+    title.replaceChildren('This link ', make('em', '', 'doesn’t work'));
+    $('shared-details').textContent = 'It may have been cut off when it was copied. Ask your friend to send it again.';
+    $('shared-hint').hidden = true;
+    actions.hidden = true;
+    return;
+  }
+
+  const { name, birth } = shared;
+  title.replaceChildren(`${name} `, make('em', '', 'shared their chart with you'));
+  $('shared-details').textContent = `Born ${bornText(birth)}. ${bigThree(result.chart)}.`;
+  $('shared-hint').hidden = false;
+  actions.hidden = false;
+
+  if (me && !me.isSample && samePerson(me, birth)) {
+    $('shared-details').append(' This is your own link: send it to a friend so they can add you.');
+    actions.hidden = true;
+    return;
+  }
+
+  const existing = loadPeople().find((p) => samePerson(p.birth, birth));
+  const button = $('shared-add');
+  button.textContent = existing ? `${existing.name} is already in your people: compare` : `Add ${name} to my people`;
+  button.onclick = () => {
+    let id = existing?.id;
+    if (!id) {
+      id = `p${Date.now().toString(36)}`;
+      // They shared it themselves, so permission is already given.
+      if (!savePeople([...loadPeople(), { id, name, birth, shared: true }])) {
+        $('shared-error').textContent = 'Your browser is blocking ORBIT from saving (this can happen in private browsing). Please allow site data and try again.';
+        return;
+      }
+    }
+    // Replace the address, so Back doesn't return to the "add" question.
+    history.replaceState(null, '', `connections.html#with=${id}`);
+    route();
+  };
+  title.focus({ preventScroll: true });
+}
+
+// The "Share your chart" box, under your people.
+function setUpShareBox() {
+  if (!me || me.isSample) {
+    $('share-intro').textContent = 'Once you’ve created your own chart, you can send friends a link that adds you to their Connections.';
+    $('share-form').hidden = true;
+    return;
+  }
+  $('share-name').value = me.name || '';
+  $('share-make').addEventListener('click', () => {
+    const name = $('share-name').value.trim();
+    if (!name) {
+      $('share-error').textContent = 'Please add your name, so your friend knows who the link is from.';
+      $('share-name').setAttribute('aria-invalid', 'true');
+      $('share-name').focus();
+      return;
+    }
+    $('share-error').textContent = '';
+    $('share-name').removeAttribute('aria-invalid');
+    saveBirth({ ...me, name }); // remember your name for next time
+    $('share-link').value = makeShareLink(name, me);
+    $('share-result').hidden = false;
+    $('share-copy').textContent = 'Copy';
+  });
+  $('share-copy').addEventListener('click', async () => {
+    const field = $('share-link');
+    try {
+      await navigator.clipboard.writeText(field.value);
+      $('share-copy').textContent = 'Copied';
+      $('share-status').textContent = 'Copied. Paste it in a message to your friend. Anyone with this link can see your birth details, so only send it to people you trust.';
+    } catch {
+      // Some browsers don't allow copying: select the text so it's easy to copy by hand.
+      field.select();
+      $('share-status').textContent = 'Your browser didn’t let ORBIT copy it. The link is selected: copy it with Ctrl+C (or ⌘C on a Mac).';
+    }
   });
 }
 
@@ -502,3 +616,12 @@ function setUpWheel() {
 }
 
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && current) { hideTip(); unlight(); } });
+
+// =====================================================================
+// Start: everything above is ready, so draw the page.
+// =====================================================================
+
+setUpAddForm();
+setUpShareBox();
+route();
+window.addEventListener('hashchange', route);
