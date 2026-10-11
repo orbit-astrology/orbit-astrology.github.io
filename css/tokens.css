@@ -1,0 +1,36 @@
+/* tokens.css
+   ---------------------------------------------------------------
+   ORBIT's colours and fonts, in one place (see docs/style-guide.md).
+   Every other stylesheet uses these names instead of raw colours,
+   so changing a colour here changes it everywhere.
+   --------------------------------------------------------------- */
+
+:root {
+  /* One dusty colour per page, all at the same depth */
+  --olive:   #4A4F41;  /* Welcome */
+  --rose:    #5A4146;  /* My Universe */
+  --slate:   #3B4552;  /* My Chart */
+  --sage:    #43504D;  /* Explore */
+  --mauve:   #524552;  /* Connections */
+  --grey:    #46484B;  /* Profile */
+
+  /* Shared on every page */
+  --bone:       #E9E3D8;              /* main text */
+  --bone-soft:  #CCC4B8;              /* quiet text */
+  --champagne:  #CDBB92;              /* labels, lines, buttons, your planets */
+  --ink:        #1E1A17;              /* text on champagne buttons */
+  --line:       rgba(233, 227, 216, 0.2); /* thin see-through dividers */
+  --lilac:      #C4B3C6;              /* the sky this week */
+  --error:      #F0B8B0;              /* error messages (readable on every page colour) */
+
+  /* Fonts */
+  --serif: 'Bodoni Moda', Didot, 'Bodoni 72', Georgia, serif;
+  --sans:  'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Layout */
+  --max-width: 1440px;
+  --gutter: max(16px, 5vw);           /* space on the left and right of the page */
+
+  /* Each page sets its own background (see the page-… classes in base.css) */
+  --page: var(--olive);
+}

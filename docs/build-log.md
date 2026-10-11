@@ -63,3 +63,33 @@ One entry per work session: what was done, what was decided, what went wrong, an
 
 **Next**
 - Build the real site, starting with the Welcome page and My Universe.
+
+---
+
+## 11 October 2026 (night) · Stage 2: Welcome and My Universe
+
+**What we built**
+- **Shared styles** from my style guide (`css/tokens.css`, `css/base.css`): page colours, fonts, menu (folds into a "Menu" button on phones), buttons, form fields.
+- **Welcome page** (`index.html`): the birth form with day/month/year, hour/minute, "I don't know my birth time", and a birthplace search that suggests real places (Valencia, Spain vs Valencia, Venezuela). Clear error messages, a question when a time happened twice (clocks going back), and "Explore a sample chart" with a made-up person (Alex).
+- The faint wheel behind the title is **the real sky right now**, with a caption saying where the Sun and Moon are today.
+- **My Universe** (`universe.html`): your real chart wheel (drawn from the calculation, with constellation drawings), your Big Three with a short plain explanation each, **Your sky this week** with real events (planets changing sign, turning retrograde, or making angles to your Sun, Moon and Rising), and links to Explore.
+- **Hover/tap explanations** for astrology words (`js/glossary.js`): every dotted-underlined word explains itself.
+- Placeholder pages for My Chart, Explore, Connections and Profile, so the menu never leads to a broken link.
+- Details are saved **only in this browser** for now (no accounts yet), and the page says so.
+
+**Honesty checks**
+- No birth time → Rising shows "Unknown" with an explanation; if the Moon changed sign that day it shows both ("Virgo or Libra").
+- The sample chart is always labelled as a made-up person.
+
+**Testing**
+- Full flow in a real browser: empty form, missing place, normal birth, unknown time, the "happened twice" time, sample chart, phone size (no sideways scrolling), phone menu, glossary pop-ups. No errors.
+- Calculation checks still pass (79/79).
+- Fixed during testing: a hidden question was showing on the Welcome page; the page was too wide on phones; weekly text read awkwardly ("Sun supports your Sun" → "The Sun supports your Sun").
+
+**AI vs me**
+- Me: the layout, colours, pages and rules this is built from; the beginner-first explanations; the sample chart idea.
+- Claude: wrote the code and first drafts of all explanation texts (`js/content/`), which **I still need to read and edit**.
+
+**To do (me)**
+- Read `js/content/basics.js` and `js/content/glossary.js` and change anything that doesn't sound right.
+- Try the site with my own birth details and compare with Astro.com.

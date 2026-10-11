@@ -1,0 +1,73 @@
+/* welcome.css: the first page (title on the left, form on the right). */
+
+.welcome-top {
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  padding-block: 28px;
+}
+
+.welcome {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: 56px 0; padding-block: 24px 40px;
+  min-height: calc(100vh - 200px);
+  overflow-x: clip; /* the background wheel may hang off the edge, but never makes the page scroll sideways */
+}
+
+/* Left side */
+.welcome-intro { flex: 1 1 520px; min-width: 0; position: relative; padding-right: 64px; }
+.welcome-intro-text { position: relative; }
+
+.welcome-title {
+  font-size: clamp(4.4rem, 11vw, 9rem); line-height: 0.9;
+  letter-spacing: 0.2em; color: var(--champagne); margin-bottom: 28px;
+}
+.welcome-tagline { font: italic 400 clamp(1.5rem, 2.6vw, 2.1rem)/1.2 var(--serif); margin: 0 0 16px; }
+.sky-caption { font-size: 13px; margin: 28px 0 0; }
+
+/* The real sky right now, drawn faintly behind the title. */
+.sky-now { position: absolute; width: min(560px, 90vw); right: -120px; top: 50%; transform: translateY(-50%); pointer-events: none; }
+
+/* Right side */
+.welcome-form {
+  flex: 1 1 400px; max-width: 520px;
+  padding-left: 64px; border-left: 1px solid var(--line);
+}
+.welcome-form form { display: flex; flex-direction: column; gap: 26px; }
+.welcome-form fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.welcome-form legend { margin-bottom: 6px; }
+
+.small-label { display: block; font-size: 12px; color: var(--bone-soft); margin-bottom: 4px; letter-spacing: 0.04em; }
+
+.date-row { display: grid; grid-template-columns: 1fr 1.6fr 1.2fr; gap: 10px; }
+.time-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: end; margin-bottom: 12px; }
+.time-colon { font-size: 22px; padding-bottom: 10px; color: var(--bone-soft); }
+
+/* Hide the little up/down arrows on number boxes. */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+input[type="number"] { -moz-appearance: textfield; }
+
+/* Place search list */
+.combobox { position: relative; }
+#place-list {
+  list-style: none; margin: 0; padding: 0;
+  border: 1px solid var(--champagne); border-top: 0;
+  background: var(--page); max-height: 260px; overflow-y: auto;
+}
+#place-list li { padding: 11px 14px; cursor: pointer; font-size: 15px; border-top: 1px solid var(--line); }
+#place-list li:first-child { border-top: 0; }
+#place-list li[aria-selected="true"], #place-list li:hover { background: rgba(233, 227, 216, 0.1); }
+#place-list .place-detail { color: var(--bone-soft); font-size: 13px; }
+
+.choice-list { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.choice-list label { display: flex; gap: 10px; align-items: baseline; font-size: 15px; cursor: pointer; }
+.choice-list input { accent-color: var(--champagne); }
+
+.form-footnote { font-size: 13px; margin: -12px 0 0; }
+.sample-link { background: none; border: 0; padding: 0; color: var(--bone); cursor: pointer; text-align: left; font-family: var(--sans); }
+
+/* Phones: stack everything, form straight after the title. */
+@media (max-width: 900px) {
+  .welcome-intro { padding-right: 0; }
+  .welcome-form { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); padding-top: 40px; max-width: none; }
+  .sky-now { right: -30%; opacity: 0.7; }
+}

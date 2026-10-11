@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Explore · ORBIT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/coming-soon.css">
+</head>
+<body class="page-explore">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html">ORBIT</a>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav id="site-nav" class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="universe.html">My Universe</a></li>
+          <li><a href="chart.html">My Chart</a></li>
+          <li><a href="explore.html" aria-current="page">Explore</a></li>
+          <li><a href="connections.html">Connections</a></li>
+          <li><a href="profile.html">Profile</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="main" class="coming-soon wrap">
+    <p class="eyebrow">Explore</p>
+    <h1 class="title">Your chart, <em>one question at a time</em></h1>
+    <p class="lede">Coming soon: topics like love, emotions and career, each bringing together the parts of your chart that answer them, plus a library that explains the basics of astrology.</p>
+    <a class="text-link" href="universe.html">← Back to My Universe</a>
+  </main>
+  <script type="module">
+    import { setUpMenu, showSampleBanner } from './js/layout.js';
+    import { loadBirth } from './js/store.js';
+    setUpMenu();
+    showSampleBanner(loadBirth());
+  </script>
+</body>
+</html>

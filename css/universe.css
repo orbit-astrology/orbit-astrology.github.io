@@ -1,0 +1,62 @@
+/* universe.css: My Universe, your personal home page. */
+
+/* Top: title on the left, your real chart on the right */
+.hero {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 40px;
+  padding-top: 56px; position: relative;
+}
+.hero-text { flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 22px; align-items: flex-start; }
+.hero-text .title { margin-top: -6px; }
+.hero-wheel { flex: 1 1 420px; max-width: 600px; margin-right: -4vw; }
+
+/* Your Big Three: three columns stepping down like planets on a path */
+.big-three { padding-block: 56px 96px; }
+.big-three-intro {
+  font: 400 17px/1.6 var(--sans); color: var(--bone-soft);
+  padding-bottom: 20px; border-bottom: 1px solid var(--champagne); margin: 0;
+}
+.big-three-grid { display: flex; flex-wrap: wrap; gap: 48px; }
+.placement { flex: 1 1 260px; padding-top: 36px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+.placement:nth-child(2) { padding-top: 96px; }
+.placement:nth-child(3) { padding-top: 156px; }
+.placement .eyebrow { letter-spacing: 0.3em; font-size: 12px; }
+.placement-sign { font: 400 clamp(3rem, 5vw, 4.4rem)/1 var(--serif); margin: 0; }
+.placement-sign.unknown { font-size: clamp(2rem, 3.4vw, 2.8rem); color: var(--bone-soft); }
+.placement p { margin: 0; max-width: 32ch; }
+.placement .note { font-size: 14px; color: var(--bone-soft); }
+
+/* Your sky this week */
+.week { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: rgba(0, 0, 0, 0.08); }
+.week-inner { display: flex; flex-wrap: wrap; gap: 40px 96px; padding-block: 88px; }
+.week-heading { flex: 1 1 300px; display: flex; flex-direction: column; gap: 12px; }
+.week-heading p { margin: 0; }
+.week-eyebrow { color: var(--lilac); }
+.week-note { font-size: 15px; max-width: 34ch; }
+.week-list { flex: 2 1 520px; min-width: 0; list-style: none; margin: 0; padding: 0; }
+.week-list li { display: flex; flex-wrap: wrap; gap: 6px 32px; padding: 22px 0; border-top: 1px solid var(--line); }
+.week-list li:first-child { border-top-color: var(--lilac); }
+.week-day { width: 110px; color: var(--lilac); margin: 0; }
+.week-text { flex: 1 1 300px; margin: 0; }
+.week-text strong { font-weight: 600; display: block; }
+.week-text span { color: var(--bone-soft); }
+
+/* Explore yourself */
+.explore-yourself { padding-block: 96px 24px; }
+.explore-yourself .section-title { margin-bottom: 40px; }
+.explore-grid { display: flex; flex-wrap: wrap; gap: 32px 48px; }
+.explore-card {
+  flex: 1 1 260px; display: flex; flex-direction: column; gap: 6px;
+  padding-top: 20px; border-top: 1px solid var(--champagne); text-decoration: none;
+}
+.explore-name { font: 400 30px/1.15 var(--serif); }
+.explore-card:hover .explore-name { color: var(--champagne); }
+
+/* Saved in this browser */
+.save { padding-block: 72px 0; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.save p { margin: 0; max-width: 52ch; }
+.save-title { font-size: clamp(1.8rem, 3vw, 2.4rem); }
+
+@media (max-width: 760px) {
+  .hero-wheel { margin-right: 0; max-width: 92vw; margin-inline: auto; }
+  .placement:nth-child(n) { padding-top: 32px; }
+}

@@ -1,0 +1,27 @@
+/* wheel.css: how the chart wheel looks (drawn by js/wheel.js). */
+
+.wheel { width: 100%; height: auto; overflow: visible; }
+
+.wheel .ring          { fill: none; stroke: var(--bone); stroke-width: 1; }
+.wheel .ring.soft     { stroke-opacity: 0.6; }
+.wheel .ring.faint    { stroke-opacity: 0.3; }
+.wheel .divider       { stroke: var(--bone); stroke-opacity: 0.45; }
+.wheel .constellation { fill: none; stroke: var(--bone); stroke-opacity: 0.5; stroke-width: 0.8; }
+.wheel .star          { fill: var(--bone); fill-opacity: 0.9; }
+.wheel .sign-name     { fill: var(--bone-soft); font: 11px var(--serif); letter-spacing: 2.6px; }
+
+.wheel .cusp          { stroke: var(--bone); stroke-opacity: 0.22; }
+.wheel .cusp.angle    { stroke-opacity: 0.8; }
+.wheel .house-number  { fill: var(--bone-soft); fill-opacity: 0.7; font: 9px var(--sans); }
+.wheel .angle-label   { fill: var(--champagne); font: 600 10px var(--sans); letter-spacing: 1.5px; }
+
+.wheel .aspect        { stroke-width: 0.9; stroke-opacity: 0.55; }
+.wheel .aspect.square, .wheel .aspect.opposition { stroke: var(--bone); }
+.wheel .aspect.trine,  .wheel .aspect.sextile    { stroke: var(--champagne); stroke-dasharray: 4 3; }
+
+.wheel .planet-dot    { fill: var(--champagne); }
+.wheel .planet-symbol { fill: var(--champagne); font: 18px/1 'Segoe UI Symbol', 'Apple Symbols', 'Noto Sans Symbols', var(--serif); }
+.wheel .leader        { stroke: var(--champagne); stroke-opacity: 0.5; stroke-width: 0.6; }
+
+/* A quieter version, used as a background drawing (Welcome page). */
+.wheel-faint .wheel { opacity: 0.3; }

@@ -3,22 +3,106 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ORBIT</title>
+  <title>ORBIT · An exploration of your personal universe</title>
+  <meta name="description" content="Enter your birth details and explore your real birth chart, explained in plain words.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400&family=Inter:wght@400&display=swap" rel="stylesheet">
-  <style>
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #221c27; color: #f4efe6; font: 16px/1.6 'Inter', system-ui, sans-serif; }
-    main { padding: 32px 16px; text-align: center; }
-    h1 { font: 400 clamp(3rem, 12vw, 7rem)/1 'Bodoni Moda', Didot, Georgia, serif; letter-spacing: 0.3em; margin: 0 0 0.3em 0.3em; }
-    a { color: inherit; }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/wheel.css">
+  <link rel="stylesheet" href="css/welcome.css">
 </head>
-<body>
-  <main>
-    <h1>ORBIT</h1>
-    <p>An interactive personal astrology atlas. In development.</p>
-    <p><a href="lab/">Calculation lab →</a></p>
+<body class="page-welcome">
+  <a class="skip-link" href="#create">Skip to the form</a>
+
+  <header class="welcome-top wrap">
+    <p class="eyebrow">A personal astrology atlas</p>
+    <a id="continue-link" class="text-link" href="universe.html" hidden>Continue to your universe →</a>
+  </header>
+
+  <main class="welcome wrap">
+
+    <!-- Left: who we are -->
+    <section class="welcome-intro" aria-labelledby="site-title">
+      <div class="sky-now wheel-faint" id="sky-now" aria-hidden="true"></div>
+      <div class="welcome-intro-text">
+        <h1 id="site-title" class="welcome-title">ORBIT</h1>
+        <p class="welcome-tagline">An exploration of your personal universe.</p>
+        <p class="lede">Discover the sky you were born under, understand your
+          <button type="button" class="term" data-term="birth-chart">birth chart</button>,
+          and explore the connections between planets, people and time. Every part is explained in plain words.</p>
+        <p class="sky-caption quiet" id="sky-caption"></p>
+      </div>
+    </section>
+
+    <!-- Right: the birth form -->
+    <section class="welcome-form" aria-labelledby="create-title">
+      <form id="create" novalidate>
+        <h2 id="create-title" class="eyebrow">Create your chart</h2>
+
+        <fieldset class="field">
+          <legend>Date of birth</legend>
+          <div class="date-row">
+            <div><label for="birth-day" class="small-label">Day</label><input id="birth-day" type="number" inputmode="numeric" min="1" max="31" placeholder="DD" autocomplete="bday-day"></div>
+            <div class="month">
+              <label for="birth-month" class="small-label">Month</label>
+              <select id="birth-month" autocomplete="bday-month">
+                <option value="">Month</option>
+                <option value="1">January</option><option value="2">February</option><option value="3">March</option>
+                <option value="4">April</option><option value="5">May</option><option value="6">June</option>
+                <option value="7">July</option><option value="8">August</option><option value="9">September</option>
+                <option value="10">October</option><option value="11">November</option><option value="12">December</option>
+              </select>
+            </div>
+            <div><label for="birth-year" class="small-label">Year</label><input id="birth-year" type="number" inputmode="numeric" min="1900" max="2100" placeholder="YYYY" autocomplete="bday-year"></div>
+          </div>
+        </fieldset>
+
+        <fieldset class="field">
+          <legend>Time of birth <span class="quiet">(local time where you were born)</span></legend>
+          <div class="time-row">
+            <div><label for="birth-hour" class="small-label">Hour (0–23)</label><input id="birth-hour" type="number" inputmode="numeric" min="0" max="23" placeholder="HH"></div>
+            <span aria-hidden="true" class="time-colon">:</span>
+            <div><label for="birth-minute" class="small-label">Minute</label><input id="birth-minute" type="number" inputmode="numeric" min="0" max="59" placeholder="MM"></div>
+          </div>
+          <label class="checkbox"><input id="time-unknown" type="checkbox"> I don’t know my birth time</label>
+          <p class="hint" id="time-hint" hidden>No problem. Your Sun and planets will still be correct, but your Rising sign and houses need an exact time, so ORBIT will leave them out rather than guess.
+            <button type="button" class="term" data-term="unknown-time">Why?</button></p>
+        </fieldset>
+
+        <div class="field place-field">
+          <label for="birth-place">Place of birth</label>
+          <div class="combobox">
+            <input id="birth-place" type="text" autocomplete="off" placeholder="Start typing a city…"
+                   role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="place-list" aria-describedby="place-status">
+            <ul id="place-list" role="listbox" aria-label="Matching places" hidden></ul>
+          </div>
+          <p id="place-status" class="hint" aria-live="polite">Type at least two letters, then choose your city from the list.</p>
+        </div>
+
+        <fieldset class="field" id="ambiguous" hidden>
+          <legend>That time happened twice that night</legend>
+          <p class="hint">The clocks went back an hour that night, so this time came round twice. Which one were you born in?</p>
+          <div id="ambiguous-options" class="choice-list"></div>
+        </fieldset>
+
+        <p id="form-error" class="error-text" role="alert"></p>
+
+        <button type="submit" class="button" id="submit">Generate my chart</button>
+        <p class="form-footnote quiet">Your details are saved only in this browser. Accounts are coming soon.</p>
+        <button type="button" class="text-link sample-link" id="sample">Or explore a sample chart →</button>
+      </form>
+    </section>
   </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>ORBIT · a student project for Webs &amp; Apps Design, 2026</p>
+      <p><a href="lab/">Calculation lab</a></p>
+    </div>
+  </footer>
+
+  <script type="module" src="js/pages/welcome.js"></script>
 </body>
 </html>
