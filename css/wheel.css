@@ -8,7 +8,7 @@
 .wheel .divider       { stroke: var(--bone); stroke-opacity: 0.45; }
 .wheel .constellation { fill: none; stroke: var(--bone); stroke-opacity: 0.5; stroke-width: 0.8; }
 .wheel .star          { fill: var(--bone); fill-opacity: 0.9; }
-.wheel .sign-name     { fill: var(--bone-soft); font: 11px var(--serif); letter-spacing: 2.6px; }
+.wheel .sign-name     { fill: var(--bone-soft); font: 600 11px var(--serif); letter-spacing: 2.6px; }
 
 .wheel .cusp          { stroke: var(--bone); stroke-opacity: 0.22; }
 .wheel .cusp.angle    { stroke-opacity: 0.8; }

@@ -17,6 +17,7 @@ body {
   background: var(--page);
   color: var(--bone);
   font: 17px/1.65 var(--sans);
+  font-weight: 450; /* a touch heavier than normal, easier to read on dark colours */
   -webkit-font-smoothing: antialiased;
 }
 
@@ -62,15 +63,17 @@ a:hover { color: var(--champagne); }
 
 /* --- 2. Text styles --------------------------------------------- */
 
-h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.05; margin: 0; }
+/* Bodoni has very thin strokes; weight 500 keeps the elegance but makes titles easier to read. */
+h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.05; margin: 0; }
 h1 em, h2 em, h3 em { font-style: italic; }
 
 /* Small spaced capitals, like "S U N · W H O  Y O U  A R E" */
 .eyebrow {
   margin: 0;
   font-family: var(--serif);
-  font-size: 13px;
-  letter-spacing: 0.4em;
+  font-weight: 650; /* small text needs extra weight to stay readable */
+  font-size: 14px;
+  letter-spacing: 0.34em;
   text-transform: uppercase;
   color: var(--champagne);
 }
@@ -91,7 +94,7 @@ h1 em, h2 em, h3 em { font-style: italic; }
 }
 
 .brand {
-  font-family: var(--serif); font-size: 24px; letter-spacing: 0.4em;
+  font-family: var(--serif); font-weight: 600; font-size: 24px; letter-spacing: 0.4em;
   color: var(--champagne); text-decoration: none;
 }
 
@@ -100,7 +103,7 @@ h1 em, h2 em, h3 em { font-style: italic; }
 .site-nav ul {
   display: flex; flex-wrap: wrap; gap: 10px 34px;
   margin: 0; padding: 0; list-style: none;
-  font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;
+  font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
 }
 .site-nav a { text-decoration: none; padding-block: 6px; display: inline-block; }
 /* The page you're on is underlined in champagne. */

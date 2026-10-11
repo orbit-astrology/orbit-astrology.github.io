@@ -90,6 +90,11 @@ One entry per work session: what was done, what was decided, what went wrong, an
 - Me: the layout, colours, pages and rules this is built from; the beginner-first explanations; the sample chart idea.
 - Claude: wrote the code and first drafts of all explanation texts (`js/content/`), which **I still need to read and edit**.
 
+**My feedback after trying it (and the fixes)**
+- "I love it!" but some lettering was hard to read → heavier font weights for titles, labels, menu and body text (Bodoni's thin strokes disappeared at small sizes).
+- On the Welcome page the text overlapped the wheel → the wheel now fades out towards the left, so the words sit on a clean background.
+- In "Explore yourself" it wasn't clear you could click → added an underlined "Explore →" link and a hover effect to each topic; "Change birth details" is now a button.
+
 **To do (me)**
 - Read `js/content/basics.js` and `js/content/glossary.js` and change anything that doesn't sound right.
 - Try the site with my own birth details and compare with Astro.com.

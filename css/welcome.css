@@ -20,11 +20,18 @@
   font-size: clamp(4.4rem, 11vw, 9rem); line-height: 0.9;
   letter-spacing: 0.2em; color: var(--champagne); margin-bottom: 28px;
 }
-.welcome-tagline { font: italic 400 clamp(1.5rem, 2.6vw, 2.1rem)/1.2 var(--serif); margin: 0 0 16px; }
+.welcome-tagline { font: italic 500 clamp(1.5rem, 2.6vw, 2.1rem)/1.2 var(--serif); margin: 0 0 16px; }
 .sky-caption { font-size: 13px; margin: 28px 0 0; }
 
-/* The real sky right now, drawn faintly behind the title. */
-.sky-now { position: absolute; width: min(560px, 90vw); right: -120px; top: 50%; transform: translateY(-50%); pointer-events: none; }
+/* The real sky right now, drawn faintly on the right of the title.
+   It fades out towards the left (a "mask"), so the words always sit on a
+   clean background and stay easy to read. */
+.sky-now {
+  position: absolute; width: min(580px, 75%); right: 0; top: 50%;
+  transform: translateY(-50%); pointer-events: none;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 30%, black 80%);
+          mask-image: linear-gradient(to right, transparent 0%, transparent 30%, black 80%);
+}
 
 /* Right side */
 .welcome-form {
@@ -69,5 +76,5 @@ input[type="number"] { -moz-appearance: textfield; }
 @media (max-width: 900px) {
   .welcome-intro { padding-right: 0; }
   .welcome-form { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); padding-top: 40px; max-width: none; }
-  .sky-now { right: -30%; opacity: 0.7; }
+  .sky-now { right: -25%; width: 80%; opacity: 0.8; }
 }

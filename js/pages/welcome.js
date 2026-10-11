@@ -27,7 +27,7 @@ const sky = skyAt(new Date());
 $('sky-now').append(drawWheel(sky, { label: 'The sky right now' }));
 const sunNow = sky.bodies.find((b) => b.id === 'sun').sign;
 const moonNow = sky.bodies.find((b) => b.id === 'moon').sign;
-$('sky-caption').textContent = `The wheel behind this text is the real sky right now: the Sun is in ${sunNow} and the Moon is in ${moonNow}.`;
+$('sky-caption').textContent = `The faint wheel is the real sky right now: the Sun is in ${sunNow} and the Moon is in ${moonNow}.`;
 
 // --- Coming back? Offer a shortcut ----------------------------------
 
