@@ -10,15 +10,15 @@
 // the address means the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610111915';
-import { drawWheel } from '../wheel.js?v=202610111915';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610111915';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610111915';
-import { setUpBirthForm } from '../birth-form.js?v=202610111915';
-import { loadBirth, loadPeople, savePeople } from '../store.js?v=202610111915';
-import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610111915';
-import { PERSONAL, LENSES, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610111915';
-import { PLANETS, SIGNS } from '../content/basics.js?v=202610111915';
+import { calculateChart } from '../astro/chart.js?v=202610111917';
+import { drawWheel } from '../wheel.js?v=202610111917';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610111917';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610111917';
+import { setUpBirthForm } from '../birth-form.js?v=202610111917';
+import { loadBirth, loadPeople, savePeople } from '../store.js?v=202610111917';
+import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610111917';
+import { PERSONAL, LENSES, LENS_HINT, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610111917';
+import { PLANETS, SIGNS } from '../content/basics.js?v=202610111917';
 
 const $ = (id) => document.getElementById(id);
 const nameOf = (id) => id[0].toUpperCase() + id.slice(1);
@@ -236,16 +236,34 @@ for (const button of document.querySelectorAll('[data-lens]')) {
   button.addEventListener('click', () => {
     lens = button.dataset.lens;
     try { localStorage.setItem('orbit.lens', lens); } catch { /* not saved, that's fine */ }
-    showLens();
+    showLens(true);
   });
 }
 
-function showLens() {
+// Show the chosen lens. `changed` is true when you just clicked the
+// switch: then the explanations briefly light up, so you can see that
+// they changed (they're further down the page).
+function showLens(changed = false) {
   for (const button of document.querySelectorAll('[data-lens]')) {
     button.setAttribute('aria-pressed', String(button.dataset.lens === lens));
   }
-  $('lens-note').textContent = LENSES[lens];
+  const note = $('lens-note');
+  const jump = make('a', 'text-link', 'See the explanations ↓');
+  jump.href = '#links-title';
+  // Scroll instead of changing the address (the address decides which person is shown).
+  jump.addEventListener('click', (e) => {
+    e.preventDefault();
+    $('links-title').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  });
+  note.replaceChildren(make('span', 'quiet', `${LENSES[lens]} ${LENS_HINT} `), jump);
   renderLinks();
+  if (changed) {
+    for (const node of [note, ...document.querySelectorAll('.link-card')]) {
+      node.classList.remove('flash');
+      void node.offsetWidth; // restart the highlight if you click quickly
+      node.classList.add('flash');
+    }
+  }
 }
 
 // --- The explanations ---------------------------------------------------

@@ -218,3 +218,18 @@ One entry per work session: what was done, what was decided, what went wrong, an
 **Testing:** hovering lines, signs and planets on a laptop; tapping on a phone (375 px); keyboard (Tab reaches the lines, Enter jumps to the explanation). No errors; 79/79 calculation checks.
 
 **AI vs me:** Me: the idea of reading the wheel by hovering. Claude: the code and the box texts.
+
+---
+
+## 11 October 2026 (night) · Connections: making the Friendship / Romance switch visible
+
+**My feedback:** "when I click either Friendship or Romance nothing changes, no?"
+
+**What was happening:** it did work, but it only changes the wording of the explanations, which are further down the page, so from the top nothing seemed to happen.
+
+**What changed**
+- Under the switch: "The planets stay the same; the explanations change." plus a link, **See the explanations ↓**.
+- A second Friendship / Romance switch right above the explanations ("Read these as"), so you can compare the two readings while looking at them. Both switches always match.
+- When you switch, the explanations glow for a moment to show they've changed (no glow for people who turn off animations on their device).
+
+**AI vs me:** Me: spotted that the switch looked like it did nothing. Claude: the fix.

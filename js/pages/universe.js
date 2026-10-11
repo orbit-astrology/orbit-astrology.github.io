@@ -8,13 +8,13 @@
 //   - this week's sky, matched against your chart
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610111915';
-import { weeklyEvents } from '../astro/sky.js?v=202610111915';
-import { drawWheel } from '../wheel.js?v=202610111915';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610111915';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610111915';
-import { loadBirth } from '../store.js?v=202610111915';
-import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202610111915';
+import { calculateChart } from '../astro/chart.js?v=202610111917';
+import { weeklyEvents } from '../astro/sky.js?v=202610111917';
+import { drawWheel } from '../wheel.js?v=202610111917';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610111917';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610111917';
+import { loadBirth } from '../store.js?v=202610111917';
+import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202610111917';
 
 const $ = (id) => document.getElementById(id);
 

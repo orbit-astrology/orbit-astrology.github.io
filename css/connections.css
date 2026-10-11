@@ -38,7 +38,8 @@
 /* --- You & Sam --- */
 .compare-intro { flex-direction: row; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 40px; }
 .compare-intro-text { flex: 1 1 560px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
-.lens-note { font-size: 14px; margin: 8px 0 0; max-width: 34ch; }
+.lens-note { font-size: 14px; margin: 8px 0 0; max-width: 40ch; }
+.lens-note .text-link { font-size: 14px; white-space: nowrap; }
 .lilac { color: var(--lilac); }
 
 /* Their planets (inner ring) are lilac; yours stay gold. */
@@ -95,3 +96,10 @@
 .wheel-hint { margin: 0 0 12px; text-align: center; font-size: 14px; font-weight: 600; color: var(--champagne); }
 .wheel .aspect-hit { stroke: transparent; stroke-width: 12; cursor: pointer; outline: none; }
 .wheel .aspect-hit:focus-visible { stroke: rgba(205, 187, 146, 0.35); }
+
+/* The second Friendship / Romance switch, right above the explanations */
+.lens-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; }
+
+/* After switching, the changed texts glow for a moment. */
+@keyframes lens-flash { from { background: rgba(205, 187, 146, 0.18); } to { background: transparent; } }
+.flash { animation: lens-flash 1.4s ease-out; }
