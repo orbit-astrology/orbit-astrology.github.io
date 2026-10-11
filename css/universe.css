@@ -2,38 +2,38 @@
 
 /* Top: title on the left, your real chart on the right */
 .hero {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 40px;
-  padding-top: 56px; position: relative;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 32px;
+  padding-top: 32px; position: relative; min-height: min(640px, calc(100vh - 80px));
 }
-.hero-text { flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 22px; align-items: flex-start; }
+.hero-text { flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
 .hero-text .title { margin-top: -6px; }
-.hero-wheel { flex: 1 1 420px; max-width: 600px; margin-right: -4vw; }
+.hero-wheel { flex: 0 1 auto; width: min(520px, calc(100vh - 140px), 100%); margin-left: auto; }
 
 /* Your Big Three: three columns stepping down like planets on a path */
-.big-three { padding-block: 56px 96px; }
+.big-three { padding-block: 40px 64px; }
 .big-three-intro {
-  font: 400 17px/1.6 var(--sans); color: var(--bone-soft);
+  font: 450 16px/1.6 var(--sans); color: var(--bone-soft);
   padding-bottom: 20px; border-bottom: 1px solid var(--champagne); margin: 0;
 }
 .big-three-grid { display: flex; flex-wrap: wrap; gap: 48px; }
-.placement { flex: 1 1 260px; padding-top: 36px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
-.placement:nth-child(2) { padding-top: 96px; }
-.placement:nth-child(3) { padding-top: 156px; }
-.placement .eyebrow { letter-spacing: 0.28em; font-size: 13px; }
-.placement-sign { font: 500 clamp(3rem, 5vw, 4.4rem)/1 var(--serif); margin: 0; }
-.placement-sign.unknown { font-size: clamp(2rem, 3.4vw, 2.8rem); color: var(--bone-soft); }
+.placement { flex: 1 1 240px; padding-top: 28px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+.placement:nth-child(2) { padding-top: 52px; }
+.placement:nth-child(3) { padding-top: 76px; }
+.placement .eyebrow { letter-spacing: 0.26em; font-size: 12px; }
+.placement-sign { font: 500 clamp(2.2rem, 3.2vw, 2.9rem)/1 var(--serif); margin: 0; }
+.placement-sign.unknown { font-size: clamp(1.8rem, 2.6vw, 2.3rem); color: var(--bone-soft); }
 .placement p { margin: 0; max-width: 32ch; }
 .placement .note { font-size: 14px; color: var(--bone-soft); }
 
 /* Your sky this week */
 .week { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: rgba(0, 0, 0, 0.08); }
-.week-inner { display: flex; flex-wrap: wrap; gap: 40px 96px; padding-block: 88px; }
+.week-inner { display: flex; flex-wrap: wrap; gap: 32px 80px; padding-block: 56px; }
 .week-heading { flex: 1 1 300px; display: flex; flex-direction: column; gap: 12px; }
 .week-heading p { margin: 0; }
 .week-eyebrow { color: var(--lilac); }
 .week-note { font-size: 15px; max-width: 34ch; }
 .week-list { flex: 2 1 520px; min-width: 0; list-style: none; margin: 0; padding: 0; }
-.week-list li { display: flex; flex-wrap: wrap; gap: 6px 32px; padding: 22px 0; border-top: 1px solid var(--line); }
+.week-list li { display: flex; flex-wrap: wrap; gap: 6px 32px; padding: 16px 0; border-top: 1px solid var(--line); }
 .week-list li:first-child { border-top-color: var(--lilac); }
 .week-day { width: 110px; color: var(--lilac); margin: 0; }
 .week-text { flex: 1 1 300px; margin: 0; }
@@ -41,8 +41,8 @@
 .week-text span { color: var(--bone-soft); }
 
 /* Explore yourself */
-.explore-yourself { padding-block: 96px 24px; }
-.explore-yourself .section-title { margin-bottom: 40px; }
+.explore-yourself { padding-block: 56px 16px; }
+.explore-yourself .section-title { margin-bottom: 28px; }
 .explore-grid { display: flex; flex-wrap: wrap; gap: 32px 48px; }
 /* Each topic is one big link. The "Explore →" line and the hover
    effect make it obvious that you can click it. */
@@ -51,7 +51,7 @@
   padding: 20px 0 8px; border-top: 1px solid var(--champagne); text-decoration: none;
   transition: border-color 0.2s;
 }
-.explore-name { font: 500 30px/1.15 var(--serif); }
+.explore-name { font: 500 24px/1.15 var(--serif); }
 .explore-go {
   margin-top: 10px; font-size: 14px; font-weight: 650; letter-spacing: 0.08em;
   color: var(--champagne); text-decoration: underline; text-underline-offset: 5px;
@@ -64,9 +64,9 @@
 .week-day { font-weight: 600; }
 
 /* Saved in this browser */
-.save { padding-block: 72px 0; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.save { padding-block: 48px 0; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
 .save p { margin: 0; max-width: 52ch; }
-.save-title { font-size: clamp(1.8rem, 3vw, 2.4rem); }
+.save-title { font-size: clamp(1.4rem, 2.2vw, 1.8rem); }
 
 @media (max-width: 760px) {
   .hero-wheel { margin-right: 0; max-width: 92vw; margin-inline: auto; }

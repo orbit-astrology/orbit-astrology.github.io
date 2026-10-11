@@ -10,7 +10,7 @@
 // recalculated from them every time, so it's always correct.
 // ---------------------------------------------------------------
 
-import { SETTINGS } from './astro/settings.js?v=202610111804';
+import { SETTINGS } from './astro/settings.js?v=202610111855';
 
 const KEY = 'orbit.birth';
 

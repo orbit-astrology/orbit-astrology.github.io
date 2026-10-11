@@ -2,13 +2,13 @@
 
 .welcome-top {
   display: flex; justify-content: space-between; align-items: center; gap: 16px;
-  padding-block: 28px;
+  padding-block: 20px;
 }
 
 .welcome {
   display: flex; flex-wrap: wrap; align-items: center;
-  gap: 56px 0; padding-block: 24px 40px;
-  min-height: calc(100vh - 200px);
+  gap: 40px 0; padding-block: 8px 24px;
+  min-height: calc(100vh - 150px);
   overflow-x: clip; /* the background wheel may hang off the edge, but never makes the page scroll sideways */
 }
 
@@ -17,17 +17,17 @@
 .welcome-intro-text { position: relative; }
 
 .welcome-title {
-  font-size: clamp(4.4rem, 11vw, 9rem); line-height: 0.9;
-  letter-spacing: 0.2em; color: var(--champagne); margin-bottom: 28px;
+  font-size: clamp(3rem, 6.5vw, 5.4rem); line-height: 0.9;
+  letter-spacing: 0.2em; color: var(--champagne); margin-bottom: 20px;
 }
-.welcome-tagline { font: italic 500 clamp(1.5rem, 2.6vw, 2.1rem)/1.2 var(--serif); margin: 0 0 16px; }
+.welcome-tagline { font: italic 500 clamp(1.2rem, 1.9vw, 1.6rem)/1.25 var(--serif); margin: 0 0 14px; }
 .sky-caption { font-size: 13px; margin: 28px 0 0; }
 
 /* The real sky right now, drawn faintly on the right of the title.
    It fades out towards the left (a "mask"), so the words always sit on a
    clean background and stay easy to read. */
 .sky-now {
-  position: absolute; width: min(580px, 75%); right: 0; top: 50%;
+  position: absolute; width: min(460px, 70%, 70vh); right: 0; top: 50%;
   transform: translateY(-50%); pointer-events: none;
   -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 30%, black 80%);
           mask-image: linear-gradient(to right, transparent 0%, transparent 30%, black 80%);
@@ -38,7 +38,7 @@
   flex: 1 1 400px; max-width: 520px;
   padding-left: 64px; border-left: 1px solid var(--line);
 }
-.welcome-form form { display: flex; flex-direction: column; gap: 26px; }
+.welcome-form form { display: flex; flex-direction: column; gap: 18px; }
 .welcome-form fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 .welcome-form legend { margin-bottom: 6px; }
 
@@ -52,6 +52,7 @@
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 input[type="number"] { -moz-appearance: textfield; }
+.welcome-form input, .welcome-form select { min-height: 44px; padding: 10px 12px; }
 
 /* Place search list */
 .combobox { position: relative; }

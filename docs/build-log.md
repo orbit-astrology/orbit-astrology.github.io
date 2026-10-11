@@ -156,3 +156,18 @@ One entry per work session: what was done, what was decided, what went wrong, an
 **AI vs me**
 - Me: the five topics and their questions (from the plan, inspired by The Pattern), the aspect playground idea, small coloured dots instead of bands.
 - Claude: wrote the code and the draft topic texts for me to review.
+
+---
+
+## 11 October 2026 (night) · Proportions
+
+**My feedback:** "everything is too big": titles broke onto two lines and sections didn't fit on the screen. I wanted the same proportions everywhere, titles on one line where possible, and each part fully visible on the screen.
+
+**What changed**
+- Scaled the whole type system down by the same proportion: page titles about half the size (one line), section titles, sign names, topic names and readings all smaller; body text 17 → 16 px.
+- Less empty space between sections (roughly a third less padding).
+- The chart wheels are now sized by the **screen height**, so the whole wheel fits on screen (My Universe, My Chart, and the playground).
+- The Big Three still step down diagonally, but more gently.
+- Fixed two bugs I spotted in my screenshots: a huge empty gap under "Who am I?" on topic pages (two different elements shared a style name), and "birth chart" not matching the spaced capitals in "YOUR BIRTH CHART".
+
+**Testing:** screenshots of every page at a laptop size (1440 × 900): all titles fit on one line. Phone, keyboard and touch tests still pass; 79/79 calculation checks.

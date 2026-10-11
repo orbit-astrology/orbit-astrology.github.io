@@ -9,14 +9,14 @@
 //   4. write "Your chart, explained": one section per placement
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610111804';
-import { formatOffset } from '../astro/time.js?v=202610111804';
-import { drawWheel } from '../wheel.js?v=202610111804';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610111804';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610111804';
-import { loadBirth } from '../store.js?v=202610111804';
-import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202610111804';
-import { placements, reading, grammar, connections, degreeText, ordinal } from '../readings.js?v=202610111804';
+import { calculateChart } from '../astro/chart.js?v=202610111855';
+import { formatOffset } from '../astro/time.js?v=202610111855';
+import { drawWheel } from '../wheel.js?v=202610111855';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610111855';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610111855';
+import { loadBirth } from '../store.js?v=202610111855';
+import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202610111855';
+import { placements, reading, grammar, connections, degreeText, ordinal } from '../readings.js?v=202610111855';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {

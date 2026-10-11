@@ -16,7 +16,7 @@ body {
   min-height: 100vh;
   background: var(--page);
   color: var(--bone);
-  font: 17px/1.65 var(--sans);
+  font: 16px/1.65 var(--sans);
   font-weight: 450; /* a touch heavier than normal, easier to read on dark colours */
   -webkit-font-smoothing: antialiased;
 }
@@ -45,6 +45,9 @@ a:hover { color: var(--champagne); }
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
 
+/* Headings that the page moves the focus to (after a click) don't need a visible box. */
+[tabindex="-1"]:focus { outline: none; }
+
 /* Hidden on screen but still read out by screen readers. */
 .visually-hidden {
   position: absolute; width: 1px; height: 1px; overflow: hidden;
@@ -72,14 +75,14 @@ h1 em, h2 em, h3 em { font-style: italic; }
   margin: 0;
   font-family: var(--serif);
   font-weight: 650; /* small text needs extra weight to stay readable */
-  font-size: 14px;
-  letter-spacing: 0.34em;
+  font-size: 12.5px;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
   color: var(--champagne);
 }
 
-.title { font-size: clamp(2.8rem, 6.5vw, 6.2rem); }
-.section-title { font-size: clamp(2.2rem, 4.4vw, 3.4rem); }
+.title { font-size: clamp(1.9rem, 3.4vw, 3.1rem); line-height: 1.12; }
+.section-title { font-size: clamp(1.6rem, 2.5vw, 2.2rem); line-height: 1.15; }
 
 .lede { max-width: 58ch; color: var(--bone-soft); margin: 0; }
 .quiet { color: var(--bone-soft); }
@@ -90,11 +93,11 @@ h1 em, h2 em, h3 em { font-style: italic; }
 
 .site-header .wrap {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-  gap: 12px 40px; padding-block: 24px;
+  gap: 12px 40px; padding-block: 18px;
 }
 
 .brand {
-  font-family: var(--serif); font-weight: 600; font-size: 24px; letter-spacing: 0.4em;
+  font-family: var(--serif); font-weight: 600; font-size: 20px; letter-spacing: 0.4em;
   color: var(--champagne); text-decoration: none;
 }
 
@@ -103,7 +106,7 @@ h1 em, h2 em, h3 em { font-style: italic; }
 .site-nav ul {
   display: flex; flex-wrap: wrap; gap: 10px 34px;
   margin: 0; padding: 0; list-style: none;
-  font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
 }
 .site-nav a { text-decoration: none; padding-block: 6px; display: inline-block; }
 /* The page you're on is underlined in champagne. */
@@ -138,8 +141,8 @@ h1 em, h2 em, h3 em { font-style: italic; }
 
 .button {
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-  min-height: 48px; padding: 14px 26px;
-  font: 600 13px/1.2 var(--sans); letter-spacing: 0.16em; text-transform: uppercase;
+  min-height: 44px; padding: 12px 22px;
+  font: 600 12px/1.2 var(--sans); letter-spacing: 0.16em; text-transform: uppercase;
   text-decoration: none; cursor: pointer;
   border: 1px solid var(--champagne); border-radius: 0;
   background: var(--champagne); color: var(--ink);
@@ -183,7 +186,7 @@ select option { color: var(--ink); }
    or tapped to show a one-line plain explanation (js/glossary.js). */
 
 .term {
-  font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0;
+  font: inherit; color: inherit; text-transform: inherit; letter-spacing: inherit; background: none; border: 0; padding: 0; margin: 0;
   cursor: help; position: relative; display: inline;
   text-decoration: underline dotted; text-decoration-color: var(--champagne);
   text-underline-offset: 4px; text-decoration-thickness: 1px;
@@ -200,6 +203,6 @@ select option { color: var(--ink); }
 
 /* --- 7. Footer ---------------------------------------------------- */
 
-.site-footer { border-top: 1px solid var(--line); margin-top: 96px; }
+.site-footer { border-top: 1px solid var(--line); margin-top: 64px; }
 .site-footer .wrap { padding-block: 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 32px; font-size: 13px; color: var(--bone-soft); }
 .site-footer p { margin: 0; }

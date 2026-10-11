@@ -7,14 +7,14 @@
 // so the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610111804';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610111804';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610111804';
-import { loadBirth, saveBirth, SAMPLE_BIRTH } from '../store.js?v=202610111804';
-import { setUpPlayground } from '../playground.js?v=202610111804';
-import { TOPICS, topicById } from '../content/topics.js?v=202610111804';
-import { PLANETS, PLANET_DETAIL, SIGNS, SIGN_DETAIL, HOUSES, ASPECT_TEXT, SIGN_TRAITS } from '../content/basics.js?v=202610111804';
-import { placements, connections, degreeText, ordinal } from '../readings.js?v=202610111804';
+import { calculateChart } from '../astro/chart.js?v=202610111855';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610111855';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610111855';
+import { loadBirth, saveBirth, SAMPLE_BIRTH } from '../store.js?v=202610111855';
+import { setUpPlayground } from '../playground.js?v=202610111855';
+import { TOPICS, topicById } from '../content/topics.js?v=202610111855';
+import { PLANETS, PLANET_DETAIL, SIGNS, SIGN_DETAIL, HOUSES, ASPECT_TEXT, SIGN_TRAITS } from '../content/basics.js?v=202610111855';
+import { placements, connections, degreeText, ordinal } from '../readings.js?v=202610111855';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
@@ -47,7 +47,7 @@ for (const t of TOPICS) {
   const arrow = make('span', '', '→');
   arrow.setAttribute('aria-hidden', 'true');
   go.append('Explore ', arrow);
-  a.append(make('span', 'topic-num', t.number), dot, make('span', 'topic-name', t.name), make('span', 'topic-question', t.question), go);
+  a.append(make('span', 'topic-num', t.number), dot, make('span', 'topic-name', t.name), make('span', 'topic-ask', t.question), go);
   li.append(a);
   $('topic-list').append(li);
 }

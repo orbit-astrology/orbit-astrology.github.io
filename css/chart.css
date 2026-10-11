@@ -2,9 +2,9 @@
 
 .chart-intro {
   display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
-  gap: 24px 48px; padding-top: 56px;
+  gap: 16px 40px; padding-top: 32px;
 }
-.chart-intro-text { flex: 1 1 640px; display: flex; flex-direction: column; gap: 18px; }
+.chart-intro-text { flex: 1 1 640px; display: flex; flex-direction: column; gap: 12px; }
 
 /* Wheel / List switch */
 .view-switch { display: inline-flex; border: 1px solid var(--champagne); }
@@ -16,9 +16,9 @@
 .view-switch button[aria-pressed="true"] { background: var(--champagne); color: var(--ink); }
 
 /* Wheel + "how to read" side by side */
-.chart-stage { display: flex; flex-wrap: wrap; gap: 48px 72px; align-items: center; padding-block: 48px 96px; }
+.chart-stage { display: flex; flex-wrap: wrap; gap: 32px 64px; align-items: center; padding-block: 24px 56px; }
 .wheel-area, .list-area { flex: 1 1 600px; min-width: 0; position: relative; }
-.wheel-box { max-width: 720px; margin: 0 auto; }
+.wheel-box { width: min(580px, calc(100vh - 280px), 100%); min-width: min(380px, 100%); margin: 0 auto; }
 
 /* The little explanation box that follows your mouse or finger */
 .tip {
@@ -34,9 +34,9 @@
 
 /* How to read the wheel */
 .how-to-read { flex: 1 1 280px; max-width: 380px; }
-.how-title { font-size: 30px; margin-bottom: 18px; }
+.how-title { font-size: 22px; margin-bottom: 12px; }
 .how-to-read dl { margin: 0; }
-.how-to-read dl > div { padding: 14px 0; border-top: 1px solid var(--line); }
+.how-to-read dl > div { padding: 10px 0; border-top: 1px solid var(--line); }
 .how-to-read dl > div:last-child { border-bottom: 1px solid var(--line); }
 .how-to-read dt { font-weight: 650; }
 .how-to-read dd { margin: 2px 0 0; color: var(--bone-soft); font-size: 15px; }
@@ -57,7 +57,7 @@
 .placements-table td.quiet { color: var(--bone-soft); }
 
 /* Your chart, explained: a slightly darker band of the same colour */
-.explained { background: rgba(0, 0, 0, 0.14); border-top: 1px solid var(--line); padding-block: 88px; }
+.explained { background: rgba(0, 0, 0, 0.14); border-top: 1px solid var(--line); padding-block: 56px; }
 .explained .lede { margin: 12px 0 28px; }
 
 .jump-links ul {
@@ -68,20 +68,20 @@
 .jump-links a:hover { text-decoration: underline; }
 
 .reading {
-  display: flex; flex-wrap: wrap; gap: 24px 72px; padding: 56px 16px; margin-inline: -16px;
+  display: flex; flex-wrap: wrap; gap: 20px 64px; padding: 40px 16px; margin-inline: -16px;
   border-bottom: 1px solid var(--line); scroll-margin-top: 24px;
   transition: background 0.6s;
 }
 .reading.flash { background: rgba(205, 187, 146, 0.14); }
 .reading-head { flex: 1 1 280px; display: flex; flex-direction: column; gap: 8px; }
-.reading-head .symbol { font-size: 30px; color: var(--champagne); line-height: 1; }
-.reading-title { font: 500 clamp(2.2rem, 3.6vw, 3rem)/1.05 var(--serif); }
+.reading-head .symbol { font-size: 24px; color: var(--champagne); line-height: 1; }
+.reading-title { font: 500 clamp(1.6rem, 2.4vw, 2.1rem)/1.1 var(--serif); }
 .reading-meta { margin: 0; color: var(--bone-soft); font-size: 15px; }
 .reading-body { flex: 2 1 520px; min-width: 0; }
 .reading-body p { margin: 0 0 14px; max-width: 66ch; }
 
 /* "Your Venus (how you love) in Scorpio (how) in your 1st house (where)" */
-.grammar { font: 500 clamp(1.4rem, 2.2vw, 1.75rem)/1.4 var(--serif); margin: 0 0 22px !important; }
+.grammar { font: 500 clamp(1.15rem, 1.6vw, 1.35rem)/1.45 var(--serif); margin: 0 0 22px !important; }
 .grammar .role { border-bottom: 1.5px solid var(--champagne); }
 .grammar .note { font: italic 0.72em var(--serif); color: var(--bone-soft); }
 
