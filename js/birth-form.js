@@ -13,9 +13,9 @@
 // "friend-place" on Connections.
 // ---------------------------------------------------------------
 
-import { calculateChart } from './astro/chart.js?v=202610111920';
-import { searchPlaces } from './astro/places.js?v=202610111920';
-import { formatOffset } from './astro/time.js?v=202610111920';
+import { calculateChart } from './astro/chart.js?v=202610111932';
+import { searchPlaces } from './astro/places.js?v=202610111932';
+import { formatOffset } from './astro/time.js?v=202610111932';
 
 // Options:
 //   form, prefix  – the <form> and the start of its ids
@@ -210,8 +210,23 @@ export function setUpBirthForm({ form, prefix, whose = 'your', extraFields = [],
     onSuccess(birth, result.chart, showError);
   });
 
-  // So a page can clear the form after saving.
+  // So a page can fill the form (to edit saved details) or clear it.
   return {
+    fill(birth) {
+      $('day').value = birth.day;
+      $('month').value = String(birth.month);
+      $('year').value = birth.year;
+      $('time-unknown').checked = !birth.timeKnown;
+      $('hour').disabled = !birth.timeKnown;
+      $('minute').disabled = !birth.timeKnown;
+      $('time-hint').hidden = birth.timeKnown;
+      $('hour').value = birth.timeKnown ? birth.hour : '';
+      $('minute').value = birth.timeKnown ? birth.minute : '';
+      chosenPlace = birth.place;
+      input.value = birth.place.label;
+      status.textContent = `Selected: ${birth.place.label} (time zone ${birth.place.timeZone}).`;
+      chosenOffset = birth.offsetMinutes ?? null;
+    },
     reset() {
       form.reset();
       chosenPlace = null;

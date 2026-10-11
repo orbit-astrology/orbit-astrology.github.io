@@ -206,3 +206,21 @@ select option { color: var(--ink); }
 .site-footer { border-top: 1px solid var(--line); margin-top: 64px; }
 .site-footer .wrap { padding-block: 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 32px; font-size: 13px; color: var(--bone-soft); }
 .site-footer p { margin: 0; }
+
+/* --- 8. "Save to my profile" button ------------------------------- */
+.save-button {
+  align-self: flex-start;
+  font: 600 11.5px/1.2 var(--sans); letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--bone); background: transparent; cursor: pointer;
+  border: 1px solid var(--line); border-radius: 0; padding: 9px 14px; min-height: 36px;
+}
+.save-button:hover { border-color: var(--champagne); color: var(--champagne); }
+.save-button[aria-pressed="true"] { border-color: var(--champagne); color: var(--champagne); }
+
+/* --- 9. A quiet button that looks like a text link (Remove, Cancel) --- */
+.link-button {
+  font: 600 15px var(--sans); color: var(--bone); background: none; border: 0; padding: 10px 0;
+  cursor: pointer; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--line);
+}
+.link-button:hover { color: var(--champagne); text-decoration-color: currentColor; }
+.link-button.danger { color: var(--error); text-decoration-color: currentColor; }

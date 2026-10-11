@@ -256,3 +256,25 @@ One entry per work session: what was done, what was decided, what went wrong, an
 **Testing:** three separate browsers (one person sharing, one adding them, one with no chart on a phone), the copy button, own link, duplicate, broken link; earlier Connections and Welcome tests still pass. No errors.
 
 **AI vs me:** Me: the idea of friends connecting with each other, and choosing the share link for now. Claude: suggested the link as a no-accounts version, wrote the code.
+
+---
+
+## 11 October 2026 (night) · Stage 6: Profile
+
+**What we built** (`profile.html`, `js/pages/profile.js`, `js/save-button.js`, `css/profile.css`), following part 06 of the specification:
+- **Your details:** name, birth date, time (or "Unknown"), place and Big Three. The greeting uses your name ("Hello, Salma").
+- **Edit my details:** the same form as the Welcome page, already filled in, plus an optional name. Your chart is only replaced once the new details have passed every check and been calculated, so a mistake (like 31 February) can't break it. Afterwards every page uses the new chart.
+- **Save to my profile:** a new button on every reading in My Chart and on every topic in Explore. Saved things are listed on Profile with a link back and a Remove button.
+- If your details change, saved readings follow your **current** chart, and say so: "Updated: when you saved it, it was Venus in Aquarius", or "Not in your chart right now: it needs an exact birth time".
+- **Your data:** says honestly that there are no accounts yet, that everything stays in this browser on this device, and that birth details are never sent to a server (only the city name typed into the place search). It lists what's saved, and has **Download my data** (a file with everything) and **Delete everything** (asks first, right on the page).
+- With the made-up sample or no chart, Profile explains there's no profile yet and offers to create your chart. The sample's readings can't be saved.
+
+**Decisions**
+- The specification also lists email, password, privacy settings and log out. Those need real accounts, and the spec says to "only show account features that actually work", so they're left out and the page says accounts are coming later.
+- The specification suggests a cream page, but we kept the slate grey from my colour palette so every tab feels like the same website.
+
+**Testing:** no chart, sample chart, creating a chart from Profile, editing (prefilled form, unknown time, an impossible date, Cancel keeps the old details), saving and removing readings, the "updated" notes, downloading the file, deleting everything, phone width. Every earlier page test still passes; 79/79 calculation checks.
+
+**AI vs me**
+- Me: asked for the Profile page; the three parts come from my specification.
+- Claude: wrote the code and texts, and suggested Download my data and the honest "your data" section.

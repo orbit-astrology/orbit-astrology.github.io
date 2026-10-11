@@ -4,7 +4,7 @@ An interactive personal astrology atlas: a website where you enter your birth de
 
 Individual Web Project · Webs & Apps Design · 2026
 
-**Status:** stage 5. Welcome, My Universe, My Chart, Explore and Connections work with real charts. Profile is coming next. The developer test page is at `/lab/`.
+**Status:** stage 6. Every page works with real charts: Welcome, My Universe, My Chart, Explore, Connections and Profile. Everything is saved in the browser for now; real accounts are a possible later stage. The developer test page is at `/lab/`.
 
 ## Pages
 
@@ -15,7 +15,7 @@ Individual Web Project · Webs & Apps Design · 2026
 | My Chart | `chart.html` | Working |
 | Explore | `explore.html` | Working |
 | Connections | `connections.html` | Working |
-| Profile | `profile.html` | Coming next |
+| Profile | `profile.html` | Working |
 
 ## How it works so far
 
@@ -36,6 +36,7 @@ birth form → birthplace search → exact UTC moment → planet positions
 | `js/astro/aspects.js` | Finds the angles between planets (conjunction, sextile, square, trine, opposition) |
 | `js/astro/zodiac.js` | Small helpers: which sign a degree is in, and how to write it (12°33′ Leo) |
 | `js/birth-form.js` | The birth form (place search, checks, the "time happened twice" question), shared by Welcome and Connections |
+| `js/save-button.js` | The “Save to my profile” button on My Chart readings and Explore topics |
 | `js/share.js` | “Share my chart” links: your birth details in the part of the address after #, which never reaches the server |
 | `js/compare.js` | Compares two people's charts: the angles between their personal planets, explained in plain words |
 | `js/vendor/astronomy.js` | Astronomy Engine by Don Cross (MIT license), which calculates where the planets are |

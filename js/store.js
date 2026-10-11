@@ -10,7 +10,7 @@
 // recalculated from them every time, so it's always correct.
 // ---------------------------------------------------------------
 
-import { SETTINGS } from './astro/settings.js?v=202610111920';
+import { SETTINGS } from './astro/settings.js?v=202610111932';
 
 const KEY = 'orbit.birth';
 
@@ -67,3 +67,34 @@ export function savePeople(list) {
     return false;
   }
 }
+
+// --- Saved readings (Profile) -------------------------------------
+// A list of { kind: 'placement' | 'topic', id, title, sign, savedAt }.
+// `sign` remembers which sign it was in when saved, so Profile can
+// say so if you later change your birth details.
+
+const SAVED_KEY = 'orbit.saved';
+
+export function loadSaved() {
+  try {
+    const list = JSON.parse(localStorage.getItem(SAVED_KEY) || '[]');
+    return Array.isArray(list) ? list : [];
+  } catch {
+    return [];
+  }
+}
+
+export function saveSaved(list) {
+  try {
+    localStorage.setItem(SAVED_KEY, JSON.stringify(list));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export const isSaved = (kind, id) => loadSaved().some((s) => s.kind === kind && s.id === id);
+
+// Everything ORBIT keeps in this browser, for "Download my data" and
+// "Delete everything" on the Profile page.
+export const ALL_KEYS = [KEY, PEOPLE_KEY, SAVED_KEY, 'orbit.lens'];

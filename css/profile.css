@@ -1,0 +1,47 @@
+/* profile.css: the Profile page (your details, saved readings, your data). */
+
+.profile-intro { display: flex; flex-direction: column; gap: 12px; padding-top: 32px; }
+
+.profile-layout { display: flex; flex-wrap: wrap; gap: 40px 64px; padding-block: 32px 48px; align-items: flex-start; }
+.profile-details { flex: 1 1 420px; max-width: 560px; display: flex; flex-direction: column; gap: 16px; }
+.profile-saved { flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 14px; padding-left: 64px; border-left: 1px solid var(--line); }
+
+/* Your details, as a simple list */
+.details-view { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+.details-list { margin: 0; width: 100%; border-top: 1px solid var(--line); }
+.details-list > div { display: grid; grid-template-columns: 130px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.details-list dt { font-weight: 650; color: var(--bone-soft); font-size: 15px; }
+.details-list dd { margin: 0; }
+.details-view > p { margin: 0; }
+.saved-text { color: var(--champagne); font-weight: 600; font-size: 15px; }
+.saved-text:empty { display: none; }
+.form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; }
+
+/* Saved readings */
+.saved-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.saved-list:empty { display: none; }
+.saved-item { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 20px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.saved-main { flex: 1 1 240px; min-width: 0; }
+.saved-kind { margin: 0 0 2px; font: 650 11px/1.4 var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--bone-soft); }
+.saved-title { font-size: 24px; }
+.saved-title a { text-decoration: none; }
+.saved-title a:hover { text-decoration: underline; }
+.saved-note { margin: 4px 0 0; font-size: 14px; color: var(--bone-soft); }
+.saved-note.changed { color: var(--champagne); }
+.saved-empty { margin: 0; max-width: 46ch; }
+
+/* Your data */
+.data-layout { display: flex; flex-wrap: wrap; gap: 32px 64px; align-items: flex-start; }
+.data-about { flex: 1 1 520px; display: flex; flex-direction: column; gap: 12px; }
+.data-about p { margin: 0; max-width: 64ch; }
+.data-list { margin: 4px 0 0; padding-left: 18px; }
+.data-list li { margin: 2px 0; }
+.data-actions { flex: 1 1 300px; max-width: 420px; display: flex; flex-direction: column; gap: 24px; }
+.data-actions .hint { margin-top: 8px; }
+.delete-confirm { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; }
+.delete-confirm p { flex-basis: 100%; margin: 0; }
+
+@media (max-width: 900px) {
+  .profile-saved { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); padding-top: 32px; }
+  .details-list > div { grid-template-columns: 1fr; gap: 2px; }
+}
