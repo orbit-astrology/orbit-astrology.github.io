@@ -13,3 +13,7 @@ ORBIT is an interactive personal astrology website, a student project for Webs &
 ## Checking accuracy
 
 `node tests/run-tests.js` must pass before any change to the calculation code is saved.
+
+## Before every push
+
+Run `node tools/set-version.js`. It adds a new version number to every link to our own CSS and JS files, so visitors' browsers load the new files instead of old saved copies (otherwise a page can break after an update).

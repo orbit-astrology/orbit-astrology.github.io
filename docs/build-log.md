@@ -125,6 +125,8 @@ One entry per work session: what was done, what was decided, what went wrong, an
 - Mouse hover on planets, signs and houses; keyboard (Tab to a planet, Enter jumps to its section); phone taps; List view; a chart with no birth time; phone width. 79/79 calculation checks still pass.
 - Fixed: Enter key didn't work on planets (SVG shapes don't have `.click()`); the first tap on a phone jumped down instead of showing the box; "are at side by side" → "are side by side".
 
+**Problem found when I tried it live:** My Chart showed no wheel and no explanations. The live files were correct; my browser was still using an old saved copy of one file from earlier, so the new page asked it for something it didn't have and stopped. A hard refresh fixes it, but it would happen after every update (also to my teacher). **Fix:** every link to our own CSS/JS now carries a version number (`chart.js?v=202610111755`), set by `tools/set-version.js` before each update, so browsers always fetch the new files.
+
 **AI vs me**
 - Me: the idea of hovering for info with detailed explanations underneath (from my own frustration with chart sites), the beginner-first rule, the colours.
 - Claude: wrote the code and the draft texts (`js/content/basics.js`, `js/readings.js`) for me to review.
