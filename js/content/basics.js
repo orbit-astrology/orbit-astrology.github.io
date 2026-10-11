@@ -73,6 +73,22 @@ export const SIGN_DETAIL = {
   Pisces:      'Pisces is gentle, imaginative and compassionate, and feels the world very deeply.',
 };
 
+// Three plain adjectives per sign, used to describe a person.
+export const SIGN_TRAITS = {
+  Aries:       'brave, direct and quick to act',
+  Taurus:      'calm, loyal and comfort-loving',
+  Gemini:      'curious, chatty and quick-minded',
+  Cancer:      'caring, sensitive and protective',
+  Leo:         'warm, proud and expressive',
+  Virgo:       'thoughtful, practical and helpful',
+  Libra:       'charming, fair and peace-loving',
+  Scorpio:     'deep, intense and private',
+  Sagittarius: 'free, honest and adventurous',
+  Capricorn:   'serious, responsible and ambitious',
+  Aquarius:    'independent, original and a little unconventional',
+  Pisces:      'gentle, dreamy and compassionate',
+};
+
 // How the five main angles between planets feel, in plain words.
 export const ASPECT_TEXT = {
   conjunction: { name: 'conjunction', angle: 0,   plain: 'side by side', meaning: 'they blend together and act as one' },

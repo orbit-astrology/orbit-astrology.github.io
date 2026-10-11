@@ -18,7 +18,7 @@
 //   points (cusp 5 is opposite 11, and so on).
 // ---------------------------------------------------------------
 
-import { normalize } from './zodiac.js?v=202610111757';
+import { normalize } from './zodiac.js?v=202610111804';
 
 const rad = (d) => (d * Math.PI) / 180;
 const deg = (r) => (r * 180) / Math.PI;

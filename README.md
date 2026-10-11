@@ -4,7 +4,7 @@ An interactive personal astrology atlas: a website where you enter your birth de
 
 Individual Web Project · Webs & Apps Design · 2026
 
-**Status:** stage 3. Welcome, My Universe and My Chart work with real charts. Explore, Connections and Profile are coming next. The developer test page is at `/lab/`.
+**Status:** stage 4. Welcome, My Universe, My Chart and Explore work with real charts. Connections and Profile are coming next. The developer test page is at `/lab/`.
 
 ## Pages
 
@@ -13,8 +13,8 @@ Individual Web Project · Webs & Apps Design · 2026
 | Welcome (birth form) | `index.html` | Working |
 | My Universe | `universe.html` | Working |
 | My Chart | `chart.html` | Working |
-| Explore | `explore.html` | Coming next |
-| Connections | `connections.html` | Coming soon |
+| Explore | `explore.html` | Working |
+| Connections | `connections.html` | Coming next |
 | Profile | `profile.html` | Coming soon |
 
 ## How it works so far

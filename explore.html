@@ -7,9 +7,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Manrope:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/tokens.css?v=202610111757">
-  <link rel="stylesheet" href="css/base.css?v=202610111757">
-  <link rel="stylesheet" href="css/coming-soon.css?v=202610111757">
+  <link rel="stylesheet" href="css/tokens.css?v=202610111804">
+  <link rel="stylesheet" href="css/base.css?v=202610111804">
+  <link rel="stylesheet" href="css/explore.css?v=202610111804">
 </head>
 <body class="page-explore">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -28,17 +28,64 @@
       </nav>
     </div>
   </header>
-  <main id="main" class="coming-soon wrap">
-    <p class="eyebrow">Explore</p>
-    <h1 class="title">Your chart, <em>one question at a time</em></h1>
-    <p class="lede">Coming soon: topics like love, emotions and career, each bringing together the parts of your chart that answer them, plus a library that explains the basics of astrology.</p>
-    <a class="text-link" href="universe.html">← Back to My Universe</a>
+
+  <main id="main">
+
+    <!-- The Explore home: topics, library and playground -->
+    <div id="hub">
+      <section class="explore-intro wrap" aria-labelledby="explore-title">
+        <p class="eyebrow">Explore</p>
+        <h1 id="explore-title" class="title">Your chart, <em>one question at a time</em></h1>
+        <p class="lede">Pick something you’re curious about. Each topic brings together the parts of your chart that answer it, explained in plain words.</p>
+      </section>
+
+      <section class="topics wrap" aria-label="Topics">
+        <ol class="topic-list" id="topic-list"></ol>
+        <p class="no-chart-note quiet" id="no-chart-note" hidden>Topics use your birth chart. <a href="index.html#create">Create yours</a> or <a href="#" id="try-sample">try the sample chart</a>. The library and playground below work without one.</p>
+      </section>
+
+      <section class="library" id="library" aria-labelledby="library-title">
+        <div class="wrap">
+          <p class="eyebrow">No chart needed</p>
+          <h2 id="library-title" class="section-title">The astrology <em>library</em></h2>
+          <p class="lede">The basics, explained simply, for anyone who’s just starting out. Open a section to read it.</p>
+          <div class="library-sections" id="library-sections"></div>
+        </div>
+      </section>
+
+      <section class="playground wrap" id="playground" aria-labelledby="playground-title">
+        <div class="playground-text">
+          <p class="eyebrow">Try it</p>
+          <h2 id="playground-title" class="section-title">The aspect <em>playground</em></h2>
+          <p class="lede">An aspect is the angle between two planets. Drag the hollow planet around the circle (or select it and use the arrow keys). When it reaches one of the five special angles, a line appears and tells you what that angle means.</p>
+          <div class="playground-readout" id="playground-readout" aria-live="polite"></div>
+        </div>
+        <div class="playground-wheel pg" id="playground-wheel"></div>
+      </section>
+    </div>
+
+    <!-- One topic, shown when the address ends in #love, #career… -->
+    <div id="topic" hidden>
+      <section class="topic-head wrap" aria-labelledby="topic-title">
+        <a class="text-link back" href="explore.html">← All topics</a>
+        <p class="eyebrow" id="topic-number"></p>
+        <h1 id="topic-title" class="title"></h1>
+        <p class="topic-question" id="topic-question"></p>
+        <p class="lede" id="topic-intro"></p>
+        <p class="time-note quiet" id="topic-time-note" hidden></p>
+      </section>
+      <div class="wrap" id="topic-items"></div>
+      <nav class="wrap topic-nav" aria-label="Other topics" id="topic-nav"></nav>
+    </div>
   </main>
-  <script type="module">
-    import { setUpMenu, showSampleBanner } from './js/layout.js?v=202610111757';
-    import { loadBirth } from './js/store.js?v=202610111757';
-    setUpMenu();
-    showSampleBanner(loadBirth());
-  </script>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>ORBIT · a student project for Webs &amp; Apps Design, 2026</p>
+      <p>Planet positions: Astronomy Engine · Tropical zodiac, Placidus houses</p>
+    </div>
+  </footer>
+
+  <script type="module" src="js/pages/explore.js?v=202610111804"></script>
 </body>
 </html>

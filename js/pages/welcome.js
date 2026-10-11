@@ -9,13 +9,13 @@
 //   4. go to My Universe, which reads them and shows your chart
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610111757';
-import { searchPlaces } from '../astro/places.js?v=202610111757';
-import { formatOffset } from '../astro/time.js?v=202610111757';
-import { skyAt } from '../astro/sky.js?v=202610111757';
-import { drawWheel } from '../wheel.js?v=202610111757';
-import { setUpGlossary } from '../glossary.js?v=202610111757';
-import { saveBirth, loadBirth, SAMPLE_BIRTH } from '../store.js?v=202610111757';
+import { calculateChart } from '../astro/chart.js?v=202610111804';
+import { searchPlaces } from '../astro/places.js?v=202610111804';
+import { formatOffset } from '../astro/time.js?v=202610111804';
+import { skyAt } from '../astro/sky.js?v=202610111804';
+import { drawWheel } from '../wheel.js?v=202610111804';
+import { setUpGlossary } from '../glossary.js?v=202610111804';
+import { saveBirth, loadBirth, SAMPLE_BIRTH } from '../store.js?v=202610111804';
 
 const $ = (id) => document.getElementById(id);
 

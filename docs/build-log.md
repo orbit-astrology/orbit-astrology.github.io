@@ -130,3 +130,29 @@ One entry per work session: what was done, what was decided, what went wrong, an
 **AI vs me**
 - Me: the idea of hovering for info with detailed explanations underneath (from my own frustration with chart sites), the beginner-first rule, the colours.
 - Claude: wrote the code and the draft texts (`js/content/basics.js`, `js/readings.js`) for me to review.
+
+---
+
+## 11 October 2026 (late) · Stage 4: Explore
+
+**What we built** (`explore.html`, `js/pages/explore.js`, `js/content/topics.js`, `js/playground.js`)
+- **Five topics**, each answering a real question with *my* placements:
+  - 01 Identity & personality · *Who am I?* (Sun, Rising, Mercury)
+  - 02 Emotions & inner world · *What do I need to feel safe?* (Moon, 4th house, what affects my mood)
+  - 03 Love & relationships · *How do I love?* (Venus, Mars, 7th and 5th houses, how my love planets connect)
+  - 04 Career & direction · *Where am I going?* (Midheaven, Saturn, 10th and 6th houses)
+  - 05 Growth & change · *What am I learning?* (Jupiter, Saturn, Pluto, my tense angles)
+- Each part has a sentence written for that topic (Venus means something specific in Love), where it sits in my life (house), and a link to the full explanation in My Chart.
+- Houses with no planets say so honestly ("very common and doesn't mean this area is empty in your life").
+- **The astrology library**: planets, signs, houses and aspects explained for beginners, no chart needed. If you have a chart, each item also shows yours ("Yours: Cancer, 8th house").
+- **The aspect playground**: drag the Moon around the Sun (or use the arrow keys). The angle updates live; at 0°, 60°, 90°, 120° or 180° a line appears and explains the aspect, including what the "orb" is.
+- Topics open at addresses like `explore.html#love`, so the Back button works and My Universe links straight to them.
+- Topic colours appear only as small dots, as I asked (no big bands).
+
+**Testing**
+- All five topics with a full chart; Love with no birth time (houses hidden, with a note); no chart at all (library and playground still work, topics invite you to create a chart); playground by keyboard and by dragging; phone width. No errors; 79/79 calculation checks pass.
+- Fixed: "fun feels best when they're gently and imaginatively" (grammar), and a grey line that repeated the main sentence (now it says which area of life instead).
+
+**AI vs me**
+- Me: the five topics and their questions (from the plan, inspired by The Pattern), the aspect playground idea, small coloured dots instead of bands.
+- Claude: wrote the code and the draft topic texts for me to review.
