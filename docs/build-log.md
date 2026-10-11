@@ -284,3 +284,16 @@ One entry per work session: what was done, what was decided, what went wrong, an
 ## 11 October 2026 (night) · Footer
 
 **My feedback:** remove "ORBIT · a student project for Webs & Apps Design, 2026" from the footer. Done on every page; the credit for the planet-position library stays.
+
+---
+
+## 11 October 2026 (night) · Explanation boxes never cover the wheel
+
+**My feedback:** the explanation box appeared in the middle of the chart and hid it. It should always sit on the outside, so the chart stays visible.
+
+**What changed** (`js/tip-position.js`, used by My Chart and Connections)
+- On a computer the box now appears **beside** the wheel, on the side of whatever you're pointing at (or the other side if there's no room), level with it. It usually sits over the "How to read" column, never over the chart.
+- With no room at the sides (tablets, phones), it goes just below the wheel, or, if that's off the screen, as a slim strip at the top or bottom edge of the screen, whichever is further from what you tapped, so that part of the chart stays visible.
+- Fixed on phones: a tap sometimes opened the box and closed it again immediately. Now a tap opens it and it stays until you tap something else; signs open and close with a second tap. No blue flash when tapping the wheel.
+
+**Testing:** measured the box against the wheel at four screen sizes (1920, 1280, 900 wide, and a 375 px phone) for signs, planets and lines on both pages: no overlap at any size. All earlier page tests still pass.

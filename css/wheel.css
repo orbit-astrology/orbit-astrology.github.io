@@ -30,6 +30,8 @@
 .wheel .hit:hover   { fill: rgba(233, 227, 216, 0.07); }
 .wheel .planet-hit  { fill: transparent; }
 .wheel .planet      { cursor: pointer; outline: none; }
+/* No blue flash when a planet, sign or line is tapped on a phone. */
+.wheel .planet, .wheel .hit, .wheel .aspect-hit { -webkit-tap-highlight-color: transparent; }
 .wheel .planet:focus-visible .planet-hit,
 .wheel .planet.active .planet-hit { stroke: var(--champagne); stroke-width: 1.2; }
 .wheel .planet.active .planet-symbol { fill: var(--bone); }

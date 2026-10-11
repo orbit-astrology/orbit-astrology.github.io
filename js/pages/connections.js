@@ -10,16 +10,17 @@
 // the address means the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610111936';
-import { drawWheel } from '../wheel.js?v=202610111936';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610111936';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610111936';
-import { setUpBirthForm } from '../birth-form.js?v=202610111936';
-import { makeShareLink, readShareCode } from '../share.js?v=202610111936';
-import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202610111936';
-import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610111936';
-import { PERSONAL, LENSES, LENS_HINT, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610111936';
-import { PLANETS, SIGNS } from '../content/basics.js?v=202610111936';
+import { calculateChart } from '../astro/chart.js?v=202610112037';
+import { drawWheel } from '../wheel.js?v=202610112037';
+import { placeTip } from '../tip-position.js?v=202610112037';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610112037';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610112037';
+import { setUpBirthForm } from '../birth-form.js?v=202610112037';
+import { makeShareLink, readShareCode } from '../share.js?v=202610112037';
+import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202610112037';
+import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610112037';
+import { PERSONAL, LENSES, LENS_HINT, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610112037';
+import { PLANETS, SIGNS } from '../content/basics.js?v=202610112037';
 
 const $ = (id) => document.getElementById(id);
 const nameOf = (id) => id[0].toUpperCase() + id.slice(1);
@@ -436,6 +437,11 @@ let tipOwner = null;
 let tipBeforeTap = null;
 let tappedSign = null; // the sign whose box was opened by the last tap or click
 area.addEventListener('pointerdown', (e) => { lastPointer = e.pointerType; tipBeforeTap = tipOwner; }, true);
+// On phones there's no "mouse leaving", so the box closes when you tap
+// anywhere outside the wheel instead.
+document.addEventListener('pointerdown', (e) => {
+  if (e.pointerType === 'touch' && !area.contains(e.target)) { hideTip(); unlight(); }
+});
 
 const sameLink = (line, link) => line.dataset.from === link.from && line.dataset.to === link.to;
 
@@ -468,6 +474,7 @@ function lightPlanet(person, id) {
 }
 
 function unlight() {
+  if (!current) return; // no comparison on screen
   const { svg } = current;
   svg.classList.remove('focusing');
   document.querySelectorAll('.lit').forEach((n) => n.classList.remove('lit'));
@@ -532,13 +539,7 @@ function showTip(owner, content) {
     make('p', 'tip-action', content.action),
   );
   tip.hidden = false;
-  // Place the box next to the thing, on whichever side has more room.
-  const a = area.getBoundingClientRect();
-  const o = owner.getBoundingClientRect();
-  const left = o.left - a.left + o.width / 2 > a.width / 2 ? o.left - a.left - tip.offsetWidth - 12 : o.right - a.left + 12;
-  const top = Math.min(Math.max(o.top - a.top - 20, 0), a.height - tip.offsetHeight);
-  tip.style.left = `${Math.max(0, Math.min(left, a.width - tip.offsetWidth))}px`;
-  tip.style.top = `${top}px`;
+  placeTip(tip, owner, current.svg, area); // beside the wheel, never on top of it
 }
 
 function hideTip() {
@@ -566,7 +567,7 @@ function setUpWheel() {
     g.setAttribute('role', 'button');
     g.setAttribute('aria-label', `${who} ${nameOf(body)} in ${signText(chart.bodies.find((b) => b.id === body))}. Show its links.`);
     const enter = () => { showTip(g, planetTip(person, body)); lightPlanet(person, body); };
-    const leave = () => { hideTip(); unlight(); };
+    const leave = () => { if (lastPointer === 'touch') return; hideTip(); unlight(); };
     g.addEventListener('mouseenter', enter);
     g.addEventListener('mouseleave', leave);
     g.addEventListener('focus', enter);
@@ -588,7 +589,7 @@ function setUpWheel() {
     hit.setAttribute('role', 'button');
     hit.setAttribute('aria-label', `${explainLink(link, myChart, current.theirChart, current.person.name, lens).title}. Read about this link.`);
     const enter = () => { showTip(hit, linkTip(link)); lightLink(link); $(`link-${link.id}`)?.classList.add('lit'); };
-    const leave = () => { hideTip(); unlight(); };
+    const leave = () => { if (lastPointer === 'touch') return; hideTip(); unlight(); };
     hit.addEventListener('mouseenter', enter);
     hit.addEventListener('mouseleave', leave);
     hit.addEventListener('focus', enter);
@@ -605,7 +606,7 @@ function setUpWheel() {
   // The signs: hover or tap to see what they mean and whose planets are there.
   for (const slice of svg.querySelectorAll('[data-sign]')) {
     slice.addEventListener('mouseenter', () => showTip(slice, signTip(slice.dataset.sign)));
-    slice.addEventListener('mouseleave', hideTip);
+    slice.addEventListener('mouseleave', () => { if (lastPointer !== 'touch') hideTip(); });
     slice.addEventListener('click', () => {
       // A tap or click opens the box; doing it again on the same sign closes it.
       if (tappedSign === slice) { hideTip(); return; }
