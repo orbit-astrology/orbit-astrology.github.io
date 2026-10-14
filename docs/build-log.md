@@ -340,3 +340,30 @@ One entry per work session: what was done, what was decided, what went wrong, an
 **My feedback:** keep only the switch right above the explanations. The one at the top of the page didn't change anything you could see there; it only told you to look further down.
 
 **What changed:** removed the top switch and its note. The switch now lives only above "How your charts talk to each other", next to the explanations it changes, and the changed parts glow for a moment when you switch.
+
+---
+
+## 14 October 2026 · Approximate birth time, "Back to…" button, clearer weekly sky and playground
+
+**My feedback**
+1. An option for an approximate birth time ("I was born around 9 am").
+2. After clicking "Read more" (and similar links) there should be a way back to where I was.
+3. "Your sky this week": is it for me or for everyone?
+4. The aspect playground wasn't clear.
+5. Can the website address be something like orbit.com instead of my username? (Answered separately: needs a decision, see below.)
+
+**What changed**
+- **Approximate birth time:** a new question under the time in every birth form (Welcome, Connections, Profile): *How sure are you about this time?* Exact, or give or take 15 minutes, 30 minutes, 1 hour or 2 hours.
+  - The planets are calculated at the time you gave (they barely move in a few hours).
+  - The Rising sign, Midheaven and houses move fast, so ORBIT checks 9 moments across the whole window and keeps every sign or house that appears. Where they could differ, every page shows all the options: "Rising: Aries or Taurus", "6th or 5th house (approximate time)", with an explanation of each.
+  - Weekly sky: with an approximate time, it leaves out moments that depend on your exact Rising sign or houses.
+  - New calculation checks: the planets stay the same, the Rising options include the exact one, ± 2 hours gives more than one Rising sign, and 0 means exact. **83/83 checks pass.**
+- **"← Back to …" button:** when you follow a link inside a page to another page (Read more →, Explore →, a saved reading…), a small button appears in the bottom-left corner: "← Back to My Universe". It takes you back to the same spot on the page. Choosing a page from the top menu doesn't create it.
+- **Your sky this week:** the intro now says the planets move the same way for everyone, and what's personal is how they meet your chart. Every moment has a label: **Your chart** (it touches your own planets) or **Everyone** (it happens in the sky for all of us).
+- **Aspect playground:** a short explanation of what an aspect is, then four numbered steps: what the circle is, which planet to drag, what the number means, and what the marks are (and why each angle appears on both sides).
+- **Drop-down menus** (Month, How sure…) now match the other boxes: flat, square, with a thin gold arrow, instead of the browser's shiny default button.
+- The explanation box on narrow screens now docks on the screen edge that has room, so it never covers the wheel.
+
+**AI vs me**
+- Me: all five points came from using the site myself.
+- Claude: the approach for each (checking the whole time window, the session-based back button, the labels) and the code.

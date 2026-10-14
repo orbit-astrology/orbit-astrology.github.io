@@ -73,5 +73,17 @@ export function runChecks() {
   results.push({ case: 'Unknown birth time', item: 'Moon marked uncertain (Virgo or Libra)', reference: 'Virgo, Libra', actual: moon.possibleSigns.join(', '), pass: moon.uncertain && moon.possibleSigns.join(', ') === 'Virgo, Libra' });
   results.push({ case: 'Unknown birth time', item: 'No Ascendant or houses invented', reference: 'none', actual: unknown.chart.angles || unknown.chart.houses ? 'present' : 'none', pass: !unknown.chart.angles && !unknown.chart.houses });
 
+  // Approximate birth time: the planets stay exactly as at the given
+  // time, and the Rising sign lists every sign it could be in the window.
+  const exact = calculateChart(vettel.birth).chart;
+  const rough = calculateChart({ ...vettel.birth, margin: 120 }).chart;
+  const samePlanets = exact.bodies.every((b, i) => b.longitude === rough.bodies[i].longitude);
+  results.push({ case: 'Approximate birth time', item: 'Planets unchanged (± 2 hours)', reference: 'same', actual: samePlanets ? 'same' : 'different', pass: samePlanets });
+  const ascList = rough.angles.ascendant.possibleSigns;
+  results.push({ case: 'Approximate birth time', item: 'Rising options include the exact Rising', reference: exact.angles.ascendant.sign, actual: ascList.join(', '), pass: ascList.includes(exact.angles.ascendant.sign) && rough.angles.ascendant.uncertain === (ascList.length > 1) });
+  results.push({ case: 'Approximate birth time', item: '± 2 hours spans more than one Rising sign', reference: '2 or more', actual: String(ascList.length), pass: ascList.length >= 2 });
+  const zero = calculateChart({ ...vettel.birth, margin: 0 }).chart;
+  results.push({ case: 'Approximate birth time', item: 'A margin of 0 is an exact time', reference: 'exact', actual: zero.utcRange ? 'range' : 'exact', pass: !zero.utcRange && !zero.angles.ascendant.uncertain });
+
   return results;
 }

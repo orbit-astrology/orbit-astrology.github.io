@@ -8,12 +8,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Manrope:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/tokens.css?v=202610112316">
-  <link rel="stylesheet" href="css/base.css?v=202610112316">
-  <link rel="stylesheet" href="css/wheel.css?v=202610112316">
-  <link rel="stylesheet" href="css/birth-form.css?v=202610112316">
-  <link rel="stylesheet" href="css/chart.css?v=202610112316">
-  <link rel="stylesheet" href="css/connections.css?v=202610112316">
+  <link rel="stylesheet" href="css/tokens.css?v=202610141025">
+  <link rel="stylesheet" href="css/base.css?v=202610141025">
+  <link rel="stylesheet" href="css/wheel.css?v=202610141025">
+  <link rel="stylesheet" href="css/birth-form.css?v=202610141025">
+  <link rel="stylesheet" href="css/chart.css?v=202610141025">
+  <link rel="stylesheet" href="css/connections.css?v=202610141025">
 </head>
 <body class="page-connections">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -132,6 +132,17 @@
                 <span aria-hidden="true" class="time-colon">:</span>
                 <div><label for="friend-minute" class="small-label">Minute</label><input id="friend-minute" type="number" inputmode="numeric" min="0" max="59" placeholder="MM"></div>
               </div>
+              <div class="margin-field" id="friend-margin-field">
+                <label for="friend-margin" class="small-label">How sure are you about this time?</label>
+                <select id="friend-margin">
+                  <option value="0">Exact (for example, from a birth certificate)</option>
+                  <option value="15">Roughly: give or take 15 minutes</option>
+                  <option value="30">Roughly: give or take 30 minutes</option>
+                  <option value="60">Roughly: give or take 1 hour</option>
+                  <option value="120">Roughly: give or take 2 hours</option>
+                </select>
+                <p class="hint" id="friend-margin-hint" hidden>Good to know. Planets barely move in a few hours, but the Rising sign and houses change quickly, so where they could differ ORBIT will show you every option instead of guessing. <button type="button" class="term" data-term="approximate-time">Why?</button></p>
+              </div>
               <label class="checkbox"><input id="friend-time-unknown" type="checkbox"> I don’t know their birth time</label>
               <p class="hint" id="friend-time-hint" hidden>That’s fine. Their planets will still be right, but their Moon moves fast, so any link with it is marked “might not be exact”.
                 <button type="button" class="term" data-term="unknown-time">Why?</button></p>
@@ -225,6 +236,6 @@
     </div>
   </footer>
 
-  <script type="module" src="js/pages/connections.js?v=202610112316"></script>
+  <script type="module" src="js/pages/connections.js?v=202610141025"></script>
 </body>
 </html>

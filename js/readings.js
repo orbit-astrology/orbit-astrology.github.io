@@ -16,11 +16,40 @@
 import {
   PLANETS, PLANET_DETAIL, SIGNS, SIGN_DETAIL, HOUSES, SLOW_PLANETS,
   ASPECT_TEXT, SUN_IN, MOON_IN, RISING_IN, degreePlace,
-} from './content/basics.js?v=202610112316';
+} from './content/basics.js?v=202610141025';
 
 export const ORDER = ['sun', 'moon', 'rising', 'mercury', 'venus', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto', 'midheaven'];
 
 export const ordinal = (n) => n + (n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th');
+
+// ['Leo', 'Virgo', 'Libra'] → "Leo, Virgo or Libra"
+export const orList = (items) => (items.length > 1 ? `${items.slice(0, -1).join(', ')} or ${items.at(-1)}` : items[0]);
+
+// The Rising sign as text: "Scorpio", "Scorpio or Sagittarius" (approximate
+// time), or null when there's no birth time.
+export function risingText(chart) {
+  if (!chart.angles) return null;
+  const asc = chart.angles.ascendant;
+  return asc.uncertain ? orList(asc.possibleSigns) : asc.sign;
+}
+
+// "give or take 1 hour" for a margin of 60 minutes (approximate time).
+export function marginText(minutes) {
+  if (!minutes) return '';
+  if (minutes < 60) return `give or take ${minutes} minutes`;
+  const hours = minutes / 60;
+  return `give or take ${hours} hour${hours === 1 ? '' : 's'}`;
+}
+
+// A planet's house as text: "3rd house" or "3rd or 4th house".
+export function houseText(p) {
+  if (!p.house) return null;
+  if (!p.houseUncertain) return `${ordinal(p.house)} house`;
+  // In number order ("5th or 6th"), but 12th before 1st, since the 1st follows the 12th.
+  const list = [...p.possibleHouses].sort((x, y) => x - y);
+  if (list.includes(1) && list.includes(12)) list.unshift(list.pop());
+  return `${orList(list.map(ordinal))} house`;
+}
 const nameOf = (id) => id[0].toUpperCase() + id.slice(1);
 
 // "14°" plus where that sits in the sign, e.g. "14° (around the middle of the sign)"
@@ -43,6 +72,7 @@ export function placements(chart) {
         what: id === 'rising' ? 'how you come across' : 'your direction in life',
         sign: point.sign, degree: point.degree, longitude: point.longitude,
         house: id === 'rising' ? 1 : 10,
+        uncertain: Boolean(point.uncertain), possibleSigns: point.possibleSigns ?? [point.sign],
       });
       continue;
     }
@@ -53,6 +83,7 @@ export function placements(chart) {
       house: b.house ?? null, retrograde: b.retrograde,
       uncertain: Boolean(b.uncertain), possibleSigns: b.possibleSigns ?? [b.sign],
       approximate: Boolean(b.approximate),
+      houseUncertain: Boolean(b.houseUncertain), possibleHouses: b.possibleHouses ?? (b.house ? [b.house] : []),
     });
   }
   return list;
@@ -77,6 +108,19 @@ export function connections(chart, id) {
 export function reading(chart, p) {
   const parts = [];
 
+  if (p.kind === 'angle' && p.uncertain) {
+    // Approximate birth time: say honestly which signs it could be.
+    const what = p.id === 'rising' ? 'Rising sign' : 'Midheaven';
+    parts.push(`Your birth time is approximate, and your ${what} moves into a new sign within that time window, so it could be ${orList(p.possibleSigns)}.`);
+    if (p.id === 'rising') {
+      for (const sign of p.possibleSigns) parts.push(`If it’s ${sign}: ${RISING_IN[sign]}`);
+      parts.push('Your Rising sign is the sign that was coming up over the eastern horizon when you were born: the first impression you give. If you can find your exact birth time (it’s often on your birth certificate), ORBIT can tell you which one it is.');
+    } else {
+      parts.push('Your Midheaven was the highest point of the sky when you were born, linked to your direction in life. ' + p.possibleSigns.map((sign) => `If it’s ${sign}, you’re drawn to a path you can follow ${SIGNS[sign].how}.`).join(' '));
+    }
+    return parts;
+  }
+
   if (p.id === 'rising') {
     parts.push(RISING_IN[p.sign]);
     parts.push(`Your Rising sign is the sign that was coming up over the eastern horizon at the moment you were born. It’s like the front door of your chart: the first impression you give, and the style you use to meet new situations. ${SIGN_DETAIL[p.sign]} So you tend to meet the world ${SIGNS[p.sign].how}.`);
@@ -90,9 +134,9 @@ export function reading(chart, p) {
   }
 
   if (p.uncertain) {
-    const [a, b] = p.possibleSigns;
-    parts.push(`${PLANET_DETAIL[p.id]} Your ${p.name} changed sign on the day you were born, so without your birth time it could be in ${a} or ${b}.`);
-    parts.push(`If it’s ${a}: you’d tend to show this side of you ${SIGNS[a].how}. If it’s ${b}: ${SIGNS[b].how}.`);
+    const when = chart.timeKnown ? 'within your approximate birth time' : 'on the day you were born, so without your birth time';
+    parts.push(`${PLANET_DETAIL[p.id]} Your ${p.name} changed sign ${when}, so it could be in ${orList(p.possibleSigns)}.`);
+    parts.push(p.possibleSigns.map((sign) => `If it’s ${sign}: you’d tend to show this side of you ${SIGNS[sign].how}.`).join(' '));
     return parts;
   }
 
@@ -101,7 +145,9 @@ export function reading(chart, p) {
 
   parts.push(`${PLANET_DETAIL[p.id]} ${SIGN_DETAIL[p.sign]} So your ${p.name} works ${SIGNS[p.sign].how}.`);
 
-  if (p.house) {
+  if (p.house && p.houseUncertain) {
+    parts.push(`Your birth time is approximate, so it could sit in your ${houseText(p)}: ${p.possibleHouses.map((h) => `the ${ordinal(h)} is about ${HOUSES[h]}`).join('; ')}. That’s where this part of you tends to show up most.`);
+  } else if (p.house) {
     parts.push(`It sits in your ${ordinal(p.house)} house, the area of ${HOUSES[p.house]}. That’s where this part of you tends to show up most.`);
   }
   if (SLOW_PLANETS.includes(p.id)) {
@@ -122,6 +168,6 @@ export function grammar(p) {
     { text: 'Your ' }, { text: p.name, role: 'what', note: p.what },
     { text: ' in ' }, { text: p.sign, role: 'how', note: SIGNS[p.sign].how },
   ];
-  if (p.house) pieces.push({ text: ' in your ' }, { text: `${ordinal(p.house)} house`, role: 'where', note: HOUSES[p.house] });
+  if (p.house && !p.houseUncertain) pieces.push({ text: ' in your ' }, { text: `${ordinal(p.house)} house`, role: 'where', note: HOUSES[p.house] });
   return pieces;
 }

@@ -10,17 +10,18 @@
 // the address means the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610112316';
-import { drawWheel } from '../wheel.js?v=202610112316';
-import { placeTip } from '../tip-position.js?v=202610112316';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610112316';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610112316';
-import { setUpBirthForm } from '../birth-form.js?v=202610112316';
-import { makeShareLink, readShareCode } from '../share.js?v=202610112316';
-import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202610112316';
-import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610112316';
-import { PERSONAL, LENS_TAGS, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610112316';
-import { PLANETS, SIGNS } from '../content/basics.js?v=202610112316';
+import { calculateChart } from '../astro/chart.js?v=202610141025';
+import { drawWheel } from '../wheel.js?v=202610141025';
+import { placeTip } from '../tip-position.js?v=202610141025';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610141025';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610141025';
+import { setUpBirthForm } from '../birth-form.js?v=202610141025';
+import { makeShareLink, readShareCode } from '../share.js?v=202610141025';
+import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202610141025';
+import { risingText } from '../readings.js?v=202610141025';
+import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610141025';
+import { PERSONAL, LENS_TAGS, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610141025';
+import { PLANETS, SIGNS } from '../content/basics.js?v=202610141025';
 
 const $ = (id) => document.getElementById(id);
 const nameOf = (id) => id[0].toUpperCase() + id.slice(1);
@@ -84,7 +85,7 @@ function route() {
 // "Sun in Virgo · Moon in Leo · Rising Scorpio" for one person.
 function bigThree(chart) {
   const body = (id) => chart.bodies.find((b) => b.id === id);
-  const rising = chart.angles ? `Rising ${chart.angles.ascendant.sign}` : 'Rising unknown (no birth time)';
+  const rising = chart.angles ? `Rising ${risingText(chart)}` : 'Rising unknown (no birth time)';
   return `Sun in ${signText(body('sun'))} · Moon in ${signText(body('moon'))} · ${rising}`;
 }
 
@@ -338,7 +339,7 @@ function fillSideBySide() {
     body.append(tr);
   };
   const sign = (chart, id) => signText(chart.bodies.find((b) => b.id === id));
-  const rising = (chart) => (chart.angles ? chart.angles.ascendant.sign : 'Needs a birth time');
+  const rising = (chart) => risingText(chart) ?? 'Needs a birth time';
   row('Sun', PLANETS.sun.symbol, sign(myChart, 'sun'), sign(theirChart, 'sun'));
   row('Moon', PLANETS.moon.symbol, sign(myChart, 'moon'), sign(theirChart, 'moon'));
   row('Rising', '', rising(myChart), rising(theirChart));

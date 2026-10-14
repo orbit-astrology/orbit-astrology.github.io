@@ -7,9 +7,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Manrope:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/tokens.css?v=202610112316">
-  <link rel="stylesheet" href="css/base.css?v=202610112316">
-  <link rel="stylesheet" href="css/explore.css?v=202610112316">
+  <link rel="stylesheet" href="css/tokens.css?v=202610141025">
+  <link rel="stylesheet" href="css/base.css?v=202610141025">
+  <link rel="stylesheet" href="css/explore.css?v=202610141025">
 </head>
 <body class="page-explore">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -57,7 +57,15 @@
         <div class="playground-text">
           <p class="eyebrow">Try it</p>
           <h2 id="playground-title" class="section-title">The aspect <em>playground</em></h2>
-          <p class="lede">An aspect is the angle between two planets. Drag the hollow planet around the circle (or select it and use the arrow keys). When it reaches one of the five special angles, a line appears and tells you what that angle means.</p>
+          <p class="lede">In a chart, planets that sit at certain distances from each other are said to “talk” to each other. That distance, measured as an angle around the circle, is called an
+            <button type="button" class="term" data-term="aspect">aspect</button>. Here you can see how it works with just two planets.</p>
+          <ol class="playground-steps">
+            <li>The circle is the sky all around the Earth, like the wheel of your chart. The <strong>Sun</strong> (the filled circle at the top) stays still.</li>
+            <li><strong>Drag the Moon</strong> (the hollow circle) around the circle, or select it and use the arrow keys.</li>
+            <li>The big number shows how far apart they are, in degrees. A full circle is 360°.</li>
+            <li>The little marks are the five special angles: 0°, 60°, 90°, 120° and 180°. Each one appears on both sides, because you can measure from the Sun either way round. When the Moon reaches one, a line appears and the text explains what it means.</li>
+          </ol>
+          <p class="quiet playground-link">In your own chart the same thing happens between all your planets: those are the lines inside your wheel.</p>
           <div class="playground-readout" id="playground-readout" aria-live="polite"></div>
         </div>
         <div class="playground-wheel pg" id="playground-wheel"></div>
@@ -86,6 +94,6 @@
     </div>
   </footer>
 
-  <script type="module" src="js/pages/explore.js?v=202610112316"></script>
+  <script type="module" src="js/pages/explore.js?v=202610141025"></script>
 </body>
 </html>

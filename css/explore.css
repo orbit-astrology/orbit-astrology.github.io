@@ -45,6 +45,9 @@
 .playground { display: flex; flex-wrap: wrap; align-items: center; gap: 32px 64px; padding-block: 56px 16px; }
 .playground-text { flex: 1 1 380px; display: flex; flex-direction: column; gap: 18px; }
 .playground-wheel { flex: 0 1 auto; width: min(420px, calc(100vh - 160px), 100%); margin-inline: auto; touch-action: none; }
+.playground-steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 6px; max-width: 62ch; }
+.playground-steps li::marker { color: var(--champagne); font-weight: 700; }
+.playground-link { margin: 0; font-size: 15px; max-width: 62ch; }
 .playground-readout { min-height: 150px; border-top: 1px solid var(--champagne); padding-top: 18px; }
 .playground-readout .angle { font: 500 34px/1 var(--serif); margin: 0 0 8px; }
 .playground-readout .aspect-name { font: 650 16px var(--sans); color: var(--champagne); margin: 0 0 4px; }

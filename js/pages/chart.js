@@ -9,16 +9,16 @@
 //   4. write "Your chart, explained": one section per placement
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610112316';
-import { formatOffset } from '../astro/time.js?v=202610112316';
-import { drawWheel } from '../wheel.js?v=202610112316';
-import { placeTip } from '../tip-position.js?v=202610112316';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610112316';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610112316';
-import { loadBirth } from '../store.js?v=202610112316';
-import { saveButton } from '../save-button.js?v=202610112316';
-import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202610112316';
-import { placements, reading, grammar, connections, degreeText, ordinal } from '../readings.js?v=202610112316';
+import { calculateChart } from '../astro/chart.js?v=202610141025';
+import { formatOffset } from '../astro/time.js?v=202610141025';
+import { drawWheel } from '../wheel.js?v=202610141025';
+import { placeTip } from '../tip-position.js?v=202610141025';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610141025';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610141025';
+import { loadBirth } from '../store.js?v=202610141025';
+import { saveButton } from '../save-button.js?v=202610141025';
+import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202610141025';
+import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202610141025';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
@@ -48,7 +48,9 @@ if (result.status !== 'ok') {
 const chart = result.chart;
 const all = placements(chart);
 const byId = Object.fromEntries(all.map((p) => [p.id, p]));
-const signLabel = (p) => (p.uncertain ? p.possibleSigns.join(' or ') : p.sign);
+const signLabel = (p) => (p.uncertain ? orList(p.possibleSigns) : p.sign);
+// Which explanation fits: no birth time at all, or an approximate one.
+const timeTerm = chart.timeKnown ? 'approximate-time' : 'unknown-time';
 
 // --- 2. The wheel ----------------------------------------------------
 
@@ -72,12 +74,12 @@ document.addEventListener('pointerdown', (e) => {
 // What the box says for each kind of thing on the wheel.
 function planetTip(p) {
   const meta = [degreeText(p.degree)];
-  if (p.house) meta.push(`${ordinal(p.house)} house`);
+  if (p.house) meta.push(houseText(p));
   if (p.retrograde) meta.push('retrograde');
   const how = p.uncertain ? 'depends on your birth time' : SIGNS[p.sign].how;
   return {
     title: `${p.name} in ${signLabel(p)}`,
-    meta: p.uncertain ? 'The Moon changed sign that day' : meta.join(' · '),
+    meta: p.uncertain ? 'Depends on your birth time' : meta.join(' · '),
     text: `${capital(p.what)}: ${how}.`,
     action: lastPointer === 'touch' ? 'Tap again to read the full explanation ↓' : 'Click to read the full explanation ↓',
   };
@@ -106,8 +108,8 @@ function houseTip(n) {
 function angleTip(id) {
   const p = byId[id];
   return id === 'rising'
-    ? { title: `Rising sign: ${p.sign}`, meta: 'ASC, the Ascendant', text: 'The sign coming up over the horizon when you were born: how you come across.', action: 'Click to read more ↓' }
-    : { title: `Midheaven: ${p.sign}`, meta: 'MC, the top of the chart', text: 'Linked to your direction in life and how you want to be seen.', action: 'Click to read more ↓' };
+    ? { title: `Rising sign: ${signLabel(p)}`, meta: 'ASC, the Ascendant', text: 'The sign coming up over the horizon when you were born: how you come across.', action: 'Click to read more ↓' }
+    : { title: `Midheaven: ${signLabel(p)}`, meta: 'MC, the top of the chart', text: 'Linked to your direction in life and how you want to be seen.', action: 'Click to read more ↓' };
 }
 
 function showTip(owner, content) {
@@ -159,7 +161,7 @@ for (const g of svg.querySelectorAll('.planet')) {
   const p = byId[g.dataset.body];
   g.setAttribute('tabindex', '0');
   g.setAttribute('role', 'button');
-  g.setAttribute('aria-label', `${p.name} in ${signLabel(p)}, ${p.uncertain ? '' : `${Math.floor(p.degree)} degrees`}${p.house ? `, ${ordinal(p.house)} house` : ''}. Open its explanation.`);
+  g.setAttribute('aria-label', `${p.name} in ${signLabel(p)}, ${p.uncertain ? '' : `${Math.floor(p.degree)} degrees`}${p.house ? `, ${houseText(p)}` : ''}. Open its explanation.`);
   const enter = () => { showTip(g, planetTip(p)); focusPlanet(p.id); };
   const leave = () => { if (lastPointer === 'touch') return; hideTip(); unfocus(); };
   g.addEventListener('mouseenter', enter);
@@ -226,7 +228,7 @@ for (const p of all) {
     nameCell,
     make('td', 'quiet', capital(p.what)),
     make('td', '', p.uncertain ? `${signLabel(p)} (depends on birth time)` : `${p.sign} ${Math.floor(p.degree)}°`),
-    make('td', '', p.house ? `${ordinal(p.house)} · ${HOUSES[p.house]}` : '–'),
+    make('td', '', p.houseUncertain ? `${houseText(p)} (approximate time)` : p.house ? `${ordinal(p.house)} · ${HOUSES[p.house]}` : '–'),
     linkCell,
   );
   body.append(tr);
@@ -269,7 +271,8 @@ function howWeKnow(p) {
   if (p.kind === 'planet' && p.house && chart.houses) {
     const h = chart.houses[p.house - 1].longitude;
     const next = chart.houses[p.house % 12].longitude;
-    steps.push(`Your ${ordinal(p.house)} house runs from ${h.toFixed(1)}° to ${next.toFixed(1)}°, so it falls in that house.`);
+    steps.push(`Your ${ordinal(p.house)} house runs from ${h.toFixed(1)}° to ${next.toFixed(1)}°, so at the time you gave it falls in that house.`);
+    if (p.houseUncertain) steps.push(`Your time is approximate, so ORBIT checked the whole window: during it, this falls in your ${houseText(p)}.`);
   }
   return steps;
 }
@@ -294,9 +297,10 @@ for (const p of all) {
   head.append(h3);
   const meta = make('p', 'reading-meta');
   if (!p.uncertain) meta.append(termButton('degree', `${Math.floor(p.degree)}°`), ` (${degreeText(p.degree).split('(')[1]}`);
-  if (p.kind === 'planet' && p.house) meta.append(' · ', termButton('house', `${ordinal(p.house)} house`));
+  if (p.kind === 'planet' && p.house) meta.append(' · ', termButton('house', houseText(p)));
+  if (p.houseUncertain) meta.append(' · ', termButton('approximate-time', 'approximate time'));
   if (p.retrograde) meta.append(' · ', termButton('retrograde', 'retrograde'));
-  if (p.uncertain) meta.append('Depends on your birth time · ', termButton('unknown-time', 'why?'));
+  if (p.uncertain) meta.append('Depends on your birth time · ', termButton(timeTerm, 'why?'));
   head.append(meta);
   // Save this reading to your Profile (not for the made-up sample).
   if (!birth.isSample) {

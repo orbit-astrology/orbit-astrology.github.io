@@ -13,24 +13,25 @@
 // if it doesn't hold all day, it's marked "might not be exact".
 // ---------------------------------------------------------------
 
-import { findCrossAspects } from './astro/aspects.js?v=202610112316';
-import { PLANETS } from './content/basics.js?v=202610112316';
-import { PERSONAL, PAIRS, LINK_TYPES, THEIR_WHAT, pairKey } from './content/connections.js?v=202610112316';
+import { findCrossAspects } from './astro/aspects.js?v=202610141025';
+import { PLANETS } from './content/basics.js?v=202610141025';
+import { PERSONAL, PAIRS, LINK_TYPES, THEIR_WHAT, pairKey } from './content/connections.js?v=202610141025';
 
 const nameOf = (id) => id[0].toUpperCase() + id.slice(1);
 const personal = (bodies) => bodies.filter((b) => PERSONAL.includes(b.id));
 
 // The possible versions of someone's planets: just one if the time is
-// known, or the start and end of the day if it isn't.
+// exact, or the start and end of the time window (the whole day when
+// the time is unknown, or ± the margin when it's approximate).
 function versions(chart) {
-  if (chart.timeKnown) return [personal(chart.bodies)];
+  if (!chart.utcRange) return [personal(chart.bodies)]; // exact time
   return [0, 1].map((edge) => personal(chart.bodies).map((b) => ({ ...b, longitude: b.range[edge] })));
 }
 
 // All links between two charts, tightest (strongest) first.
 export function compareCharts(you, them) {
   const links = findCrossAspects(personal(you.bodies), personal(them.bodies));
-  if (you.timeKnown && them.timeKnown) return links;
+  if (!you.utcRange && !them.utcRange) return links; // both times exact
 
   // Which links hold in every combination of start/end of the day?
   const sets = [];

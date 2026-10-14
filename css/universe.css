@@ -35,7 +35,14 @@
 .week-list { flex: 2 1 520px; min-width: 0; list-style: none; margin: 0; padding: 0; }
 .week-list li { display: flex; flex-wrap: wrap; gap: 6px 32px; padding: 16px 0; border-top: 1px solid var(--line); }
 .week-list li:first-child { border-top-color: var(--lilac); }
-.week-day { width: 110px; color: var(--lilac); margin: 0; }
+.week-day { width: 120px; color: var(--lilac); margin: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+/* Small labels: "Your chart" (personal) or "Everyone" (the same sky for all). */
+.week-tag {
+  display: inline-block; padding: 3px 7px; border: 1px solid currentColor;
+  font: 700 10.5px/1.2 var(--sans); letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap;
+}
+.week-tag.you { color: var(--champagne); }
+.week-tag.all { color: var(--bone-soft); }
 .week-text { flex: 1 1 300px; margin: 0; }
 .week-text strong { font-weight: 600; display: block; }
 .week-text span { color: var(--bone-soft); }

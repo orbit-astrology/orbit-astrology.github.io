@@ -7,15 +7,15 @@
 // so the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610112316';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610112316';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610112316';
-import { loadBirth, saveBirth, SAMPLE_BIRTH } from '../store.js?v=202610112316';
-import { saveButton } from '../save-button.js?v=202610112316';
-import { setUpPlayground } from '../playground.js?v=202610112316';
-import { TOPICS, topicById } from '../content/topics.js?v=202610112316';
-import { PLANETS, PLANET_DETAIL, SIGNS, SIGN_DETAIL, HOUSES, ASPECT_TEXT, SIGN_TRAITS } from '../content/basics.js?v=202610112316';
-import { placements, connections, degreeText, ordinal } from '../readings.js?v=202610112316';
+import { calculateChart } from '../astro/chart.js?v=202610141025';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610141025';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610141025';
+import { loadBirth, saveBirth, SAMPLE_BIRTH } from '../store.js?v=202610141025';
+import { saveButton } from '../save-button.js?v=202610141025';
+import { setUpPlayground } from '../playground.js?v=202610141025';
+import { TOPICS, topicById } from '../content/topics.js?v=202610141025';
+import { PLANETS, PLANET_DETAIL, SIGNS, SIGN_DETAIL, HOUSES, ASPECT_TEXT, SIGN_TRAITS } from '../content/basics.js?v=202610141025';
+import { placements, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202610141025';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
@@ -83,7 +83,7 @@ const planetItems = Object.keys(PLANETS).map((id) => {
   const p = byId[id];
   return {
     symbol: PLANETS[id].symbol, title: id[0].toUpperCase() + id.slice(1), text: PLANET_DETAIL[id],
-    yours: p ? `Yours: ${p.uncertain ? p.possibleSigns.join(' or ') : p.sign}${p.house ? `, ${ordinal(p.house)} house` : ''}` : null,
+    yours: p ? `Yours: ${p.uncertain ? orList(p.possibleSigns) : p.sign}${p.house ? `, ${houseText(p)}` : ''}` : null,
   };
 });
 const signItems = Object.keys(SIGNS).map((sign) => {
@@ -124,23 +124,24 @@ function placementItem(item) {
   const head = make('div', 'topic-item-head');
   if (p.symbol) head.append(make('span', 'symbol', p.symbol + '︎'));
   head.append(make('p', 'eyebrow', `${p.short} · ${p.what}`));
-  head.append(make('h2', 'topic-item-title', `${p.short} in ${p.uncertain ? p.possibleSigns.join(' or ') : p.sign}`));
+  head.append(make('h2', 'topic-item-title', `${p.short} in ${p.uncertain ? orList(p.possibleSigns) : p.sign}`));
   const meta = make('p', 'topic-item-meta');
-  if (p.uncertain) meta.append('Depends on your birth time · ', termButton('unknown-time', 'why?'));
+  if (p.uncertain) meta.append('Depends on your birth time · ', termButton(chart.timeKnown ? 'approximate-time' : 'unknown-time', 'why?'));
   else meta.append(degreeText(p.degree));
-  if (p.kind === 'planet' && p.house) meta.append(' · ', termButton('house', `${ordinal(p.house)} house`));
+  if (p.kind === 'planet' && p.house) meta.append(' · ', termButton('house', houseText(p)));
   head.append(meta);
 
   const body = make('div', 'topic-item-body');
   if (p.uncertain) {
-    const [a, b] = p.possibleSigns;
-    body.append(make('p', 'lens', `Your ${p.name} changed sign on the day you were born, so it could be in ${a} or ${b}.`));
-    body.append(make('p', '', `If it’s ${a}: ${item.lens({ ...p, sign: a })}`));
-    body.append(make('p', '', `If it’s ${b}: ${item.lens({ ...p, sign: b })}`));
+    const why = chart.timeKnown ? 'your birth time is approximate, and it changes sign within that window' : 'it changed sign on the day you were born';
+    body.append(make('p', 'lens', `Your ${p.name} could be in ${orList(p.possibleSigns)}, because ${why}.`));
+    for (const sign of p.possibleSigns) body.append(make('p', '', `If it’s ${sign}: ${item.lens({ ...p, sign })}`));
   } else {
     body.append(make('p', 'lens', item.lens(p)));
     if (p.kind === 'planet' && p.house) {
-      body.append(make('p', 'quiet', `It sits in your ${ordinal(p.house)} house, so this shows up most in the area of ${HOUSES[p.house]}.`));
+      body.append(make('p', 'quiet', p.houseUncertain
+        ? `Your birth time is approximate, so it could sit in your ${houseText(p)}: ${p.possibleHouses.map((h) => HOUSES[h]).join(', or ')}.`
+        : `It sits in your ${ordinal(p.house)} house, so this shows up most in the area of ${HOUSES[p.house]}.`));
     }
   }
   const link = make('a', 'text-link', 'Read the full explanation in My Chart →');

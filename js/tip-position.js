@@ -44,10 +44,16 @@ export function placeTip(tip, owner, wheel, area) {
     return;
   }
 
-  // Otherwise stick it to the top or bottom of the screen, whichever is
-  // further from the thing you're pointing at, so that stays visible.
+  // Otherwise stick it to the top or bottom edge of the screen: an edge
+  // with enough empty room beside the wheel if there is one, or else the
+  // edge further from the thing you're pointing at, so that stays visible.
   tip.classList.add('docked');
-  tip.classList.toggle('docked-top', o.top + o.height / 2 > window.innerHeight / 2);
+  const roomAbove = w.top - 8 >= height;
+  const roomBelow = window.innerHeight - w.bottom - 8 >= height;
+  const top = roomAbove && !roomBelow ? true
+    : roomBelow && !roomAbove ? false
+      : o.top + o.height / 2 > window.innerHeight / 2;
+  tip.classList.toggle('docked-top', top);
   tip.style.left = '';
   tip.style.top = '';
 }

@@ -13,9 +13,9 @@
 // "friend-place" on Connections.
 // ---------------------------------------------------------------
 
-import { calculateChart } from './astro/chart.js?v=202610112316';
-import { searchPlaces } from './astro/places.js?v=202610112316';
-import { formatOffset } from './astro/time.js?v=202610112316';
+import { calculateChart } from './astro/chart.js?v=202610141025';
+import { searchPlaces } from './astro/places.js?v=202610141025';
+import { formatOffset } from './astro/time.js?v=202610141025';
 
 // Options:
 //   form, prefix  – the <form> and the start of its ids
@@ -34,7 +34,11 @@ export function setUpBirthForm({ form, prefix, whose = 'your', extraFields = [],
     $('hour').disabled = unknown;
     $('minute').disabled = unknown;
     $('time-hint').hidden = !unknown;
+    $('margin-field').hidden = unknown; // "how sure?" only makes sense with a time
   });
+
+  // --- "How sure are you about this time?" (approximate time) ---
+  $('margin').addEventListener('change', () => { $('margin-hint').hidden = $('margin').value === '0'; });
 
   // --- Birthplace search ---
   const input = $('place');
@@ -148,6 +152,8 @@ export function setUpBirthForm({ form, prefix, whose = 'your', extraFields = [],
       minute: timeKnown ? number('minute') : undefined,
       place: chosenPlace,
     };
+    const margin = Number($('margin').value);
+    if (timeKnown && margin > 0) birth.margin = margin; // ± minutes
     if (chosenOffset !== null) birth.offsetMinutes = chosenOffset;
     return birth;
   }
@@ -222,6 +228,9 @@ export function setUpBirthForm({ form, prefix, whose = 'your', extraFields = [],
       $('time-hint').hidden = birth.timeKnown;
       $('hour').value = birth.timeKnown ? birth.hour : '';
       $('minute').value = birth.timeKnown ? birth.minute : '';
+      $('margin').value = String(birth.margin || 0);
+      $('margin-field').hidden = !birth.timeKnown;
+      $('margin-hint').hidden = !birth.margin;
       chosenPlace = birth.place;
       input.value = birth.place.label;
       status.textContent = `Selected: ${birth.place.label} (time zone ${birth.place.timeZone}).`;
@@ -234,6 +243,8 @@ export function setUpBirthForm({ form, prefix, whose = 'your', extraFields = [],
       $('hour').disabled = false;
       $('minute').disabled = false;
       $('time-hint').hidden = true;
+      $('margin-field').hidden = false;
+      $('margin-hint').hidden = true;
       $('ambiguous').hidden = true;
       status.textContent = defaultStatus;
       showError('');

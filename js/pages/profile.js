@@ -11,13 +11,13 @@
 // (localStorage) and the page says so honestly.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610112316';
-import { setUpGlossary } from '../glossary.js?v=202610112316';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610112316';
-import { setUpBirthForm } from '../birth-form.js?v=202610112316';
-import { placements } from '../readings.js?v=202610112316';
-import { topicById } from '../content/topics.js?v=202610112316';
-import { loadBirth, saveBirth, loadPeople, loadSaved, saveSaved, ALL_KEYS } from '../store.js?v=202610112316';
+import { calculateChart } from '../astro/chart.js?v=202610141025';
+import { setUpGlossary } from '../glossary.js?v=202610141025';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610141025';
+import { setUpBirthForm } from '../birth-form.js?v=202610141025';
+import { placements, risingText, marginText } from '../readings.js?v=202610141025';
+import { topicById } from '../content/topics.js?v=202610141025';
+import { loadBirth, saveBirth, loadPeople, loadSaved, saveSaved, ALL_KEYS } from '../store.js?v=202610141025';
 
 const $ = (id) => document.getElementById(id);
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -73,9 +73,10 @@ function showDetails() {
   const sign = (b) => (b.uncertain ? b.possibleSigns.join(' or ') : b.sign);
   row('Name', me.name || 'Not added');
   row('Born', `${me.day} ${MONTHS[me.month - 1]} ${me.year}`);
-  row('Time', me.timeKnown ? `${two(me.hour)}:${two(me.minute)}` : 'Unknown (no Rising sign or houses)');
+  row('Time', !me.timeKnown ? 'Unknown (no Rising sign or houses)'
+    : me.margin ? `Around ${two(me.hour)}:${two(me.minute)} (${marginText(me.margin)})` : `${two(me.hour)}:${two(me.minute)}`);
   row('Place', me.place.label);
-  row('Big Three', `Sun in ${sign(body('sun'))} · Moon in ${sign(body('moon'))} · Rising ${chart.angles ? chart.angles.ascendant.sign : 'unknown'}`);
+  row('Big Three', `Sun in ${sign(body('sun'))} · Moon in ${sign(body('moon'))} · Rising ${risingText(chart) ?? 'unknown'}`);
   $('details-note').textContent = '';
   $('edit-details').textContent = 'Edit my details';
 }

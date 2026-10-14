@@ -10,12 +10,12 @@
 // object this file returns, so they always show the same data.
 // ---------------------------------------------------------------
 
-import * as Astronomy from '../vendor/astronomy.js?v=202610112316';
-import { SETTINGS, BODIES } from './settings.js?v=202610112316';
-import { normalize, signOf } from './zodiac.js?v=202610112316';
-import { localToUtc, isRealDate } from './time.js?v=202610112316';
-import { placidusHouses, houseOf } from './houses.js?v=202610112316';
-import { findAspects } from './aspects.js?v=202610112316';
+import * as Astronomy from '../vendor/astronomy.js?v=202610141025';
+import { SETTINGS, BODIES } from './settings.js?v=202610141025';
+import { normalize, signOf } from './zodiac.js?v=202610141025';
+import { localToUtc, isRealDate } from './time.js?v=202610141025';
+import { placidusHouses, houseOf } from './houses.js?v=202610141025';
+import { findAspects } from './aspects.js?v=202610141025';
 
 // --- 1. Raw astronomy ------------------------------------------
 
@@ -108,6 +108,10 @@ export function calculateChart(birth, { now = new Date() } = {}) {
   let offsetMinutes;
   let utcRange = null;
 
+  // An approximate time ("around 9:00, give or take an hour") is a
+  // known time plus a margin in minutes. 0 means exact.
+  const margin = timeKnown && Number.isInteger(birth.margin) && birth.margin > 0 ? Math.min(birth.margin, 180) : 0;
+
   if (timeKnown) {
     const result = localToUtc(birth, place.timeZone);
     if (result.status === 'nonexistent') {
@@ -122,6 +126,10 @@ export function calculateChart(birth, { now = new Date() } = {}) {
     } else {
       utc = result.utc;
       offsetMinutes = result.offsetMinutes;
+    }
+    if (margin) {
+      // Look at the whole window: from `margin` minutes before to after.
+      utcRange = [new Date(utc.getTime() - margin * 60000), new Date(utc.getTime() + margin * 60000)];
     }
   } else {
     // Unknown time: look at the whole local day. Planets are drawn
@@ -143,12 +151,12 @@ export function calculateChart(birth, { now = new Date() } = {}) {
 
   const bodies = positionsAt(utc);
 
-  if (!timeKnown) {
+  if (utcRange) {
     const atStart = positionsAt(utcRange[0]);
     const atEnd = positionsAt(utcRange[1]);
     bodies.forEach((b, i) => {
       const signs = [...new Set([atStart[i].sign, b.sign, atEnd[i].sign])];
-      b.approximate = true;            // exact degree depends on the unknown time
+      b.approximate = true;            // exact degree depends on the time
       b.uncertain = signs.length > 1;  // even the sign could be different
       b.possibleSigns = signs;
       b.range = [atStart[i].longitude, atEnd[i].longitude];
@@ -173,11 +181,41 @@ export function calculateChart(birth, { now = new Date() } = {}) {
       houses = h.cusps.map((longitude, i) => ({ number: i + 1, longitude, ...signOf(longitude) }));
       for (const b of bodies) b.house = houseOf(b.longitude, h.cusps);
     }
+
+    // Approximate time: the Rising sign and houses move quickly (about one
+    // sign every two hours), so check 9 moments across the window and keep
+    // every sign or house that appears, in order.
+    if (margin) {
+      const ascSigns = [];
+      const mcSigns = [];
+      const houseLists = bodies.map(() => []);
+      const addOnce = (list, value) => { if (!list.includes(value)) list.push(value); };
+      for (let i = 0; i <= 8; i++) {
+        const moment = new Date(utcRange[0].getTime() + ((utcRange[1] - utcRange[0]) * i) / 8);
+        const hs = housesAt(moment, place.latitude, place.longitude);
+        addOnce(ascSigns, signOf(hs.ascendant).sign);
+        addOnce(mcSigns, signOf(hs.midheaven).sign);
+        if (houses && !hs.error) {
+          positionsAt(moment).forEach((p, n) => addOnce(houseLists[n], houseOf(p.longitude, hs.cusps)));
+        }
+      }
+      angles.ascendant.possibleSigns = ascSigns;
+      angles.ascendant.uncertain = ascSigns.length > 1;
+      angles.midheaven.possibleSigns = mcSigns;
+      angles.midheaven.uncertain = mcSigns.length > 1;
+      if (houses) {
+        bodies.forEach((b, n) => {
+          b.possibleHouses = houseLists[n];
+          b.houseUncertain = houseLists[n].length > 1;
+        });
+      }
+    }
   }
 
   let aspects = findAspects(bodies);
-  if (!timeKnown) {
-    // An aspect is only certain if it holds all day long.
+  if (utcRange) {
+    // An aspect is only certain if it holds for the whole time window
+    // (the whole day when the time is unknown).
     const dayAspects = [positionsAt(utcRange[0]), positionsAt(utcRange[1])]
       .map((pts) => new Set(findAspects(pts).map((a) => a.id)));
     aspects = aspects.map((a) => ({ ...a, uncertain: !dayAspects.every((s) => s.has(a.id)) }));
@@ -189,6 +227,7 @@ export function calculateChart(birth, { now = new Date() } = {}) {
       settings: { ...SETTINGS },
       input: structuredClone(birth),
       timeKnown: Boolean(timeKnown),
+      timeMargin: margin,             // 0 = exact time; otherwise ± minutes
       utc: utc.toISOString(),
       utcRange: utcRange && utcRange.map((d) => d.toISOString()),
       offsetMinutes,

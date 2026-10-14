@@ -84,6 +84,10 @@ export const GLOSSARY = {
     term: 'Strong link',
     text: 'The angle between the two planets is almost exact (within 1.5°). Astrologers say the closer the angle, the more you notice it.',
   },
+  'approximate-time': {
+    term: 'An approximate birth time',
+    text: 'The planets move slowly, so a rough time is enough for them. But the Rising sign changes about every two hours and the houses move with it. With a rough time, ORBIT checks the whole window and shows every Rising sign or house you could have, instead of picking one.',
+  },
   'unknown-time': {
     term: 'Why we need your birth time',
     text: 'The Moon moves through a whole sign in about two and a half days, and the Rising sign changes every two hours or so. Without your birth time, ORBIT can’t know these for sure, so it tells you instead of guessing.',

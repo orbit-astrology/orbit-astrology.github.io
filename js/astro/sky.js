@@ -13,9 +13,9 @@
 // would fill the week with small events.
 // ---------------------------------------------------------------
 
-import { positionsAt } from './chart.js?v=202610112316';
-import { findAspects, aspectBetween } from './aspects.js?v=202610112316';
-import { houseOf } from './houses.js?v=202610112316';
+import { positionsAt } from './chart.js?v=202610141025';
+import { findAspects, aspectBetween } from './aspects.js?v=202610141025';
+import { houseOf } from './houses.js?v=202610141025';
 
 const HOUR = 3600000;
 const MOVERS = ['sun', 'mercury', 'venus', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto'];
@@ -45,7 +45,8 @@ function natalTargets(chart) {
   const moon = chart.bodies.find((b) => b.id === 'moon');
   targets.push({ id: 'sun', longitude: sun.longitude });
   if (chart.timeKnown || !moon.uncertain) targets.push({ id: 'moon', longitude: moon.longitude });
-  if (chart.angles) targets.push({ id: 'rising', longitude: chart.angles.ascendant.longitude });
+  // The Rising sign only counts with an exact time: it moves about 1° every 4 minutes.
+  if (chart.angles && !chart.timeMargin) targets.push({ id: 'rising', longitude: chart.angles.ascendant.longitude });
   return targets;
 }
 
@@ -91,9 +92,9 @@ export function weeklyEvents(chart, now = new Date()) {
   }
   events.push(...best.values());
 
-  // Add the house each new sign position falls in (only if birth time is known).
+  // Add the house each new sign position falls in (only with an exact birth time).
   for (const e of events) {
-    if (e.type === 'ingress' && chart.houses) e.house = houseOf(e.longitude, chart.houses.map((h) => h.longitude));
+    if (e.type === 'ingress' && chart.houses && !chart.timeMargin) e.house = houseOf(e.longitude, chart.houses.map((h) => h.longitude));
   }
 
   // Choose up to three: rare events first (stations), then personal

@@ -8,13 +8,14 @@
 //   - this week's sky, matched against your chart
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610112316';
-import { weeklyEvents } from '../astro/sky.js?v=202610112316';
-import { drawWheel } from '../wheel.js?v=202610112316';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610112316';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610112316';
-import { loadBirth } from '../store.js?v=202610112316';
-import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202610112316';
+import { calculateChart } from '../astro/chart.js?v=202610141025';
+import { weeklyEvents } from '../astro/sky.js?v=202610141025';
+import { risingText, marginText } from '../readings.js?v=202610141025';
+import { drawWheel } from '../wheel.js?v=202610141025';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610141025';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610141025';
+import { loadBirth } from '../store.js?v=202610141025';
+import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202610141025';
 
 const $ = (id) => document.getElementById(id);
 
@@ -43,16 +44,16 @@ const body = (id) => chart.bodies.find((b) => b.id === id);
 
 const dateText = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
   .format(new Date(Date.UTC(birth.year, birth.month - 1, birth.day)));
-const timeText = birth.timeKnown
-  ? `${String(birth.hour).padStart(2, '0')}:${String(birth.minute).padStart(2, '0')}`
-  : 'time unknown';
+const clock = `${String(birth.hour).padStart(2, '0')}:${String(birth.minute).padStart(2, '0')}`;
+const timeText = !birth.timeKnown ? 'time unknown'
+  : birth.margin ? `around ${clock} (${marginText(birth.margin)})` : clock;
 const who = birth.isSample ? `${birth.name} was born` : 'Born';
 $('born-line').textContent = `${who} ${dateText} · ${timeText} · ${birth.place.label}`;
 
 // --- Chart wheel ----------------------------------------------------
 
 const summary = `Your birth chart wheel. Sun in ${body('sun').sign}, Moon in ${body('moon').possibleSigns?.join(' or ') ?? body('moon').sign}` +
-  (chart.angles ? `, Rising sign ${chart.angles.ascendant.sign}.` : '. Rising sign unknown because the birth time is unknown.');
+  (chart.angles ? `, Rising sign ${risingText(chart)}.` : '. Rising sign unknown because the birth time is unknown.');
 $('hero-wheel').append(drawWheel(chart, { label: summary }));
 
 // --- Big Three --------------------------------------------------------
@@ -121,7 +122,17 @@ if (moon.uncertain) {
   }));
 }
 
-if (chart.angles) {
+if (chart.angles?.ascendant.uncertain) {
+  // Approximate birth time: the Rising sign could be more than one sign.
+  const options = chart.angles.ascendant.possibleSigns;
+  cards.push(placement({
+    label: 'Rising · how you come across', termKey: 'rising', termLabel: 'Rising sign',
+    sign: risingText(chart),
+    text: `Your birth time is approximate, and the Rising sign changes about every two hours, so it could be ${risingText(chart)}. ${options[0]}: ${RISING_IN[options[0]]}`,
+    note: options.slice(1).map((sign) => `${sign}: ${RISING_IN[sign]} `),
+    link: 'chart.html#rising',
+  }));
+} else if (chart.angles) {
   const rising = chart.angles.ascendant.sign;
   cards.push(placement({
     label: 'Rising · how you come across', termKey: 'rising', termLabel: 'Rising sign',
@@ -162,7 +173,7 @@ function describe(e) {
   if (e.type === 'ingress') {
     const title = `${capital(planet)} moves into ${e.sign}`;
     let text = `${capital(planet)} stands for ${PLANETS[e.body].short}. In ${e.sign}, it works ${SIGNS[e.sign].how}.`;
-    if (e.house) text += ` For you, it’s moving through your ${ordinal(e.house)} house: ${HOUSES[e.house]}.`;
+    if (e.house) text += ` In your own chart, it’s moving through your ${ordinal(e.house)} house: ${HOUSES[e.house]}.`;
     return { title, text, term: 'house', termLabel: 'What is a house?' };
   }
   if (e.type === 'station') {
@@ -197,6 +208,12 @@ for (const e of week.events) {
   const day = document.createElement('p');
   day.className = 'week-day';
   day.textContent = dayFormat.format(e.date);
+  // Is this about your own chart, or something everyone shares?
+  const personal = e.type === 'transit';
+  const tag = document.createElement('span');
+  tag.className = `week-tag ${personal ? 'you' : 'all'}`;
+  tag.textContent = personal ? 'Your chart' : 'Everyone';
+  day.append(tag);
   const p = document.createElement('p');
   p.className = 'week-text';
   const strong = document.createElement('strong');
