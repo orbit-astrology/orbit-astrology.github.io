@@ -5,8 +5,8 @@
 // so the same checks can be shown to anyone.
 // ---------------------------------------------------------------
 
-import { calculateChart, positionsAt } from '../js/astro/chart.js';
-import { localToUtc } from '../js/astro/time.js';
+import { calculateChart, positionsAt } from '../../js/astro/chart.js';
+import { localToUtc } from '../../js/astro/time.js';
 import { REFERENCE_CHARTS, REFERENCE_SKY, TIME_CASES, parsePosition } from './reference-charts.js';
 
 // Allowed difference, in arcminutes (1° = 60′). The reference cuts

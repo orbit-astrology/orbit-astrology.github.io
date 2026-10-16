@@ -16,7 +16,7 @@
 import {
   PLANETS, PLANET_DETAIL, SIGNS, SIGN_DETAIL, HOUSES, SLOW_PLANETS,
   ASPECT_TEXT, SUN_IN, MOON_IN, RISING_IN, degreePlace,
-} from './content/basics.js?v=202610141025';
+} from './content/basics.js?v=202610161505';
 
 export const ORDER = ['sun', 'moon', 'rising', 'mercury', 'venus', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto', 'midheaven'];
 

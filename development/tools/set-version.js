@@ -6,7 +6,7 @@
 // CSS and JavaScript files (for example  js/wheel.js?v=202610112000).
 // When the number changes, browsers fetch the new files.
 //
-// Run before saving an update:   node tools/set-version.js
+// Run before saving an update:   node development/tools/set-version.js
 // ---------------------------------------------------------------
 
 import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs';

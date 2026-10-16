@@ -8,7 +8,7 @@
 // the plain explanation from js/content/glossary.js.
 // ---------------------------------------------------------------
 
-import { GLOSSARY } from './content/glossary.js?v=202610141025';
+import { GLOSSARY } from './content/glossary.js?v=202610161505';
 
 let open = null; // the pop-up currently showing, if any
 

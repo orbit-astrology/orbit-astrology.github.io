@@ -1,7 +1,7 @@
 // content/connections.js
 // ---------------------------------------------------------------
 // The words for comparing two people's charts (Connections page).
-// Rules: docs/writing-guide.md. Status: first draft written with AI,
+// Rules: development/docs/writing-guide.md. Status: first draft written with AI,
 // Salma reviews and edits.
 //
 // How a "link" is explained:

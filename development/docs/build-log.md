@@ -367,3 +367,20 @@ One entry per work session: what was done, what was decided, what went wrong, an
 **AI vs me**
 - Me: all five points came from using the site myself.
 - Claude: the approach for each (checking the whole time window, the session-based back button, the labels) and the code.
+
+---
+
+## 16 October 2026 · Organising the project folder like the teacher's drawing
+
+**What my teacher asked:** the final project is handed in as one "Final Project" folder with structure (HTML), style (CSS) and interactivity (JavaScript) kept separate, plus a folder of images that the HTML links to, so the project is organised and easy to keep track of.
+
+**What changed**
+- The website itself is now just: the six HTML pages, `css/`, `js/` and a new **`img/`** folder.
+- **`img/`** holds ORBIT's icon (a planet circling a star, in my colours): `favicon.svg` for the browser tab and `icon-180.png` for a phone's home screen. Every HTML page links to it in its `<head>`.
+- Everything behind the scenes (build log, style and writing guides, accuracy tests, the version helper and the calculation lab) moved into one folder, **`development/`**, so it doesn't mix with the website's files.
+- The README now has a map of the folder and explains how the files connect: each HTML page links its CSS in the `<head>`, its JavaScript at the end and its icon from `img/`. None of the HTML pages has styles or scripts written inside it (checked).
+- The six HTML pages stay at the top of the folder (not in their own folder) because GitHub Pages needs `index.html` there to open the website.
+
+**Testing:** every page and the lab load with no missing files; 83/83 calculation checks pass; the earlier page tests still pass.
+
+**AI vs me:** Me: brought the teacher's requirements and drew the structure. Claude: moved the files, fixed every link and made the icon.

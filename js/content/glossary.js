@@ -2,7 +2,7 @@
 // ---------------------------------------------------------------
 // One plain explanation per astrology word, used by every page so
 // a word always means the same thing everywhere on ORBIT.
-// (Rules: docs/writing-guide.md)
+// (Rules: development/docs/writing-guide.md)
 //
 // Status: first draft written with AI. Salma reviews and edits.
 // ---------------------------------------------------------------
