@@ -483,3 +483,15 @@ One entry per work session: what was done, what was decided, what went wrong, an
 When you're logged in, "Delete everything" deletes your account too, but the question still said "from this browser". It now says "…your account (email), your birth details… for good, on every device? This can't be undone." Without an account it still says "from this browser".
 
 **AI vs me:** Me: asked what the button does. Claude: noticed the wording didn't match and fixed it.
+
+---
+
+## 20 October 2026 · New address: orbit-astrology.github.io
+
+**What changed:** ORBIT moved from `salmaabudayeh9.github.io/ORBIT/` to **https://orbit-astrology.github.io**, a cleaner address without my username.
+
+**How:** I made a free GitHub organization called **orbit-astrology**, transferred the project into it, and renamed it `orbit-astrology.github.io` (that special name makes it the organization's main website). I kept my own username. GitHub Pages publishes it from the `main` branch. In Supabase, the Site URL now points to the new address, so account emails link there.
+
+**Good to know:** the old link no longer works. Accounts are safe because they're stored in Supabase, not on the website, so people just log in once on the new address.
+
+**AI vs me:** Me: wanted an address without my username, chose the organization name, and did the transfer, rename and settings. Claude: explained the options and guided each step.
