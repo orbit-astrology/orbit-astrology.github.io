@@ -573,3 +573,11 @@ If the Moon's sign or house isn't certain (unknown birth time), the example uses
 Step 2 explained the Sun and Moon, then said "Your Moon (how you feel)" again straight after. Now each meaning is given once, in the person's own example: "Each planet is one part of you. Your Moon (how you feel) is in Aries: boldly and directly." Step 3 doesn't repeat "(how you feel)" either, unless it uses a different planet from step 2.
 
 **AI vs me:** Me: noticed the repetition. Claude: rewrote it.
+
+---
+
+## 20 October 2026 · Shorter steps
+
+The step-by-step texts were still a lot to read at once. Each step is now 2–3 short sentences; the hover boxes on the wheel hold the detail. Cut: "(the Sun and Moon count too)", "The houses come from your birth time and place", the Rising sign sentence (it's in the hover box for ASC), and the number of lines.
+
+**AI vs me:** Me: felt the steps were too long and that the hover boxes already give the detail. Claude: shortened all four steps to match.
