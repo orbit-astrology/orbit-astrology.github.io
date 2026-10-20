@@ -46,6 +46,8 @@
 .week-text { flex: 1 1 300px; margin: 0; }
 .week-text strong { font-weight: 600; display: block; }
 .week-text span { color: var(--bone-soft); }
+.week-text span[hidden] { display: none; }
+.week-more { font-size: 14px; }
 
 /* Explore yourself */
 .explore-yourself { padding-block: 56px 16px; }
@@ -99,6 +101,8 @@
   .travel-wheel { position: static; width: min(480px, 100%); }
 }
 .lilac-word { color: var(--lilac); font-weight: 600; }
+.gold-word { color: var(--champagne); font-weight: 600; }
+#travel-more { align-self: flex-start; margin-top: 6px; }
 .travel-controls { display: flex; flex-direction: column; gap: 10px; border-top: 1px solid var(--lilac); padding-top: 16px; }
 .travel-date { margin: 0; font: 500 clamp(1.3rem, 2vw, 1.7rem)/1.2 var(--serif); display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
 .travel-date span { font: 650 11.5px/1 var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--lilac); }

@@ -10,19 +10,22 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Manrope:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/tokens.css?v=202610201645">
-  <link rel="stylesheet" href="css/base.css?v=202610201645">
-  <link rel="stylesheet" href="css/wheel.css?v=202610201645">
-  <link rel="stylesheet" href="css/birth-form.css?v=202610201645">
-  <link rel="stylesheet" href="css/account.css?v=202610201645">
-  <link rel="stylesheet" href="css/welcome.css?v=202610201645">
+  <link rel="stylesheet" href="css/tokens.css?v=202610201903">
+  <link rel="stylesheet" href="css/base.css?v=202610201903">
+  <link rel="stylesheet" href="css/wheel.css?v=202610201903">
+  <link rel="stylesheet" href="css/birth-form.css?v=202610201903">
+  <link rel="stylesheet" href="css/account.css?v=202610201903">
+  <link rel="stylesheet" href="css/welcome.css?v=202610201903">
 </head>
 <body class="page-welcome">
   <a class="skip-link" href="#create">Skip to the form</a>
 
   <header class="welcome-top wrap">
     <p class="eyebrow">A personal astrology atlas</p>
-    <a id="continue-link" class="text-link" href="universe.html" hidden>Continue to your universe →</a>
+    <div class="welcome-top-links">
+      <a id="continue-link" class="text-link" href="universe.html" hidden>Continue to your universe →</a>
+      <button type="button" class="text-link login-link" id="login-link" aria-controls="account" aria-expanded="false" hidden>Log in</button>
+    </div>
   </header>
 
   <main class="welcome wrap">
@@ -43,13 +46,14 @@
     <!-- Right: the birth form -->
     <section class="welcome-form" aria-labelledby="create-title">
 
-      <!-- Your account: log in or create one (js/account-panel.js) -->
-      <div class="account welcome-account" id="account" aria-labelledby="account-title">
+      <!-- Your account: log in or create one (js/account-panel.js).
+           Hidden until you press "Log in" at the top, or when you're logged in. -->
+      <div class="account welcome-account" id="account" aria-labelledby="account-title" hidden>
         <h2 id="account-title" class="eyebrow">Your account</h2>
         <p class="quiet" id="account-off" hidden>Accounts aren’t switched on yet. For now, everything is saved in this browser.</p>
 
         <div id="account-out" hidden>
-          <p class="account-why">Log in, or create a free account to keep your chart, your people and your saved readings safe and open them on any device. It’s optional: you can also just make your chart below.</p>
+          <p class="account-why">Log in to see your universe, or create a free account to keep your chart, people and saved readings on any device.</p>
           <div class="view-switch" role="group" aria-label="Log in or create an account">
             <button type="button" id="mode-login" aria-pressed="false">Log in</button>
             <button type="button" id="mode-signup" aria-pressed="false">Create account</button>
@@ -167,6 +171,6 @@
     </div>
   </footer>
 
-  <script type="module" src="js/pages/welcome.js?v=202610201645"></script>
+  <script type="module" src="js/pages/welcome.js?v=202610201903"></script>
 </body>
 </html>

@@ -7,18 +7,19 @@
 //   2. save the birth details in this browser (js/store.js)
 //   3. go to My Universe, which reads them and shows your chart
 //
-// The account box (log in / create account) is at the top of the form
-// side. If you're logged in and your chart is already saved, the form
-// is replaced by a "Welcome back" link to your universe.
+// To keep the page calm, the account box (log in / create account) only
+// opens when you press "Log in" at the top (or when you're logged in).
+// If you're logged in and your chart is already saved, the form is
+// replaced by a "Welcome back" link to your universe.
 // ---------------------------------------------------------------
 
-import { skyAt } from '../astro/sky.js?v=202610201645';
-import { drawWheel } from '../wheel.js?v=202610201645';
-import { setUpGlossary } from '../glossary.js?v=202610201645';
-import { setUpBirthForm } from '../birth-form.js?v=202610201645';
-import { startCloud, currentUser } from '../cloud.js?v=202610201645';
-import { setUpAccountPanel } from '../account-panel.js?v=202610201645';
-import { saveBirth, loadBirth, sameBirth, startFresh, SAMPLE_BIRTH } from '../store.js?v=202610201645';
+import { skyAt } from '../astro/sky.js?v=202610201903';
+import { drawWheel } from '../wheel.js?v=202610201903';
+import { setUpGlossary } from '../glossary.js?v=202610201903';
+import { setUpBirthForm } from '../birth-form.js?v=202610201903';
+import { startCloud, currentUser, cloudReady } from '../cloud.js?v=202610201903';
+import { setUpAccountPanel } from '../account-panel.js?v=202610201903';
+import { saveBirth, loadBirth, sameBirth, startFresh, SAMPLE_BIRTH } from '../store.js?v=202610201903';
 
 const $ = (id) => document.getElementById(id);
 
@@ -36,8 +37,14 @@ $('sky-caption').textContent = `The faint wheel is the real sky right now: the S
 
 const hasChart = () => { const b = loadBirth(); return Boolean(b && !b.isSample); };
 
+let accountOpen = false; // has "Log in" been pressed?
+
 function showRightSide() {
-  const welcomeBack = Boolean(currentUser()) && hasChart();
+  const loggedIn = Boolean(currentUser());
+  $('account').hidden = !loggedIn && !accountOpen;
+  $('login-link').hidden = loggedIn || !cloudReady;
+  $('login-link').setAttribute('aria-expanded', String(accountOpen));
+  const welcomeBack = loggedIn && hasChart();
   $('welcome-back').hidden = !welcomeBack;
   $('create').hidden = welcomeBack;
   $('continue-link').hidden = welcomeBack || !hasChart();
@@ -71,6 +78,16 @@ $('sample').addEventListener('click', () => goToUniverse(SAMPLE_BIRTH, (m) => { 
 
 const mode = await startCloud(); // logs you in from an email link, and syncs
 showRightSide();
+
+// "Log in" at the top opens the account box (press again to close it).
+$('login-link').addEventListener('click', () => {
+  accountOpen = !accountOpen;
+  showRightSide();
+  if (accountOpen) {
+    $('mode-login').click(); // show the log-in form straight away
+    $('account').scrollIntoView({ block: 'nearest' });
+  }
+});
 setUpAccountPanel({
   mode,
   collapsed: true,

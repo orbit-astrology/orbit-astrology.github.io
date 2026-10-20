@@ -10,18 +10,18 @@
 // the address means the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610201645';
-import { drawWheel } from '../wheel.js?v=202610201645';
-import { placeTip } from '../tip-position.js?v=202610201645';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610201645';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201645';
-import { setUpBirthForm } from '../birth-form.js?v=202610201645';
-import { makeShareLink, readShareCode } from '../share.js?v=202610201645';
-import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202610201645';
-import { risingText } from '../readings.js?v=202610201645';
-import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610201645';
-import { PERSONAL, LENS_TAGS, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610201645';
-import { PLANETS, SIGNS } from '../content/basics.js?v=202610201645';
+import { calculateChart } from '../astro/chart.js?v=202610201903';
+import { drawWheel } from '../wheel.js?v=202610201903';
+import { placeTip } from '../tip-position.js?v=202610201903';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610201903';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201903';
+import { setUpBirthForm } from '../birth-form.js?v=202610201903';
+import { makeShareLink, readShareCode } from '../share.js?v=202610201903';
+import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202610201903';
+import { risingText } from '../readings.js?v=202610201903';
+import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610201903';
+import { PERSONAL, LENS_TAGS, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610201903';
+import { PLANETS, SIGNS } from '../content/basics.js?v=202610201903';
 
 const $ = (id) => document.getElementById(id);
 const nameOf = (id) => id[0].toUpperCase() + id.slice(1);

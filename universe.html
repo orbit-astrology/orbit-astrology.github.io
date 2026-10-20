@@ -9,10 +9,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Manrope:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/tokens.css?v=202610201645">
-  <link rel="stylesheet" href="css/base.css?v=202610201645">
-  <link rel="stylesheet" href="css/wheel.css?v=202610201645">
-  <link rel="stylesheet" href="css/universe.css?v=202610201645">
+  <link rel="stylesheet" href="css/tokens.css?v=202610201903">
+  <link rel="stylesheet" href="css/base.css?v=202610201903">
+  <link rel="stylesheet" href="css/wheel.css?v=202610201903">
+  <link rel="stylesheet" href="css/universe.css?v=202610201903">
 </head>
 <body class="page-universe">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -56,11 +56,9 @@
           <p class="eyebrow week-eyebrow">The sky right now</p>
           <h2 id="week-title" class="section-title">Your sky <em>this week</em></h2>
           <p class="quiet" id="week-dates"></p>
-          <p class="quiet week-note">The planets move the same way for everyone. What’s personal is
-            how they meet <em>your</em> chart (astrologers call this
-            <button type="button" class="term" data-term="transit">transits</button>).</p>
-          <p class="quiet week-note">Each moment is marked <span class="week-tag you">Your chart</span> if it’s about your own planets,
-            or <span class="week-tag all">Everyone</span> if it happens in the sky for all of us.</p>
+          <p class="quiet week-note"><span class="week-tag you">Your chart</span> means it touches your own planets
+            (<button type="button" class="term" data-term="transit">a transit</button>);
+            <span class="week-tag all">Everyone</span> means it’s in the sky for all of us.</p>
         </div>
         <ol class="week-list" id="week-list"></ol>
       </div>
@@ -71,7 +69,7 @@
       <div class="travel-intro">
         <p class="eyebrow week-eyebrow">Try it</p>
         <h2 id="travel-title" class="section-title">Travel <em>through time</em></h2>
-        <p class="lede">Drag the slider to move through the days. Your planets stay where they were when you were born, in gold. The <span class="lilac-word">lilac</span> ones are the real sky on the day you choose. When a moving planet lines up with one of yours, a line appears.</p>
+        <p class="lede">Drag the slider to any day. Your birth planets are <span class="gold-word">gold</span>; the sky that day is <span class="lilac-word">lilac</span>. When they line up, a line appears.</p>
       </div>
 
       <div class="travel-wheel" id="travel-wheel"></div>
@@ -91,6 +89,7 @@
       <div class="travel-results">
         <h3 class="travel-list-title">What’s touching your chart that day</h3>
         <ul class="travel-list" id="travel-list"></ul>
+        <button type="button" class="link-button" id="travel-more" hidden></button>
       </div>
     </section>
 
@@ -134,6 +133,6 @@
     </div>
   </footer>
 
-  <script type="module" src="js/pages/universe.js?v=202610201645"></script>
+  <script type="module" src="js/pages/universe.js?v=202610201903"></script>
 </body>
 </html>

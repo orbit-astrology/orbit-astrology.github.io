@@ -12,10 +12,10 @@
 // with the same code as your birth chart (js/astro/sky.js).
 // ---------------------------------------------------------------
 
-import { skyAt } from './astro/sky.js?v=202610201645';
-import { findCrossAspects } from './astro/aspects.js?v=202610201645';
-import { drawWheel } from './wheel.js?v=202610201645';
-import { PLANETS, ASPECT_TEXT } from './content/basics.js?v=202610201645';
+import { skyAt } from './astro/sky.js?v=202610201903';
+import { findCrossAspects } from './astro/aspects.js?v=202610201903';
+import { drawWheel } from './wheel.js?v=202610201903';
+import { PLANETS, ASPECT_TEXT } from './content/basics.js?v=202610201903';
 
 const DAY = 86400000;
 const CLOSE = 1.5; // degrees: how close an angle must be to count
@@ -42,11 +42,14 @@ function yourPoints(chart) {
   return points;
 }
 
-export function setUpTimeTravel({ chart, wheelBox, slider, dateLabel, list, buttons }) {
+const FIRST = 3; // how many angles to show before "Show all"
+
+export function setUpTimeTravel({ chart, wheelBox, slider, dateLabel, list, moreButton, buttons }) {
   // "Day 0" is today at midday, in your own time zone.
   const today = new Date();
   today.setHours(12, 0, 0, 0);
   let timer = null;
+  let showAll = false; // the list starts short; "Show all" opens it (and it stays open)
 
   function show(offsetDays) {
     const date = new Date(today.getTime() + offsetDays * DAY);
@@ -83,15 +86,19 @@ export function setUpTimeTravel({ chart, wheelBox, slider, dateLabel, list, butt
       li.textContent = 'Nothing lines up closely with your planets on this day. Try moving the slider: the faster planets (the Moon, Mercury, Venus) bring something new almost every day.';
       list.append(li);
     }
-    for (const l of all) {
+    all.forEach((l, i) => {
       const t = ASPECT_TEXT[l.type];
       const yours = l.from === 'rising' ? 'your Rising sign (how you come across)' : `your ${nameOf(l.from)} (${PLANETS[l.from].what})`;
       const li = document.createElement('li');
       const strong = document.createElement('strong');
       strong.textContent = `${nameOf(l.to)} ${VERB[l.type]} ${l.from === 'rising' ? 'your Rising sign' : `your ${nameOf(l.from)}`}`;
       li.append(strong, `${nameOf(l.to)} in the sky that day (${SKY_THEME[l.to]}) and ${yours} are ${t.plain} (${t.angle}°): ${t.meaning}.`);
+      li.hidden = !showAll && i >= FIRST;
       list.append(li);
-    }
+    });
+    const extra = all.length - FIRST;
+    moreButton.hidden = showAll || extra <= 0;
+    moreButton.textContent = `Show ${extra} more`;
   }
 
   const go = (offset) => show(Math.max(Number(slider.min), Math.min(Number(slider.max), offset)));
@@ -113,6 +120,12 @@ export function setUpTimeTravel({ chart, wheelBox, slider, dateLabel, list, butt
       go(current() + 1);
     }, 150);
   }
+
+  moreButton.addEventListener('click', () => {
+    showAll = true;
+    for (const li of list.children) li.hidden = false;
+    moreButton.hidden = true;
+  });
 
   slider.addEventListener('input', () => { stop(); show(current()); });
   buttons.back.addEventListener('click', () => { stop(); go(current() - 1); });

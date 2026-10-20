@@ -495,3 +495,20 @@ When you're logged in, "Delete everything" deletes your account too, but the que
 **Good to know:** the old link no longer works. Accounts are safe because they're stored in Supabase, not on the website, so people just log in once on the new address.
 
 **AI vs me:** Me: wanted an address without my username, chose the organization name, and did the transfer, rename and settings. Claude: explained the options and guided each step.
+
+---
+
+## 20 October 2026 · A calmer first page and My Universe
+
+**Why:** friends who tried ORBIT loved the explanations but found some pages a lot to take in at once. Nothing was removed; the extras now come in smaller doses.
+
+**What changed**
+- **First page:** only the birth form shows. The account box is behind a small **"Log in"** link in the top corner (it opens with the log-in form ready). When you're logged in, it shows who's logged in, with Log out.
+- **My Universe, "Your sky this week":** each moment shows its title and one short line; **"Read more"** opens the full explanation. The two notes under the title became one.
+- **My Universe, "Travel through time":** stays on this page (I like it here), with a shorter intro. The list shows the 3 closest angles; **"Show 6 more"** opens the rest and stays open while you move through the days.
+- **Connections:** the notes now say details are saved in this browser *and in your account if you're logged in* (they said "only in this browser", which was out of date).
+- My Universe is about 20% shorter on a laptop.
+
+**Testing:** laptop and phone sizes, Log in link, creating an account from it, logging out, Read more, Show more and moving the slider afterwards. No errors; 83/83 checks.
+
+**AI vs me:** Me: decided the site should feel calmer, chose to keep Travel through time on My Universe, and approved the rest. Claude: proposed what to fold away and wrote the code.

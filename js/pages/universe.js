@@ -8,16 +8,16 @@
 //   - this week's sky, matched against your chart
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610201645';
-import { weeklyEvents } from '../astro/sky.js?v=202610201645';
-import { risingText, marginText } from '../readings.js?v=202610201645';
-import { setUpTimeTravel } from '../time-travel.js?v=202610201645';
-import { cloudReady, currentUser } from '../cloud.js?v=202610201645';
-import { drawWheel } from '../wheel.js?v=202610201645';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610201645';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201645';
-import { loadBirth } from '../store.js?v=202610201645';
-import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202610201645';
+import { calculateChart } from '../astro/chart.js?v=202610201903';
+import { weeklyEvents } from '../astro/sky.js?v=202610201903';
+import { risingText, marginText } from '../readings.js?v=202610201903';
+import { setUpTimeTravel } from '../time-travel.js?v=202610201903';
+import { cloudReady, currentUser } from '../cloud.js?v=202610201903';
+import { drawWheel } from '../wheel.js?v=202610201903';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610201903';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201903';
+import { loadBirth } from '../store.js?v=202610201903';
+import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202610201903';
 
 const $ = (id) => document.getElementById(id);
 
@@ -176,17 +176,18 @@ function describe(e) {
     const title = `${capital(planet)} moves into ${e.sign}`;
     let text = `${capital(planet)} stands for ${PLANETS[e.body].short}. In ${e.sign}, it works ${SIGNS[e.sign].how}.`;
     if (e.house) text += ` In your own chart, it’s moving through your ${ordinal(e.house)} house: ${HOUSES[e.house]}.`;
-    return { title, text, term: 'house', termLabel: 'What is a house?' };
+    return { title, short: `${capital(planet)} (${PLANETS[e.body].short}) changes sign.`, text, term: 'house', termLabel: 'What is a house?' };
   }
   if (e.type === 'station') {
     return e.retrograde
-      ? { title: `${capital(planet)} turns retrograde`, text: `It starts to look like it’s moving backwards from Earth. Traditionally a time to slow down and look again at ${PLANETS[e.body].short}.`, term: 'retrograde', termLabel: 'What does retrograde mean?' }
-      : { title: `${capital(planet)} moves forward again`, text: `After weeks of looking like it went backwards, things linked to ${PLANETS[e.body].short} can start moving again.` };
+      ? { title: `${capital(planet)} turns retrograde`, short: `Traditionally a time to slow down with ${PLANETS[e.body].short}.`, text: `It starts to look like it’s moving backwards from Earth. Traditionally a time to slow down and look again at ${PLANETS[e.body].short}.`, term: 'retrograde', termLabel: 'What does retrograde mean?' }
+      : { title: `${capital(planet)} moves forward again`, short: `Things linked to ${PLANETS[e.body].short} can move again.`, text: `After weeks of looking like it went backwards, things linked to ${PLANETS[e.body].short} can start moving again.` };
   }
   const words = ASPECT_WORDS[e.aspect];
   const target = TARGETS[e.target];
   return {
     title: `${capital(planet)} ${words.verb} ${target.name}`,
+    short: words.feel,
     text: `This week’s ${planet.replace('the ', '')} (${PLANETS[e.body].short}) ${words.angle} ${target.name} (${target.what}). ${words.feel}`,
     term: 'aspect', termLabel: 'What is an angle between planets?',
   };
@@ -204,8 +205,10 @@ if (week.events.length === 0) {
   li.innerHTML = '<p class="week-text"><strong>A quiet week in the sky.</strong> <span>No planet changes sign or makes a close angle to your Sun, Moon or Rising sign this week.</span></p>';
   list.append(li);
 }
+// Each moment shows its title and one short line. "Read more" opens the
+// full explanation, so the section stays calm until you want the detail.
 for (const e of week.events) {
-  const { title, text, term, termLabel } = describe(e);
+  const { title, short, text, term, termLabel } = describe(e);
   const li = document.createElement('li');
   const day = document.createElement('p');
   day.className = 'week-day';
@@ -220,10 +223,24 @@ for (const e of week.events) {
   p.className = 'week-text';
   const strong = document.createElement('strong');
   strong.textContent = title;
-  const span = document.createElement('span');
-  span.textContent = text + ' ';
-  if (term) span.append(termButton(term, termLabel));
-  p.append(strong, span);
+  const shortLine = document.createElement('span');
+  shortLine.textContent = `${short} `;
+  const more = document.createElement('button');
+  more.type = 'button';
+  more.className = 'link-button week-more';
+  more.textContent = 'Read more';
+  more.setAttribute('aria-expanded', 'false');
+  const full = document.createElement('span');
+  full.className = 'week-full';
+  full.hidden = true;
+  full.textContent = text + ' ';
+  if (term) full.append(termButton(term, termLabel));
+  more.addEventListener('click', () => {
+    full.hidden = false;
+    shortLine.hidden = true;
+    more.remove();
+  });
+  p.append(strong, shortLine, more, full);
   li.append(day, p);
   list.append(li);
 }
@@ -236,6 +253,7 @@ setUpTimeTravel({
   slider: $('travel-slider'),
   dateLabel: $('travel-date'),
   list: $('travel-list'),
+  moreButton: $('travel-more'),
   buttons: { back: $('travel-back'), forward: $('travel-forward'), today: $('travel-today'), play: $('travel-play') },
 });
 

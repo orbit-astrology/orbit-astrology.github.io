@@ -45,6 +45,9 @@
 /* Your account, at the top of the right side, with a line under it */
 .welcome-account { padding: 0 0 28px; margin-bottom: 28px; border-bottom: 1px solid var(--line); gap: 12px; }
 .welcome-account .account-why { font-size: 15px; color: var(--bone-soft); }
+.welcome-top-links { display: flex; align-items: center; gap: 12px 28px; }
+.login-link { background: none; border: 0; padding: 0; cursor: pointer; font-family: var(--sans); color: var(--bone); }
+.welcome-account[hidden] { display: none; }
 .welcome-back { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
 .welcome-back p { margin: 0; }
 .welcome-back[hidden], #create[hidden] { display: none; }
