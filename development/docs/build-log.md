@@ -541,3 +541,11 @@ Removed "Every part is explained in plain words." from the introduction under th
 The box that appears when you point at a planet said "Click to read the full explanation", but the box disappears when you move the mouse onto it, so it looked like you should click the box. It now says what to click: **"Click the Moon symbol on the wheel to read its full explanation ↓"** (on phones: "Tap the Moon symbol again…"). On Connections, the boxes for lines say "Click the line on the wheel…".
 
 **AI vs me:** Me: noticed the hint was confusing and suggested the new wording. Claude: changed it on My Chart and Connections.
+
+---
+
+## 20 October 2026 · "Watch your chart build" no longer moves the page
+
+Pressing the button used to scroll the page down to the wheel, and the wheel also jumped up because the button disappeared. Now, on a laptop, the page stays exactly where it is: no scrolling, and the button keeps its space (it's just invisible while the steps run). On phones it still scrolls to the wheel, because the step card covers the bottom of the screen there.
+
+**AI vs me:** Me: noticed the jump and asked for the view to stay put. Claude: fixed both causes and checked it at three screen sizes.

@@ -9,17 +9,17 @@
 //   4. write "Your chart, explained": one section per placement
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610201914';
-import { formatOffset } from '../astro/time.js?v=202610201914';
-import { drawWheel } from '../wheel.js?v=202610201914';
-import { placeTip } from '../tip-position.js?v=202610201914';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610201914';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201914';
-import { loadBirth } from '../store.js?v=202610201914';
-import { saveButton } from '../save-button.js?v=202610201914';
-import { runTour } from '../tour.js?v=202610201914';
-import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202610201914';
-import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202610201914';
+import { calculateChart } from '../astro/chart.js?v=202610201920';
+import { formatOffset } from '../astro/time.js?v=202610201920';
+import { drawWheel } from '../wheel.js?v=202610201920';
+import { placeTip } from '../tip-position.js?v=202610201920';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610201920';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201920';
+import { loadBirth } from '../store.js?v=202610201920';
+import { saveButton } from '../save-button.js?v=202610201920';
+import { runTour } from '../tour.js?v=202610201920';
+import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202610201920';
+import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202610201920';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
@@ -386,16 +386,19 @@ function startTour() {
   setView(false); // the tour needs the wheel
   hideTip();
   $('how-content').hidden = true;
-  $('replay-tour').hidden = true;
-  // Bring the wheel into view (on phones the tour card covers the bottom).
-  $('wheel-box').scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  $('replay-tour').style.visibility = 'hidden'; // keeps its space, so nothing below moves
+  // On a laptop the page stays exactly where it is. Only on phones do we
+  // scroll to the wheel, because there the tour card covers the bottom.
+  if (matchMedia('(max-width: 960px)').matches) {
+    $('wheel-box').scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  }
   runTour({
     svg,
     panel: $('tour'),
     steps: tourSteps(),
     onEnd: () => {
       $('how-content').hidden = false;
-      $('replay-tour').hidden = false;
+      $('replay-tour').style.visibility = '';
       $('replay-tour').focus({ preventScroll: true });
     },
   });
