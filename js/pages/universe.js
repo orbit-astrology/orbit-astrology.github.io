@@ -8,14 +8,15 @@
 //   - this week's sky, matched against your chart
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610161505';
-import { weeklyEvents } from '../astro/sky.js?v=202610161505';
-import { risingText, marginText } from '../readings.js?v=202610161505';
-import { drawWheel } from '../wheel.js?v=202610161505';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610161505';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610161505';
-import { loadBirth } from '../store.js?v=202610161505';
-import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202610161505';
+import { calculateChart } from '../astro/chart.js?v=202610201450';
+import { weeklyEvents } from '../astro/sky.js?v=202610201450';
+import { risingText, marginText } from '../readings.js?v=202610201450';
+import { setUpTimeTravel } from '../time-travel.js?v=202610201450';
+import { drawWheel } from '../wheel.js?v=202610201450';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610201450';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201450';
+import { loadBirth } from '../store.js?v=202610201450';
+import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202610201450';
 
 const $ = (id) => document.getElementById(id);
 
@@ -225,5 +226,16 @@ for (const e of week.events) {
   li.append(day, p);
   list.append(li);
 }
+
+// --- Travel through time (js/time-travel.js) ----------------------------
+
+setUpTimeTravel({
+  chart,
+  wheelBox: $('travel-wheel'),
+  slider: $('travel-slider'),
+  dateLabel: $('travel-date'),
+  list: $('travel-list'),
+  buttons: { back: $('travel-back'), forward: $('travel-forward'), today: $('travel-today'), play: $('travel-play') },
+});
 
 setUpGlossary();

@@ -79,3 +79,39 @@
   .hero-wheel { margin-right: 0; max-width: 92vw; margin-inline: auto; }
   .placement:nth-child(n) { padding-top: 32px; }
 }
+
+/* Travel through time. On a laptop: text, controls and results on the left,
+   the wheel on the right, staying in view while you scroll the results.
+   On a phone: title, wheel, then the slider right under it, then results. */
+.travel {
+  display: grid; gap: 20px 64px; padding-block: 56px; border-bottom: 1px solid var(--line);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 520px);
+  grid-template-areas: "intro wheel" "controls wheel" "results wheel";
+  align-items: start;
+}
+.travel-intro { grid-area: intro; display: flex; flex-direction: column; gap: 14px; }
+.travel-intro p { margin: 0; }
+.travel-controls { grid-area: controls; }
+.travel-results { grid-area: results; }
+.travel-wheel { grid-area: wheel; width: min(520px, calc(100vh - 120px), 100%); justify-self: center; position: sticky; top: 24px; }
+@media (max-width: 900px) {
+  .travel { grid-template-columns: minmax(0, 1fr); grid-template-areas: "intro" "wheel" "controls" "results"; }
+  .travel-wheel { position: static; width: min(480px, 100%); }
+}
+.lilac-word { color: var(--lilac); font-weight: 600; }
+.travel-controls { display: flex; flex-direction: column; gap: 10px; border-top: 1px solid var(--lilac); padding-top: 16px; }
+.travel-date { margin: 0; font: 500 clamp(1.3rem, 2vw, 1.7rem)/1.2 var(--serif); display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
+.travel-date span { font: 650 11.5px/1 var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--lilac); }
+.travel-buttons { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 22px; }
+
+/* The slider: a thin line with a small square handle (no round shapes) */
+.travel-slider { -webkit-appearance: none; appearance: none; width: 100%; height: 28px; background: transparent; cursor: pointer; margin: 0; }
+.travel-slider::-webkit-slider-runnable-track { height: 1px; background: var(--bone-soft); }
+.travel-slider::-moz-range-track { height: 1px; background: var(--bone-soft); }
+.travel-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; margin-top: -7px; background: var(--lilac); border: 0; border-radius: 0; transform: rotate(45deg); }
+.travel-slider::-moz-range-thumb { width: 12px; height: 12px; background: var(--lilac); border: 0; border-radius: 0; transform: rotate(45deg); }
+
+.travel-list-title { font: 650 12.5px/1.4 var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--bone-soft); margin: 8px 0 0; }
+.travel-list { list-style: none; margin: 0; padding: 0; min-height: 120px; }
+.travel-list li { padding: 10px 0; border-top: 1px solid var(--line); font-size: 15px; color: var(--bone-soft); max-width: 62ch; }
+.travel-list strong { display: block; color: var(--bone); font-weight: 650; }

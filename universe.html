@@ -9,10 +9,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Manrope:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/tokens.css?v=202610161505">
-  <link rel="stylesheet" href="css/base.css?v=202610161505">
-  <link rel="stylesheet" href="css/wheel.css?v=202610161505">
-  <link rel="stylesheet" href="css/universe.css?v=202610161505">
+  <link rel="stylesheet" href="css/tokens.css?v=202610201450">
+  <link rel="stylesheet" href="css/base.css?v=202610201450">
+  <link rel="stylesheet" href="css/wheel.css?v=202610201450">
+  <link rel="stylesheet" href="css/universe.css?v=202610201450">
 </head>
 <body class="page-universe">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -66,6 +66,34 @@
       </div>
     </section>
 
+    <!-- Travel through time: the real sky on any day, over your chart (js/time-travel.js) -->
+    <section class="travel wrap" aria-labelledby="travel-title">
+      <div class="travel-intro">
+        <p class="eyebrow week-eyebrow">Try it</p>
+        <h2 id="travel-title" class="section-title">Travel <em>through time</em></h2>
+        <p class="lede">Drag the slider to move through the days. Your planets stay where they were when you were born, in gold. The <span class="lilac-word">lilac</span> ones are the real sky on the day you choose. When a moving planet lines up with one of yours, a line appears.</p>
+      </div>
+
+      <div class="travel-wheel" id="travel-wheel"></div>
+
+      <div class="travel-controls">
+        <p class="travel-date" id="travel-date" aria-live="polite"></p>
+        <label for="travel-slider" class="visually-hidden">Choose a day</label>
+        <input type="range" id="travel-slider" class="travel-slider" min="-365" max="365" step="1" value="0">
+        <div class="travel-buttons">
+          <button type="button" class="link-button" id="travel-back">← Day</button>
+          <button type="button" class="button button-outline" id="travel-play">Play</button>
+          <button type="button" class="link-button" id="travel-today">Today</button>
+          <button type="button" class="link-button" id="travel-forward">Day →</button>
+        </div>
+      </div>
+
+      <div class="travel-results">
+        <h3 class="travel-list-title">What’s touching your chart that day</h3>
+        <ul class="travel-list" id="travel-list"></ul>
+      </div>
+    </section>
+
     <section class="explore-yourself wrap" aria-labelledby="explore-title">
       <h2 id="explore-title" class="section-title">Explore <em>yourself</em></h2>
       <div class="explore-grid">
@@ -103,6 +131,6 @@
     </div>
   </footer>
 
-  <script type="module" src="js/pages/universe.js?v=202610161505"></script>
+  <script type="module" src="js/pages/universe.js?v=202610201450"></script>
 </body>
 </html>

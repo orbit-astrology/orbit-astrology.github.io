@@ -45,3 +45,12 @@
 
 /* A quieter version, used as a background drawing (Welcome page). */
 .wheel-faint .wheel { opacity: 0.3; }
+
+/* --- A second ring inside the wheel (Connections, Travel through time) ---
+   The inner planets are lilac; yours stay gold. */
+.wheel .partner-ring { stroke: var(--lilac); stroke-opacity: 0.45; }
+.wheel .planets.them .planet-dot { fill: var(--lilac); }
+.wheel .planets.them .planet-symbol { fill: var(--lilac); font-size: 15px; }
+.wheel .planets.them .leader { stroke: var(--lilac); }
+.wheel .planets.them .planet:focus-visible .planet-hit,
+.wheel .planets.them .planet.active .planet-hit { stroke: var(--lilac); }

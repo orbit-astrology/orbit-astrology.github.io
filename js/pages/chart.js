@@ -9,16 +9,17 @@
 //   4. write "Your chart, explained": one section per placement
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610161505';
-import { formatOffset } from '../astro/time.js?v=202610161505';
-import { drawWheel } from '../wheel.js?v=202610161505';
-import { placeTip } from '../tip-position.js?v=202610161505';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610161505';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610161505';
-import { loadBirth } from '../store.js?v=202610161505';
-import { saveButton } from '../save-button.js?v=202610161505';
-import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202610161505';
-import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202610161505';
+import { calculateChart } from '../astro/chart.js?v=202610201450';
+import { formatOffset } from '../astro/time.js?v=202610201450';
+import { drawWheel } from '../wheel.js?v=202610201450';
+import { placeTip } from '../tip-position.js?v=202610201450';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610201450';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201450';
+import { loadBirth } from '../store.js?v=202610201450';
+import { saveButton } from '../save-button.js?v=202610201450';
+import { runTour, tourWasSeen } from '../tour.js?v=202610201450';
+import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202610201450';
+import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202610201450';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
@@ -356,3 +357,49 @@ setUpGlossary();
 if (location.hash && $(location.hash.slice(1))) {
   setTimeout(() => goToReading(location.hash.slice(1)), 150);
 }
+
+// --- 5. Watch your chart build, step by step (js/tour.js) -----------
+
+function tourSteps() {
+  const sun = byId.sun;
+  const moon = byId.moon;
+  const lines = chart.aspects.filter((a) => a.type !== 'conjunction').length;
+  const steps = [
+    { layers: ['signs'], title: 'The 12 signs',
+      text: 'The outer ring is the zodiac: the 12 signs, each with its constellation. It\u2019s the backdrop of the sky. Signs describe how something in you shows up.' },
+    { layers: ['planets'], title: 'Your planets',
+      text: `Each gold symbol is a planet (the Sun and Moon count too), placed exactly where it was in the sky when you were born. Your Sun was in ${signLabel(sun)} and your Moon in ${signLabel(moon)}. Planets describe what part of you.` },
+  ];
+  if (chart.houses) {
+    steps.push({ layers: ['houses'], title: 'The houses',
+      text: `The 12 numbered slices are the houses: areas of life like home, love or work. They come from your birth time and place. ASC, on the left, is your Rising sign: ${signLabel(byId.rising)}. Houses describe where.` });
+  }
+  steps.push({ layers: ['aspects'], title: 'The lines',
+    text: `Lines join planets that sit at special angles from each other, called aspects. Dashed lines are easy, solid lines are tense. Your chart has ${lines}. Now hover over anything to learn more.` });
+  return steps;
+}
+
+function startTour() {
+  setView(false); // the tour needs the wheel
+  hideTip();
+  $('how-content').hidden = true;
+  $('replay-tour').hidden = true;
+  // Bring the wheel into view (on phones the tour card covers the bottom).
+  $('wheel-box').scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  runTour({
+    svg,
+    panel: $('tour'),
+    steps: tourSteps(),
+    onEnd: () => {
+      $('how-content').hidden = false;
+      $('replay-tour').hidden = false;
+      $('replay-tour').focus({ preventScroll: true });
+    },
+  });
+}
+
+$('replay-tour').addEventListener('click', startTour);
+// The first time someone opens My Chart, it builds itself (not when
+// arriving from a link to one explanation, like chart.html#venus).
+if (!tourWasSeen() && !location.hash) startTour();
+

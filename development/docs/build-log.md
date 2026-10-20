@@ -384,3 +384,24 @@ One entry per work session: what was done, what was decided, what went wrong, an
 **Testing:** every page and the lab load with no missing files; 83/83 calculation checks pass; the earlier page tests still pass.
 
 **AI vs me:** Me: brought the teacher's requirements and drew the structure. Claude: moved the files, fixed every link and made the icon.
+
+---
+
+## 20 October 2026 · Watch your chart build, and travel through time
+
+**Why:** my teacher's feedback was "the website will be considered as easy or medium depending on its design and execution", and I want at least medium. We picked three bigger features: these two, and real accounts (next).
+
+**Watch your chart build, step by step** (`js/tour.js`, My Chart)
+- The first time you open My Chart, the wheel builds itself in four steps: the signs, your planets, the houses (only with a birth time) and the lines. Each layer fades in, with one short sentence written for your chart ("Your Sun was in Leo and your Moon in Aquarius", "Your chart has 16 lines").
+- Next / Skip, a progress bar, Escape to stop. It only plays by itself once; "Watch your chart build, step by step" under the title replays it.
+- On phones the step text is a card at the bottom of the screen, so the wheel stays visible above it.
+
+**Travel through time** (`js/time-travel.js`, My Universe)
+- A wheel with your chart in gold and the real sky of any day in lilac on the inner ring. A slider goes a year back and a year forward; there are Day buttons, Today, and Play (one day every 0.15 seconds) to watch the planets travel.
+- When a planet in the sky comes within 1.5° of a special angle to one of your planets, a line joins them and a list explains it in plain words ("Mars flows with your Pluto…").
+- Calculated live with the same code as the birth chart, about 2.5 ms per day.
+- On a laptop the wheel stays beside the controls while you scroll; on a phone it comes right before the slider.
+
+**Testing:** every step of the tour, Skip, Escape, replay, no tour when arriving at one explanation; slider by mouse and keyboard, Play/Pause, phone width. No errors.
+
+**AI vs me:** Me: chose these features to raise the difficulty after my teacher's feedback (the step-by-step chart was in my original plan). Claude: designed the details and wrote the code.
