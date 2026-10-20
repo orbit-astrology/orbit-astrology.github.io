@@ -5,8 +5,8 @@
 // log out. The talking-to-the-server part is in cloud.js.
 // ---------------------------------------------------------------
 
-import { cloudReady, currentUser, signUp, logIn, logOut, sendPasswordReset, setNewPassword, deviceHasData } from './cloud.js?v=202610201534';
-import { loadBirth } from './store.js?v=202610201534';
+import { cloudReady, currentUser, signUp, logIn, logOut, sendPasswordReset, setNewPassword, deviceHasData, finishSignUp } from './cloud.js?v=202610201540';
+import { loadBirth } from './store.js?v=202610201540';
 
 const $ = (id) => document.getElementById(id);
 
@@ -91,9 +91,12 @@ export function setUpAccountPanel({ mode, onChange, collapsed = false, keepByDef
       if (signingUp) {
         const keep = !$('account-keep-field').hidden && $('account-keep').checked;
         const result = await signUp(email, password, keep);
-        message.textContent = result === 'check-email'
-          ? `Almost there: we sent a link to ${email}. Open it to confirm your email, and you’ll be logged in.`
-          : 'Your account is ready. Everything you save from now on is kept in it.';
+        if (result === 'check-email') {
+          message.textContent = `Almost there: we sent a link to ${email}. Open it on any device (your phone is fine) and this page will log you in by itself.`;
+          waitForConfirmation(email, password);
+        } else {
+          message.textContent = 'Your account is ready. Everything you save from now on is kept in it.';
+        }
         event = 'signup';
       } else {
         await logIn(email, password);
@@ -110,6 +113,37 @@ export function setUpAccountPanel({ mode, onChange, collapsed = false, keepByDef
       button.disabled = false;
     }
   });
+
+  // Waiting for the email to be confirmed. The link might be opened on
+  // another device, so this page checks by itself: every 15 seconds,
+  // and straight away when you come back to this tab. It stops after
+  // 30 minutes (then just log in normally).
+  function waitForConfirmation(email, password) {
+    const started = Date.now();
+    let busy = false;
+    async function check() {
+      if (busy || document.hidden) return;
+      if (Date.now() - started > 30 * 60000) return stop();
+      busy = true;
+      try {
+        if (await finishSignUp(email, password)) {
+          stop();
+          message.textContent = 'Your email is confirmed and you’re logged in.';
+          show();
+          onChange?.('login');
+        }
+      } catch { /* offline for a moment: try again next time */ }
+      busy = false;
+    }
+    const timer = setInterval(check, 15000);
+    document.addEventListener('visibilitychange', check);
+    window.addEventListener('focus', check);
+    function stop() {
+      clearInterval(timer);
+      document.removeEventListener('visibilitychange', check);
+      window.removeEventListener('focus', check);
+    }
+  }
 
   $('forgot').addEventListener('click', async () => {
     const email = $('account-email').value.trim();

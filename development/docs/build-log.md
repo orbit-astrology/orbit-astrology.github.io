@@ -453,3 +453,15 @@ One entry per work session: what was done, what was decided, what went wrong, an
 **Testing:** the chart opens complete at 1024, 1280, 1440 and 1920 px wide, nothing hangs off the side, the button starts the step-by-step version, no errors.
 
 **AI vs me:** Me: noticed the problem while a friend tried the site, and decided the full chart should come first with the steps as an option. Claude: changed the code and the button.
+
+---
+
+## 20 October 2026 · Confirming your email on another device
+
+**Problem (found by a friend testing):** she created an account on her laptop, opened the confirmation email on her iPhone, and was logged in on the phone, but the laptop kept waiting until she refreshed.
+
+**Fix:** while the page says "we sent you a link", it now checks by itself whether the email has been confirmed: every 15 seconds, and straight away when you come back to the tab. As soon as it's confirmed (on any device), the laptop logs in too. The password is only kept in the page's memory while it waits, never saved, and it stops checking after 30 minutes.
+
+**Testing:** pretend Supabase: signing up on the first page and on Profile, confirming "on another device", the laptop logging itself in when you return to the tab and by the 15-second timer, and no error shown while it's still waiting. 83/83 checks.
+
+**AI vs me:** Me: found the problem with a real user. Claude: designed the fix and wrote the code.

@@ -17,7 +17,7 @@
 // about an hour) and a refresh token (gets a new access token).
 // ---------------------------------------------------------------
 
-import { SUPABASE_URL, SUPABASE_KEY } from './cloud-config.js?v=202610201534';
+import { SUPABASE_URL, SUPABASE_KEY } from './cloud-config.js?v=202610201540';
 
 const SESSION_KEY = 'orbit.session';
 const SYNCED_KEY = 'orbit.synced-at';
@@ -74,7 +74,11 @@ async function call(path, { method = 'GET', body, token, headers = {} } = {}) {
   }
   const text = await response.text();
   const data = text ? JSON.parse(text) : null;
-  if (!response.ok) throw new Error(friendly(data, response.status));
+  if (!response.ok) {
+    const error = new Error(friendly(data, response.status));
+    error.notConfirmed = text.toLowerCase().includes('not confirmed'); // see finishSignUp
+    throw error;
+  }
   return data;
 }
 
@@ -139,6 +143,23 @@ export async function signUp(email, password, keepHere = false) {
   saveSession(data);
   await syncAfterLogin(keepHere);
   return 'logged-in';
+}
+
+// After "check your email": has the email been confirmed yet (maybe on
+// another device, like a phone)? If so, log in here too and return
+// true. If not yet, return false. The password is only kept in the
+// page's memory while it waits, never saved.
+export async function finishSignUp(email, password) {
+  let data;
+  try {
+    data = await call('/auth/v1/token?grant_type=password', { method: 'POST', body: { email, password } });
+  } catch (error) {
+    if (error.notConfirmed) return false;
+    throw error;
+  }
+  saveSession(data);
+  await syncAfterLogin(read(KEEP_KEY) === email.toLowerCase());
+  return true;
 }
 
 // Logging in shows that account's things only: whatever was in this
