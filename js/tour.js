@@ -23,7 +23,7 @@ export function tourWasSeen() {
 /**
  * svg   – the chart wheel
  * panel – the box where the step text appears (inside the "How to read" column)
- * steps – [{ layers: ['signs'], title, text }] in order
+ * steps – [{ layers: ['signs'], title, intro, points, outro }] in order
  * onEnd – called when the tour finishes or is skipped
  */
 export function runTour({ svg, panel, steps, onEnd }) {
@@ -54,7 +54,31 @@ export function runTour({ svg, panel, steps, onEnd }) {
 
     eyebrow.textContent = `Step ${i + 1} of ${steps.length}`;
     title.textContent = step.title;
-    text.textContent = step.text;
+    // Each step: a short intro, a few bullet points, then one closing line.
+    const intro = document.createElement('p');
+    intro.textContent = step.intro;
+    const list = document.createElement('ul');
+    for (const point of step.points || []) {
+      const li = document.createElement('li');
+      // A small sample of the line style, for "Dashed" and "Solid".
+      if (point.line) {
+        const sample = document.createElement('span');
+        sample.className = `line-sample ${point.line}`;
+        sample.setAttribute('aria-hidden', 'true');
+        li.append(sample);
+      }
+      const label = document.createElement('strong');
+      label.textContent = point.label;
+      li.append(label, `: ${point.text}`);
+      list.append(li);
+    }
+    text.replaceChildren(intro);
+    if (list.children.length) text.append(list);
+    if (step.outro) {
+      const outro = document.createElement('p');
+      outro.textContent = step.outro;
+      text.append(outro);
+    }
     [...dots.children].forEach((d, n) => d.classList.toggle('done', n <= i));
     next.textContent = i === steps.length - 1 ? 'Explore my chart' : 'Next →';
     next.focus({ preventScroll: true });

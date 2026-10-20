@@ -107,7 +107,18 @@
 .replay-tour { align-self: flex-start; margin-top: 6px; }
 .tour { display: flex; flex-direction: column; gap: 12px; }
 .tour-title { font-size: clamp(1.6rem, 2.4vw, 2.1rem); }
-.tour-text { margin: 0; font-size: 16px; max-width: 38ch; }
+.tour-text { margin: 0; font-size: 16px; max-width: 38ch; display: flex; flex-direction: column; gap: 10px; }
+.tour-text p { margin: 0; }
+/* The bullet points: small squares, in keeping with the square style. */
+.tour-text ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.tour-text li { position: relative; padding-left: 18px; }
+.tour-text li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 5px; height: 5px; background: var(--champagne); }
+.tour-text li:has(.line-sample) { padding-left: 38px; }
+.tour-text li:has(.line-sample)::before { display: none; }
+.tour-text strong { font-weight: 650; }
+/* A tiny sample of each line style next to "Dashed" and "Solid". */
+.line-sample { position: absolute; left: 0; top: 0.75em; width: 26px; border-top: 1.5px solid var(--bone); }
+.line-sample.dashed { border-top-style: dashed; border-color: var(--champagne); }
 .tour-dots { display: flex; gap: 6px; }
 .tour-dots span { width: 18px; height: 3px; background: var(--line); }
 .tour-dots span.done { background: var(--champagne); }

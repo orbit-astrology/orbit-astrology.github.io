@@ -581,3 +581,18 @@ Step 2 explained the Sun and Moon, then said "Your Moon (how you feel)" again st
 The step-by-step texts were still a lot to read at once. Each step is now 2–3 short sentences; the hover boxes on the wheel hold the detail. Cut: "(the Sun and Moon count too)", "The houses come from your birth time and place", the Rising sign sentence (it's in the hover box for ASC), and the number of lines.
 
 **AI vs me:** Me: felt the steps were too long and that the hover boxes already give the detail. Claude: shortened all four steps to match.
+
+---
+
+## 20 October 2026 · Step-by-step as intro, bullet points and one closing line
+
+**My idea:** instead of a paragraph, each step is a short intro, a few bullet points and one closing line, so it's easier to scan and less overwhelming.
+
+- **Signs:** intro, then "Aries: boldly · Taurus: calmly · Gemini: curiously".
+- **Planets:** intro, then "Sun: who you are · Moon: how you feel · Venus: how you love", then "Your Moon is in Aries: boldly and directly."
+- **Houses:** intro, then "4th house: home and family · 7th house: partners · 10th house: career", then "Your Moon is in the 6th house (daily routines, work and health): that's where it shows up most."
+- **Lines:** intro, then a dashed line sample next to "Dashed: they help each other easily" and a solid line sample next to "Solid: they pull against each other, which helps you grow", then "Now hover over anything to learn more."
+
+The bullets are small squares, matching the square style.
+
+**AI vs me:** Me: came up with the intro / bullets / closing-line format. Claude: rebuilt the steps that way and added the little line samples.

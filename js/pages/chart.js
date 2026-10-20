@@ -9,17 +9,17 @@
 //   4. write "Your chart, explained": one section per placement
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610201934';
-import { formatOffset } from '../astro/time.js?v=202610201934';
-import { drawWheel } from '../wheel.js?v=202610201934';
-import { placeTip } from '../tip-position.js?v=202610201934';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610201934';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201934';
-import { loadBirth } from '../store.js?v=202610201934';
-import { saveButton } from '../save-button.js?v=202610201934';
-import { runTour } from '../tour.js?v=202610201934';
-import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202610201934';
-import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202610201934';
+import { calculateChart } from '../astro/chart.js?v=202610201937';
+import { formatOffset } from '../astro/time.js?v=202610201937';
+import { drawWheel } from '../wheel.js?v=202610201937';
+import { placeTip } from '../tip-position.js?v=202610201937';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610201937';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201937';
+import { loadBirth } from '../store.js?v=202610201937';
+import { saveButton } from '../save-button.js?v=202610201937';
+import { runTour } from '../tour.js?v=202610201937';
+import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202610201937';
+import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202610201937';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
@@ -368,23 +368,45 @@ function tourSteps() {
   const moon = byId.moon;
   // The example uses your Moon, or your Sun if the Moon's sign isn't certain.
   const example = moon.uncertain ? sun : moon;
+  // Each step: { intro, points: [{ label, text }], outro } (shown by js/tour.js)
   const steps = [
     { layers: ['signs'], title: 'The 12 signs',
-      text: 'The outer ring is the zodiac: the 12 signs. Each sign is a style or mood, how a part of you behaves: boldly (Aries), calmly (Taurus) or curiously (Gemini).' },
+      intro: 'The outer ring is the zodiac: the 12 signs. Each sign is a style or mood, how a part of you behaves.',
+      points: [
+        { label: 'Aries', text: 'boldly' },
+        { label: 'Taurus', text: 'calmly' },
+        { label: 'Gemini', text: 'curiously' },
+      ] },
     { layers: ['planets'], title: 'Your planets',
-      text: `Each gold symbol is a planet, placed where it was in the sky when you were born. Each planet is one part of you. Your ${example.name} (${example.what}) is in ${example.sign}: ${SIGNS[example.sign].how}.` },
+      intro: 'Each gold symbol is a planet, placed where it was in the sky when you were born. Each planet is one part of you.',
+      points: [
+        { label: 'Sun', text: 'who you are' },
+        { label: 'Moon', text: 'how you feel' },
+        { label: 'Venus', text: 'how you love' },
+      ],
+      outro: `Your ${example.name} is in ${example.sign}: ${SIGNS[example.sign].how}.` },
   ];
   if (chart.houses) {
     // A planet whose house is certain, to show what a house means.
     const inHouse = [moon, sun].find((p) => p.house && !p.houseUncertain);
-    const houseExample = inHouse
-      ? ` Your ${inHouse.name} is in the ${ordinal(inHouse.house)} house (${HOUSES[inHouse.house]}): that’s where it shows up most.`
-      : '';
     steps.push({ layers: ['houses'], title: 'The houses',
-      text: `The 12 numbered slices are the houses. Each house is an area of life, like home, love or work.${houseExample}` });
+      intro: 'The 12 numbered slices are the houses. Each house is an area of life.',
+      points: [
+        { label: '4th house', text: 'home and family' },
+        { label: '7th house', text: 'partners' },
+        { label: '10th house', text: 'career' },
+      ],
+      outro: inHouse
+        ? `Your ${inHouse.name} is in the ${ordinal(inHouse.house)} house (${HOUSES[inHouse.house]}): that’s where it shows up most.`
+        : '' });
   }
   steps.push({ layers: ['aspects'], title: 'The lines',
-    text: 'A line means two planets affect each other. Dashed: they help each other easily. Solid: they pull against each other, which helps you grow. Now hover over anything to learn more.' });
+    intro: 'A line means two planets affect each other.',
+    points: [
+      { label: 'Dashed', text: 'they help each other easily', line: 'dashed' },
+      { label: 'Solid', text: 'they pull against each other, which helps you grow', line: 'solid' },
+    ],
+    outro: 'Now hover over anything to learn more.' });
   return steps;
 }
 
