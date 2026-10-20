@@ -11,5 +11,5 @@
 // Never put the "service_role" or "secret" key here.
 // ---------------------------------------------------------------
 
-export const SUPABASE_URL = '';  // e.g. 'https://abcdxyz.supabase.co'
-export const SUPABASE_KEY = '';  // the "anon public" / "publishable" key
+export const SUPABASE_URL = 'https://inxpjshdjkaedylgjdcz.supabase.co';
+export const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlueHBqc2hkamthZWR5bGdqZGN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI1MDQxMzQsImV4cCI6MjEwODA4MDEzNH0.NIXyCO7SWcrLLsAl8uiD8rBvqjIqzFJMGQd9EdVIm0A'; // the public "anon" key
