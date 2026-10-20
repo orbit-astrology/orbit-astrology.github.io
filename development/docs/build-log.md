@@ -565,3 +565,11 @@ Pressing the button used to scroll the page down to the wheel, and the wheel als
 If the Moon's sign or house isn't certain (unknown birth time), the example uses the Sun, or leaves the example out, so it never shows something that might be wrong.
 
 **AI vs me:** Me: spotted that the wording was unclear, chose to keep "houses" in the houses step, and cut "for example" and "Neither is good or bad". Claude: explained the formula and drafted the new texts.
+
+---
+
+## 20 October 2026 · Step 2 no longer repeats itself
+
+Step 2 explained the Sun and Moon, then said "Your Moon (how you feel)" again straight after. Now each meaning is given once, in the person's own example: "Each planet is one part of you. Your Moon (how you feel) is in Aries: boldly and directly." Step 3 doesn't repeat "(how you feel)" either, unless it uses a different planet from step 2.
+
+**AI vs me:** Me: noticed the repetition. Claude: rewrote it.

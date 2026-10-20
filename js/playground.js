@@ -7,9 +7,9 @@
 // explains that aspect.
 // ---------------------------------------------------------------
 
-import { ASPECTS } from './astro/settings.js?v=202610201928';
-import { aspectBetween } from './astro/aspects.js?v=202610201928';
-import { ASPECT_TEXT } from './content/basics.js?v=202610201928';
+import { ASPECTS } from './astro/settings.js?v=202610201933';
+import { aspectBetween } from './astro/aspects.js?v=202610201933';
+import { ASPECT_TEXT } from './content/basics.js?v=202610201933';
 
 const NS = 'http://www.w3.org/2000/svg';
 const C = 200;   // centre of the 400 × 400 drawing
