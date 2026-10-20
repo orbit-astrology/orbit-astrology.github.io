@@ -533,3 +533,11 @@ Removed "Every part is explained in plain words." from the introduction under th
   - tapping on a phone opens it reliably.
 
 **AI vs me:** Me: decided to remove the questions and their boxes. Claude: found them all, removed them, and fixed the pop-up problems it found on the way.
+
+---
+
+## 20 October 2026 · Clearer "click" hint in the wheel's boxes
+
+The box that appears when you point at a planet said "Click to read the full explanation", but the box disappears when you move the mouse onto it, so it looked like you should click the box. It now says what to click: **"Click the Moon symbol on the wheel to read its full explanation ↓"** (on phones: "Tap the Moon symbol again…"). On Connections, the boxes for lines say "Click the line on the wheel…".
+
+**AI vs me:** Me: noticed the hint was confusing and suggested the new wording. Claude: changed it on My Chart and Connections.

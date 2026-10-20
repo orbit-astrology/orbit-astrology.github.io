@@ -9,17 +9,17 @@
 //   4. write "Your chart, explained": one section per placement
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610201912';
-import { formatOffset } from '../astro/time.js?v=202610201912';
-import { drawWheel } from '../wheel.js?v=202610201912';
-import { placeTip } from '../tip-position.js?v=202610201912';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610201912';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201912';
-import { loadBirth } from '../store.js?v=202610201912';
-import { saveButton } from '../save-button.js?v=202610201912';
-import { runTour } from '../tour.js?v=202610201912';
-import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202610201912';
-import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202610201912';
+import { calculateChart } from '../astro/chart.js?v=202610201914';
+import { formatOffset } from '../astro/time.js?v=202610201914';
+import { drawWheel } from '../wheel.js?v=202610201914';
+import { placeTip } from '../tip-position.js?v=202610201914';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610201914';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201914';
+import { loadBirth } from '../store.js?v=202610201914';
+import { saveButton } from '../save-button.js?v=202610201914';
+import { runTour } from '../tour.js?v=202610201914';
+import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202610201914';
+import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202610201914';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
@@ -82,7 +82,10 @@ function planetTip(p) {
     title: `${p.name} in ${signLabel(p)}`,
     meta: p.uncertain ? 'Depends on your birth time' : meta.join(' · '),
     text: `${capital(p.what)}: ${how}.`,
-    action: lastPointer === 'touch' ? 'Tap again to read the full explanation ↓' : 'Click to read the full explanation ↓',
+    // Say WHAT to click: the box itself disappears when the mouse moves to it.
+    action: lastPointer === 'touch'
+      ? `Tap the ${p.name} symbol again to read its full explanation ↓`
+      : `Click the ${p.name} symbol on the wheel to read its full explanation ↓`,
   };
 }
 

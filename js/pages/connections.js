@@ -10,18 +10,18 @@
 // the address means the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610201912';
-import { drawWheel } from '../wheel.js?v=202610201912';
-import { placeTip } from '../tip-position.js?v=202610201912';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610201912';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201912';
-import { setUpBirthForm } from '../birth-form.js?v=202610201912';
-import { makeShareLink, readShareCode } from '../share.js?v=202610201912';
-import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202610201912';
-import { risingText } from '../readings.js?v=202610201912';
-import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610201912';
-import { PERSONAL, LENS_TAGS, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610201912';
-import { PLANETS, SIGNS } from '../content/basics.js?v=202610201912';
+import { calculateChart } from '../astro/chart.js?v=202610201914';
+import { drawWheel } from '../wheel.js?v=202610201914';
+import { placeTip } from '../tip-position.js?v=202610201914';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610201914';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201914';
+import { setUpBirthForm } from '../birth-form.js?v=202610201914';
+import { makeShareLink, readShareCode } from '../share.js?v=202610201914';
+import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202610201914';
+import { risingText } from '../readings.js?v=202610201914';
+import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610201914';
+import { PERSONAL, LENS_TAGS, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610201914';
+import { PLANETS, SIGNS } from '../content/basics.js?v=202610201914';
 
 const $ = (id) => document.getElementById(id);
 const nameOf = (id) => id[0].toUpperCase() + id.slice(1);
@@ -503,7 +503,8 @@ function linkTip(link) {
     title: e.title.replace(' · ', ' & '),
     meta: meta.join(' · '),
     text: `They’re ${e.plain}. This link is about ${e.theme}.`,
-    action: `${lastPointer === 'touch' ? 'Tap again' : 'Click'} to read the full explanation ↓`,
+    // Say WHAT to click: the box itself disappears when the mouse moves to it.
+    action: `${lastPointer === 'touch' ? 'Tap the line again' : 'Click the line on the wheel'} to read the full explanation ↓`,
   };
 }
 

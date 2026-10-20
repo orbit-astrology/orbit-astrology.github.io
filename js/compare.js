@@ -13,9 +13,9 @@
 // if it doesn't hold all day, it's marked "might not be exact".
 // ---------------------------------------------------------------
 
-import { findCrossAspects } from './astro/aspects.js?v=202610201912';
-import { PLANETS } from './content/basics.js?v=202610201912';
-import { PERSONAL, PAIRS, LINK_TYPES, THEIR_WHAT, pairKey } from './content/connections.js?v=202610201912';
+import { findCrossAspects } from './astro/aspects.js?v=202610201914';
+import { PLANETS } from './content/basics.js?v=202610201914';
+import { PERSONAL, PAIRS, LINK_TYPES, THEIR_WHAT, pairKey } from './content/connections.js?v=202610201914';
 
 const nameOf = (id) => id[0].toUpperCase() + id.slice(1);
 const personal = (bodies) => bodies.filter((b) => PERSONAL.includes(b.id));
