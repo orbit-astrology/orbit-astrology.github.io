@@ -9,11 +9,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Manrope:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/tokens.css?v=202610201450">
-  <link rel="stylesheet" href="css/base.css?v=202610201450">
-  <link rel="stylesheet" href="css/birth-form.css?v=202610201450">
-  <link rel="stylesheet" href="css/chart.css?v=202610201450">
-  <link rel="stylesheet" href="css/profile.css?v=202610201450">
+  <link rel="stylesheet" href="css/tokens.css?v=202610201505">
+  <link rel="stylesheet" href="css/base.css?v=202610201505">
+  <link rel="stylesheet" href="css/birth-form.css?v=202610201505">
+  <link rel="stylesheet" href="css/chart.css?v=202610201505">
+  <link rel="stylesheet" href="css/profile.css?v=202610201505">
 </head>
 <body class="page-profile">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -36,7 +36,56 @@
     <section class="wrap profile-intro">
       <p class="eyebrow">Profile</p>
       <h1 class="title" id="profile-title">Your profile</h1>
-      <p class="lede">Your details, the readings you’ve saved, and everything ORBIT keeps in this browser.</p>
+      <p class="lede">Your account, your details, the readings you’ve saved, and everything ORBIT keeps about you.</p>
+    </section>
+
+    <!-- Your account: log in, create one, or log out (js/account-panel.js) -->
+    <section class="wrap account" id="account" aria-labelledby="account-title">
+      <h2 id="account-title" class="eyebrow" tabindex="-1">Your account</h2>
+
+      <p class="quiet" id="account-off" hidden>Accounts aren’t switched on yet. For now, everything is saved in this browser.</p>
+
+      <div id="account-out" hidden>
+        <p class="account-why">Create a free account to keep your universe safe and open it on any device: your chart, your people and your saved readings go with you.</p>
+        <div class="view-switch" role="group" aria-label="Log in or create an account">
+          <button type="button" id="mode-login" aria-pressed="true">Log in</button>
+          <button type="button" id="mode-signup" aria-pressed="false">Create account</button>
+        </div>
+        <form id="account-form" class="account-form" novalidate>
+          <div class="field">
+            <label for="account-email">Email</label>
+            <input id="account-email" type="email" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="account-password">Password</label>
+            <input id="account-password" type="password" autocomplete="current-password" minlength="8" required>
+            <p class="hint" id="password-hint" hidden>At least 8 characters.</p>
+          </div>
+          <p class="error-text" id="account-error" role="alert"></p>
+          <div class="form-actions">
+            <button type="submit" class="button" id="account-submit">Log in</button>
+            <button type="button" class="link-button" id="forgot">Forgot your password?</button>
+          </div>
+        </form>
+      </div>
+
+      <form id="new-password" class="account-form" novalidate hidden>
+        <p>Choose a new password for your account.</p>
+        <div class="field">
+          <label for="new-password-input">New password</label>
+          <input id="new-password-input" type="password" autocomplete="new-password" minlength="8" required>
+          <p class="hint">At least 8 characters.</p>
+        </div>
+        <p class="error-text" id="new-password-error" role="alert"></p>
+        <button type="submit" class="button">Save new password</button>
+      </form>
+
+      <div id="account-in" hidden>
+        <p>Logged in as <strong id="account-who"></strong>. Your chart, your people and your saved readings are saved to your account, so they’re there on any device where you log in.</p>
+        <button type="button" class="button button-outline" id="logout">Log out</button>
+      </div>
+
+      <p class="saved-text" id="account-message" role="status"></p>
     </section>
 
     <div class="wrap profile-layout">
@@ -135,10 +184,9 @@
       <div class="wrap data-layout">
         <div class="data-about">
           <h2 id="data-title" class="section-title">Your <em>data</em></h2>
-          <p>ORBIT doesn’t have accounts yet, so everything is saved only in this browser, on this device. It doesn’t follow you to your phone or another computer, and clearing your browser data deletes it.</p>
-          <p class="quiet">Your birth details are never sent to a server. The only thing that leaves your browser is the city name you type into the place search.</p>
+          <p id="data-where"></p>
+          <p class="quiet" id="data-server"></p>
           <ul class="data-list" id="data-list"></ul>
-          <p class="quiet coming">Coming later: accounts, so you can log in and see your universe on any device.</p>
         </div>
         <div class="data-actions">
           <div>
@@ -152,6 +200,7 @@
               <button type="button" class="button" id="delete-yes">Yes, delete everything</button>
               <button type="button" class="link-button" id="delete-no">Cancel</button>
             </div>
+            <p class="error-text" id="delete-error" role="alert"></p>
           </div>
         </div>
       </div>
@@ -164,6 +213,6 @@
     </div>
   </footer>
 
-  <script type="module" src="js/pages/profile.js?v=202610201450"></script>
+  <script type="module" src="js/pages/profile.js?v=202610201505"></script>
 </body>
 </html>

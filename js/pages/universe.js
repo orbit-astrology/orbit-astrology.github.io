@@ -8,15 +8,16 @@
 //   - this week's sky, matched against your chart
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610201450';
-import { weeklyEvents } from '../astro/sky.js?v=202610201450';
-import { risingText, marginText } from '../readings.js?v=202610201450';
-import { setUpTimeTravel } from '../time-travel.js?v=202610201450';
-import { drawWheel } from '../wheel.js?v=202610201450';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610201450';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201450';
-import { loadBirth } from '../store.js?v=202610201450';
-import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202610201450';
+import { calculateChart } from '../astro/chart.js?v=202610201505';
+import { weeklyEvents } from '../astro/sky.js?v=202610201505';
+import { risingText, marginText } from '../readings.js?v=202610201505';
+import { setUpTimeTravel } from '../time-travel.js?v=202610201505';
+import { cloudReady, currentUser } from '../cloud.js?v=202610201505';
+import { drawWheel } from '../wheel.js?v=202610201505';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610201505';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201505';
+import { loadBirth } from '../store.js?v=202610201505';
+import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202610201505';
 
 const $ = (id) => document.getElementById(id);
 
@@ -237,5 +238,15 @@ setUpTimeTravel({
   list: $('travel-list'),
   buttons: { back: $('travel-back'), forward: $('travel-forward'), today: $('travel-today'), play: $('travel-play') },
 });
+
+// --- Saved where? (accounts: js/cloud.js) ---------------------------------
+
+if (currentUser() && !birth.isSample) {
+  $('save-where').textContent = 'in your account';
+  $('save-note').textContent = `It’s saved to ${currentUser().email}, so you can open it on any device where you log in.`;
+  $('save-account').hidden = true;
+} else if (!cloudReady || birth.isSample) {
+  $('save-account').hidden = true;
+}
 
 setUpGlossary();

@@ -2,17 +2,20 @@
 // ---------------------------------------------------------------
 // Remembers the birth details between pages.
 //
-// For now everything is saved only in this browser (localStorage).
-// That means: it stays when you reload or come back later on the
-// same device, but it doesn't follow you to other devices, and it
-// disappears if you clear your browser data. Real accounts come
-// later. We save the birth DETAILS, not the chart: the chart is
-// recalculated from them every time, so it's always correct.
+// Everything is saved in this browser (localStorage), so pages load
+// instantly and ORBIT works without an account. When you're logged
+// in, cloud.js also sends every change to your account, so it follows
+// you to other devices. We save the birth DETAILS, not the chart: the
+// chart is recalculated from them every time, so it's always correct.
 // ---------------------------------------------------------------
 
-import { SETTINGS } from './astro/settings.js?v=202610201450';
+import { SETTINGS } from './astro/settings.js?v=202610201505';
 
 const KEY = 'orbit.birth';
+
+// Tell the rest of the site that saved data changed (cloud.js listens
+// and sends it to your account when you're logged in).
+const changed = () => window.dispatchEvent(new Event('orbit:changed'));
 
 // The made-up sample person, for "Explore a sample chart".
 export const SAMPLE_BIRTH = {
@@ -25,6 +28,7 @@ export const SAMPLE_BIRTH = {
 export function saveBirth(birth) {
   try {
     localStorage.setItem(KEY, JSON.stringify({ ...birth, settingsVersion: SETTINGS.version }));
+    changed();
     return true;
   } catch {
     return false; // private browsing or storage turned off
@@ -41,7 +45,7 @@ export function loadBirth() {
 }
 
 export function clearBirth() {
-  try { localStorage.removeItem(KEY); } catch { /* nothing to clear */ }
+  try { localStorage.removeItem(KEY); changed(); } catch { /* nothing to clear */ }
 }
 
 // --- The people you've added on Connections ---------------------
@@ -62,6 +66,7 @@ export function loadPeople() {
 export function savePeople(list) {
   try {
     localStorage.setItem(PEOPLE_KEY, JSON.stringify(list));
+    changed();
     return true;
   } catch {
     return false;
@@ -87,6 +92,7 @@ export function loadSaved() {
 export function saveSaved(list) {
   try {
     localStorage.setItem(SAVED_KEY, JSON.stringify(list));
+    changed();
     return true;
   } catch {
     return false;
@@ -97,4 +103,4 @@ export const isSaved = (kind, id) => loadSaved().some((s) => s.kind === kind && 
 
 // Everything ORBIT keeps in this browser, for "Download my data" and
 // "Delete everything" on the Profile page.
-export const ALL_KEYS = [KEY, PEOPLE_KEY, SAVED_KEY, 'orbit.lens'];
+export const ALL_KEYS = [KEY, PEOPLE_KEY, SAVED_KEY, 'orbit.lens', 'orbit.tour-done'];

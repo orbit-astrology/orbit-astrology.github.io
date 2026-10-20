@@ -5,7 +5,11 @@
 //   - the strip that says "You're viewing a sample chart"
 // ---------------------------------------------------------------
 
+import { startCloud } from './cloud.js?v=202610201505';
+
 export function setUpMenu() {
+  startCloud(); // accounts: log in from email links, keep this device in sync (js/cloud.js)
+
   const button = document.querySelector('.menu-button');
   const nav = document.getElementById('site-nav');
   if (!button || !nav) return;

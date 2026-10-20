@@ -66,6 +66,10 @@ birth form → birthplace search → exact UTC moment → planet positions
 | `js/astro/aspects.js` | Finds the angles between planets (conjunction, sextile, square, trine, opposition) |
 | `js/astro/zodiac.js` | Small helpers: which sign a degree is in, and how to write it (12°33′ Leo) |
 | `js/birth-form.js` | The birth form (place search, checks, the "time happened twice" question), shared by Welcome and Connections |
+| `js/tour.js` | “Watch your chart build”: the step-by-step tour of the wheel on My Chart |
+| `js/time-travel.js` | “Travel through time”: the real sky on any day over your chart (My Universe) |
+| `js/cloud.js` | Accounts: sign up, log in, and syncing your data with Supabase (database setup: `development/docs/supabase-setup.sql`) |
+| `js/account-panel.js` | The “Your account” box on Profile |
 | `js/save-button.js` | The “Save to my profile” button on My Chart readings and Explore topics |
 | `js/share.js` | “Share my chart” links: your birth details in the part of the address after #, which never reaches the server |
 | `js/compare.js` | Compares two people's charts: the angles between their personal planets, explained in plain words |

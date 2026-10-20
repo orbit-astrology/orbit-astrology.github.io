@@ -405,3 +405,23 @@ One entry per work session: what was done, what was decided, what went wrong, an
 **Testing:** every step of the tour, Skip, Escape, replay, no tour when arriving at one explanation; slider by mouse and keyboard, Play/Pause, phone width. No errors.
 
 **AI vs me:** Me: chose these features to raise the difficulty after my teacher's feedback (the step-by-step chart was in my original plan). Claude: designed the details and wrote the code.
+
+---
+
+## 20 October 2026 · Real accounts (built, waiting for the Supabase keys)
+
+**What it does**
+- **Profile → Your account:** create an account or log in with email and password; "Forgot your password?" sends a reset link; a confirm-your-email link logs you in.
+- When you're logged in, your birth details, your people and your saved readings are saved to your account and come with you to any device. Logging in on a new device downloads them; a change on one device shows on the other the next time a page opens.
+- Logging out removes your data from that browser (it stays in your account), so the next person on a shared computer can't see it. "Delete everything" also deletes the account.
+- The site still works without an account, exactly as before. My Universe and the Welcome page invite you to create one.
+
+**How it's built** (`js/cloud.js`, `js/account-panel.js`, `js/cloud-config.js`)
+- A free **Supabase** project: its login service and one database table, `orbit_data` (one row per person).
+- Instead of Supabase's big ready-made library, a short file of our own talks to Supabase with plain `fetch()` requests, so I can read and explain every line.
+- **Privacy:** the website only has Supabase's *public* key. Database rules ("row level security", `development/docs/supabase-setup.sql`) let each logged-in person read and change only their own row.
+- The browser keeps its own copy (localStorage), so pages still load instantly.
+
+**Testing:** a pretend Supabase inside the test browser: sign up, data saved online, a second device logging in and getting everything, a change on one device appearing on the other, wrong password, bad email, log out, delete account, email confirmation and password reset links. All older tests still pass; 83/83 checks.
+
+**AI vs me:** Me: chose to add accounts to reach at least medium difficulty, and set up the Supabase project. Claude: designed the syncing and wrote the code and the database rules.

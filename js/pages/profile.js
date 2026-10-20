@@ -11,13 +11,15 @@
 // (localStorage) and the page says so honestly.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610201450';
-import { setUpGlossary } from '../glossary.js?v=202610201450';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201450';
-import { setUpBirthForm } from '../birth-form.js?v=202610201450';
-import { placements, risingText, marginText } from '../readings.js?v=202610201450';
-import { topicById } from '../content/topics.js?v=202610201450';
-import { loadBirth, saveBirth, loadPeople, loadSaved, saveSaved, ALL_KEYS } from '../store.js?v=202610201450';
+import { calculateChart } from '../astro/chart.js?v=202610201505';
+import { setUpGlossary } from '../glossary.js?v=202610201505';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201505';
+import { setUpBirthForm } from '../birth-form.js?v=202610201505';
+import { placements, risingText, marginText } from '../readings.js?v=202610201505';
+import { topicById } from '../content/topics.js?v=202610201505';
+import { startCloud, cloudReady, currentUser, deleteAccount } from '../cloud.js?v=202610201505';
+import { setUpAccountPanel } from '../account-panel.js?v=202610201505';
+import { loadBirth, saveBirth, loadPeople, loadSaved, saveSaved, ALL_KEYS } from '../store.js?v=202610201505';
 
 const $ = (id) => document.getElementById(id);
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -190,6 +192,7 @@ function showSaved() {
 
 function counts() {
   return {
+    account: currentUser()?.email ?? null,
     birth: Boolean(me && !me.isSample),
     people: loadPeople().length,
     saved: loadSaved().length,
@@ -200,8 +203,16 @@ const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
 
 function showData() {
   const c = counts();
+  // Where your data lives depends on whether you're logged in.
+  $('data-where').textContent = c.account
+    ? 'You’re logged in, so everything is saved in this browser and in your ORBIT account, which you can open on any device.'
+    : 'You’re not logged in, so everything is saved only in this browser, on this device. It doesn’t follow you to your phone or another computer, and clearing your browser data deletes it.';
+  $('data-server').textContent = c.account
+    ? 'Your account is stored with Supabase (ORBIT’s database), protected so that only you can read it. The place search also receives the city name you type.'
+    : `Your birth details are never sent to a server. The only thing that leaves your browser is the city name you type into the place search.${cloudReady ? ' Create an account above to keep them safe online.' : ''}`;
   const list = $('data-list');
   list.replaceChildren(
+    ...(c.account ? [make('li', '', `Your account: ${c.account}`)] : []),
     make('li', '', c.birth ? 'Your birth details and name' : 'No birth details of your own'),
     make('li', '', `${plural(c.people, 'person')} in Connections`.replace('persons', 'people')),
     make('li', '', plural(c.saved, 'saved reading')),
@@ -231,6 +242,7 @@ $('download').addEventListener('click', () => {
 $('delete-all').addEventListener('click', () => {
   const c = counts();
   const parts = [];
+  if (c.account) parts.push(`your account (${c.account})`);
   if (c.birth) parts.push('your birth details');
   if (c.people) parts.push(plural(c.people, 'person').replace('persons', 'people') + ' in Connections');
   if (c.saved) parts.push(plural(c.saved, 'saved reading'));
@@ -246,7 +258,16 @@ $('delete-no').addEventListener('click', () => {
   $('delete-all').hidden = false;
   $('delete-all').focus();
 });
-$('delete-yes').addEventListener('click', () => {
+$('delete-yes').addEventListener('click', async () => {
+  // Logged in: delete the account on the server first.
+  if (currentUser()) {
+    try {
+      await deleteAccount();
+    } catch (error) {
+      $('delete-error').textContent = `Your account couldn’t be deleted: ${error.message}`;
+      return;
+    }
+  }
   try { for (const key of ALL_KEYS) localStorage.removeItem(key); } catch { /* nothing to delete */ }
   window.location.href = 'index.html';
 });
@@ -254,6 +275,19 @@ $('delete-yes').addEventListener('click', () => {
 // =====================================================================
 // Start
 // =====================================================================
+
+// Accounts: log in from an email link, sync, then set up the account box.
+const mode = await startCloud();
+me = loadBirth();
+setUpAccountPanel({
+  mode,
+  onChange() {
+    me = loadBirth();
+    showDetails();
+    showSaved();
+    showData();
+  },
+});
 
 showDetails();
 showSaved();

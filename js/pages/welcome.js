@@ -8,15 +8,17 @@
 //   3. go to My Universe, which reads them and shows your chart
 // ---------------------------------------------------------------
 
-import { skyAt } from '../astro/sky.js?v=202610201450';
-import { drawWheel } from '../wheel.js?v=202610201450';
-import { setUpGlossary } from '../glossary.js?v=202610201450';
-import { setUpBirthForm } from '../birth-form.js?v=202610201450';
-import { saveBirth, loadBirth, SAMPLE_BIRTH } from '../store.js?v=202610201450';
+import { skyAt } from '../astro/sky.js?v=202610201505';
+import { drawWheel } from '../wheel.js?v=202610201505';
+import { setUpGlossary } from '../glossary.js?v=202610201505';
+import { setUpBirthForm } from '../birth-form.js?v=202610201505';
+import { startCloud } from '../cloud.js?v=202610201505';
+import { saveBirth, loadBirth, SAMPLE_BIRTH } from '../store.js?v=202610201505';
 
 const $ = (id) => document.getElementById(id);
 
 setUpGlossary();
+startCloud(); // if you're logged in, your details are sent to your account too
 
 // --- The real sky right now, drawn faintly behind the title --------
 
