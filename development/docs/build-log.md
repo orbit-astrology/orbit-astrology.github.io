@@ -512,3 +512,11 @@ When you're logged in, "Delete everything" deletes your account too, but the que
 **Testing:** laptop and phone sizes, Log in link, creating an account from it, logging out, Read more, Show more and moving the slider afterwards. No errors; 83/83 checks.
 
 **AI vs me:** Me: decided the site should feel calmer, chose to keep Travel through time on My Universe, and approved the rest. Claude: proposed what to fold away and wrote the code.
+
+---
+
+## 20 October 2026 · First page: shorter introduction
+
+Removed "Every part is explained in plain words." from the introduction under the title, so it ends on "…planets, people and time." The site already shows it's beginner-friendly; it doesn't need to say so.
+
+**AI vs me:** Me: decided to cut the sentence. Claude: made the edit.
