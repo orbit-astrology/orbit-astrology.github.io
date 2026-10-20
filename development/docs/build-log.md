@@ -475,3 +475,11 @@ One entry per work session: what was done, what was decided, what went wrong, an
 **Change:** "An exploration of your personal universe." is still in Bodoni Moda, but upright and a little heavier instead of thin italic. Bodoni's italic has very thin strokes, which are hard to read on a dark background. It stays elegant and matches the style guide (Bodoni for titles).
 
 **AI vs me:** Me: collected the feedback and decided to act on it. Claude: chose upright semi-bold Bodoni and checked it on a laptop and a phone.
+
+---
+
+## 20 October 2026 · Clearer "Delete everything" question
+
+When you're logged in, "Delete everything" deletes your account too, but the question still said "from this browser". It now says "…your account (email), your birth details… for good, on every device? This can't be undone." Without an account it still says "from this browser".
+
+**AI vs me:** Me: asked what the button does. Claude: noticed the wording didn't match and fixed it.

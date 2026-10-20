@@ -12,15 +12,15 @@
 // honestly where your data is.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610201606';
-import { setUpGlossary } from '../glossary.js?v=202610201606';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201606';
-import { setUpBirthForm } from '../birth-form.js?v=202610201606';
-import { placements, risingText, marginText } from '../readings.js?v=202610201606';
-import { topicById } from '../content/topics.js?v=202610201606';
-import { startCloud, cloudReady, currentUser, deleteAccount } from '../cloud.js?v=202610201606';
-import { setUpAccountPanel } from '../account-panel.js?v=202610201606';
-import { loadBirth, saveBirth, loadPeople, loadSaved, saveSaved, ALL_KEYS } from '../store.js?v=202610201606';
+import { calculateChart } from '../astro/chart.js?v=202610201616';
+import { setUpGlossary } from '../glossary.js?v=202610201616';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201616';
+import { setUpBirthForm } from '../birth-form.js?v=202610201616';
+import { placements, risingText, marginText } from '../readings.js?v=202610201616';
+import { topicById } from '../content/topics.js?v=202610201616';
+import { startCloud, cloudReady, currentUser, deleteAccount } from '../cloud.js?v=202610201616';
+import { setUpAccountPanel } from '../account-panel.js?v=202610201616';
+import { loadBirth, saveBirth, loadPeople, loadSaved, saveSaved, ALL_KEYS } from '../store.js?v=202610201616';
 
 const $ = (id) => document.getElementById(id);
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -248,7 +248,7 @@ $('delete-all').addEventListener('click', () => {
   if (c.people) parts.push(plural(c.people, 'person').replace('persons', 'people') + ' in Connections');
   if (c.saved) parts.push(plural(c.saved, 'saved reading'));
   $('delete-question').textContent = parts.length
-    ? `Delete ${parts.length > 1 ? `${parts.slice(0, -1).join(', ')} and ${parts.at(-1)}` : parts[0]} from this browser? This can’t be undone.`
+    ? `Delete ${parts.length > 1 ? `${parts.slice(0, -1).join(', ')} and ${parts.at(-1)}` : parts[0]} ${c.account ? ' for good, on every device' : ' from this browser'}? This can’t be undone.`
     : 'There’s nothing of yours saved here, but this also clears the sample chart. Continue?';
   $('delete-all').hidden = true;
   $('delete-confirm').hidden = false;
