@@ -45,8 +45,8 @@
 .week-tag.all { color: var(--bone-soft); }
 .week-text { flex: 1 1 300px; margin: 0; }
 .week-text strong { font-weight: 600; display: block; }
-.week-text span { color: var(--bone-soft); }
-.week-text span[hidden] { display: none; }
+.week-text > span { color: var(--bone-soft); } /* ">": only the text lines, not the word pop-ups inside them */
+.week-text > span[hidden] { display: none; }
 .week-more { font-size: 14px; }
 
 /* Explore yourself */

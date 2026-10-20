@@ -8,16 +8,16 @@
 //   - this week's sky, matched against your chart
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610201906';
-import { weeklyEvents } from '../astro/sky.js?v=202610201906';
-import { risingText, marginText } from '../readings.js?v=202610201906';
-import { setUpTimeTravel } from '../time-travel.js?v=202610201906';
-import { cloudReady, currentUser } from '../cloud.js?v=202610201906';
-import { drawWheel } from '../wheel.js?v=202610201906';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610201906';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201906';
-import { loadBirth } from '../store.js?v=202610201906';
-import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202610201906';
+import { calculateChart } from '../astro/chart.js?v=202610201912';
+import { weeklyEvents } from '../astro/sky.js?v=202610201912';
+import { risingText, marginText } from '../readings.js?v=202610201912';
+import { setUpTimeTravel } from '../time-travel.js?v=202610201912';
+import { cloudReady, currentUser } from '../cloud.js?v=202610201912';
+import { drawWheel } from '../wheel.js?v=202610201912';
+import { setUpGlossary } from '../glossary.js?v=202610201912';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201912';
+import { loadBirth } from '../store.js?v=202610201912';
+import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202610201912';
 
 const $ = (id) => document.getElementById(id);
 
@@ -60,7 +60,7 @@ $('hero-wheel').append(drawWheel(chart, { label: summary }));
 
 // --- Big Three --------------------------------------------------------
 
-function placement({ label, termKey, termLabel, sign, text, note, link }) {
+function placement({ label, sign, text, note, link }) {
   const col = document.createElement('article');
   col.className = 'placement';
 
@@ -84,11 +84,6 @@ function placement({ label, termKey, termLabel, sign, text, note, link }) {
     col.append(noteEl);
   }
 
-  const more = document.createElement('p');
-  more.className = 'note';
-  more.append('What is a ', termButton(termKey, termLabel), '?');
-  col.append(more);
-
   if (link) {
     const a = document.createElement('a');
     a.className = 'text-link';
@@ -104,14 +99,14 @@ const moon = body('moon');
 const cards = [];
 
 cards.push(placement({
-  label: 'Sun · who you are', termKey: 'sun', termLabel: 'Sun sign',
+  label: 'Sun · who you are',
   sign: sun.sign, text: SUN_IN[sun.sign], link: 'chart.html#sun',
 }));
 
 if (moon.uncertain) {
   // Without a birth time, the Moon could be in one of two signs that day.
   cards.push(placement({
-    label: 'Moon · how you feel', termKey: 'moon', termLabel: 'Moon sign',
+    label: 'Moon · how you feel',
     sign: moon.possibleSigns.join(' or '),
     text: `The Moon changed sign on the day you were born, so it depends on your birth time. ${moon.possibleSigns[0]}: ${MOON_IN[moon.possibleSigns[0]]}`,
     note: [`${moon.possibleSigns[1]}: ${MOON_IN[moon.possibleSigns[1]]}`],
@@ -119,7 +114,7 @@ if (moon.uncertain) {
   }));
 } else {
   cards.push(placement({
-    label: 'Moon · how you feel', termKey: 'moon', termLabel: 'Moon sign',
+    label: 'Moon · how you feel',
     sign: moon.sign, text: MOON_IN[moon.sign], link: 'chart.html#moon',
   }));
 }
@@ -128,7 +123,7 @@ if (chart.angles?.ascendant.uncertain) {
   // Approximate birth time: the Rising sign could be more than one sign.
   const options = chart.angles.ascendant.possibleSigns;
   cards.push(placement({
-    label: 'Rising · how you come across', termKey: 'rising', termLabel: 'Rising sign',
+    label: 'Rising · how you come across',
     sign: risingText(chart),
     text: `Your birth time is approximate, and the Rising sign changes about every two hours, so it could be ${risingText(chart)}. ${options[0]}: ${RISING_IN[options[0]]}`,
     note: options.slice(1).map((sign) => `${sign}: ${RISING_IN[sign]} `),
@@ -137,12 +132,12 @@ if (chart.angles?.ascendant.uncertain) {
 } else if (chart.angles) {
   const rising = chart.angles.ascendant.sign;
   cards.push(placement({
-    label: 'Rising · how you come across', termKey: 'rising', termLabel: 'Rising sign',
+    label: 'Rising · how you come across',
     sign: rising, text: RISING_IN[rising], link: 'chart.html#rising',
   }));
 } else {
   cards.push(placement({
-    label: 'Rising · how you come across', termKey: 'rising', termLabel: 'Rising sign',
+    label: 'Rising · how you come across',
     sign: null,
     text: 'Your Rising sign changes about every two hours, so it needs your exact birth time. ORBIT leaves it out rather than guess.',
     note: ['If you find your birth time (it’s often on your birth certificate), you can ', Object.assign(document.createElement('a'), { href: 'index.html#create', textContent: 'add it here' }), '.'],
@@ -176,11 +171,11 @@ function describe(e) {
     const title = `${capital(planet)} moves into ${e.sign}`;
     let text = `${capital(planet)} stands for ${PLANETS[e.body].short}. In ${e.sign}, it works ${SIGNS[e.sign].how}.`;
     if (e.house) text += ` In your own chart, it’s moving through your ${ordinal(e.house)} house: ${HOUSES[e.house]}.`;
-    return { title, short: `${capital(planet)} (${PLANETS[e.body].short}) changes sign.`, text, term: 'house', termLabel: 'What is a house?' };
+    return { title, short: `${capital(planet)} (${PLANETS[e.body].short}) changes sign.`, text };
   }
   if (e.type === 'station') {
     return e.retrograde
-      ? { title: `${capital(planet)} turns retrograde`, short: `Traditionally a time to slow down with ${PLANETS[e.body].short}.`, text: `It starts to look like it’s moving backwards from Earth. Traditionally a time to slow down and look again at ${PLANETS[e.body].short}.`, term: 'retrograde', termLabel: 'What does retrograde mean?' }
+      ? { title: `${capital(planet)} turns retrograde`, short: `Traditionally a time to slow down with ${PLANETS[e.body].short}.`, text: `It starts to look like it’s moving backwards from Earth. Traditionally a time to slow down and look again at ${PLANETS[e.body].short}.` }
       : { title: `${capital(planet)} moves forward again`, short: `Things linked to ${PLANETS[e.body].short} can move again.`, text: `After weeks of looking like it went backwards, things linked to ${PLANETS[e.body].short} can start moving again.` };
   }
   const words = ASPECT_WORDS[e.aspect];
@@ -189,7 +184,6 @@ function describe(e) {
     title: `${capital(planet)} ${words.verb} ${target.name}`,
     short: words.feel,
     text: `This week’s ${planet.replace('the ', '')} (${PLANETS[e.body].short}) ${words.angle} ${target.name} (${target.what}). ${words.feel}`,
-    term: 'aspect', termLabel: 'What is an angle between planets?',
   };
 }
 
@@ -208,7 +202,7 @@ if (week.events.length === 0) {
 // Each moment shows its title and one short line. "Read more" opens the
 // full explanation, so the section stays calm until you want the detail.
 for (const e of week.events) {
-  const { title, short, text, term, termLabel } = describe(e);
+  const { title, short, text } = describe(e);
   const li = document.createElement('li');
   const day = document.createElement('p');
   day.className = 'week-day';
@@ -233,8 +227,7 @@ for (const e of week.events) {
   const full = document.createElement('span');
   full.className = 'week-full';
   full.hidden = true;
-  full.textContent = text + ' ';
-  if (term) full.append(termButton(term, termLabel));
+  full.textContent = text;
   more.addEventListener('click', () => {
     full.hidden = false;
     shortLine.hidden = true;

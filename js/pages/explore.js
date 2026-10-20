@@ -7,15 +7,15 @@
 // so the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610201906';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610201906';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201906';
-import { loadBirth, saveBirth, SAMPLE_BIRTH } from '../store.js?v=202610201906';
-import { saveButton } from '../save-button.js?v=202610201906';
-import { setUpPlayground } from '../playground.js?v=202610201906';
-import { TOPICS, topicById } from '../content/topics.js?v=202610201906';
-import { PLANETS, PLANET_DETAIL, SIGNS, SIGN_DETAIL, HOUSES, ASPECT_TEXT, SIGN_TRAITS } from '../content/basics.js?v=202610201906';
-import { placements, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202610201906';
+import { calculateChart } from '../astro/chart.js?v=202610201912';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610201912';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201912';
+import { loadBirth, saveBirth, SAMPLE_BIRTH } from '../store.js?v=202610201912';
+import { saveButton } from '../save-button.js?v=202610201912';
+import { setUpPlayground } from '../playground.js?v=202610201912';
+import { TOPICS, topicById } from '../content/topics.js?v=202610201912';
+import { PLANETS, PLANET_DETAIL, SIGNS, SIGN_DETAIL, HOUSES, ASPECT_TEXT, SIGN_TRAITS } from '../content/basics.js?v=202610201912';
+import { placements, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202610201912';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
@@ -157,9 +157,6 @@ function houseItem(item) {
   const head = make('div', 'topic-item-head');
   head.append(make('p', 'eyebrow', `${ordinal(item.number)} house · ${HOUSES[item.number]}`));
   head.append(make('h2', 'topic-item-title', `${ordinal(item.number)} house in ${sign}`));
-  const meta = make('p', 'topic-item-meta');
-  meta.append('What is a ', termButton('house', 'house'), '?');
-  head.append(meta);
 
   const body = make('div', 'topic-item-body');
   body.append(make('p', 'lens', item.lens(sign)));
@@ -188,9 +185,6 @@ function aspectsItem(item) {
   const head = make('div', 'topic-item-head');
   head.append(make('p', 'eyebrow', 'Connections'));
   head.append(make('h2', 'topic-item-title', item.title));
-  const meta = make('p', 'topic-item-meta');
-  meta.append('What is an ', termButton('aspect', 'aspect'), '?');
-  head.append(meta);
 
   const body = make('div', 'topic-item-body');
   body.append(make('p', '', item.intro));

@@ -520,3 +520,16 @@ When you're logged in, "Delete everything" deletes your account too, but the que
 Removed "Every part is explained in plain words." from the introduction under the title, so it ends on "…planets, people and time." The site already shows it's beginner-friendly; it doesn't need to say so.
 
 **AI vs me:** Me: decided to cut the sentence. Claude: made the edit.
+
+---
+
+## 20 October 2026 · No more "What is a …?" questions
+
+**What changed**
+- Removed every "What is a Sun sign?", "What is a house?", "What is an angle between planets?", "What does retrograde mean?" and "What is an aspect?" line, and the boxes they opened (My Universe and Explore). I found them distracting; each reading already explains itself.
+- The dotted words inside sentences (like "birth chart") still explain themselves, but are calmer now:
+  - the box only opens if the mouse **rests** on the word for a moment, not when it just passes over it;
+  - its text is always dark on the light box (on My Universe a style made it pale and hard to read);
+  - tapping on a phone opens it reliably.
+
+**AI vs me:** Me: decided to remove the questions and their boxes. Claude: found them all, removed them, and fixed the pop-up problems it found on the way.

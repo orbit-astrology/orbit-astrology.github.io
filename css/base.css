@@ -205,6 +205,9 @@ select {
   font: 14px/1.5 var(--sans); letter-spacing: 0; text-transform: none; text-align: left;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
 }
+/* The pop-up always keeps dark text on its light box, whatever page
+   styles are around it (".term >" makes this rule win). */
+.term > .term-popup { color: var(--ink); }
 .term-popup strong { display: block; font-family: var(--serif); font-weight: 400; font-size: 18px; margin-bottom: 2px; }
 .term-popup[hidden] { display: none; }
 

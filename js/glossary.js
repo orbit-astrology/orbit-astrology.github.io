@@ -4,15 +4,19 @@
 //
 // In the HTML, a word is written like this:
 //   <button type="button" class="term" data-term="rising">Rising sign</button>
-// Hovering, focusing (keyboard) or tapping it shows a small box with
-// the plain explanation from js/content/glossary.js.
+// Resting the mouse on it, focusing it (keyboard) or tapping it shows a
+// small box with the plain explanation from js/content/glossary.js.
 // ---------------------------------------------------------------
 
-import { GLOSSARY } from './content/glossary.js?v=202610201906';
+import { GLOSSARY } from './content/glossary.js?v=202610201912';
 
 let open = null; // the pop-up currently showing, if any
+let waiting = null; // a hover that hasn't lasted long enough yet
+const HOVER_DELAY = 300; // milliseconds: the mouse must rest on the word, not just pass over it
+let openedAt = 0; // when the pop-up opened (see the click handler)
 
 function close() {
+  clearTimeout(waiting);
   if (!open) return;
   open.popup.hidden = true;
   open.button.setAttribute('aria-expanded', 'false');
@@ -39,6 +43,7 @@ function show(button) {
   popup.hidden = false;
   button.setAttribute('aria-expanded', 'true');
   open = { button, popup };
+  openedAt = Date.now();
 }
 
 // Turn on every .term inside `root` (the whole page by default).
@@ -46,13 +51,24 @@ export function setUpGlossary(root = document) {
   for (const button of root.querySelectorAll('.term:not([data-ready])')) {
     button.dataset.ready = 'true';
     button.setAttribute('aria-expanded', 'false');
-    button.addEventListener('mouseenter', () => show(button));
-    button.addEventListener('mouseleave', close);
+    // Hover only counts for a real mouse: phones send pretend mouse
+    // events around a tap, which would close the box straight away.
+    button.addEventListener('pointerenter', (e) => {
+      if (e.pointerType !== 'mouse') return;
+      clearTimeout(waiting);
+      waiting = setTimeout(() => show(button), HOVER_DELAY);
+    });
+    button.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') close(); });
     button.addEventListener('focus', () => show(button));
     button.addEventListener('blur', close);
+    // A click or tap opens the box. Clicking again closes it, unless it
+    // only just opened from the same click (a tap also counts as
+    // "focus", which opens it a moment before the click arrives).
     button.addEventListener('click', (e) => {
       e.preventDefault();
-      if (open && open.button === button) close(); else show(button);
+      clearTimeout(waiting);
+      const justOpened = Date.now() - openedAt < 500;
+      if (open && open.button === button && !justOpened) close(); else show(button);
     });
   }
 }
