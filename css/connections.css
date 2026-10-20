@@ -96,6 +96,9 @@
 
 /* A friend's share link */
 .shared-view { padding-bottom: 48px; }
+.share-back { display: flex; flex-direction: column; gap: 12px; margin: 4px 0 8px; max-width: 420px; }
+.share-back .field[hidden] { display: none; }
+.share-back input[type="text"] { width: 100%; }
 .shared-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: 8px; }
 
 /* Share your chart */

@@ -596,3 +596,22 @@ The step-by-step texts were still a lot to read at once. Each step is now 2–3 
 The bullets are small squares, matching the square style.
 
 **AI vs me:** Me: came up with the intro / bullets / closing-line format. Claude: rebuilt the steps that way and added the little line samples.
+
+---
+
+## 20 October 2026 · Two-way connections
+
+**What I wanted:** when a friend sends me their link and I add them, I should appear in *their* people too, as one connection.
+
+**How it works**
+- Every account has a private, random **invite code**. A share link made while you're logged in carries it, and the share box says: "Because you're logged in, your friend can also add themselves to your people when they open it."
+- When a logged-in friend opens the link, there's a ticked box: **"Also add me to Leo's people (Leo will see my birth details)"** and "Your name, as they'll see it". They can untick it.
+- On "Add Leo to my people", a small server function (`add_me_to`, in `development/docs/supabase-connections.sql`) adds them to Leo's people. It only ever adds *the person asking*, using the birth details saved in their own account, so nobody can add someone else or change anything else in Leo's row.
+- Leo sees them the next time he opens Connections (the page now waits for the account sync before drawing the list).
+- Not logged in: the page says "Log in to also appear in Leo's people." Links from people who aren't logged in work one-way, as before.
+
+**Testing:** pretend Supabase with two accounts: Leo makes a link, Salma adds him and herself, both rows end up with each other, Leo's Connections shows Salma; a logged-out visitor and a link from a logged-out person get no two-way option. No errors; 83/83 checks.
+
+**Setup:** run `development/docs/supabase-connections.sql` once in Supabase. Until then, links keep working one-way.
+
+**AI vs me:** Me: came up with two-way connections after testing with a friend. Claude: designed the invite code and the safe server function, and wrote the code.

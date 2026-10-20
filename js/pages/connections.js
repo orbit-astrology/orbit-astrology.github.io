@@ -10,18 +10,19 @@
 // the address means the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610201937';
-import { drawWheel } from '../wheel.js?v=202610201937';
-import { placeTip } from '../tip-position.js?v=202610201937';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610201937';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201937';
-import { setUpBirthForm } from '../birth-form.js?v=202610201937';
-import { makeShareLink, readShareCode } from '../share.js?v=202610201937';
-import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202610201937';
-import { risingText } from '../readings.js?v=202610201937';
-import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610201937';
-import { PERSONAL, LENS_TAGS, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610201937';
-import { PLANETS, SIGNS } from '../content/basics.js?v=202610201937';
+import { calculateChart } from '../astro/chart.js?v=202610202014';
+import { drawWheel } from '../wheel.js?v=202610202014';
+import { placeTip } from '../tip-position.js?v=202610202014';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610202014';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610202014';
+import { setUpBirthForm } from '../birth-form.js?v=202610202014';
+import { makeShareLink, readShareCode } from '../share.js?v=202610202014';
+import { startCloud, currentUser, myInvite, addMeTo } from '../cloud.js?v=202610202014';
+import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202610202014';
+import { risingText } from '../readings.js?v=202610202014';
+import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610202014';
+import { PERSONAL, LENS_TAGS, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610202014';
+import { PLANETS, SIGNS } from '../content/basics.js?v=202610202014';
 
 const $ = (id) => document.getElementById(id);
 const nameOf = (id) => id[0].toUpperCase() + id.slice(1);
@@ -36,6 +37,9 @@ function make(tag, className, text) {
 }
 
 setUpMenu();
+// Wait for the account sync first, so people added from another device
+// (or a friend who added themselves) are already in the list.
+await startCloud();
 const me = loadBirth();
 showSampleBanner(me);
 
@@ -220,10 +224,44 @@ function showShared(code) {
     return;
   }
 
+  // Two-way: if the link came from a logged-in friend, offer to add
+  // yourself to their people too. Only possible when you're logged in
+  // and have your own chart (the server sends them your saved details).
+  const canShareBack = Boolean(shared.invite && currentUser() && me && !me.isSample);
+  $('share-back').hidden = !canShareBack;
+  $('share-back-label').textContent = `Also add me to ${name}’s people (${name} will see my birth details)`;
+  $('share-back-name').value = me?.name || '';
+  $('share-back-yes').onchange = () => { $('share-back-name-field').hidden = !$('share-back-yes').checked; };
+  const login = $('share-back-login');
+  login.hidden = !(shared.invite && !currentUser());
+  if (!login.hidden) {
+    const link = make('a', 'text-link', 'Log in');
+    link.href = 'index.html';
+    login.replaceChildren(link, ` to also appear in ${name}’s people.`);
+  }
+
   const existing = loadPeople().find((p) => samePerson(p.birth, birth));
   const button = $('shared-add');
   button.textContent = existing ? `${existing.name} is already in your people: compare` : `Add ${name} to my people`;
-  button.onclick = () => {
+  button.onclick = async () => {
+    // Add yourself to their people first (it needs a moment online).
+    if (canShareBack && $('share-back-yes').checked) {
+      const myName = $('share-back-name').value.trim();
+      if (!myName) {
+        $('shared-error').textContent = `Please add your name, so ${name} knows who you are.`;
+        $('share-back-name').focus();
+        return;
+      }
+      button.disabled = true;
+      try {
+        if (!(await addMeTo(shared.invite, myName))) throw new Error();
+        saveBirth({ ...me, name: myName }); // remember your name for next time
+      } catch {
+        button.disabled = false;
+        $('shared-error').textContent = `ORBIT couldn’t add you to ${name}’s people just now. Untick the box to add ${name} anyway, or try again.`;
+        return;
+      }
+    }
     let id = existing?.id;
     if (!id) {
       id = `p${Date.now().toString(36)}`;
@@ -248,7 +286,7 @@ function setUpShareBox() {
     return;
   }
   $('share-name').value = me.name || '';
-  $('share-make').addEventListener('click', () => {
+  $('share-make').addEventListener('click', async () => {
     const name = $('share-name').value.trim();
     if (!name) {
       $('share-error').textContent = 'Please add your name, so your friend knows who the link is from.';
@@ -259,7 +297,11 @@ function setUpShareBox() {
     $('share-error').textContent = '';
     $('share-name').removeAttribute('aria-invalid');
     saveBirth({ ...me, name }); // remember your name for next time
-    $('share-link').value = makeShareLink(name, me);
+    // Logged in: the link carries your invite code, so a friend can
+    // add themselves to your people too.
+    const invite = await myInvite();
+    $('share-link').value = makeShareLink(name, me, invite);
+    $('share-two-way').hidden = !invite;
     $('share-result').hidden = false;
     $('share-copy').textContent = 'Copy';
   });

@@ -8,6 +8,9 @@
 //   connections.html#add=eyJuIjoiU2FsbWEiLC…
 // The part after # is never sent to the website's server: it stays
 // between you, the person you send it to, and their browser.
+//
+// If you're logged in, the link also carries your private invite code
+// (see cloud.js), so your friend can add themselves to your people too.
 // ---------------------------------------------------------------
 
 // Text → a code that is safe inside an address (base64url).
@@ -24,8 +27,9 @@ function decode(code) {
 }
 
 // Build the link for your own chart. Only what's needed is included.
-export function makeShareLink(name, birth) {
+export function makeShareLink(name, birth, invite = null) {
   const data = {
+    i: invite || undefined,
     n: name,
     y: birth.year, m: birth.month, d: birth.day,
     t: birth.timeKnown ? [birth.hour, birth.minute] : null,
@@ -63,7 +67,8 @@ export function readShareCode(code) {
       birth.minute = minute;
     }
     if (isInt(d.o)) birth.offsetMinutes = d.o;
-    return { name, birth };
+    const invite = typeof d.i === 'string' && /^[0-9a-f]{32}$/.test(d.i) ? d.i : null;
+    return { name, birth, invite };
   } catch {
     return null;
   }

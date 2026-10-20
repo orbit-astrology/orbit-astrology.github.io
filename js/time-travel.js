@@ -12,10 +12,10 @@
 // with the same code as your birth chart (js/astro/sky.js).
 // ---------------------------------------------------------------
 
-import { skyAt } from './astro/sky.js?v=202610201937';
-import { findCrossAspects } from './astro/aspects.js?v=202610201937';
-import { drawWheel } from './wheel.js?v=202610201937';
-import { PLANETS, ASPECT_TEXT } from './content/basics.js?v=202610201937';
+import { skyAt } from './astro/sky.js?v=202610202014';
+import { findCrossAspects } from './astro/aspects.js?v=202610202014';
+import { drawWheel } from './wheel.js?v=202610202014';
+import { PLANETS, ASPECT_TEXT } from './content/basics.js?v=202610202014';
 
 const DAY = 86400000;
 const CLOSE = 1.5; // degrees: how close an angle must be to count

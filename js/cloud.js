@@ -17,7 +17,7 @@
 // about an hour) and a refresh token (gets a new access token).
 // ---------------------------------------------------------------
 
-import { SUPABASE_URL, SUPABASE_KEY } from './cloud-config.js?v=202610201937';
+import { SUPABASE_URL, SUPABASE_KEY } from './cloud-config.js?v=202610202014';
 
 const SESSION_KEY = 'orbit.session';
 const SYNCED_KEY = 'orbit.synced-at';
@@ -261,6 +261,37 @@ window.addEventListener('orbit:changed', () => {
   clearTimeout(pushTimer);
   pushTimer = setTimeout(() => push().catch(() => { /* tried again on the next change */ }), 800);
 });
+
+// --- Two-way connections ------------------------------------------------
+// Every account has a private "invite" code. Share links made while
+// you're logged in carry it, so a friend who adds you can add
+// themselves to YOUR people too (if they say yes). The server function
+// add_me_to only ever adds the person asking, with their own saved
+// birth details (development/docs/supabase-setup.sql).
+
+// Your invite code, or null (not logged in, or not set up on the server).
+export async function myInvite() {
+  const user = currentUser();
+  if (!user || !cloudReady) return null;
+  try {
+    await push(); // make sure your row exists first
+    const rows = await call(`/rest/v1/orbit_data?select=invite&user_id=eq.${user.id}`, { token: await token() });
+    return rows?.[0]?.invite ?? null;
+  } catch {
+    return null;
+  }
+}
+
+// Add yourself to the people of whoever owns this invite code.
+// Returns true if it worked.
+export async function addMeTo(invite, myName) {
+  if (!currentUser()) return false;
+  await push(); // the server reads your birth details from your account
+  const result = await call('/rest/v1/rpc/add_me_to', {
+    method: 'POST', token: await token(), body: { invite_code: invite, my_name: myName },
+  });
+  return result === true;
+}
 
 // --- When any page opens -----------------------------------------------
 // 1. Coming back from a link in one of ORBIT's emails: log in.
