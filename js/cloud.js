@@ -17,12 +17,18 @@
 // about an hour) and a refresh token (gets a new access token).
 // ---------------------------------------------------------------
 
-import { SUPABASE_URL, SUPABASE_KEY } from './cloud-config.js?v=202610201505';
+import { SUPABASE_URL, SUPABASE_KEY } from './cloud-config.js?v=202610201525';
 
 const SESSION_KEY = 'orbit.session';
 const SYNCED_KEY = 'orbit.synced-at';
 // The localStorage keys that hold your data (see store.js).
 const DATA_KEYS = { birth: 'orbit.birth', people: 'orbit.connections', saved: 'orbit.saved' };
+// Small per-person extras that are also forgotten when someone else
+// takes over the browser (the chosen lens, whether the tour was seen).
+const EXTRA_KEYS = ['orbit.lens', 'orbit.tour-done'];
+// Remembers "keep what's on this device" while a new account waits
+// for its email to be confirmed.
+const KEEP_KEY = 'orbit.keep-for';
 
 export const cloudReady = Boolean(SUPABASE_URL && SUPABASE_KEY);
 
@@ -105,20 +111,41 @@ async function token() {
 const profileUrl = () => new URL('profile.html', location.href).href.split('#')[0];
 
 // --- Sign up, log in, log out ----------------------------------------
+// Every account is separate: you only ever see your own chart, people
+// and saved readings, even on a computer someone else used before you.
 
+// Forget everything personal in this browser (not the login itself).
+export function clearThisDevice() {
+  for (const key of [...Object.values(DATA_KEYS), ...EXTRA_KEYS, SYNCED_KEY, KEEP_KEY]) write(key, null);
+}
+
+// Is there anything personal in this browser right now? Used to offer
+// "keep the chart on this device" when creating an account.
+export function deviceHasData() {
+  const d = localData();
+  return Boolean((d.birth && !d.birth.isSample) || d.people.length || d.saved.length);
+}
+
+// keepHere: true = the chart, people and saved readings already in this
+// browser become the new account's first contents. false = the new
+// account starts completely empty.
 // Returns 'logged-in', or 'check-email' when Supabase wants the email
 // address confirmed first.
-export async function signUp(email, password) {
+export async function signUp(email, password, keepHere = false) {
   const data = await call(`/auth/v1/signup?redirect_to=${encodeURIComponent(profileUrl())}`, { method: 'POST', body: { email, password } });
+  if (keepHere) write(KEEP_KEY, email.toLowerCase());
+  else clearThisDevice();
   if (!data?.access_token) return 'check-email';
   saveSession(data);
-  await syncAfterLogin();
+  await syncAfterLogin(keepHere);
   return 'logged-in';
 }
 
+// Logging in shows that account's things only: whatever was in this
+// browser before (maybe from someone else) is replaced.
 export async function logIn(email, password) {
   saveSession(await call('/auth/v1/token?grant_type=password', { method: 'POST', body: { email, password } }));
-  await syncAfterLogin();
+  await syncAfterLogin(false);
 }
 
 // Logging out also clears your data from this browser (it stays safe
@@ -127,8 +154,7 @@ export async function logOut() {
   const t = await token();
   if (t) { try { await call('/auth/v1/logout', { method: 'POST', token: t }); } catch { /* logged out locally anyway */ } }
   write(SESSION_KEY, null);
-  write(SYNCED_KEY, null);
-  for (const key of Object.values(DATA_KEYS)) write(key, null);
+  clearThisDevice();
 }
 
 export async function sendPasswordReset(email) {
@@ -189,21 +215,21 @@ export async function push() {
   write(SYNCED_KEY, rows?.[0]?.updated_at ?? new Date().toISOString());
 }
 
-// Right after logging in: combine what's in your account with what's
-// in this browser. Your account's birth details win if it has some;
-// people and saved readings from both are kept.
-async function syncAfterLogin() {
+// Right after logging in.
+//   keepHere = false (logging in): this browser shows exactly what's in
+//     your account, nothing else. A brand-new account = a blank start.
+//   keepHere = true (a new account that chose to keep this device's
+//     chart): what's in this browser is saved to the account.
+async function syncAfterLogin(keepHere) {
+  write(KEEP_KEY, null);
   const row = await fetchRow();
-  const here = localData();
-  const birthHere = here.birth?.isSample ? null : here.birth;
-  const byId = (list, key) => [...new Map(list.map((x) => [key(x), x])).values()];
-  const merged = {
-    birth: row?.birth ?? birthHere,
-    people: byId([...(row?.people || []), ...here.people], (p) => p.id),
-    saved: byId([...(row?.saved || []), ...here.saved], (s) => `${s.kind}:${s.id}`),
-  };
-  writeLocal(merged);
-  await push();
+  if (keepHere) {
+    await push();
+    return;
+  }
+  for (const key of EXTRA_KEYS) write(key, null); // the tour and lens start fresh too
+  writeLocal(row ?? { birth: null, people: [], saved: [] });
+  write(SYNCED_KEY, row?.updated_at ?? null);
 }
 
 // Every change saved in the browser (store.js announces it) is sent to
@@ -238,7 +264,10 @@ async function openPage() {
       saveSession({ access_token: access, refresh_token: hash.get('refresh_token'), expires_in: hash.get('expires_in'), user });
       mode = hash.get('type') === 'recovery' ? 'recovery' : 'confirmed';
       history.replaceState(null, '', location.pathname + location.search);
-      await syncAfterLogin();
+      // Confirming a new account in the same browser where it was made,
+      // after ticking "keep the chart on this device": keep it.
+      const keepHere = hash.get('type') === 'signup' && read(KEEP_KEY) === user.email?.toLowerCase();
+      await syncAfterLogin(keepHere);
     } catch { /* an old or used link: nothing happens */ }
   }
   if (currentUser()) {

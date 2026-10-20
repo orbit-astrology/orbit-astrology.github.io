@@ -1,22 +1,42 @@
 // account-panel.js
 // ---------------------------------------------------------------
-// The "Your account" box on the Profile page: log in, create an
-// account, forgot password, choose a new password, log out.
-// The talking-to-the-server part is in cloud.js.
+// The "Your account" box (on the Welcome page and the Profile page):
+// log in, create an account, forgot password, choose a new password,
+// log out. The talking-to-the-server part is in cloud.js.
 // ---------------------------------------------------------------
 
-import { cloudReady, currentUser, signUp, logIn, logOut, sendPasswordReset, setNewPassword } from './cloud.js?v=202610201505';
+import { cloudReady, currentUser, signUp, logIn, logOut, sendPasswordReset, setNewPassword, deviceHasData } from './cloud.js?v=202610201525';
+import { loadBirth } from './store.js?v=202610201525';
 
 const $ = (id) => document.getElementById(id);
 
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
 /**
- * mode     – what startCloud() reported: 'recovery' after a password
- *            reset link, 'confirmed' after confirming an email, or null
- * onChange – called after logging in or out, so the page can refresh
+ * mode      – what startCloud() reported: 'recovery' after a password
+ *             reset link, 'confirmed' after confirming an email, or null
+ * onChange  – called after logging in ('login'), creating an account
+ *             ('signup') or logging out ('logout'), so the page can refresh
+ * collapsed – true: only the two buttons show until one is pressed
+ *             (Welcome page); false: the log-in form shows straight away
+ * keepByDefault – whether "keep the chart on this device" starts ticked
  */
-export function setUpAccountPanel({ mode, onChange }) {
+export function setUpAccountPanel({ mode, onChange, collapsed = false, keepByDefault = false }) {
   let signingUp = false;
   const message = $('account-message');
+  $('account-keep').checked = keepByDefault;
+
+  // "Also save the chart on this device to my new account", with the
+  // birth date so you can tell whose it is.
+  function showKeep() {
+    const offer = signingUp && deviceHasData();
+    $('account-keep-field').hidden = !offer;
+    if (!offer) return;
+    const b = loadBirth();
+    $('account-keep-what').textContent = b && !b.isSample
+      ? `the chart on this device (born ${b.day} ${MONTHS[b.month - 1]} ${b.year}${b.place?.label ? `, ${b.place.label.split(',')[0]}` : ''}) and anything saved with it`
+      : 'the people and readings saved on this device';
+  }
 
   function show() {
     const user = currentUser();
@@ -28,6 +48,7 @@ export function setUpAccountPanel({ mode, onChange }) {
 
   function setMode(signup) {
     signingUp = signup;
+    $('account-form').hidden = false;
     $('mode-login').setAttribute('aria-pressed', String(!signup));
     $('mode-signup').setAttribute('aria-pressed', String(signup));
     $('account-submit').textContent = signup ? 'Create my account' : 'Log in';
@@ -35,10 +56,11 @@ export function setUpAccountPanel({ mode, onChange }) {
     $('password-hint').hidden = !signup;
     $('forgot').hidden = signup;
     $('account-error').textContent = '';
+    showKeep();
   }
 
-  $('mode-login').addEventListener('click', () => setMode(false));
-  $('mode-signup').addEventListener('click', () => setMode(true));
+  $('mode-login').addEventListener('click', () => { setMode(false); $('account-email').focus(); });
+  $('mode-signup').addEventListener('click', () => { setMode(true); $('account-email').focus(); });
 
   // Simple checks before asking the server.
   function check(email, password) {
@@ -65,18 +87,22 @@ export function setUpAccountPanel({ mode, onChange }) {
     $('account-error').textContent = '';
     message.textContent = signingUp ? 'Creating your account…' : 'Logging in…';
     try {
+      let event = 'login';
       if (signingUp) {
-        const result = await signUp(email, password);
+        const keep = !$('account-keep-field').hidden && $('account-keep').checked;
+        const result = await signUp(email, password, keep);
         message.textContent = result === 'check-email'
           ? `Almost there: we sent a link to ${email}. Open it to confirm your email, and you’ll be logged in.`
-          : 'Your account is ready. Your universe is now saved to it.';
+          : 'Your account is ready. Everything you save from now on is kept in it.';
+        event = 'signup';
       } else {
         await logIn(email, password);
         message.textContent = 'Welcome back. Your universe is up to date.';
       }
       $('account-form').reset();
+      $('account-keep').checked = keepByDefault;
       show();
-      onChange?.();
+      onChange?.(event);
     } catch (error) {
       message.textContent = '';
       $('account-error').textContent = error.message;
@@ -101,7 +127,7 @@ export function setUpAccountPanel({ mode, onChange }) {
     }
   });
 
-  $('new-password').addEventListener('submit', async (e) => {
+  $('new-password')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const password = $('new-password-input').value;
     if (password.length < 8) {
@@ -122,10 +148,17 @@ export function setUpAccountPanel({ mode, onChange }) {
     await logOut();
     message.textContent = 'You’re logged out. Your universe is safe in your account; log in again to see it.';
     show();
-    onChange?.();
+    onChange?.('logout');
   });
 
-  setMode(false);
+  if (collapsed) {
+    // Nothing chosen yet: just the two buttons.
+    $('account-form').hidden = true;
+    $('mode-login').setAttribute('aria-pressed', 'false');
+    $('mode-signup').setAttribute('aria-pressed', 'false');
+  } else {
+    setMode(false);
+  }
   show();
   if (mode === 'confirmed') message.textContent = 'Your email is confirmed and you’re logged in.';
   if (mode === 'recovery') {

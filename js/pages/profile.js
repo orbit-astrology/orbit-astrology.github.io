@@ -7,19 +7,20 @@
 //   3. your data: what ORBIT keeps in this browser, with
 //      "Download my data" and "Delete everything"
 //
-// There are no accounts yet, so everything lives in this browser
-// (localStorage) and the page says so honestly.
+// Everything lives in this browser (localStorage) and, when you're
+// logged in, in your ORBIT account too (js/cloud.js). The page says
+// honestly where your data is.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610201505';
-import { setUpGlossary } from '../glossary.js?v=202610201505';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201505';
-import { setUpBirthForm } from '../birth-form.js?v=202610201505';
-import { placements, risingText, marginText } from '../readings.js?v=202610201505';
-import { topicById } from '../content/topics.js?v=202610201505';
-import { startCloud, cloudReady, currentUser, deleteAccount } from '../cloud.js?v=202610201505';
-import { setUpAccountPanel } from '../account-panel.js?v=202610201505';
-import { loadBirth, saveBirth, loadPeople, loadSaved, saveSaved, ALL_KEYS } from '../store.js?v=202610201505';
+import { calculateChart } from '../astro/chart.js?v=202610201525';
+import { setUpGlossary } from '../glossary.js?v=202610201525';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201525';
+import { setUpBirthForm } from '../birth-form.js?v=202610201525';
+import { placements, risingText, marginText } from '../readings.js?v=202610201525';
+import { topicById } from '../content/topics.js?v=202610201525';
+import { startCloud, cloudReady, currentUser, deleteAccount } from '../cloud.js?v=202610201525';
+import { setUpAccountPanel } from '../account-panel.js?v=202610201525';
+import { loadBirth, saveBirth, loadPeople, loadSaved, saveSaved, ALL_KEYS } from '../store.js?v=202610201525';
 
 const $ = (id) => document.getElementById(id);
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -281,6 +282,7 @@ const mode = await startCloud();
 me = loadBirth();
 setUpAccountPanel({
   mode,
+  keepByDefault: true, // on Profile you usually sign up to keep the chart you just made
   onChange() {
     me = loadBirth();
     showDetails();

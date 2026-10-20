@@ -41,6 +41,13 @@
 .form-footnote { font-size: 13px; margin: -12px 0 0; }
 .sample-link { background: none; border: 0; padding: 0; color: var(--bone); cursor: pointer; text-align: left; font-family: var(--sans); }
 
+/* Your account, at the top of the right side, with a line under it */
+.welcome-account { padding: 0 0 28px; margin-bottom: 28px; border-bottom: 1px solid var(--line); gap: 12px; }
+.welcome-account .account-why { font-size: 15px; color: var(--bone-soft); }
+.welcome-back { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+.welcome-back p { margin: 0; }
+.welcome-back[hidden], #create[hidden] { display: none; }
+
 /* Phones: stack everything, form straight after the title. */
 @media (max-width: 900px) {
   .welcome-intro { padding-right: 0; }

@@ -6,19 +6,23 @@
 //   1. check every field and calculate the chart (js/birth-form.js)
 //   2. save the birth details in this browser (js/store.js)
 //   3. go to My Universe, which reads them and shows your chart
+//
+// The account box (log in / create account) is at the top of the form
+// side. If you're logged in and your chart is already saved, the form
+// is replaced by a "Welcome back" link to your universe.
 // ---------------------------------------------------------------
 
-import { skyAt } from '../astro/sky.js?v=202610201505';
-import { drawWheel } from '../wheel.js?v=202610201505';
-import { setUpGlossary } from '../glossary.js?v=202610201505';
-import { setUpBirthForm } from '../birth-form.js?v=202610201505';
-import { startCloud } from '../cloud.js?v=202610201505';
-import { saveBirth, loadBirth, SAMPLE_BIRTH } from '../store.js?v=202610201505';
+import { skyAt } from '../astro/sky.js?v=202610201525';
+import { drawWheel } from '../wheel.js?v=202610201525';
+import { setUpGlossary } from '../glossary.js?v=202610201525';
+import { setUpBirthForm } from '../birth-form.js?v=202610201525';
+import { startCloud, currentUser } from '../cloud.js?v=202610201525';
+import { setUpAccountPanel } from '../account-panel.js?v=202610201525';
+import { saveBirth, loadBirth, sameBirth, startFresh, SAMPLE_BIRTH } from '../store.js?v=202610201525';
 
 const $ = (id) => document.getElementById(id);
 
 setUpGlossary();
-startCloud(); // if you're logged in, your details are sent to your account too
 
 // --- The real sky right now, drawn faintly behind the title --------
 
@@ -30,12 +34,23 @@ $('sky-caption').textContent = `The faint wheel is the real sky right now: the S
 
 // --- Coming back? Offer a shortcut ----------------------------------
 
-const saved = loadBirth();
-if (saved && !saved.isSample) $('continue-link').hidden = false;
+const hasChart = () => { const b = loadBirth(); return Boolean(b && !b.isSample); };
+
+function showRightSide() {
+  const welcomeBack = Boolean(currentUser()) && hasChart();
+  $('welcome-back').hidden = !welcomeBack;
+  $('create').hidden = welcomeBack;
+  $('continue-link').hidden = welcomeBack || !hasChart();
+}
 
 // --- The form -------------------------------------------------------
 
 function goToUniverse(birth, showError) {
+  // Not logged in, and these aren't the birth details saved here? Then
+  // it's someone new on this computer: forget the last person's people
+  // and saved readings so they don't see them.
+  const before = loadBirth();
+  if (!currentUser() && before && !sameBirth(before, birth)) startFresh();
   if (!saveBirth(birth)) {
     showError('Your browser is blocking ORBIT from saving your details (this can happen in private browsing). Please allow site data and try again.');
     return;
@@ -51,3 +66,19 @@ setUpBirthForm({
 });
 
 $('sample').addEventListener('click', () => goToUniverse(SAMPLE_BIRTH, (m) => { $('birth-form-error').textContent = m; }));
+
+// --- Your account ---------------------------------------------------
+
+const mode = await startCloud(); // logs you in from an email link, and syncs
+showRightSide();
+setUpAccountPanel({
+  mode,
+  collapsed: true,
+  onChange(event) {
+    // Logged in and your account already has a chart: straight to it.
+    if (event === 'login' && hasChart()) { window.location.href = 'universe.html'; return; }
+    // Logged out: reload, so the form starts completely empty.
+    if (event === 'logout') { window.location.reload(); return; }
+    showRightSide();
+  },
+});

@@ -241,3 +241,13 @@ select {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
 }
 .back-chip:hover { background: var(--champagne); color: var(--ink); }
+
+/* Two or more buttons joined together, one pressed at a time
+   (Wheel / List, Friendship / Romance, Log in / Create account). */
+.view-switch { display: inline-flex; border: 1px solid var(--champagne); }
+.view-switch button {
+  font: 600 12px/1 var(--sans); letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 13px 20px; min-height: 44px; border: 0; border-radius: 0; cursor: pointer;
+  background: transparent; color: var(--bone);
+}
+.view-switch button[aria-pressed="true"] { background: var(--champagne); color: var(--ink); }

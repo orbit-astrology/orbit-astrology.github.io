@@ -1,0 +1,15 @@
+/* account.css: the "Your account" box (Welcome page and Profile page). */
+
+.account { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; padding-top: 28px; }
+.account p { margin: 0; max-width: 62ch; }
+.account #account-out, .account #account-in { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; width: 100%; }
+.account-form { display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 420px; }
+.account-form input[type="email"], .account-form input[type="password"] {
+  width: 100%; min-height: 44px; padding: 10px 12px; font: inherit; color: var(--bone);
+  background: rgba(233, 227, 216, 0.06); border: 1px solid rgba(233, 227, 216, 0.45); border-radius: 0;
+}
+.account-form input:focus { border-color: var(--champagne); outline: none; box-shadow: 0 0 0 1px var(--champagne); }
+.account-form[hidden] { display: none; }
+.keep-field { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; line-height: 1.45; }
+.keep-field input { width: 18px; height: 18px; margin: 2px 0 0; flex: none; accent-color: var(--champagne); }
+.keep-field[hidden] { display: none; }

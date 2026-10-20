@@ -9,7 +9,7 @@
 // chart is recalculated from them every time, so it's always correct.
 // ---------------------------------------------------------------
 
-import { SETTINGS } from './astro/settings.js?v=202610201505';
+import { SETTINGS } from './astro/settings.js?v=202610201525';
 
 const KEY = 'orbit.birth';
 
@@ -100,6 +100,24 @@ export function saveSaved(list) {
 }
 
 export const isSaved = (kind, id) => loadSaved().some((s) => s.kind === kind && s.id === id);
+
+// --- A different person on the same computer ---------------------
+// Someone types birth details that aren't the ones saved here: it's
+// a new person, so the people and readings saved by the last person
+// are forgotten (they're theirs, not yours).
+
+export function sameBirth(a, b) {
+  if (!a || !b) return false;
+  const keys = ['year', 'month', 'day', 'hour', 'minute', 'timeKnown'];
+  return keys.every((k) => a[k] === b[k]) && a.place?.label === b.place?.label;
+}
+
+export function startFresh() {
+  try {
+    for (const key of [PEOPLE_KEY, SAVED_KEY, 'orbit.lens', 'orbit.tour-done']) localStorage.removeItem(key);
+  } catch { /* nothing to clear */ }
+  changed();
+}
 
 // Everything ORBIT keeps in this browser, for "Download my data" and
 // "Delete everything" on the Profile page.

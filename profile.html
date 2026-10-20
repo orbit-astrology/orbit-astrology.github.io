@@ -9,11 +9,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Manrope:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/tokens.css?v=202610201505">
-  <link rel="stylesheet" href="css/base.css?v=202610201505">
-  <link rel="stylesheet" href="css/birth-form.css?v=202610201505">
-  <link rel="stylesheet" href="css/chart.css?v=202610201505">
-  <link rel="stylesheet" href="css/profile.css?v=202610201505">
+  <link rel="stylesheet" href="css/tokens.css?v=202610201525">
+  <link rel="stylesheet" href="css/base.css?v=202610201525">
+  <link rel="stylesheet" href="css/birth-form.css?v=202610201525">
+  <link rel="stylesheet" href="css/chart.css?v=202610201525">
+  <link rel="stylesheet" href="css/account.css?v=202610201525">
+  <link rel="stylesheet" href="css/profile.css?v=202610201525">
 </head>
 <body class="page-profile">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -61,6 +62,10 @@
             <input id="account-password" type="password" autocomplete="current-password" minlength="8" required>
             <p class="hint" id="password-hint" hidden>At least 8 characters.</p>
           </div>
+          <label class="keep-field" id="account-keep-field" hidden>
+            <input type="checkbox" id="account-keep">
+            <span>Also save <span id="account-keep-what">the chart on this device</span> to my new account. Leave this unticked if it isn’t yours: your account will start empty.</span>
+          </label>
           <p class="error-text" id="account-error" role="alert"></p>
           <div class="form-actions">
             <button type="submit" class="button" id="account-submit">Log in</button>
@@ -213,6 +218,6 @@
     </div>
   </footer>
 
-  <script type="module" src="js/pages/profile.js?v=202610201505"></script>
+  <script type="module" src="js/pages/profile.js?v=202610201525"></script>
 </body>
 </html>

@@ -425,3 +425,21 @@ One entry per work session: what was done, what was decided, what went wrong, an
 **Testing:** a pretend Supabase inside the test browser: sign up, data saved online, a second device logging in and getting everything, a change on one device appearing on the other, wrong password, bad email, log out, delete account, email confirmation and password reset links. All older tests still pass; 83/83 checks.
 
 **AI vs me:** Me: chose to add accounts to reach at least medium difficulty, and set up the Supabase project. Claude: designed the syncing and wrote the code and the database rules.
+
+---
+
+## 20 October 2026 · Accounts are live, and every account is separate
+
+**Accounts are live.** I ran the database setup in Supabase, added the website's address, and tested it for real: I created an account and got the confirmation email.
+
+**What changed**
+- **The account box is now on the first page**, at the top of the form side: "Log in" or "Create account". It's optional; you can still just make your chart. When you're logged in and your chart is already saved, the form is replaced by "Welcome back · Open my universe".
+- **Nobody sees anyone else's things**, even on a shared computer:
+  - **Logging in** shows only that account's chart, people and saved readings. Whatever was in the browser before is replaced, not mixed in.
+  - **A new account starts empty.** If there's already a chart on the device, there's a tick box: "Also save the chart on this device (born …) to my new account". It shows the birth date so you can tell whose it is. It starts unticked on the first page and ticked on Profile (where you usually sign up to keep the chart you just made).
+  - **Without an account:** typing *different* birth details on the first page (or opening the sample) counts as a new person, so the last person's people and saved readings are forgotten.
+  - **Logging out** clears everything from the browser, so the page is blank for the next person.
+
+**Testing:** pretend Supabase, every case: a friend on my computer as a guest; a friend creating an account on my computer (starts empty); logging in on a computer with someone else's data; signing up on Profile keeping the chart; email confirmation keeping or not keeping; log out. Desktop and phone. No errors; 83/83 checks.
+
+**AI vs me:** Me: tested the live accounts, and decided that each person must start blank and that the account box belongs on the first page. Claude: worked out the rules for each case and wrote the code.

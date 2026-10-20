@@ -69,7 +69,7 @@ birth form → birthplace search → exact UTC moment → planet positions
 | `js/tour.js` | “Watch your chart build”: the step-by-step tour of the wheel on My Chart |
 | `js/time-travel.js` | “Travel through time”: the real sky on any day over your chart (My Universe) |
 | `js/cloud.js` | Accounts: sign up, log in, and syncing your data with Supabase (database setup: `development/docs/supabase-setup.sql`) |
-| `js/account-panel.js` | The “Your account” box on Profile |
+| `js/account-panel.js` | The “Your account” box on Welcome and Profile |
 | `js/save-button.js` | The “Save to my profile” button on My Chart readings and Explore topics |
 | `js/share.js` | “Share my chart” links: your birth details in the part of the address after #, which never reaches the server |
 | `js/compare.js` | Compares two people's charts: the angles between their personal planets, explained in plain words |
