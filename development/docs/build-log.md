@@ -549,3 +549,19 @@ The box that appears when you point at a planet said "Click to read the full exp
 Pressing the button used to scroll the page down to the wheel, and the wheel also jumped up because the button disappeared. Now, on a laptop, the page stays exactly where it is: no scrolling, and the button keeps its space (it's just invisible while the steps run). On phones it still scrolls to the wheel, because the step card covers the bottom of the screen there.
 
 **AI vs me:** Me: noticed the jump and asked for the view to stay put. Claude: fixed both causes and checked it at three screen sizes.
+
+---
+
+## 20 October 2026 · Clearer step-by-step text and wheel guide
+
+**Why:** "Planets describe what part of you", "Signs describe how" and "Houses describe where" were too abstract. I didn't understand them myself, so a first-timer wouldn't either.
+
+**What changed:** the 4 steps and the "How to read the wheel" box now explain astrology's basic formula with the person's own chart:
+- **Signs:** each sign is a style or mood, how a part of you behaves: boldly (Aries), calmly (Taurus) or curiously (Gemini).
+- **Planets:** each planet is one part of you (the Sun is who you are, the Moon is how you feel), then their own example: "Your Moon (how you feel) is in Aries: boldly and directly."
+- **Houses:** "The 12 numbered slices are the houses", then what a house is (an area of life), then their own example: "Your Moon is in the 6th house (daily routines, work and health): that's where it shows up most in your life."
+- **Lines:** a line means two parts of you affect each other. Dashed: they help each other easily. Solid: they pull against each other, which is harder but helps you grow.
+
+If the Moon's sign or house isn't certain (unknown birth time), the example uses the Sun, or leaves the example out, so it never shows something that might be wrong.
+
+**AI vs me:** Me: spotted that the wording was unclear, chose to keep "houses" in the houses step, and cut "for example" and "Neither is good or bad". Claude: explained the formula and drafted the new texts.

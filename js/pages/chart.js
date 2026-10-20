@@ -9,17 +9,17 @@
 //   4. write "Your chart, explained": one section per placement
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610201920';
-import { formatOffset } from '../astro/time.js?v=202610201920';
-import { drawWheel } from '../wheel.js?v=202610201920';
-import { placeTip } from '../tip-position.js?v=202610201920';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610201920';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201920';
-import { loadBirth } from '../store.js?v=202610201920';
-import { saveButton } from '../save-button.js?v=202610201920';
-import { runTour } from '../tour.js?v=202610201920';
-import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202610201920';
-import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202610201920';
+import { calculateChart } from '../astro/chart.js?v=202610201928';
+import { formatOffset } from '../astro/time.js?v=202610201928';
+import { drawWheel } from '../wheel.js?v=202610201928';
+import { placeTip } from '../tip-position.js?v=202610201928';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610201928';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610201928';
+import { loadBirth } from '../store.js?v=202610201928';
+import { saveButton } from '../save-button.js?v=202610201928';
+import { runTour } from '../tour.js?v=202610201928';
+import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202610201928';
+import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202610201928';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
@@ -367,18 +367,25 @@ function tourSteps() {
   const sun = byId.sun;
   const moon = byId.moon;
   const lines = chart.aspects.filter((a) => a.type !== 'conjunction').length;
+  // The example uses your Moon, or your Sun if the Moon's sign isn't certain.
+  const example = moon.uncertain ? sun : moon;
   const steps = [
     { layers: ['signs'], title: 'The 12 signs',
-      text: 'The outer ring is the zodiac: the 12 signs, each with its constellation. It\u2019s the backdrop of the sky. Signs describe how something in you shows up.' },
+      text: 'The outer ring is the zodiac: the 12 signs, each with its constellation. Each sign is a style or mood. It shows how a part of you behaves: boldly (Aries), calmly (Taurus) or curiously (Gemini).' },
     { layers: ['planets'], title: 'Your planets',
-      text: `Each gold symbol is a planet (the Sun and Moon count too), placed exactly where it was in the sky when you were born. Your Sun was in ${signLabel(sun)} and your Moon in ${signLabel(moon)}. Planets describe what part of you.` },
+      text: `Each gold symbol is a planet (the Sun and Moon count too), placed exactly where it was in the sky when you were born. Each planet is one part of you: the Sun is who you are, the Moon is how you feel. Your ${example.name} (${example.what}) is in ${example.sign}: ${SIGNS[example.sign].how}.` },
   ];
   if (chart.houses) {
+    // A planet whose house is certain, to show what a house means.
+    const inHouse = [moon, sun].find((p) => p.house && !p.houseUncertain);
+    const houseExample = inHouse
+      ? ` Your ${inHouse.name} (${inHouse.what}) is in the ${ordinal(inHouse.house)} house (${HOUSES[inHouse.house]}): that’s where it shows up most in your life.`
+      : '';
     steps.push({ layers: ['houses'], title: 'The houses',
-      text: `The 12 numbered slices are the houses: areas of life like home, love or work. They come from your birth time and place. ASC, on the left, is your Rising sign: ${signLabel(byId.rising)}. Houses describe where.` });
+      text: `The 12 numbered slices are the houses. Each house is an area of life, like home, love or work, and a planet’s house shows where in your life it shows up most.${houseExample} The houses come from your birth time and place. ASC, on the left, is your Rising sign: ${signLabel(byId.rising)}.` });
   }
   steps.push({ layers: ['aspects'], title: 'The lines',
-    text: `Lines join planets that sit at special angles from each other, called aspects. Dashed lines are easy, solid lines are tense. Your chart has ${lines}. Now hover over anything to learn more.` });
+    text: `A line joins two planets at a special angle (an aspect), which means those two parts of you affect each other. Dashed lines: they help each other easily. Solid lines: they pull against each other, which is harder but helps you grow. Your chart has ${lines}. Now hover over anything to learn more.` });
   return steps;
 }
 
