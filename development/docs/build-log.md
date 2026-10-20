@@ -465,3 +465,13 @@ One entry per work session: what was done, what was decided, what went wrong, an
 **Testing:** pretend Supabase: signing up on the first page and on Profile, confirming "on another device", the laptop logging itself in when you return to the tab and by the 15-second timer, and no error shown while it's still waiting. 83/83 checks.
 
 **AI vs me:** Me: found the problem with a real user. Claude: designed the fix and wrote the code.
+
+---
+
+## 20 October 2026 · Easier-to-read subheading on the first page
+
+**Feedback from a friend:** "cambia el font del subheading porque no se puede leer muy claro" (the subheading font is hard to read).
+
+**Change:** "An exploration of your personal universe." is still in Bodoni Moda, but upright and a little heavier instead of thin italic. Bodoni's italic has very thin strokes, which are hard to read on a dark background. It stays elegant and matches the style guide (Bodoni for titles).
+
+**AI vs me:** Me: collected the feedback and decided to act on it. Claude: chose upright semi-bold Bodoni and checked it on a laptop and a phone.
