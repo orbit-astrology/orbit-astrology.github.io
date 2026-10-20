@@ -443,3 +443,13 @@ One entry per work session: what was done, what was decided, what went wrong, an
 **Testing:** pretend Supabase, every case: a friend on my computer as a guest; a friend creating an account on my computer (starts empty); logging in on a computer with someone else's data; signing up on Profile keeping the chart; email confirmation keeping or not keeping; log out. Desktop and phone. No errors; 83/83 checks.
 
 **AI vs me:** Me: tested the live accounts, and decided that each person must start blank and that the account box belongs on the first page. Claude: worked out the rules for each case and wrote the code.
+
+---
+
+## 20 October 2026 · My Chart shows the full chart straight away
+
+**What changed:** the step-by-step build no longer starts by itself the first time you open My Chart. A friend testing the site found it confusing to arrive at a blank wheel. Now the full chart is there immediately, and **"Watch your chart build, step by step"** is a clear outlined button under the title for anyone who wants the guided version.
+
+**Testing:** the chart opens complete at 1024, 1280, 1440 and 1920 px wide, nothing hangs off the side, the button starts the step-by-step version, no errors.
+
+**AI vs me:** Me: noticed the problem while a friend tried the site, and decided the full chart should come first with the steps as an option. Claude: changed the code and the button.
