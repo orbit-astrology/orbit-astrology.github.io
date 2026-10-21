@@ -654,3 +654,11 @@ The bullets are small squares, matching the square style.
 Every password box (first page, Profile, invitations and "choose a new password") now has a small **Show** button inside it on the right. Pressing it shows what you typed; pressing **Hide** turns it back into dots. It goes back to dots by itself when the form is cleared. It works with a screen reader too ("Show password" / "Hide password").
 
 **AI vs me:** Me: asked for it. Claude: added it to all password boxes at once (`addShowButtons()` in `js/account-panel.js`).
+
+---
+
+## 21 October 2026 · "Log in or sign up"
+
+The link at the top right of the first page said only "Log in", which didn't make it clear you could also create an account there. It now says **"Log in or sign up"**.
+
+**AI vs me:** Me: chose the new wording. Claude: changed it.
