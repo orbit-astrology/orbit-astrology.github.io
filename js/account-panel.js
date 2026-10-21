@@ -5,8 +5,8 @@
 // log out. The talking-to-the-server part is in cloud.js.
 // ---------------------------------------------------------------
 
-import { cloudReady, currentUser, signUp, logIn, logOut, sendPasswordReset, setNewPassword, deviceHasData, finishSignUp } from './cloud.js?v=202610211427';
-import { loadBirth } from './store.js?v=202610211427';
+import { cloudReady, currentUser, signUp, logIn, logOut, sendPasswordReset, setNewPassword, deviceHasData, finishSignUp } from './cloud.js?v=202610211817';
+import { loadBirth } from './store.js?v=202610211817';
 
 const $ = (id) => document.getElementById(id);
 
@@ -193,11 +193,39 @@ export function setUpAccountPanel({ mode, onChange, collapsed = false, keepByDef
   } else {
     setMode(false);
   }
+  addShowButtons();
   show();
   if (mode === 'confirmed') message.textContent = 'Your email is confirmed and you’re logged in.';
   if (mode === 'recovery') {
     $('account-in').hidden = true;
     $('new-password').hidden = false;
     $('new-password-input').focus();
+  }
+}
+
+// A "Show" button inside each password box, so you can check what
+// you typed. It switches the box between hidden dots (type="password")
+// and normal text, and back to dots whenever the form is cleared.
+function addShowButtons() {
+  for (const input of document.querySelectorAll('.account-form input[type="password"]')) {
+    const wrap = document.createElement('span');
+    wrap.className = 'password-wrap';
+    input.replaceWith(wrap);
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'password-show';
+    button.textContent = 'Show';
+    button.setAttribute('aria-pressed', 'false');
+    button.setAttribute('aria-label', 'Show password');
+    wrap.append(input, button);
+
+    const hide = (hidden) => {
+      input.type = hidden ? 'password' : 'text';
+      button.textContent = hidden ? 'Show' : 'Hide';
+      button.setAttribute('aria-pressed', String(!hidden));
+      button.setAttribute('aria-label', hidden ? 'Show password' : 'Hide password');
+    };
+    button.addEventListener('click', () => hide(input.type === 'text'));
+    input.form?.addEventListener('reset', () => hide(true));
   }
 }

@@ -4,7 +4,7 @@
 .account p { margin: 0; max-width: 62ch; }
 .account #account-out, .account #account-in { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; width: 100%; }
 .account-form { display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 420px; }
-.account-form input[type="email"], .account-form input[type="password"] {
+.account-form input[type="email"], .account-form .password-wrap input {
   width: 100%; min-height: 44px; padding: 10px 12px; font: inherit; color: var(--bone);
   background: rgba(233, 227, 216, 0.06); border: 1px solid rgba(233, 227, 216, 0.45); border-radius: 0;
 }
@@ -13,3 +13,13 @@
 .keep-field { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; line-height: 1.45; }
 .keep-field input { width: 18px; height: 18px; margin: 2px 0 0; flex: none; accent-color: var(--champagne); }
 .keep-field[hidden] { display: none; }
+
+/* The password box with its "Show" button inside, on the right */
+.password-wrap { position: relative; display: block; width: 100%; }
+.password-wrap input { padding-right: 72px !important; }
+.password-show {
+  position: absolute; right: 1px; top: 1px; bottom: 1px; padding: 0 14px;
+  background: none; border: 0; cursor: pointer;
+  font: 650 11.5px/1 var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--champagne);
+}
+.password-show:hover { color: var(--bone); }

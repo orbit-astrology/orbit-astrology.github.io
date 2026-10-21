@@ -646,3 +646,11 @@ The bullets are small squares, matching the square style.
 **Testing:** pretend Supabase, the whole route: open the invitation logged out → create an account → create a chart (with a pretend place search) → back on the invitation → add herself → she appears in my people. No errors.
 
 **AI vs me:** Me: found the gap while testing with my mum and asked for the log-in option there. Claude: designed the three steps and wrote the code.
+
+---
+
+## 21 October 2026 · "Show" button in password boxes
+
+Every password box (first page, Profile, invitations and "choose a new password") now has a small **Show** button inside it on the right. Pressing it shows what you typed; pressing **Hide** turns it back into dots. It goes back to dots by itself when the form is cleared. It works with a screen reader too ("Show password" / "Hide password").
+
+**AI vs me:** Me: asked for it. Claude: added it to all password boxes at once (`addShowButtons()` in `js/account-panel.js`).
