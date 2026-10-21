@@ -18,6 +18,7 @@ ORBIT/                    (the final project folder)
 ├── explore.html
 ├── connections.html
 ├── profile.html
+├── how.html               (How ORBIT works: where the data comes from)
 ├── css/                  ← STYLE (CSS): colours and fonts (tokens.css),
 │                            shared styles (base.css), one file per page
 ├── js/                   ← INTERACTION (JavaScript)
@@ -46,6 +47,7 @@ How the files connect: each HTML page links its CSS files in the `<head>` (`<lin
 | Explore | `explore.html` | Working |
 | Connections | `connections.html` | Working |
 | Profile | `profile.html` | Working |
+| How ORBIT works | `how.html` | Working (linked from every page's footer) |
 
 ## How it works so far
 

@@ -28,6 +28,7 @@ body {
 .page-explore     { --page: var(--sage); }
 .page-connections { --page: var(--mauve); }
 .page-profile     { --page: var(--grey); }
+.page-how         { --page: var(--taupe); }
 
 img, svg { display: block; max-width: 100%; }
 

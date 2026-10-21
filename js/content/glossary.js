@@ -52,6 +52,18 @@ export const GLOSSARY = {
     term: 'Slow planets',
     text: 'Uranus, Neptune and Pluto move so slowly that they stay in one sign for many years, so everyone your age shares them. The house they’re in is more personal.',
   },
+  tropical: {
+    term: 'Tropical zodiac',
+    text: 'The way ORBIT measures the signs: the circle of the sky is divided into 12 equal signs, starting from where the Sun is on the first day of spring (0° Aries).',
+  },
+  placidus: {
+    term: 'Placidus',
+    text: 'The method ORBIT uses to divide a chart into the 12 houses. There are several methods; Placidus is the most common one.',
+  },
+  orb: {
+    term: 'Orb',
+    text: 'How close an angle between two planets is to exact. The smaller the orb, the stronger the link.',
+  },
   'how-we-know': {
     term: 'How we know this',
     text: 'ORBIT turns your birth time and place into an exact moment, then calculates where each planet was with an astronomy library accurate to about 1/60 of a degree.',

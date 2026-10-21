@@ -615,3 +615,19 @@ The bullets are small squares, matching the square style.
 **Setup:** run `development/docs/supabase-connections.sql` once in Supabase. Until then, links keep working one-way.
 
 **AI vs me:** Me: came up with two-way connections after testing with a friend. Claude: designed the invite code and the safe server function, and wrote the code.
+
+---
+
+## 21 October 2026 · New page: How ORBIT works
+
+**Why:** my teacher's feedback asked "Where does the data to power the page come from?". This page answers it on the site itself, in plain words, so any visitor (and my teacher) can see it.
+
+**What's on it** (`how.html`, `css/how.css`, `js/pages/how.js`)
+- A five-step journey: You → Open-Meteo (place, position, time zone) → your browser (the exact moment, using the IANA time-zone history) → Astronomy Engine (where the planets were) → ORBIT (signs, houses, angles and the words).
+- Eight short sections: the place search, time zones, the astronomy, ORBIT's own calculations (tropical zodiac, Placidus houses, aspects; what happens with an unknown or approximate time), the accuracy tests (83 checks against published charts), the explanations (traditional meanings, drafted with AI and edited by me; astrology is interpretation, not science), the sky this week / time travel, and where your data is kept (browser, Supabase with row level security).
+- Each section ends with "In the code:" and the file names, so the page also works as a map of the project.
+- Its own dusty colour, taupe `#4D463F` (contrast checked: 7.3:1 for main text, 5.4:1 for quiet text).
+- Three new glossary words: tropical zodiac, Placidus and orb.
+- Linked from the footer of every page ("How ORBIT works →").
+
+**AI vs me:** Me: wanted to answer my teacher's question on the site. Claude: checked each fact in the code and wrote the page.

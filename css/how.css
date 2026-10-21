@@ -1,0 +1,46 @@
+/* how.css: the "How ORBIT works" page. */
+
+.how-intro { display: flex; flex-direction: column; gap: 12px; padding-top: 32px; }
+.how-intro .lede { max-width: 60ch; margin: 0; }
+
+/* The five steps, joined by a thin line (side by side on a laptop,
+   one under the other on a phone). */
+.how-flow-section { padding-block: 40px 16px; }
+.how-flow {
+  list-style: none; margin: 20px 0 0; padding: 0;
+  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0;
+  border-top: 1px solid var(--champagne);
+}
+.how-flow li { padding: 18px 20px 4px 0; position: relative; }
+.how-flow li + li { padding-left: 20px; border-left: 1px solid var(--line); }
+/* A small square on the line above each step */
+.how-flow li::before {
+  content: ''; position: absolute; top: -4px; left: 0; width: 7px; height: 7px; background: var(--champagne);
+}
+.how-flow li + li::before { left: -4px; }
+.flow-number { margin: 0 0 6px; font: 650 11.5px/1 var(--sans); letter-spacing: 0.14em; color: var(--champagne); }
+.how-flow h3 { margin: 0 0 6px; font: 500 22px/1.2 var(--serif); }
+.how-flow p:last-child { margin: 0; font-size: 15px; color: var(--bone-soft); }
+
+@media (max-width: 900px) {
+  .how-flow { grid-template-columns: minmax(0, 1fr); border-top: 0; border-left: 1px solid var(--champagne); }
+  .how-flow li, .how-flow li + li { padding: 4px 0 20px 24px; border-left: 0; }
+  .how-flow li::before, .how-flow li + li::before { top: 8px; left: -4px; }
+}
+
+/* Each part, in two columns on a laptop */
+.how-details {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 64px;
+  padding-block: 32px 56px;
+}
+.how-part { display: flex; flex-direction: column; gap: 12px; padding: 28px 0; border-top: 1px solid var(--line); }
+.how-part p { margin: 0; max-width: 60ch; }
+.how-part .section-title { margin: 0 0 4px; }
+.how-list { list-style: square; margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 8px; max-width: 60ch; }
+/* Where to find it in the code: small and quiet, for the curious */
+.how-code { font-size: 14px; color: var(--bone-soft); }
+.how-code code { font-size: 13.5px; color: var(--bone); }
+
+@media (max-width: 900px) {
+  .how-details { grid-template-columns: minmax(0, 1fr); }
+}

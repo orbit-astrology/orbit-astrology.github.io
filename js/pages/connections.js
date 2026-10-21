@@ -10,19 +10,19 @@
 // the address means the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610202014';
-import { drawWheel } from '../wheel.js?v=202610202014';
-import { placeTip } from '../tip-position.js?v=202610202014';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610202014';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610202014';
-import { setUpBirthForm } from '../birth-form.js?v=202610202014';
-import { makeShareLink, readShareCode } from '../share.js?v=202610202014';
-import { startCloud, currentUser, myInvite, addMeTo } from '../cloud.js?v=202610202014';
-import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202610202014';
-import { risingText } from '../readings.js?v=202610202014';
-import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610202014';
-import { PERSONAL, LENS_TAGS, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610202014';
-import { PLANETS, SIGNS } from '../content/basics.js?v=202610202014';
+import { calculateChart } from '../astro/chart.js?v=202610211325';
+import { drawWheel } from '../wheel.js?v=202610211325';
+import { placeTip } from '../tip-position.js?v=202610211325';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610211325';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610211325';
+import { setUpBirthForm } from '../birth-form.js?v=202610211325';
+import { makeShareLink, readShareCode } from '../share.js?v=202610211325';
+import { startCloud, currentUser, myInvite, addMeTo } from '../cloud.js?v=202610211325';
+import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202610211325';
+import { risingText } from '../readings.js?v=202610211325';
+import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610211325';
+import { PERSONAL, LENS_TAGS, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610211325';
+import { PLANETS, SIGNS } from '../content/basics.js?v=202610211325';
 
 const $ = (id) => document.getElementById(id);
 const nameOf = (id) => id[0].toUpperCase() + id.slice(1);
