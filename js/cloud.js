@@ -17,7 +17,7 @@
 // about an hour) and a refresh token (gets a new access token).
 // ---------------------------------------------------------------
 
-import { SUPABASE_URL, SUPABASE_KEY } from './cloud-config.js?v=202610211818';
+import { SUPABASE_URL, SUPABASE_KEY } from './cloud-config.js?v=202610211856';
 
 const SESSION_KEY = 'orbit.session';
 const SYNCED_KEY = 'orbit.synced-at';
@@ -52,6 +52,9 @@ function friendly(data, status) {
   if (text.includes('not confirmed')) return 'Please confirm your email first: open the link we sent you.';
   if (text.includes('password') && text.includes('characters')) return 'Your password needs at least 8 characters.';
   if (text.includes('email') && text.includes('invalid')) return 'That email address doesn’t look right.';
+  // ORBIT's free email service can only send a few emails an hour, for
+  // everyone together (sign-up confirmations and password resets).
+  if (text.includes('email rate limit')) return 'ORBIT can only send a few emails an hour, and it has reached that limit. Please try again a bit later.';
   if (status === 429 || text.includes('rate limit')) return 'Too many tries in a short time. Please wait a minute and try again.';
   return 'Something went wrong talking to ORBIT’s server. Please try again.';
 }

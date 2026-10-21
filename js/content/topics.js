@@ -13,7 +13,7 @@
 // Status: first draft written with AI. Salma reviews and edits.
 // ---------------------------------------------------------------
 
-import { SIGN_TRAITS as T, SIGNS, MOON_IN, HOUSES } from './basics.js?v=202610211818';
+import { SIGN_TRAITS as T, SIGNS, MOON_IN, HOUSES } from './basics.js?v=202610211856';
 
 export const TOPICS = [
   {

@@ -662,3 +662,15 @@ Every password box (first page, Profile, invitations and "choose a new password"
 The link at the top right of the first page said only "Log in", which didn't make it clear you could also create an account there. It now says **"Log in or sign up"**.
 
 **AI vs me:** Me: chose the new wording. Claude: changed it.
+
+---
+
+## 21 October 2026 · The email limit
+
+**Problem:** creating an account said "Too many tries in a short time" even after one try. Cause: Supabase's free, built-in email service can send only **2 emails per hour for the whole project** (https://supabase.com/docs/guides/auth/rate-limits), and every new account sent a confirmation email. Once a couple of friends had signed up, everyone else was blocked for the rest of the hour.
+
+**Fix**
+- In Supabase I turned off **Confirm email** (Authentication → Providers → Email). New accounts now work straight away, with no email, so the limit no longer affects sign-ups. Trade-off: ORBIT doesn't check that the email address is real, which is fine for a student project.
+- The error message now says what's really happening when the email limit is reached (for example with "Forgot your password?"): "ORBIT can only send a few emails an hour, and it has reached that limit. Please try again a bit later."
+
+**AI vs me:** Me: hit the error on my phone and changed the Supabase setting. Claude: found the cause in Supabase's documentation and updated the message.
