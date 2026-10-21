@@ -674,3 +674,11 @@ The link at the top right of the first page said only "Log in", which didn't mak
 - The error message now says what's really happening when the email limit is reached (for example with "Forgot your password?"): "ORBIT can only send a few emails an hour, and it has reached that limit. Please try again a bit later."
 
 **AI vs me:** Me: hit the error on my phone and changed the Supabase setting. Claude: found the cause in Supabase's documentation and updated the message.
+
+---
+
+## 21 October 2026 · No more "Menu" button on phones
+
+On phones the pages were hidden behind a "Menu" button, so you couldn't see where you could go. Now the five pages (My Universe, My Chart, Explore, Connections, Profile) are always visible under ORBIT, as small tabs in two rows, with the page you're on underlined. On a laptop nothing changes. This also made the code simpler: the Menu button and the code that opened and closed it are gone.
+
+**AI vs me:** Me: asked to see the options instead of "Menu". Claude: changed the phone layout and checked it on two phone widths.

@@ -1,37 +1,14 @@
 // layout.js
 // ---------------------------------------------------------------
 // Small things every page needs:
-//   - the "Menu" button that opens and closes the menu on phones
+//   - the menu (always visible: on phones it becomes two rows of tabs)
 //   - the strip that says "You're viewing a sample chart"
 // ---------------------------------------------------------------
 
-import { startCloud } from './cloud.js?v=202610211856';
+import { startCloud } from './cloud.js?v=202610211905';
 
 export function setUpMenu() {
   startCloud(); // accounts: log in from email links, keep this device in sync (js/cloud.js)
-
-  const button = document.querySelector('.menu-button');
-  const nav = document.getElementById('site-nav');
-  if (!button || !nav) return;
-
-  const phone = window.matchMedia('(max-width: 760px)');
-
-  function sync() {
-    // On a phone the menu starts closed; on a computer it's always visible.
-    if (phone.matches) {
-      nav.hidden = button.getAttribute('aria-expanded') !== 'true';
-    } else {
-      nav.hidden = false;
-    }
-  }
-
-  button.addEventListener('click', () => {
-    const isOpen = button.getAttribute('aria-expanded') === 'true';
-    button.setAttribute('aria-expanded', String(!isOpen));
-    sync();
-  });
-  phone.addEventListener('change', sync);
-  sync();
   setUpBackLink(); // every page with the menu also gets the "Back to …" button
 }
 
