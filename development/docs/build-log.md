@@ -631,3 +631,18 @@ The bullets are small squares, matching the square style.
 - Linked from the footer of every page ("How ORBIT works →").
 
 **AI vs me:** Me: wanted to answer my teacher's question on the site. Claude: checked each fact in the code and wrote the page.
+
+---
+
+## 21 October 2026 · Invitations: log in or create an account right there
+
+**Problem (found when my mum opened my link):** the invitation said "Log in to also appear in Salma's people", but there was no way to log in on that screen, and nothing helped if she had no chart yet.
+
+**Now the invitation shows the right next step:**
+- **Not logged in:** "To also appear in Salma's people, log in or create a free account. You can also just add Salma without one." with **Log in / Create account** right there (the same account box as the first page). After logging in, the same invitation opens again.
+- **Logged in, no chart yet:** "Next, create your own chart, so Salma can see it too. ORBIT will bring you back here afterwards." with **Create my chart**. After making the chart, ORBIT goes straight back to the invitation (it remembers it in `orbit.pending-add`).
+- **Logged in with a chart:** the ticked "Also add me to Salma's people" box, as before.
+
+**Testing:** pretend Supabase, the whole route: open the invitation logged out → create an account → create a chart (with a pretend place search) → back on the invitation → add herself → she appears in my people. No errors.
+
+**AI vs me:** Me: found the gap while testing with my mum and asked for the log-in option there. Claude: designed the three steps and wrote the code.

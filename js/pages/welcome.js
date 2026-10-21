@@ -13,13 +13,13 @@
 // replaced by a "Welcome back" link to your universe.
 // ---------------------------------------------------------------
 
-import { skyAt } from '../astro/sky.js?v=202610211325';
-import { drawWheel } from '../wheel.js?v=202610211325';
-import { setUpGlossary } from '../glossary.js?v=202610211325';
-import { setUpBirthForm } from '../birth-form.js?v=202610211325';
-import { startCloud, currentUser, cloudReady } from '../cloud.js?v=202610211325';
-import { setUpAccountPanel } from '../account-panel.js?v=202610211325';
-import { saveBirth, loadBirth, sameBirth, startFresh, SAMPLE_BIRTH } from '../store.js?v=202610211325';
+import { skyAt } from '../astro/sky.js?v=202610211427';
+import { drawWheel } from '../wheel.js?v=202610211427';
+import { setUpGlossary } from '../glossary.js?v=202610211427';
+import { setUpBirthForm } from '../birth-form.js?v=202610211427';
+import { startCloud, currentUser, cloudReady } from '../cloud.js?v=202610211427';
+import { setUpAccountPanel } from '../account-panel.js?v=202610211427';
+import { saveBirth, loadBirth, sameBirth, startFresh, SAMPLE_BIRTH } from '../store.js?v=202610211427';
 
 const $ = (id) => document.getElementById(id);
 
@@ -62,7 +62,10 @@ function goToUniverse(birth, showError) {
     showError('Your browser is blocking ORBIT from saving your details (this can happen in private browsing). Please allow site data and try again.');
     return;
   }
-  window.location.href = 'universe.html';
+  // Came here from a friend's invitation? Go straight back to it.
+  let pending = null;
+  try { pending = localStorage.getItem('orbit.pending-add'); localStorage.removeItem('orbit.pending-add'); } catch { /* none */ }
+  window.location.href = pending ? `connections.html#${pending}` : 'universe.html';
 }
 
 setUpBirthForm({

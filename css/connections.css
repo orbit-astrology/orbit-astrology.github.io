@@ -99,6 +99,10 @@
 .share-back { display: flex; flex-direction: column; gap: 12px; margin: 4px 0 8px; max-width: 420px; }
 .share-back .field[hidden] { display: none; }
 .share-back input[type="text"] { width: 100%; }
+.share-join { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; margin: 8px 0 16px; padding: 18px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); max-width: 560px; }
+.share-join[hidden] { display: none; }
+.share-join p { margin: 0; }
+.share-join #account-out, .share-join #account-in { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; width: 100%; }
 .shared-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: 8px; }
 
 /* Share your chart */

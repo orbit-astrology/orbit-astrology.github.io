@@ -10,12 +10,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Manrope:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/tokens.css?v=202610211325">
-  <link rel="stylesheet" href="css/base.css?v=202610211325">
-  <link rel="stylesheet" href="css/wheel.css?v=202610211325">
-  <link rel="stylesheet" href="css/birth-form.css?v=202610211325">
-  <link rel="stylesheet" href="css/chart.css?v=202610211325">
-  <link rel="stylesheet" href="css/connections.css?v=202610211325">
+  <link rel="stylesheet" href="css/tokens.css?v=202610211427">
+  <link rel="stylesheet" href="css/base.css?v=202610211427">
+  <link rel="stylesheet" href="css/wheel.css?v=202610211427">
+  <link rel="stylesheet" href="css/birth-form.css?v=202610211427">
+  <link rel="stylesheet" href="css/chart.css?v=202610211427">
+  <link rel="stylesheet" href="css/account.css?v=202610211427">
+  <link rel="stylesheet" href="css/connections.css?v=202610211427">
 </head>
 <body class="page-connections">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -60,7 +61,46 @@
           <input id="share-back-name" type="text" maxlength="40" autocomplete="given-name">
         </div>
       </div>
-      <p class="hint" id="share-back-login" hidden></p>
+
+      <!-- Not logged in: log in or create an account right here (js/account-panel.js) -->
+      <div class="account share-join" id="account" hidden>
+        <p class="share-join-why" id="share-join-why"></p>
+        <p class="quiet" id="account-off" hidden>Accounts aren’t switched on yet.</p>
+        <div id="account-out" hidden>
+          <div class="view-switch" role="group" aria-label="Log in or create an account">
+            <button type="button" id="mode-login" aria-pressed="false">Log in</button>
+            <button type="button" id="mode-signup" aria-pressed="false">Create account</button>
+          </div>
+          <form id="account-form" class="account-form" novalidate hidden>
+            <div class="field">
+              <label for="account-email">Email</label>
+              <input id="account-email" type="email" autocomplete="email" required>
+            </div>
+            <div class="field">
+              <label for="account-password">Password</label>
+              <input id="account-password" type="password" autocomplete="current-password" minlength="8" required>
+              <p class="hint" id="password-hint" hidden>At least 8 characters.</p>
+            </div>
+            <label class="keep-field" id="account-keep-field" hidden>
+              <input type="checkbox" id="account-keep">
+              <span>Also save <span id="account-keep-what">the chart on this device</span> to my new account. Leave this unticked if it isn’t yours: your account will start empty.</span>
+            </label>
+            <p class="error-text" id="account-error" role="alert"></p>
+            <div class="form-actions">
+              <button type="submit" class="button" id="account-submit">Log in</button>
+              <button type="button" class="link-button" id="forgot">Forgot your password?</button>
+            </div>
+          </form>
+        </div>
+        <div id="account-in" hidden><p>Logged in as <strong id="account-who"></strong>.</p><button type="button" class="link-button" id="logout">Log out</button></div>
+        <p class="saved-text" id="account-message" role="status"></p>
+      </div>
+
+      <!-- Logged in, but no chart of your own yet -->
+      <div class="share-join" id="share-need-chart" hidden>
+        <p id="share-need-chart-why"></p>
+        <a class="button button-outline" href="index.html" id="share-make-chart">Create my chart</a>
+      </div>
 
       <div class="shared-actions" id="shared-actions">
         <button type="button" class="button" id="shared-add"></button>
@@ -251,6 +291,6 @@
     </div>
   </footer>
 
-  <script type="module" src="js/pages/connections.js?v=202610211325"></script>
+  <script type="module" src="js/pages/connections.js?v=202610211427"></script>
 </body>
 </html>

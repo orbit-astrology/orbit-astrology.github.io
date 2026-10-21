@@ -10,19 +10,20 @@
 // the address means the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202610211325';
-import { drawWheel } from '../wheel.js?v=202610211325';
-import { placeTip } from '../tip-position.js?v=202610211325';
-import { setUpGlossary, termButton } from '../glossary.js?v=202610211325';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202610211325';
-import { setUpBirthForm } from '../birth-form.js?v=202610211325';
-import { makeShareLink, readShareCode } from '../share.js?v=202610211325';
-import { startCloud, currentUser, myInvite, addMeTo } from '../cloud.js?v=202610211325';
-import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202610211325';
-import { risingText } from '../readings.js?v=202610211325';
-import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610211325';
-import { PERSONAL, LENS_TAGS, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610211325';
-import { PLANETS, SIGNS } from '../content/basics.js?v=202610211325';
+import { calculateChart } from '../astro/chart.js?v=202610211427';
+import { drawWheel } from '../wheel.js?v=202610211427';
+import { placeTip } from '../tip-position.js?v=202610211427';
+import { setUpGlossary, termButton } from '../glossary.js?v=202610211427';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202610211427';
+import { setUpBirthForm } from '../birth-form.js?v=202610211427';
+import { makeShareLink, readShareCode } from '../share.js?v=202610211427';
+import { setUpAccountPanel } from '../account-panel.js?v=202610211427';
+import { startCloud, currentUser, myInvite, addMeTo } from '../cloud.js?v=202610211427';
+import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202610211427';
+import { risingText } from '../readings.js?v=202610211427';
+import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202610211427';
+import { PERSONAL, LENS_TAGS, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202610211427';
+import { PLANETS, SIGNS } from '../content/basics.js?v=202610211427';
 
 const $ = (id) => document.getElementById(id);
 const nameOf = (id) => id[0].toUpperCase() + id.slice(1);
@@ -232,13 +233,18 @@ function showShared(code) {
   $('share-back-label').textContent = `Also add me to ${name}’s people (${name} will see my birth details)`;
   $('share-back-name').value = me?.name || '';
   $('share-back-yes').onchange = () => { $('share-back-name-field').hidden = !$('share-back-yes').checked; };
-  const login = $('share-back-login');
-  login.hidden = !(shared.invite && !currentUser());
-  if (!login.hidden) {
-    const link = make('a', 'text-link', 'Log in');
-    link.href = 'index.html';
-    login.replaceChildren(link, ` to also appear in ${name}’s people.`);
-  }
+  // Not logged in: offer to log in or create an account right here.
+  // After logging in, the page reloads and shows the box above.
+  $('account').hidden = !(shared.invite && !currentUser());
+  $('share-join-why').textContent = `To also appear in ${name}’s people, log in or create a free account. You can also just add ${name} without one.`;
+  // Logged in but no chart yet: make one, then come straight back here.
+  const needsChart = Boolean(shared.invite && currentUser() && (!me || me.isSample));
+  $('share-need-chart').hidden = !needsChart;
+  $('shared-add').hidden = needsChart; // make your chart first; you'll come back to this button
+  $('share-need-chart-why').textContent = `Next, create your own chart, so ${name} can see it too. ORBIT will bring you back here afterwards.`;
+  $('share-make-chart').onclick = () => {
+    try { localStorage.setItem('orbit.pending-add', location.hash.slice(1)); } catch { /* the link will just need opening again */ }
+  };
 
   const existing = loadPeople().find((p) => samePerson(p.birth, birth));
   const button = $('shared-add');
@@ -661,4 +667,12 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && current)
 setUpAddForm();
 setUpShareBox();
 route();
+
+// The log-in box inside a friend's invitation (#add=…). After logging
+// in, reload: the same invitation opens again, now with the option to
+// add yourself to their people.
+setUpAccountPanel({
+  collapsed: true,
+  onChange(event) { if (event !== 'signup' || currentUser()) window.location.reload(); },
+});
 window.addEventListener('hashchange', route);

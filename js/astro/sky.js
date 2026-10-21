@@ -13,9 +13,9 @@
 // would fill the week with small events.
 // ---------------------------------------------------------------
 
-import { positionsAt } from './chart.js?v=202610211325';
-import { findAspects, aspectBetween } from './aspects.js?v=202610211325';
-import { houseOf } from './houses.js?v=202610211325';
+import { positionsAt } from './chart.js?v=202610211427';
+import { findAspects, aspectBetween } from './aspects.js?v=202610211427';
+import { houseOf } from './houses.js?v=202610211427';
 
 const HOUR = 3600000;
 const MOVERS = ['sun', 'mercury', 'venus', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto'];
