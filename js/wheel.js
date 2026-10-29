@@ -15,8 +15,8 @@
 // the left instead.
 // ---------------------------------------------------------------
 
-import { SIGNS as SIGN_NAMES } from './astro/settings.js?v=202610211905';
-import { PLANETS } from './content/basics.js?v=202610211905';
+import { SIGNS as SIGN_NAMES } from './astro/settings.js?v=202610291945';
+import { PLANETS } from './content/basics.js?v=202610291945';
 
 const C = 300;           // centre of the 600 × 600 drawing
 const SVG_NS = 'http://www.w3.org/2000/svg';

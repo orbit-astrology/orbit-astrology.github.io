@@ -5,7 +5,7 @@
 //   - the strip that says "You're viewing a sample chart"
 // ---------------------------------------------------------------
 
-import { startCloud } from './cloud.js?v=202610211905';
+import { startCloud } from './cloud.js?v=202610291945';
 
 export function setUpMenu() {
   startCloud(); // accounts: log in from email links, keep this device in sync (js/cloud.js)

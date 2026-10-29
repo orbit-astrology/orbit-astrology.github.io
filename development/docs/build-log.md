@@ -682,3 +682,11 @@ The link at the top right of the first page said only "Log in", which didn't mak
 On phones the pages were hidden behind a "Menu" button, so you couldn't see where you could go. Now the five pages (My Universe, My Chart, Explore, Connections, Profile) are always visible under ORBIT, as small tabs in two rows, with the page you're on underlined. On a laptop nothing changes. This also made the code simpler: the Menu button and the code that opened and closed it are gone.
 
 **AI vs me:** Me: asked to see the options instead of "Menu". Claude: changed the phone layout and checked it on two phone widths.
+
+---
+
+## 29 October 2026 · Sign names on the wheel are easier to read
+
+The sign names around the wheel (ARIES, CAPRICORN…) were in thin Bodoni capitals, which were hard to read that small and curved round the circle. They're now in **Manrope** (the site's text font), bold, a little bigger, with less letter spacing, so every name still fits inside its slice (even SAGITTARIUS). The change is one line in `css/wheel.css`, so it applies to every wheel on the site.
+
+**AI vs me:** Me: noticed the names weren't readable and suggested changing the font. Claude: picked the font and size and checked it on a laptop and a phone.
