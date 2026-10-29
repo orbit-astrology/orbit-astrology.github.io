@@ -692,3 +692,13 @@ The sign names around the wheel (ARIES, CAPRICORN…) were in thin Bodoni capita
 **AI vs me:** Me: noticed the names weren't readable and suggested changing the font. Claude: picked the font and size and checked it on a laptop and a phone.
 
 **Update, same day: the names now follow the curve.** Each sign name sits on an invisible curved line through the middle of the ring (an SVG "text path"), so the letters bend round the wheel like the writing on a coin. On the bottom half the line runs the other way, so the names still read the right way up. Each curved line has its own id, so pages with two wheels (My Universe) work too.
+
+---
+
+## 29 October 2026 · Bodoni's thin lines a little sturdier
+
+**What I asked:** I love Bodoni Moda, but in big titles its thinnest lines felt too thin. I wanted them a little bolder, everywhere the font is used.
+
+**How:** Bodoni Moda changes its own shape with its size (its "optical size" setting): the bigger the text, the thinner and more delicate the fine lines. Now every big and medium Bodoni text (page titles, ORBIT, section titles, the Big Three signs, reading titles, topic names, subtitles) uses the version drawn for 18px text, which has sturdier thin lines, while still being the same font. The small spaced-out capital labels are left as they were. It's one rule in `css/base.css`: `font-variation-settings: "opsz" 18`. I checked in the browser that every element gets it.
+
+**AI vs me:** Me: asked for the thin lines to be a little bolder everywhere. Claude: found the font's optical-size setting, compared before and after, and applied it.

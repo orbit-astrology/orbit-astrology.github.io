@@ -71,6 +71,22 @@ a:hover { color: var(--champagne); }
 h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.05; margin: 0; }
 h1 em, h2 em, h3 em { font-style: italic; }
 
+/* Bodoni Moda changes its shape with its size ("optical size"): the
+   bigger the text, the thinner its fine lines. For big titles we ask
+   for the sturdier version made for 18px text, so the thin lines are a
+   little thicker and easier to read, but it's still the same font.
+   (Smaller Bodoni text, like the spaced-out labels, is left as it is.) */
+/* ("html" in front makes this rule win over the page CSS files, whose
+   "font: …" shorthand would otherwise reset it.) */
+html :is(h1, h2, h3, .title, .section-title, .welcome-title, .welcome-tagline,
+  .placement-sign, .reading-title, .grammar, .topic-name, .topic-item-title,
+  .topic-big-question, .lens, .lib-name, .explore-name, .travel-date,
+  .playground-readout .angle, .term-popup strong) {
+  font-variation-settings: "opsz" 18;
+}
+/* The small spaced-out labels keep their own automatic setting. */
+html .eyebrow { font-variation-settings: normal; }
+
 /* Small spaced capitals, like "S U N · W H O  Y O U  A R E" */
 .eyebrow {
   margin: 0;
