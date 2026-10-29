@@ -8,7 +8,7 @@
 // small box with the plain explanation from js/content/glossary.js.
 // ---------------------------------------------------------------
 
-import { GLOSSARY } from './content/glossary.js?v=202610291945';
+import { GLOSSARY } from './content/glossary.js?v=202610291947';
 
 let open = null; // the pop-up currently showing, if any
 let waiting = null; // a hover that hasn't lasted long enough yet

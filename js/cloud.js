@@ -17,7 +17,7 @@
 // about an hour) and a refresh token (gets a new access token).
 // ---------------------------------------------------------------
 
-import { SUPABASE_URL, SUPABASE_KEY } from './cloud-config.js?v=202610291945';
+import { SUPABASE_URL, SUPABASE_KEY } from './cloud-config.js?v=202610291947';
 
 const SESSION_KEY = 'orbit.session';
 const SYNCED_KEY = 'orbit.synced-at';

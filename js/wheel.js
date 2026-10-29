@@ -15,8 +15,8 @@
 // the left instead.
 // ---------------------------------------------------------------
 
-import { SIGNS as SIGN_NAMES } from './astro/settings.js?v=202610291945';
-import { PLANETS } from './content/basics.js?v=202610291945';
+import { SIGNS as SIGN_NAMES } from './astro/settings.js?v=202610291947';
+import { PLANETS } from './content/basics.js?v=202610291947';
 
 const C = 300;           // centre of the 600 × 600 drawing
 const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -24,6 +24,10 @@ const TEXT = '︎';   // asks phones to draw symbols as text, not emoji
 
 // A point at distance r from the centre, at angle deg (0° = right,
 // counting anticlockwise, like in maths class).
+// Each wheel's curved lines for the sign names need their own ids,
+// even when there are two wheels on a page.
+let pathCount = 0;
+
 function point(r, deg) {
   const a = (deg * Math.PI) / 180;
   return [C + r * Math.cos(a), C - r * Math.sin(a)];
@@ -156,16 +160,23 @@ export function drawWheel(chart, options = {}) {
       signs.append(el('circle', { cx: x.toFixed(1), cy: y.toFixed(1), r: 1.6, class: 'star' }));
     }
 
-    const [tx, ty] = point(212, mid);
-    // Keep the name running along the circle. On the bottom half it
-    // would be upside down, so turn it round (180°) to read normally.
+    // The name bends along the ring, like the letters on a coin. It
+    // sits on an invisible curved line (a "text path") through the
+    // middle of the ring. On the top half the line runs clockwise, so
+    // the letters stand on it; on the bottom half it runs the other
+    // way, so the name still reads the right way up.
     const bottomHalf = mid > 180 && mid < 360;
-    const rotation = 90 - mid + (bottomHalf ? 180 : 0);
-    signs.append(el('text', {
-      x: tx.toFixed(1), y: ty.toFixed(1), class: 'sign-name',
-      transform: `rotate(${rotation.toFixed(1)} ${tx.toFixed(1)} ${ty.toFixed(1)})`,
-      'text-anchor': 'middle', 'dominant-baseline': 'middle',
-    }, name.toUpperCase()));
+    const r = bottomHalf ? 216.5 : 207.5; // nudged so the letters sit in the middle of the ring
+    const [sx, sy] = point(r, bottomHalf ? mid - 15 : mid + 15);
+    const [ex, ey] = point(r, bottomHalf ? mid + 15 : mid - 15);
+    const id = `sign-path-${++pathCount}`;
+    signs.append(el('path', {
+      id, class: 'sign-path',
+      d: `M${sx.toFixed(1)} ${sy.toFixed(1)} A${r} ${r} 0 0 ${bottomHalf ? 0 : 1} ${ex.toFixed(1)} ${ey.toFixed(1)}`,
+    }));
+    const text = el('text', { class: 'sign-name', 'text-anchor': 'middle' });
+    text.append(el('textPath', { href: `#${id}`, startOffset: '50%' }, name.toUpperCase()));
+    signs.append(text);
   });
   svg.append(signs);
 

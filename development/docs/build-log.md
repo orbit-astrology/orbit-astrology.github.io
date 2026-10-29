@@ -690,3 +690,5 @@ On phones the pages were hidden behind a "Menu" button, so you couldn't see wher
 The sign names around the wheel (ARIES, CAPRICORN…) were in thin Bodoni capitals, which were hard to read that small and curved round the circle. They're now in **Manrope** (the site's text font), bold, a little bigger, with less letter spacing, so every name still fits inside its slice (even SAGITTARIUS). The change is one line in `css/wheel.css`, so it applies to every wheel on the site.
 
 **AI vs me:** Me: noticed the names weren't readable and suggested changing the font. Claude: picked the font and size and checked it on a laptop and a phone.
+
+**Update, same day: the names now follow the curve.** Each sign name sits on an invisible curved line through the middle of the ring (an SVG "text path"), so the letters bend round the wheel like the writing on a coin. On the bottom half the line runs the other way, so the names still read the right way up. Each curved line has its own id, so pages with two wheels (My Universe) work too.
