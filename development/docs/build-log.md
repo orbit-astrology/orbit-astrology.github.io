@@ -702,3 +702,18 @@ The sign names around the wheel (ARIES, CAPRICORN…) were in thin Bodoni capita
 **How:** Bodoni Moda changes its own shape with its size (its "optical size" setting): the bigger the text, the thinner and more delicate the fine lines. Now every big and medium Bodoni text (page titles, ORBIT, section titles, the Big Three signs, reading titles, topic names, subtitles) uses the version drawn for 18px text, which has sturdier thin lines, while still being the same font. The small spaced-out capital labels are left as they were. It's one rule in `css/base.css`: `font-variation-settings: "opsz" 18`. I checked in the browser that every element gets it.
 
 **AI vs me:** Me: asked for the thin lines to be a little bolder everywhere. Claude: found the font's optical-size setting, compared before and after, and applied it.
+
+---
+
+## 11 November 2026 · A quicker start (teacher feedback)
+
+**Feedback from my teacher (Adrián):** filling in the form takes a while, so there may be a quicker way into the chart. He also didn't notice that ORBIT has accounts.
+
+**What changed**
+- **Your Sun and Moon straight away.** As soon as a whole birthday is typed, a box under the date shows "Your Sun sign (who you are at heart): Virgo" and "Your Moon sign (how you feel): …", calculated for real with Astronomy Engine. A birthday covers different moments around the world, so ORBIT checks that whole day in every time zone (UTC+14 to UTC−12). If a sign changed that day, it shows both ("Leo or Virgo. Your birth time and place decide which.") instead of guessing.
+- **The birth time is optional.** The fastest path is now: date → city → Generate. Leaving the hour and minute empty means "I don't know it" (one short line explains what happens), so the "I don't know my birth time" tick box is gone. The "How sure are you about this time?" question only appears once a time is typed. This works the same on the first page, Connections and Profile (shared code in `js/birth-form.js`).
+- **"Log in or sign up" is now an outlined button** at the top right of the first page, so it's easy to spot.
+
+**Testing:** preview for normal days, a day when the Sun changes sign (23 September), an impossible date (29 February 2001, no preview), the fastest path without a time, a half-typed time (clear message), editing details with an unknown time on Profile; laptop and phone. No errors; 83/83 checks.
+
+**AI vs me:** Me: passed on my teacher's feedback and chose to act on it. Claude: designed the quicker form and the honest Sun/Moon preview and wrote the code.

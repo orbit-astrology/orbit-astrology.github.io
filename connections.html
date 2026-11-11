@@ -10,13 +10,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Manrope:wght@400..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/tokens.css?v=202610291953">
-  <link rel="stylesheet" href="css/base.css?v=202610291953">
-  <link rel="stylesheet" href="css/wheel.css?v=202610291953">
-  <link rel="stylesheet" href="css/birth-form.css?v=202610291953">
-  <link rel="stylesheet" href="css/chart.css?v=202610291953">
-  <link rel="stylesheet" href="css/account.css?v=202610291953">
-  <link rel="stylesheet" href="css/connections.css?v=202610291953">
+  <link rel="stylesheet" href="css/tokens.css?v=202611111934">
+  <link rel="stylesheet" href="css/base.css?v=202611111934">
+  <link rel="stylesheet" href="css/wheel.css?v=202611111934">
+  <link rel="stylesheet" href="css/birth-form.css?v=202611111934">
+  <link rel="stylesheet" href="css/chart.css?v=202611111934">
+  <link rel="stylesheet" href="css/account.css?v=202611111934">
+  <link rel="stylesheet" href="css/connections.css?v=202611111934">
 </head>
 <body class="page-connections">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -179,7 +179,7 @@
             </fieldset>
 
             <fieldset class="field">
-              <legend>Their time of birth <span class="quiet">(local time where they were born)</span></legend>
+              <legend>Their time of birth <span class="quiet">(optional · local time where they were born)</span></legend>
               <div class="time-row">
                 <div><label for="friend-hour" class="small-label">Hour (0–23)</label><input id="friend-hour" type="number" inputmode="numeric" min="0" max="23" placeholder="HH"></div>
                 <span aria-hidden="true" class="time-colon">:</span>
@@ -196,8 +196,7 @@
                 </select>
                 <p class="hint" id="friend-margin-hint" hidden>Good to know. Planets barely move in a few hours, but the Rising sign and houses change quickly, so where they could differ ORBIT will show you every option instead of guessing. <button type="button" class="term" data-term="approximate-time">Why?</button></p>
               </div>
-              <label class="checkbox"><input id="friend-time-unknown" type="checkbox"> I don’t know their birth time</label>
-              <p class="hint" id="friend-time-hint" hidden>That’s fine. Their planets will still be right, but their Moon moves fast, so any link with it is marked “might not be exact”.
+              <p class="hint" id="friend-time-hint">Don’t know it? Leave it empty. Their planets will still be right, but their Moon moves fast, so any link with it is marked “might not be exact”.
                 <button type="button" class="term" data-term="unknown-time">Why?</button></p>
             </fieldset>
 
@@ -290,6 +289,6 @@
     </div>
   </footer>
 
-  <script type="module" src="js/pages/connections.js?v=202610291953"></script>
+  <script type="module" src="js/pages/connections.js?v=202611111934"></script>
 </body>
 </html>

@@ -13,13 +13,13 @@
 // replaced by a "Welcome back" link to your universe.
 // ---------------------------------------------------------------
 
-import { skyAt } from '../astro/sky.js?v=202610291953';
-import { drawWheel } from '../wheel.js?v=202610291953';
-import { setUpGlossary } from '../glossary.js?v=202610291953';
-import { setUpBirthForm } from '../birth-form.js?v=202610291953';
-import { startCloud, currentUser, cloudReady } from '../cloud.js?v=202610291953';
-import { setUpAccountPanel } from '../account-panel.js?v=202610291953';
-import { saveBirth, loadBirth, sameBirth, startFresh, SAMPLE_BIRTH } from '../store.js?v=202610291953';
+import { skyAt } from '../astro/sky.js?v=202611111934';
+import { drawWheel } from '../wheel.js?v=202611111934';
+import { setUpGlossary } from '../glossary.js?v=202611111934';
+import { setUpBirthForm } from '../birth-form.js?v=202611111934';
+import { startCloud, currentUser, cloudReady } from '../cloud.js?v=202611111934';
+import { setUpAccountPanel } from '../account-panel.js?v=202611111934';
+import { saveBirth, loadBirth, sameBirth, startFresh, SAMPLE_BIRTH } from '../store.js?v=202611111934';
 
 const $ = (id) => document.getElementById(id);
 
@@ -32,6 +32,62 @@ $('sky-now').append(drawWheel(sky, { label: 'The sky right now' }));
 const sunNow = sky.bodies.find((b) => b.id === 'sun').sign;
 const moonNow = sky.bodies.find((b) => b.id === 'moon').sign;
 $('sky-caption').textContent = `The faint wheel is the real sky right now: the Sun is in ${sunNow} and the Moon is in ${moonNow}.`;
+
+// --- A first glimpse: your Sun and Moon -----------------------------
+// As soon as a whole birthday is typed, show the Sun and Moon signs,
+// before the rest of the form. A birthday covers different moments
+// around the world, so we check that whole day in every time zone
+// (from UTC+14 to UTC−12). If a sign changed during it, we say both:
+// the birth time and place decide which one (never a guess).
+
+const HOUR = 3600000;
+const SYMBOL = { sun: '☉', moon: '☽' };
+
+function signsOnBirthday(id, year, month, day) {
+  const start = Date.UTC(year, month - 1, day) - 14 * HOUR;
+  const end = Date.UTC(year, month - 1, day) + 36 * HOUR;
+  const signs = [];
+  for (let t = start; t <= end; t += 2 * HOUR) {
+    const sign = skyAt(new Date(t)).bodies.find((b) => b.id === id).sign;
+    if (!signs.includes(sign)) signs.push(sign);
+  }
+  return signs;
+}
+
+function previewLine(id, label, meaning, signs) {
+  const line = document.createElement('p');
+  const symbol = document.createElement('span');
+  symbol.className = 'preview-symbol';
+  symbol.setAttribute('aria-hidden', 'true');
+  symbol.textContent = SYMBOL[id];
+  const sign = document.createElement('strong');
+  sign.textContent = signs.join(' or ');
+  line.append(symbol, `Your ${label} sign (${meaning}): `, sign);
+  if (signs.length > 1) line.append('. Your birth time and place decide which.');
+  return line;
+}
+
+function showPreview() {
+  const box = $('birth-preview');
+  const day = Number($('birth-day').value);
+  const month = Number($('birth-month').value);
+  const year = Number($('birth-year').value);
+  const real = new Date(Date.UTC(year, month - 1, day));
+  const complete = Number.isInteger(day) && month && year >= 1900 && year <= 2100 &&
+    real.getUTCDate() === day && real.getUTCMonth() === month - 1;
+  if (!complete) { box.hidden = true; return; }
+  const next = document.createElement('p');
+  next.className = 'preview-next';
+  next.textContent = 'Add your city below to see your whole chart.';
+  box.replaceChildren(
+    previewLine('sun', 'Sun', 'who you are at heart', signsOnBirthday('sun', year, month, day)),
+    previewLine('moon', 'Moon', 'how you feel', signsOnBirthday('moon', year, month, day)),
+    next,
+  );
+  box.hidden = false;
+}
+for (const id of ['birth-day', 'birth-month', 'birth-year']) $(id).addEventListener('input', showPreview);
+$('birth-month').addEventListener('change', showPreview);
 
 // --- Coming back? Offer a shortcut ----------------------------------
 

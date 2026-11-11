@@ -2,7 +2,8 @@
 // ---------------------------------------------------------------
 // Everything a birth form needs, shared by the Welcome page (your
 // details) and Connections (someone else's details):
-//   - "I don't know the birth time"
+//   - the birth time is optional: leave it empty (or tick "I don't
+//     know") and ORBIT leaves out the Rising sign and houses
 //   - birthplace search (only a place picked from the list is used,
 //     so a typo can never silently become the wrong coordinates)
 //   - clear checks with messages that say exactly what's wrong
@@ -13,9 +14,9 @@
 // "friend-place" on Connections.
 // ---------------------------------------------------------------
 
-import { calculateChart } from './astro/chart.js?v=202610291953';
-import { searchPlaces } from './astro/places.js?v=202610291953';
-import { formatOffset } from './astro/time.js?v=202610291953';
+import { calculateChart } from './astro/chart.js?v=202611111934';
+import { searchPlaces } from './astro/places.js?v=202611111934';
+import { formatOffset } from './astro/time.js?v=202611111934';
 
 // Options:
 //   form, prefix  – the <form> and the start of its ids
@@ -28,17 +29,15 @@ export function setUpBirthForm({ form, prefix, whose = 'your', extraFields = [],
   const $ = (name) => document.getElementById(prefix + name);
   const FIELDS = [...extraFields, 'day', 'month', 'year', 'hour', 'minute', 'place'];
 
-  // --- "I don't know the birth time" ---
-  $('time-unknown').addEventListener('change', (e) => {
-    const unknown = e.target.checked;
-    $('hour').disabled = unknown;
-    $('minute').disabled = unknown;
-    $('time-hint').hidden = !unknown;
-    $('margin-field').hidden = unknown; // "how sure?" only makes sense with a time
-  });
-
   // --- "How sure are you about this time?" (approximate time) ---
   $('margin').addEventListener('change', () => { $('margin-hint').hidden = $('margin').value === '0'; });
+  // The birth time is optional: both boxes empty means "I don't know it".
+  // The "how sure?" question only appears once you've typed a time.
+  const timeTyped = () => $('hour').value.trim() !== '' || $('minute').value.trim() !== '';
+  const showMargin = () => { $('margin-field').hidden = !timeTyped(); };
+  $('hour').addEventListener('input', showMargin);
+  $('minute').addEventListener('input', showMargin);
+  showMargin();
 
   // --- Birthplace search ---
   const input = $('place');
@@ -144,7 +143,8 @@ export function setUpBirthForm({ form, prefix, whose = 'your', extraFields = [],
   }
 
   function read() {
-    const timeKnown = !$('time-unknown').checked;
+    // Both time boxes empty counts as "I don't know the birth time".
+    const timeKnown = timeTyped();
     const birth = {
       day: number('day'), month: number('month'), year: number('year'),
       timeKnown,
@@ -168,7 +168,7 @@ export function setUpBirthForm({ form, prefix, whose = 'your', extraFields = [],
       const time = [];
       if (!Number.isInteger(b.hour) || b.hour < 0 || b.hour > 23) time.push('hour');
       if (!Number.isInteger(b.minute) || b.minute < 0 || b.minute > 59) time.push('minute');
-      if (time.length) return [`Please enter the birth time as hour (0–23) and minute (0–59), or tick “I don’t know the birth time”.`, time];
+      if (time.length) return [`Please enter the birth time as hour (0–23) and minute (0–59), or leave both empty if you don’t know it.`, time];
     }
     if (!b.place) return ['Please choose the place of birth from the list of suggestions.', ['place']];
     return null;
@@ -222,14 +222,11 @@ export function setUpBirthForm({ form, prefix, whose = 'your', extraFields = [],
       $('day').value = birth.day;
       $('month').value = String(birth.month);
       $('year').value = birth.year;
-      $('time-unknown').checked = !birth.timeKnown;
-      $('hour').disabled = !birth.timeKnown;
-      $('minute').disabled = !birth.timeKnown;
-      $('time-hint').hidden = birth.timeKnown;
+      // An unknown time is shown as empty time boxes.
       $('hour').value = birth.timeKnown ? birth.hour : '';
       $('minute').value = birth.timeKnown ? birth.minute : '';
       $('margin').value = String(birth.margin || 0);
-      $('margin-field').hidden = !birth.timeKnown;
+      showMargin();
       $('margin-hint').hidden = !birth.margin;
       chosenPlace = birth.place;
       input.value = birth.place.label;
@@ -240,10 +237,7 @@ export function setUpBirthForm({ form, prefix, whose = 'your', extraFields = [],
       form.reset();
       chosenPlace = null;
       chosenOffset = null;
-      $('hour').disabled = false;
-      $('minute').disabled = false;
-      $('time-hint').hidden = true;
-      $('margin-field').hidden = false;
+      $('margin-field').hidden = true;
       $('margin-hint').hidden = true;
       $('ambiguous').hidden = true;
       status.textContent = defaultStatus;
