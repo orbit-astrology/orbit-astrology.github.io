@@ -736,3 +736,17 @@ Each label sits on the side nearest to what it points at, and they're nudged so 
 **Testing:** with and without a birth time, on 1366 px and 1920 px screens and a phone; hiding, showing, remembering after a reload; hovering planets still works. No errors; 83/83 checks.
 
 **AI vs me:** Me: passed on my teacher's feedback. Claude: designed the labels and wrote the code.
+
+## 11 Nov 2026 · Less "AI-looking": fewer repeated patterns (draft, not published yet)
+
+**Feedback from my teacher:** the design has a bit of an AI-generated feel.
+
+**What changed:** my two signature style details (a title with an *italic* second half, and small labels in spaced capitals) were on almost every section, so they looked like a template. Now:
+- The italic half-title stays only on the two big moments: "The sky you were *born under*" (My Universe) and "A map of the sky *the moment you were born*" (My Chart). Every other title is plain.
+- Small labels that just repeated the page name were removed ("Connections", "Explore", "Profile", "Behind the scenes", "Welcome to your universe", "Try it", "No chart needed", "The sky right now", "A personal astrology atlas"). Labels that name a section of a form or list stay.
+- On How ORBIT works, the labels are now just the numbers 01–08.
+- A few intros are shorter (Explore, the library, "Your chart, explained").
+
+**Still to do (me):** rewrite the most visible lines in my own words, and add one hand-made element.
+
+**AI vs me:** Me: chose to keep my style details but use them less. Claude: found where the pattern repeated and made the edits.
