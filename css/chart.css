@@ -10,6 +10,10 @@
 .chart-stage { display: flex; flex-wrap: wrap; gap: 32px 64px; align-items: center; padding-block: 24px 56px; }
 .wheel-area, .list-area { flex: 1 1 600px; min-width: 0; position: relative; }
 .wheel-box { width: min(580px, calc(100vh - 280px), 100%); min-width: min(380px, 100%); margin: 0 auto; }
+/* With labels at the sides the picture is wider (the wheel stays a similar size). */
+.wheel-box.annotated { width: min(980px, calc((100vh - 280px) * 1.75), 100%); }
+.labels-toggle { font-size: 14px; }
+.wheel.touring > .annotations { opacity: 0; }
 
 /* The little explanation box that follows your mouse or finger */
 .tip {

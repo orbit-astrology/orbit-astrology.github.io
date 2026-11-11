@@ -15,8 +15,8 @@
 // the left instead.
 // ---------------------------------------------------------------
 
-import { SIGNS as SIGN_NAMES } from './astro/settings.js?v=202611111934';
-import { PLANETS } from './content/basics.js?v=202611111934';
+import { SIGNS as SIGN_NAMES } from './astro/settings.js?v=202611111937';
+import { PLANETS } from './content/basics.js?v=202611111937';
 
 const C = 300;           // centre of the 600 × 600 drawing
 const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -239,6 +239,12 @@ export function drawWheel(chart, options = {}) {
   }
 
   svg.append(drawPlanets(chart.bodies.filter(keep), screen, { dot: 122, symbol: 160, leader: 146, person: 'you' }));
+  if (options.annotations) {
+    svg.append(drawAnnotations(chart, screen));
+    // Make room for the labels on both sides (the wheel itself is 0–600).
+    svg.setAttribute('viewBox', ANNOTATED_VIEW);
+    svg.dataset.plainView = '0 0 600 600';
+  }
   if (partner) {
     svg.append(drawPlanets(partner.chart.bodies.filter(keep), screen, { dot: 80, symbol: 101, leader: 92, person: 'them', gap: 12 }));
   }
@@ -268,4 +274,59 @@ function drawPlanets(bodies, screen, at) {
     planets.append(g);
   }
   return planets;
+}
+
+// --- Annotations ----------------------------------------------------
+// Labels around the wheel for first-timers (My Chart): a thin line
+// from each label to the part of the wheel it names, like the labels
+// in an atlas. Labels sit outside the wheel, so the box is widened.
+
+export const ANNOTATED_VIEW = '-250 -10 1100 620';
+
+function drawAnnotations(chart, screen) {
+  const g = el('g', { class: 'annotations', 'aria-hidden': 'true' });
+  const notes = [];
+  // [what it points at, title, short explanation]
+  notes.push({ at: point(212, 40), title: 'The 12 signs', text: 'how you do things' });
+  const sun = chart.bodies.find((b) => b.id === 'sun');
+  notes.push({ at: point(122, screen(sun.longitude)), title: 'Your Sun ☉', text: 'who you are at heart' });
+  if (chart.houses) {
+    notes.push({ at: point(150, -40), title: 'The 12 houses', text: 'areas of your life' });
+    notes.push({ at: point(242, 180), title: 'Rising sign (ASC)', text: 'how you come across', side: 'left' });
+  }
+  const line = chart.aspects.find((a) => a.type !== 'conjunction');
+  if (line) {
+    const [x1, y1] = point(122, screen(chart.bodies.find((b) => b.id === line.from).longitude));
+    const [x2, y2] = point(122, screen(chart.bodies.find((b) => b.id === line.to).longitude));
+    notes.push({ at: [(x1 + x2) / 2, (y1 + y2) / 2], title: 'Lines', text: 'two planets that\naffect each other' });
+  }
+
+  // Each label goes on the side of the wheel nearest to what it points at,
+  // at the same height, nudged so labels never overlap.
+  for (const side of ['left', 'right']) {
+    const mine = notes
+      .filter((n) => (n.side || (n.at[0] < 300 ? 'left' : 'right')) === side)
+      .sort((a, b) => a.at[1] - b.at[1]);
+    let y = -Infinity;
+    for (const n of mine) {
+      n.y = Math.max(n.at[1], y + 64);
+      y = n.y;
+    }
+    const overflow = y - 585; // too low? move the whole column up
+    if (overflow > 0) for (const n of mine) n.y -= overflow;
+
+    for (const n of mine) {
+      // (On the left, past the "ASC" label at the wheel's edge.)
+      const edge = side === 'left' ? -40 : 614;   // where the line meets the label
+      const textX = side === 'left' ? -50 : 624;
+      const anchor = side === 'left' ? 'end' : 'start';
+      g.append(el('polyline', { class: 'note-line', points: `${n.at[0].toFixed(1)},${n.at[1].toFixed(1)} ${edge},${n.y.toFixed(1)}` }));
+      g.append(el('circle', { class: 'note-dot', cx: n.at[0].toFixed(1), cy: n.at[1].toFixed(1), r: 3 }));
+      const text = el('text', { class: 'note', x: textX, y: (n.y - 3).toFixed(1), 'text-anchor': anchor });
+      text.append(el('tspan', { class: 'note-title', x: textX }, n.title.toUpperCase()));
+      n.text.split('\n').forEach((part) => text.append(el('tspan', { class: 'note-text', x: textX, dy: '21' }, part)));
+      g.append(text);
+    }
+  }
+  return g;
 }

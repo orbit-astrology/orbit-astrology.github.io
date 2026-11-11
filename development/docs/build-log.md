@@ -717,3 +717,22 @@ The sign names around the wheel (ARIES, CAPRICORN…) were in thin Bodoni capita
 **Testing:** preview for normal days, a day when the Sun changes sign (23 September), an impossible date (29 February 2001, no preview), the fastest path without a time, a half-typed time (clear message), editing details with an unknown time on Profile; laptop and phone. No errors; 83/83 checks.
 
 **AI vs me:** Me: passed on my teacher's feedback and chose to act on it. Claude: designed the quicker form and the honest Sun/Moon preview and wrote the code.
+
+---
+
+## 11 November 2026 · Labels around the chart wheel (teacher feedback)
+
+**Feedback from my teacher:** the charts are a little difficult to understand at first glance; annotations, labels or short explanations would help.
+
+**What changed (My Chart):** the wheel now has labels around it, like the labels in an atlas. A thin champagne line runs from each label to the part of the wheel it names:
+- **THE 12 SIGNS**: how you do things
+- **YOUR SUN ☉**: who you are at heart (pointing at your own Sun)
+- **THE 12 HOUSES**: areas of your life
+- **RISING SIGN (ASC)**: how you come across
+- **LINES**: two planets that affect each other
+
+Each label sits on the side nearest to what it points at, and they're nudged so they never overlap. With no birth time, the houses and Rising sign labels aren't shown (those parts aren't on the wheel). A **Hide labels / Show labels** button sits next to Wheel view / List view, and the choice is remembered. On phones there isn't room at the sides, so the labels are left out and the "How to read the wheel" guide below the wheel does the job. The labels fade away during the step-by-step build. Code: `drawAnnotations()` in `js/wheel.js`.
+
+**Testing:** with and without a birth time, on 1366 px and 1920 px screens and a phone; hiding, showing, remembering after a reload; hovering planets still works. No errors; 83/83 checks.
+
+**AI vs me:** Me: passed on my teacher's feedback. Claude: designed the labels and wrote the code.

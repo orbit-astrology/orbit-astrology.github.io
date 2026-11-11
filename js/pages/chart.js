@@ -9,17 +9,17 @@
 //   4. write "Your chart, explained": one section per placement
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611111934';
-import { formatOffset } from '../astro/time.js?v=202611111934';
-import { drawWheel } from '../wheel.js?v=202611111934';
-import { placeTip } from '../tip-position.js?v=202611111934';
-import { setUpGlossary, termButton } from '../glossary.js?v=202611111934';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611111934';
-import { loadBirth } from '../store.js?v=202611111934';
-import { saveButton } from '../save-button.js?v=202611111934';
-import { runTour } from '../tour.js?v=202611111934';
-import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611111934';
-import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202611111934';
+import { calculateChart } from '../astro/chart.js?v=202611111937';
+import { formatOffset } from '../astro/time.js?v=202611111937';
+import { drawWheel, ANNOTATED_VIEW } from '../wheel.js?v=202611111937';
+import { placeTip } from '../tip-position.js?v=202611111937';
+import { setUpGlossary, termButton } from '../glossary.js?v=202611111937';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611111937';
+import { loadBirth } from '../store.js?v=202611111937';
+import { saveButton } from '../save-button.js?v=202611111937';
+import { runTour } from '../tour.js?v=202611111937';
+import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611111937';
+import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202611111937';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
@@ -56,8 +56,28 @@ const timeTerm = chart.timeKnown ? 'approximate-time' : 'unknown-time';
 // --- 2. The wheel ----------------------------------------------------
 
 const summary = all.map((p) => `${p.name} in ${signLabel(p)}`).join(', ');
-const svg = drawWheel(chart, { hoverAreas: true, label: `Your birth chart wheel: ${summary}.` });
+// Labels around the wheel (signs, your Sun, houses, lines, Rising sign)
+// help first-timers. They need room at the sides, so they're only
+// drawn when the wheel has space (not on phones), and can be hidden.
+const roomForLabels = $('wheel-area').clientWidth >= 720;
+const svg = drawWheel(chart, { hoverAreas: true, annotations: roomForLabels, label: `Your birth chart wheel: ${summary}.` });
 $('wheel-box').append(svg);
+
+function showLabels(on) {
+  svg.querySelector('.annotations').style.display = on ? '' : 'none';
+  svg.setAttribute('viewBox', on ? ANNOTATED_VIEW : svg.dataset.plainView);
+  $('wheel-box').classList.toggle('annotated', on);
+  $('toggle-labels').setAttribute('aria-pressed', String(on));
+  $('toggle-labels').textContent = on ? 'Hide labels' : 'Show labels';
+  try { localStorage.setItem('orbit.labels', on ? 'on' : 'off'); } catch { /* not saved */ }
+}
+if (roomForLabels) {
+  $('toggle-labels').hidden = false;
+  $('toggle-labels').addEventListener('click', () => showLabels($('toggle-labels').getAttribute('aria-pressed') !== 'true'));
+  let saved = 'on';
+  try { saved = localStorage.getItem('orbit.labels') || 'on'; } catch { /* first visit */ }
+  showLabels(saved === 'on');
+}
 
 const tip = $('tip');
 const area = $('wheel-area');
