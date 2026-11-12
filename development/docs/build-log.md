@@ -767,3 +767,4 @@ Each label sits on the side nearest to what it points at, and they're nudged so 
 Also: removed "You’ve met your Big Three. Here’s everything else:" from the start of the My Chart intro (my decision: too much).
 
 Also: in "Watch your chart build", removed the lines "Your Moon is in Aries…" (planets step) and "Your Moon is in the 6th house…" (houses step), because they explained only one planet and none of the others (my decision).
+Also removed the last step’s closing line ("Now hover over anything to learn more"), so every step is just the intro and its examples.

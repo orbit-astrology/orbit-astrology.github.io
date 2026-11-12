@@ -9,17 +9,17 @@
 //   4. write "Your chart, explained": one section per placement
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611121732';
-import { formatOffset } from '../astro/time.js?v=202611121732';
-import { drawWheel } from '../wheel.js?v=202611121732';
-import { placeTip } from '../tip-position.js?v=202611121732';
-import { setUpGlossary, termButton } from '../glossary.js?v=202611121732';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611121732';
-import { loadBirth } from '../store.js?v=202611121732';
-import { saveButton } from '../save-button.js?v=202611121732';
-import { runTour } from '../tour.js?v=202611121732';
-import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611121732';
-import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202611121732';
+import { calculateChart } from '../astro/chart.js?v=202611121733';
+import { formatOffset } from '../astro/time.js?v=202611121733';
+import { drawWheel } from '../wheel.js?v=202611121733';
+import { placeTip } from '../tip-position.js?v=202611121733';
+import { setUpGlossary, termButton } from '../glossary.js?v=202611121733';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611121733';
+import { loadBirth } from '../store.js?v=202611121733';
+import { saveButton } from '../save-button.js?v=202611121733';
+import { runTour } from '../tour.js?v=202611121733';
+import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611121733';
+import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202611121733';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
@@ -390,7 +390,7 @@ if (location.hash && $(location.hash.slice(1))) {
 // --- 5. Watch your chart build, step by step (js/tour.js) -----------
 
 function tourSteps() {
-  // Each step: { intro, points: [{ label, text }], outro } (shown by js/tour.js)
+  // Each step: { intro, points: [{ label, text }] } (shown by js/tour.js)
   const steps = [
     { layers: ['signs'], title: 'The 12 signs',
       intro: 'The outer ring is the zodiac: the 12 signs. Each sign is a style or mood, how a part of you behaves.',
@@ -421,8 +421,7 @@ function tourSteps() {
     points: [
       { label: 'Dashed', text: 'they help each other easily', line: 'dashed' },
       { label: 'Solid', text: 'they pull against each other, which helps you grow', line: 'solid' },
-    ],
-    outro: 'Now hover over anything to learn more.' });
+    ] });
   return steps;
 }
 
