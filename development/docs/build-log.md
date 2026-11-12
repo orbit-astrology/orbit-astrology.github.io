@@ -737,16 +737,27 @@ Each label sits on the side nearest to what it points at, and they're nudged so 
 
 **AI vs me:** Me: passed on my teacher's feedback. Claude: designed the labels and wrote the code.
 
-## 11 Nov 2026 · Less "AI-looking": fewer repeated patterns (draft, not published yet)
+## 12 Nov 2026 · Less "AI-looking", and one journey through the site (draft, not published yet)
 
-**Feedback from my teacher:** the design has a bit of an AI-generated feel.
+**Feedback:** my teacher said the design felt a bit AI-generated. I went through every page and wrote down what felt AI to me, and I realised what was really missing was a connection between the parts: the site should take you through stages, each one deepening how you understand yourself.
 
-**What changed:** my two signature style details (a title with an *italic* second half, and small labels in spaced capitals) were on almost every section, so they looked like a template. Now:
-- The italic half-title stays only on the two big moments: "The sky you were *born under*" (My Universe) and "A map of the sky *the moment you were born*" (My Chart). Every other title is plain.
-- Small labels that just repeated the page name were removed ("Connections", "Explore", "Profile", "Behind the scenes", "Welcome to your universe", "Try it", "No chart needed", "The sky right now", "A personal astrology atlas"). Labels that name a section of a form or list stay.
-- On How ORBIT works, the labels are now just the numbers 01–08.
-- A few intros are shorter (Explore, the library, "Your chart, explained").
+**The journey:** each page is one stage. It opens with a line linking it to the stage before, and ends with a "Next" link:
+1. First page: your Sun and Moon (a first glimpse)
+2. My Universe: your Big Three → "Next: see your whole chart"
+3. My Chart: all your planets → "Next: your life, area by area"
+4. Explore: love, feelings, work… built from the parts you've read → "Next: you and your people"
+5. Connections: your chart next to someone else's
 
-**Still to do (me):** rewrite the most visible lines in my own words, and add one hand-made element.
+"This week" and "Travel through time" stay on My Universe, as the part you come back to each week. The "Explore yourself" cards on My Universe were removed (they repeated Explore).
 
-**AI vs me:** Me: chose to keep my style details but use them less. Claude: found where the pattern repeated and made the edits.
+**What changed:**
+- **Fonts easier to read:** the small labels, buttons and menu were in spaced-out capitals. Now they're normal letters in Manrope. Big titles stay in Bodoni.
+- **No italics in titles** anywhere.
+- **No labels around the wheel** (and no Show/Hide labels button). The "How to read the wheel" guide next to it already does that job.
+- **"This week":** a plain title, no boxed tags. Each moment says "For you" or "For everyone" under the day.
+- **Readings open in place:** on My Chart each part shows one short paragraph; "Read more" opens the rest on the same page ("Show less" closes it). Clicking a planet on the wheel opens its reading. On My Universe, "Read more" under each of the Big Three opens the longer explanation right there instead of taking you to another page.
+- **Explore:** new title "Your life, area by area". The topic rows have no numbers, coloured dots or questions; instead each shows the parts of *your* chart it's built from ("Your Venus in Scorpio, Mars in Taurus…"). Plainer topic names: Who you are, Your feelings, Love, Work and direction, How you grow.
+- **The library is now "The pieces of your chart"**, and each heading talks about yours ("your planets are spread over 8 of the 12 signs").
+- **The playground is now "How two planets talk"** and starts with *your own* Sun and Moon at their real distance.
+
+**AI vs me:** Me: listed everything that felt AI, decided the journey idea, chose to keep Bodoni titles but make the small text normal, to remove the wheel labels, and to make the library and playground about the user. Claude: suggested the order of the stages and made the changes.

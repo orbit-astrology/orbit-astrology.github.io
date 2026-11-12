@@ -57,9 +57,3 @@
 .wheel .planets.them .planet:focus-visible .planet-hit,
 .wheel .planets.them .planet.active .planet-hit { stroke: var(--lilac); }
 
-/* Annotations around the wheel (My Chart): thin champagne lines and labels */
-.wheel .annotations { pointer-events: none; }
-.wheel .note-line { fill: none; stroke: var(--champagne); stroke-opacity: 0.7; stroke-width: 1; }
-.wheel .note-dot { fill: var(--champagne); }
-.wheel .note-title { fill: var(--champagne); font: 700 16px var(--sans); letter-spacing: 1.6px; }
-.wheel .note-text { fill: var(--bone); font: 400 17.5px var(--sans); }

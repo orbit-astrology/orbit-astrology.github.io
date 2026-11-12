@@ -20,6 +20,6 @@
 .password-show {
   position: absolute; right: 1px; top: 1px; bottom: 1px; padding: 0 14px;
   background: none; border: 0; cursor: pointer;
-  font: 650 11.5px/1 var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--champagne);
+  font: 650 14px/1 var(--sans); letter-spacing: 0.01em; color: var(--champagne);
 }
 .password-show:hover { color: var(--bone); }

@@ -49,7 +49,7 @@
 /* "Log in or sign up": an outlined button, so it's easy to spot */
 .login-link {
   background: none; cursor: pointer; padding: 10px 16px; border: 1px solid var(--champagne);
-  font: 650 12px/1 var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--bone); text-decoration: none;
+  font: 650 14.5px/1 var(--sans); letter-spacing: 0.01em; color: var(--bone); text-decoration: none;
 }
 .login-link:hover { background: var(--champagne); color: var(--ink); }
 .welcome-account[hidden] { display: none; }

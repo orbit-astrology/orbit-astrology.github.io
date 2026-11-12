@@ -10,7 +10,7 @@
 
 import { calculateChart } from '../astro/chart.js?v=202611111937';
 import { weeklyEvents } from '../astro/sky.js?v=202611111937';
-import { risingText, marginText } from '../readings.js?v=202611111937';
+import { risingText, marginText, placements, reading } from '../readings.js?v=202611111937';
 import { setUpTimeTravel } from '../time-travel.js?v=202611111937';
 import { cloudReady, currentUser } from '../cloud.js?v=202611111937';
 import { drawWheel } from '../wheel.js?v=202611111937';
@@ -60,7 +60,10 @@ $('hero-wheel').append(drawWheel(chart, { label: summary }));
 
 // --- Big Three --------------------------------------------------------
 
-function placement({ label, sign, text, note, link }) {
+// The longer explanation for "Read more" (the same words as on My Chart).
+const readingsById = Object.fromEntries(placements(chart).map((p) => [p.id, reading(chart, p).slice(1)]));
+
+function placement({ label, sign, text, note, id }) {
   const col = document.createElement('article');
   col.className = 'placement';
 
@@ -84,12 +87,28 @@ function placement({ label, sign, text, note, link }) {
     col.append(noteEl);
   }
 
-  if (link) {
-    const a = document.createElement('a');
-    a.className = 'text-link';
-    a.href = link;
-    a.textContent = 'Read more →';
-    col.append(a);
+  // "Read more" opens the longer explanation right here, on this page.
+  const extra = id && readingsById[id];
+  if (extra && extra.length) {
+    const more = document.createElement('div');
+    more.className = 'placement-more';
+    more.hidden = true;
+    for (const t of extra) {
+      const p = document.createElement('p');
+      p.textContent = t;
+      more.append(p);
+    }
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'link-button';
+    button.textContent = 'Read more';
+    button.setAttribute('aria-expanded', 'false');
+    button.addEventListener('click', () => {
+      more.hidden = !more.hidden;
+      button.textContent = more.hidden ? 'Read more' : 'Show less';
+      button.setAttribute('aria-expanded', String(!more.hidden));
+    });
+    col.append(more, button);
   }
   return col;
 }
@@ -100,7 +119,7 @@ const cards = [];
 
 cards.push(placement({
   label: 'Sun · who you are',
-  sign: sun.sign, text: SUN_IN[sun.sign], link: 'chart.html#sun',
+  sign: sun.sign, text: SUN_IN[sun.sign], id: 'sun',
 }));
 
 if (moon.uncertain) {
@@ -110,12 +129,12 @@ if (moon.uncertain) {
     sign: moon.possibleSigns.join(' or '),
     text: `The Moon changed sign on the day you were born, so it depends on your birth time. ${moon.possibleSigns[0]}: ${MOON_IN[moon.possibleSigns[0]]}`,
     note: [`${moon.possibleSigns[1]}: ${MOON_IN[moon.possibleSigns[1]]}`],
-    link: 'chart.html#moon',
+    id: 'moon',
   }));
 } else {
   cards.push(placement({
     label: 'Moon · how you feel',
-    sign: moon.sign, text: MOON_IN[moon.sign], link: 'chart.html#moon',
+    sign: moon.sign, text: MOON_IN[moon.sign], id: 'moon',
   }));
 }
 
@@ -127,13 +146,13 @@ if (chart.angles?.ascendant.uncertain) {
     sign: risingText(chart),
     text: `Your birth time is approximate, and the Rising sign changes about every two hours, so it could be ${risingText(chart)}. ${options[0]}: ${RISING_IN[options[0]]}`,
     note: options.slice(1).map((sign) => `${sign}: ${RISING_IN[sign]} `),
-    link: 'chart.html#rising',
+    id: 'rising',
   }));
 } else if (chart.angles) {
   const rising = chart.angles.ascendant.sign;
   cards.push(placement({
     label: 'Rising · how you come across',
-    sign: rising, text: RISING_IN[rising], link: 'chart.html#rising',
+    sign: rising, text: RISING_IN[rising], id: 'rising',
   }));
 } else {
   cards.push(placement({
@@ -211,7 +230,7 @@ for (const e of week.events) {
   const personal = e.type === 'transit';
   const tag = document.createElement('span');
   tag.className = `week-tag ${personal ? 'you' : 'all'}`;
-  tag.textContent = personal ? 'Your chart' : 'Everyone';
+  tag.textContent = personal ? 'For you' : 'For everyone';
   day.append(tag);
   const p = document.createElement('p');
   p.className = 'week-text';

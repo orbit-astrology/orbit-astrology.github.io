@@ -24,9 +24,12 @@ function el(tag, attrs = {}, text) {
 }
 const point = (r, deg) => [C + r * Math.cos((deg * Math.PI) / 180), C - r * Math.sin((deg * Math.PI) / 180)];
 
-export function setUpPlayground(box, readout) {
+// "yours" (optional): how far your own Moon was from your own Sun, in
+// degrees. Then the Moon starts exactly where yours was.
+export function setUpPlayground(box, readout, yours = null) {
   const FIXED = 90;     // the Sun, at the top of the circle
-  let angle = 15;       // where the Moon starts (degrees, counted like in maths class)
+  const start = yours === null ? 15 : FIXED + yours;
+  let angle = start;    // where the Moon starts (degrees, counted like in maths class)
 
   const svg = el('svg', { viewBox: '0 0 400 400', role: 'group', 'aria-label': 'Aspect playground' });
   svg.append(el('circle', { cx: C, cy: C, r: R, class: 'ring' }));
@@ -80,6 +83,13 @@ export function setUpPlayground(box, readout) {
       : 'link off');
 
     readout.replaceChildren();
+    // Still where you started: say it's your own Sun and Moon.
+    if (yours !== null && angle === start) {
+      const mine = document.createElement('p');
+      mine.className = 'yours-note';
+      mine.textContent = 'This is your own Sun and Moon, as they were when you were born.';
+      readout.append(mine);
+    }
     const big = document.createElement('p');
     big.className = 'angle';
     big.textContent = `${sep}°`;

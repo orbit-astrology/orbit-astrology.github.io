@@ -19,28 +19,27 @@
 .placement { flex: 1 1 240px; padding-top: 28px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
 .placement:nth-child(2) { padding-top: 52px; }
 .placement:nth-child(3) { padding-top: 76px; }
-.placement .eyebrow { letter-spacing: 0.26em; font-size: 12.5px; }
+.placement .eyebrow { font-size: 15px; }
 .placement-sign { font: 500 clamp(2.2rem, 3.2vw, 2.9rem)/1 var(--serif); margin: 0; }
 .placement-sign.unknown { font-size: clamp(1.8rem, 2.6vw, 2.3rem); color: var(--bone-soft); }
 .placement p { margin: 0; max-width: 32ch; }
 .placement .note { font-size: 14px; color: var(--bone-soft); }
+/* The longer explanation that "Read more" opens */
+.placement-more { display: flex; flex-direction: column; gap: 10px; }
+.placement-more p { color: var(--bone-soft); font-size: 15px; max-width: 40ch; }
 
 /* Your sky this week */
 .week { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: rgba(0, 0, 0, 0.08); }
 .week-inner { display: flex; flex-wrap: wrap; gap: 32px 80px; padding-block: 56px; }
 .week-heading { flex: 1 1 300px; display: flex; flex-direction: column; gap: 12px; }
 .week-heading p { margin: 0; }
-.week-eyebrow { color: var(--lilac); }
 .week-note { font-size: 15px; max-width: 34ch; }
 .week-list { flex: 2 1 520px; min-width: 0; list-style: none; margin: 0; padding: 0; }
 .week-list li { display: flex; flex-wrap: wrap; gap: 6px 32px; padding: 16px 0; border-top: 1px solid var(--line); }
 .week-list li:first-child { border-top-color: var(--lilac); }
 .week-day { width: 120px; color: var(--lilac); margin: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
-/* Small labels: "Your chart" (personal) or "Everyone" (the same sky for all). */
-.week-tag {
-  display: inline-block; padding: 3px 7px; border: 1px solid currentColor;
-  font: 700 10.5px/1.2 var(--sans); letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap;
-}
+/* Under the day: "For you" (it touches your chart) or "For everyone". */
+.week-tag { font: 600 14px/1.2 var(--sans); white-space: nowrap; }
 .week-tag.you { color: var(--champagne); }
 .week-tag.all { color: var(--bone-soft); }
 .week-text { flex: 1 1 300px; margin: 0; }
@@ -48,27 +47,6 @@
 .week-text > span { color: var(--bone-soft); } /* ">": only the text lines, not the word pop-ups inside them */
 .week-text > span[hidden] { display: none; }
 .week-more { font-size: 14px; }
-
-/* Explore yourself */
-.explore-yourself { padding-block: 56px 16px; }
-.explore-yourself .section-title { margin-bottom: 28px; }
-.explore-grid { display: flex; flex-wrap: wrap; gap: 32px 48px; }
-/* Each topic is one big link. The "Explore →" line and the hover
-   effect make it obvious that you can click it. */
-.explore-card {
-  flex: 1 1 260px; display: flex; flex-direction: column; gap: 6px;
-  padding: 20px 0 8px; border-top: 1px solid var(--champagne); text-decoration: none;
-  transition: border-color 0.2s;
-}
-.explore-name { font: 500 24px/1.15 var(--serif); }
-.explore-go {
-  margin-top: 10px; font-size: 14px; font-weight: 650; letter-spacing: 0.08em;
-  color: var(--champagne); text-decoration: underline; text-underline-offset: 5px;
-}
-.explore-go span { display: inline-block; transition: transform 0.2s; }
-.explore-card:hover { border-color: var(--bone); color: var(--bone); }
-.explore-card:hover .explore-name { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
-.explore-card:hover .explore-go span, .explore-card:focus-visible .explore-go span { transform: translateX(4px); }
 
 .week-day { font-weight: 600; }
 
@@ -105,7 +83,7 @@
 #travel-more { align-self: flex-start; margin-top: 6px; }
 .travel-controls { display: flex; flex-direction: column; gap: 10px; border-top: 1px solid var(--lilac); padding-top: 16px; }
 .travel-date { margin: 0; font: 500 clamp(1.3rem, 2vw, 1.7rem)/1.2 var(--serif); display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
-.travel-date span { font: 650 11.5px/1 var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--lilac); }
+.travel-date span { font: 650 14px/1 var(--sans); letter-spacing: 0.01em; color: var(--lilac); }
 .travel-buttons { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 22px; }
 
 /* The slider: a thin line with a small square handle (no round shapes) */
@@ -115,7 +93,7 @@
 .travel-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; margin-top: -7px; background: var(--lilac); border: 0; border-radius: 0; transform: rotate(45deg); }
 .travel-slider::-moz-range-thumb { width: 12px; height: 12px; background: var(--lilac); border: 0; border-radius: 0; transform: rotate(45deg); }
 
-.travel-list-title { font: 650 12.5px/1.4 var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--bone-soft); margin: 8px 0 0; }
+.travel-list-title { font: 650 15px/1.4 var(--sans); letter-spacing: 0.01em; color: var(--bone-soft); margin: 8px 0 0; }
 .travel-list { list-style: none; margin: 0; padding: 0; min-height: 120px; }
 .travel-list li { padding: 10px 0; border-top: 1px solid var(--line); font-size: 15px; color: var(--bone-soft); max-width: 62ch; }
 .travel-list strong { display: block; color: var(--bone); font-weight: 650; }

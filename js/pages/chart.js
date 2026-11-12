@@ -11,7 +11,7 @@
 
 import { calculateChart } from '../astro/chart.js?v=202611111937';
 import { formatOffset } from '../astro/time.js?v=202611111937';
-import { drawWheel, ANNOTATED_VIEW } from '../wheel.js?v=202611111937';
+import { drawWheel } from '../wheel.js?v=202611111937';
 import { placeTip } from '../tip-position.js?v=202611111937';
 import { setUpGlossary, termButton } from '../glossary.js?v=202611111937';
 import { setUpMenu, showSampleBanner } from '../layout.js?v=202611111937';
@@ -56,28 +56,8 @@ const timeTerm = chart.timeKnown ? 'approximate-time' : 'unknown-time';
 // --- 2. The wheel ----------------------------------------------------
 
 const summary = all.map((p) => `${p.name} in ${signLabel(p)}`).join(', ');
-// Labels around the wheel (signs, your Sun, houses, lines, Rising sign)
-// help first-timers. They need room at the sides, so they're only
-// drawn when the wheel has space (not on phones), and can be hidden.
-const roomForLabels = $('wheel-area').clientWidth >= 720;
-const svg = drawWheel(chart, { hoverAreas: true, annotations: roomForLabels, label: `Your birth chart wheel: ${summary}.` });
+const svg = drawWheel(chart, { hoverAreas: true, label: `Your birth chart wheel: ${summary}.` });
 $('wheel-box').append(svg);
-
-function showLabels(on) {
-  svg.querySelector('.annotations').style.display = on ? '' : 'none';
-  svg.setAttribute('viewBox', on ? ANNOTATED_VIEW : svg.dataset.plainView);
-  $('wheel-box').classList.toggle('annotated', on);
-  $('toggle-labels').setAttribute('aria-pressed', String(on));
-  $('toggle-labels').textContent = on ? 'Hide labels' : 'Show labels';
-  try { localStorage.setItem('orbit.labels', on ? 'on' : 'off'); } catch { /* not saved */ }
-}
-if (roomForLabels) {
-  $('toggle-labels').hidden = false;
-  $('toggle-labels').addEventListener('click', () => showLabels($('toggle-labels').getAttribute('aria-pressed') !== 'true'));
-  let saved = 'on';
-  try { saved = localStorage.getItem('orbit.labels') || 'on'; } catch { /* first visit */ }
-  showLabels(saved === 'on');
-}
 
 const tip = $('tip');
 const area = $('wheel-area');
@@ -171,9 +151,20 @@ function unfocus() {
 }
 
 // Jump down to a placement's explanation and briefly highlight it.
+// Opens (or closes) the rest of a reading: the "Read more" part.
+function openReading(section, open) {
+  const more = section.querySelector('.reading-more');
+  const toggle = section.querySelector('.read-more');
+  if (!more || !toggle) return;
+  more.hidden = !open;
+  toggle.textContent = open ? 'Show less' : 'Read more';
+  toggle.setAttribute('aria-expanded', String(open));
+}
+
 function goToReading(id) {
   const section = $(id);
   if (!section) return;
+  openReading(section, true); // coming from the wheel: show the whole reading
   section.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
   section.classList.add('flash');
   setTimeout(() => section.classList.remove('flash'), 1600);
@@ -341,7 +332,14 @@ for (const p of all) {
     }
     body.append(g);
   }
-  for (const text of reading(chart, p)) body.append(make('p', '', text));
+  // Only the first paragraph shows at first. "Read more" opens the rest
+  // right here on the page, so the list of planets stays short.
+  const texts = reading(chart, p);
+  body.append(make('p', '', texts[0]));
+  const more = make('div', 'reading-more');
+  more.id = `${p.id}-more`;
+  more.hidden = true;
+  for (const text of texts.slice(1)) more.append(make('p', '', text));
 
   if (p.kind === 'planet') {
     const links = connections(chart, p.id);
@@ -355,7 +353,7 @@ for (const p of all) {
         if (c.uncertain) item.append(' ', make('span', 'maybe', '(might not apply: depends on your birth time)'));
         ul.append(item);
       }
-      body.append(title, ul);
+      more.append(title, ul);
     }
   }
 
@@ -364,11 +362,19 @@ for (const p of all) {
   const ol = make('ol');
   for (const step of howWeKnow(p)) ol.append(make('li', '', step));
   details.append(ol);
-  body.append(details);
+  more.append(details);
 
   const back = make('a', 'back-to-wheel', '↑ Back to the wheel');
   back.href = '#main';
-  body.append(back);
+  more.append(back);
+
+  const toggle = make('button', 'link-button read-more', 'Read more');
+  toggle.type = 'button';
+  toggle.setAttribute('aria-expanded', 'false');
+  toggle.setAttribute('aria-controls', more.id);
+  toggle.addEventListener('click', () => openReading(section, more.hidden));
+  // The button sits after the hidden part, so it's always at the end.
+  body.append(more, toggle);
 
   section.append(head, body);
   readings.append(section);

@@ -35,15 +35,14 @@
     <section class="chart-intro wrap" aria-labelledby="chart-title">
       <div class="chart-intro-text">
         <p class="eyebrow">Your <button type="button" class="term" data-term="birth-chart">birth chart</button></p>
-        <h1 id="chart-title" class="title">A map of the sky <em>the moment you were born</em></h1>
-        <p class="lede">Hover over (or tap) anything on the wheel to see what it is. Click a planet to jump to its full explanation below.</p>
+        <h1 id="chart-title" class="title">A map of the sky the moment you were born</h1>
+        <p class="lede">You’ve met your Big Three. Here’s everything else: all your planets, on one map. Hover over (or tap) anything on the wheel to see what it is, or click a planet to read about it.</p>
         <button type="button" class="button button-outline replay-tour" id="replay-tour">▸ Watch your chart build, step by step</button>
       </div>
       <div class="view-switch" role="group" aria-label="How to show your chart">
         <button type="button" id="show-wheel" aria-pressed="true">Wheel view</button>
         <button type="button" id="show-list" aria-pressed="false">List view</button>
       </div>
-      <button type="button" class="link-button labels-toggle" id="toggle-labels" aria-pressed="true" hidden>Hide labels</button>
     </section>
 
     <section class="chart-stage wrap" aria-label="Your chart">
@@ -93,10 +92,17 @@
     <section class="explained" aria-labelledby="explained-title">
       <div class="wrap">
         <h2 id="explained-title" class="section-title">Your chart, explained</h2>
-        <p class="lede">One section for each part, written for your placements.</p>
+        <p class="lede">One short line for each part of you. Click “Read more” for the full explanation.</p>
         <nav class="jump-links" aria-label="Jump to a placement"><ul id="jump-links"></ul></nav>
         <div id="readings"></div>
       </div>
+    </section>
+
+    <!-- The next step of the journey -->
+    <section class="next-step wrap" aria-label="Next step">
+      <p class="next-label">Next</p>
+      <a class="next-link" href="explore.html">Your life, area by area <span aria-hidden="true">→</span></a>
+      <p class="quiet">Love, feelings, work: each one brings together the parts of your chart you’ve just read.</p>
     </section>
   </main>
 

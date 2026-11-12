@@ -69,7 +69,8 @@ a:hover { color: var(--champagne); }
 
 /* Bodoni has very thin strokes; weight 500 keeps the elegance but makes titles easier to read. */
 h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.05; margin: 0; }
-h1 em, h2 em, h3 em { font-style: italic; }
+/* No italics in titles: an <em> in a title looks like the rest. */
+h1 em, h2 em, h3 em { font-style: normal; }
 
 /* Bodoni Moda changes its shape with its size ("optical size"): the
    bigger the text, the thinner its fine lines. For big titles we ask
@@ -87,14 +88,14 @@ html :is(h1, h2, h3, .title, .section-title, .welcome-title, .welcome-tagline,
 /* The small spaced-out labels keep their own automatic setting. */
 html .eyebrow { font-variation-settings: normal; }
 
-/* Small spaced capitals, like "S U N · W H O  Y O U  A R E" */
+/* Small labels above a title, like "Sun · who you are".
+   Normal letters in Manrope, so they're easy to read. */
 .eyebrow {
   margin: 0;
-  font-family: var(--serif);
-  font-weight: 700; /* small text needs extra weight to stay readable */
-  font-size: 13px;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.01em;
   color: var(--champagne);
 }
 
@@ -121,7 +122,7 @@ html .eyebrow { font-variation-settings: normal; }
 .site-nav ul {
   display: flex; flex-wrap: wrap; gap: 10px 34px;
   margin: 0; padding: 0; list-style: none;
-  font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  font-size: 15px; font-weight: 600; letter-spacing: 0.01em;
 }
 .site-nav a { text-decoration: none; padding-block: 6px; display: inline-block; }
 /* The page you're on is underlined in champagne. */
@@ -135,7 +136,7 @@ html .eyebrow { font-variation-settings: normal; }
 @media (max-width: 760px) {
   .site-header .wrap { gap: 10px; padding-block: 16px 10px; }
   .site-nav { flex-basis: 100%; }
-  .site-nav ul { gap: 2px 20px; font-size: 11.5px; letter-spacing: 0.12em; }
+  .site-nav ul { gap: 2px 8px; font-size: 12.5px; justify-content: space-between; }
   .site-nav a { padding: 8px 0; }
 }
 
@@ -151,7 +152,7 @@ html .eyebrow { font-variation-settings: normal; }
 .button {
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
   min-height: 44px; padding: 12px 22px;
-  font: 600 12px/1.2 var(--sans); letter-spacing: 0.16em; text-transform: uppercase;
+  font: 600 14.5px/1.2 var(--sans); letter-spacing: 0.01em;
   text-decoration: none; cursor: pointer;
   border: 1px solid var(--champagne); border-radius: 0;
   background: var(--champagne); color: var(--ink);
@@ -229,7 +230,7 @@ select {
 /* --- 8. "Save to my profile" button ------------------------------- */
 .save-button {
   align-self: flex-start;
-  font: 600 11.5px/1.2 var(--sans); letter-spacing: 0.14em; text-transform: uppercase;
+  font: 600 14px/1.2 var(--sans); letter-spacing: 0.01em;
   color: var(--bone); background: transparent; cursor: pointer;
   border: 1px solid var(--line); border-radius: 0; padding: 9px 14px; min-height: 36px;
 }
@@ -258,8 +259,20 @@ select {
    (Wheel / List, Friendship / Romance, Log in / Create account). */
 .view-switch { display: inline-flex; border: 1px solid var(--champagne); }
 .view-switch button {
-  font: 600 12px/1 var(--sans); letter-spacing: 0.14em; text-transform: uppercase;
+  font: 600 14.5px/1 var(--sans); letter-spacing: 0.01em;
   padding: 13px 20px; min-height: 44px; border: 0; border-radius: 0; cursor: pointer;
   background: transparent; color: var(--bone);
 }
 .view-switch button[aria-pressed="true"] { background: var(--champagne); color: var(--ink); }
+
+/* --- "Next" step at the end of a page ------------------------------
+   ORBIT is a path: Big Three → whole chart → your life, area by area →
+   you and your people. Each page ends by pointing to the next one. */
+.next-step { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding-block: 40px 56px; }
+.next-step::before { content: ''; width: 100%; border-top: 1px solid var(--champagne); margin-bottom: 20px; }
+.next-label { margin: 0; font: 600 15px var(--sans); color: var(--champagne); }
+.next-link { font: 500 clamp(1.6rem, 2.6vw, 2.3rem)/1.15 var(--serif); font-variation-settings: "opsz" 18; text-decoration: none; color: var(--bone); }
+.next-link span { display: inline-block; transition: transform 0.2s; }
+.next-link:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 8px; }
+.next-link:hover span { transform: translateX(4px); }
+.next-step .quiet { margin: 0; max-width: 52ch; }

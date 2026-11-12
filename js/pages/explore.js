@@ -37,18 +37,32 @@ const byId = Object.fromEntries(all.map((p) => [p.id, p]));
 
 // --- Topic list ---------------------------------------------------------
 
+// Each topic is one row: its name, and the parts of YOUR chart it's
+// built from (e.g. "Your Venus in Leo, Mars in Cancer and 7th house"),
+// so you can see it comes from what you've already read.
+function partsOf(t) {
+  const parts = [];
+  for (const item of t.items) {
+    if (item.type === 'placement') {
+      const p = byId[item.id];
+      if (!chart) parts.push(item.id === 'rising' ? 'Rising sign' : item.id[0].toUpperCase() + item.id.slice(1));
+      else if (p) parts.push(`${p.short} in ${p.uncertain ? orList(p.possibleSigns) : p.sign}`);
+    } else if (item.type === 'house' && (!chart || chart.houses)) {
+      parts.push(`${ordinal(item.number)} house`);
+    }
+  }
+  if (parts.length === 0) return '';
+  const list = parts.length === 1 ? parts[0] : `${parts.slice(0, -1).join(', ')} and ${parts.at(-1)}`;
+  return chart ? `Your ${list}` : list;
+}
+
 for (const t of TOPICS) {
   const li = make('li');
   const a = make('a', 'topic-link');
   a.href = `#${t.id}`;
-  const dot = make('span', 'topic-dot');
-  dot.style.background = t.dot;
-  dot.setAttribute('aria-hidden', 'true');
-  const go = make('span', 'topic-go');
-  const arrow = make('span', '', '→');
-  arrow.setAttribute('aria-hidden', 'true');
-  go.append('Explore ', arrow);
-  a.append(make('span', 'topic-num', t.number), dot, make('span', 'topic-name', t.name), make('span', 'topic-ask', t.question), go);
+  const go = make('span', 'topic-go', '→');
+  go.setAttribute('aria-hidden', 'true');
+  a.append(make('span', 'topic-name', t.name), make('span', 'topic-parts', partsOf(t)), go);
   li.append(a);
   $('topic-list').append(li);
 }
@@ -99,16 +113,26 @@ const aspectItems = Object.values(ASPECT_TEXT).map((a) => ({
   text: `Two planets ${a.plain}: ${a.meaning}.`,
 }));
 
+// With a chart, each heading says something about YOURS.
+const count = (items) => items.filter((i) => i.yours).length;
+const sub = (general, mine) => (chart ? mine : general);
 $('library-sections').append(
-  librarySection('The planets', 'The what: 10 parts of you', planetItems),
-  librarySection('The signs', 'The how: 12 styles', signItems),
-  librarySection('The houses', 'The where: 12 areas of life', houseItems),
-  librarySection('The aspects', 'How planets talk to each other', aspectItems),
+  librarySection('The planets', sub('The what: 10 parts of you', 'The what: 10 parts of you, and the sign each of yours is in'), planetItems),
+  librarySection('The signs', sub('The how: 12 styles', `The how: your planets are spread over ${count(signItems)} of the 12`), signItems),
+  librarySection('The houses', sub('The where: 12 areas of life', chart?.houses ? `The where: your planets are in ${count(houseItems)} of the 12 areas of life` : 'The where: 12 areas of life (yours need a birth time)'), houseItems),
+  librarySection('The aspects', sub('How planets talk to each other', `How planets talk: your chart has ${chart ? chart.aspects.length : 0} of these lines`), aspectItems),
 );
+if (!chart) $('library-lede').textContent = 'Every planet, sign, house and angle, explained simply.';
 
 // --- Playground -------------------------------------------------------------
 
-setUpPlayground($('playground-wheel'), $('playground-readout'));
+// The Moon starts where YOUR Moon was, measured from your Sun (when we
+// know your Moon's position well enough). Otherwise any spot will do.
+const sunP = byId.sun;
+const moonP = byId.moon;
+const yours = sunP && moonP && !moonP.uncertain ? moonP.longitude - sunP.longitude : null;
+if (yours === null) $('pg-whose').textContent = 'just two planets: the Sun and the Moon';
+setUpPlayground($('playground-wheel'), $('playground-readout'), yours);
 
 // --- One topic --------------------------------------------------------------
 
@@ -208,9 +232,7 @@ function showTopic(t) {
   $('topic').hidden = false;
   document.title = `${t.name} · Explore · ORBIT`;
   document.body.style.setProperty('--topic', t.dot);
-  $('topic-number').textContent = `${t.number} · Explore`;
   $('topic-title').textContent = t.name;
-  $('topic-question').textContent = t.question;
   $('topic-intro').textContent = t.intro;
   // Save this topic to your Profile (only with your own chart).
   $('topic-save').replaceChildren(chart && !birth.isSample ? saveButton({ kind: 'topic', id: t.id, title: t.name }) : '');

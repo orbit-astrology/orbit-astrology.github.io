@@ -35,28 +35,28 @@
     <!-- The Explore home: topics, library and playground -->
     <div id="hub">
       <section class="explore-intro wrap" aria-labelledby="explore-title">
-        <h1 id="explore-title" class="title">Your chart, one question at a time</h1>
-        <p class="lede">Pick something you’re curious about. Each topic gathers the parts of your chart that answer it.</p>
+        <h1 id="explore-title" class="title">Your life, area by area</h1>
+        <p class="lede">You’ve read each part of your chart on its own. Here they come together, one area of your life at a time.</p>
       </section>
 
       <section class="topics wrap" aria-label="Topics">
         <ol class="topic-list" id="topic-list"></ol>
-        <p class="no-chart-note quiet" id="no-chart-note" hidden>Topics use your birth chart. <a href="index.html#create">Create yours</a> or <a href="#" id="try-sample">try the sample chart</a>. The library and playground below work without one.</p>
+        <p class="no-chart-note quiet" id="no-chart-note" hidden>Topics use your birth chart. <a href="index.html#create">Create yours</a> or <a href="#" id="try-sample">try the sample chart</a>. The pieces and the Sun and Moon circle below work without one.</p>
       </section>
 
       <section class="library" id="library" aria-labelledby="library-title">
         <div class="wrap">
-          <h2 id="library-title" class="section-title">The astrology library</h2>
-          <p class="lede">The basics, for anyone just starting. No chart needed.</p>
+          <h2 id="library-title" class="section-title">The pieces of your chart</h2>
+          <p class="lede" id="library-lede">Every planet, sign, house and angle, with where yours are.</p>
           <div class="library-sections" id="library-sections"></div>
         </div>
       </section>
 
       <section class="playground wrap" id="playground" aria-labelledby="playground-title">
         <div class="playground-text">
-          <h2 id="playground-title" class="section-title">The aspect playground</h2>
+          <h2 id="playground-title" class="section-title">How two planets talk</h2>
           <p class="lede">In a chart, planets that sit at certain distances from each other are said to “talk” to each other. That distance, measured as an angle around the circle, is called an
-            <button type="button" class="term" data-term="aspect">aspect</button>. Here you can see how it works with just two planets.</p>
+            <button type="button" class="term" data-term="aspect">aspect</button>. Here you can see how it works with <span id="pg-whose">just two of yours: your Sun and your Moon</span>.</p>
           <ol class="playground-steps">
             <li>The circle is the sky all around the Earth, like the wheel of your chart. The <strong>Sun</strong> (the filled circle at the top) stays still.</li>
             <li><strong>Drag the Moon</strong> (the hollow circle) around the circle, or select it and use the arrow keys.</li>
@@ -68,15 +68,20 @@
         </div>
         <div class="playground-wheel pg" id="playground-wheel"></div>
       </section>
+
+      <!-- The next step of the journey -->
+      <section class="next-step wrap" aria-label="Next step">
+        <p class="next-label">Next</p>
+        <a class="next-link" href="connections.html">You and your people <span aria-hidden="true">→</span></a>
+        <p class="quiet">Now that you know your own chart, see how it meets a friend’s, a partner’s or your family’s.</p>
+      </section>
     </div>
 
     <!-- One topic, shown when the address ends in #love, #career… -->
     <div id="topic" hidden>
       <section class="topic-head wrap" aria-labelledby="topic-title">
         <a class="text-link back" href="explore.html">← All topics</a>
-        <p class="eyebrow" id="topic-number"></p>
         <h1 id="topic-title" class="title"></h1>
-        <p class="topic-big-question" id="topic-question"></p>
         <p class="lede" id="topic-intro"></p>
         <div id="topic-save"></div>
         <p class="time-note quiet" id="topic-time-note" hidden></p>

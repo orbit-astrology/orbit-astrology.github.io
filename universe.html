@@ -36,9 +36,9 @@
     <!-- Filled in by js/pages/universe.js from your real chart -->
     <section class="hero wrap" aria-labelledby="hero-title">
       <div class="hero-text">
-        <h1 id="hero-title" class="title">The sky you were <em>born under</em></h1>
+        <h1 id="hero-title" class="title">The sky you were born under</h1>
         <p class="lede" id="born-line"></p>
-        <a class="button" href="chart.html">Explore your chart</a>
+        <a class="button" href="#big-three-title">Start with your Big Three ↓</a>
       </div>
       <div class="hero-wheel" id="hero-wheel"></div>
     </section>
@@ -48,14 +48,20 @@
       <div class="big-three-grid" id="big-three"></div>
     </section>
 
+    <!-- The next step of the journey -->
+    <section class="next-step wrap" aria-label="Next step">
+      <p class="next-label">Next</p>
+      <a class="next-link" href="chart.html">See your whole chart <span aria-hidden="true">→</span></a>
+      <p class="quiet">Your Big Three are 3 parts of you. Your chart has 12, all on one map.</p>
+    </section>
+
     <section class="week" aria-labelledby="week-title">
       <div class="wrap week-inner">
         <div class="week-heading">
-          <h2 id="week-title" class="section-title">Your sky this week</h2>
+          <h2 id="week-title" class="section-title">This week</h2>
           <p class="quiet" id="week-dates"></p>
-          <p class="quiet week-note"><span class="week-tag you">Your chart</span> means it touches your own planets
-            (<button type="button" class="term" data-term="transit">a transit</button>);
-            <span class="week-tag all">Everyone</span> means it’s in the sky for all of us.</p>
+          <p class="quiet week-note">Come back each week: what the planets are doing, and when they touch your own chart
+            (<button type="button" class="term" data-term="transit">a transit</button>).</p>
         </div>
         <ol class="week-list" id="week-list"></ol>
       </div>
@@ -86,30 +92,6 @@
         <h3 class="travel-list-title">What’s touching your chart that day</h3>
         <ul class="travel-list" id="travel-list"></ul>
         <button type="button" class="link-button" id="travel-more" hidden></button>
-      </div>
-    </section>
-
-    <section class="explore-yourself wrap" aria-labelledby="explore-title">
-      <h2 id="explore-title" class="section-title">Explore yourself</h2>
-      <div class="explore-grid">
-        <a class="explore-card" href="explore.html#emotions">
-          <span class="eyebrow">01</span>
-          <span class="explore-name">Your inner world</span>
-          <span class="quiet">Your Moon and your emotions</span>
-          <span class="explore-go">Explore <span aria-hidden="true">→</span></span>
-        </a>
-        <a class="explore-card" href="explore.html#love">
-          <span class="eyebrow">02</span>
-          <span class="explore-name">Love &amp; relationships</span>
-          <span class="quiet">Your Venus, Mars and how you love</span>
-          <span class="explore-go">Explore <span aria-hidden="true">→</span></span>
-        </a>
-        <a class="explore-card" href="explore.html#career">
-          <span class="eyebrow">03</span>
-          <span class="explore-name">Your direction</span>
-          <span class="quiet">Your career and where you’re heading</span>
-          <span class="explore-go">Explore <span aria-hidden="true">→</span></span>
-        </a>
       </div>
     </section>
 
