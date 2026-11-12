@@ -5,7 +5,7 @@
 // Taurus, and so on, 30° per sign.
 // ---------------------------------------------------------------
 
-import { SIGNS } from './settings.js?v=202611121733';
+import { SIGNS } from './settings.js?v=202611121735';
 
 // Keep any angle inside 0 ≤ x < 360.
 export function normalize(degrees) {

@@ -768,3 +768,5 @@ Also: removed "You’ve met your Big Three. Here’s everything else:" from the 
 
 Also: in "Watch your chart build", removed the lines "Your Moon is in Aries…" (planets step) and "Your Moon is in the 6th house…" (houses step), because they explained only one planet and none of the others (my decision).
 Also removed the last step’s closing line ("Now hover over anything to learn more"), so every step is just the intro and its examples.
+
+Also: removed the hover explanations from the words in "How to read the wheel" (signs, planets, houses, aspects, ASC and MC), because the text right below each one already explains it (my decision: the pop-ups got in the way there).
