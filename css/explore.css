@@ -69,7 +69,12 @@
 /* --- One topic --- */
 .topic-head { padding-top: 28px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
 .topic-head .back { margin-bottom: 10px; }
+/* "Putting it together": the whole topic in one sentence */
+.topic-together { margin: 4px 0 0; max-width: 60ch; font: 500 clamp(1.15rem, 1.6vw, 1.35rem)/1.5 var(--serif); font-variation-settings: "opsz" 18; color: var(--bone); }
+.topic-together:empty { display: none; }
 #topic-save { margin-top: 10px; }
+.topic-item-body .side { margin: 0 0 6px; color: var(--bone-soft); }
+.topic-item-body .side strong { color: var(--champagne); font-weight: 600; }
 .time-note { margin: 0; max-width: 60ch; }
 
 .topic-item { display: flex; flex-wrap: wrap; gap: 16px 64px; padding-block: 32px; border-bottom: 1px solid var(--line); }

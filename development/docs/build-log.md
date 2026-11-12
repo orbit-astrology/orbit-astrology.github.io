@@ -790,3 +790,16 @@ Also: topic pages (Explore) now only show what’s new for that topic. Removed t
 **AI vs me:** Me: asked for everything unnecessary or overwhelming to go. Claude: did the audit and made the changes; I review them on the live site.
 
 **Change of mind (me):** I brought back the wheel at the top of My Universe and the "Start with your Big Three ↓" button. The title says "The sky you were born under", so the sky has to be there. The Big Three stay in a straight line.
+
+## 12 Nov 2026 · Explore topics with real, new content
+
+**Problem I found:** after removing the repeated parts, each topic had only one generic sentence per planet, so it didn't tell you anything new ("for what?").
+
+**What changed:**
+- **New texts written only for the topics** (`js/content/topic-texts.js`): for each sign, what your Mercury means for how you think, your Moon for what makes you feel safe, your Venus and Mars for love, your Midheaven and Saturn for work, your Jupiter for growth. Your Sun also gets a **Strength** and a **Watch out for** line.
+- **"Putting it together"** at the top of each topic: a few short sentences that connect the parts, e.g. "You love carefully and helpfully. When you want someone, you go for it gracefully, looking for balance. You're looking for someone calm, loyal and comfort-loving." Parts that need a birth time are left out if you don't have one.
+- Your Rising sign in "Who you are" now compares with your Sun ("But people first meet someone…").
+- The house parts no longer repeat the same words twice, and "No planets here…" was removed.
+- **The library** lost "The planets" and "The aspects", because My Chart and "How two planets talk" already explain them. It's now "All 12 signs and houses", with yours marked.
+
+**AI vs me:** Me: noticed the topics said nothing new and that the library repeated My Chart; chose real topic content. Claude: drafted the texts (first draft with AI, I review and edit) and built the "Putting it together" sentences.

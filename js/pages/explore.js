@@ -7,15 +7,16 @@
 // so the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611121755';
-import { setUpGlossary, termButton } from '../glossary.js?v=202611121755';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611121755';
-import { loadBirth, saveBirth, SAMPLE_BIRTH } from '../store.js?v=202611121755';
-import { saveButton } from '../save-button.js?v=202611121755';
-import { setUpPlayground } from '../playground.js?v=202611121755';
-import { TOPICS, topicById } from '../content/topics.js?v=202611121755';
-import { PLANETS, PLANET_DETAIL, SIGNS, SIGN_DETAIL, HOUSES, ASPECT_TEXT, SIGN_TRAITS } from '../content/basics.js?v=202611121755';
-import { placements, connections, ordinal, orList, houseText } from '../readings.js?v=202611121755';
+import { calculateChart } from '../astro/chart.js?v=202611121802';
+import { setUpGlossary, termButton } from '../glossary.js?v=202611121802';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611121802';
+import { loadBirth, saveBirth, SAMPLE_BIRTH } from '../store.js?v=202611121802';
+import { saveButton } from '../save-button.js?v=202611121802';
+import { setUpPlayground } from '../playground.js?v=202611121802';
+import { TOPICS, topicById } from '../content/topics.js?v=202611121802';
+import { STRENGTH, WATCH } from '../content/topic-texts.js?v=202611121802';
+import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611121802';
+import { placements, connections, ordinal, orList, houseText } from '../readings.js?v=202611121802';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
@@ -93,13 +94,6 @@ function librarySection(name, sub, items) {
   return details;
 }
 
-const planetItems = Object.keys(PLANETS).map((id) => {
-  const p = byId[id];
-  return {
-    symbol: PLANETS[id].symbol, title: id[0].toUpperCase() + id.slice(1), text: PLANET_DETAIL[id],
-    yours: p ? `Yours: ${p.uncertain ? orList(p.possibleSigns) : p.sign}${p.house ? `, ${houseText(p)}` : ''}` : null,
-  };
-});
 const signItems = Object.keys(SIGNS).map((sign) => {
   const mine = all.filter((p) => p.kind === 'planet' && !p.uncertain && p.sign === sign).map((p) => p.name);
   return { symbol: SIGNS[sign].symbol, title: sign, text: `${SIGN_DETAIL[sign]} In a chart it means acting ${SIGNS[sign].how}.`, yours: mine.length ? `Your planets here: ${mine.join(', ')}` : null };
@@ -108,21 +102,14 @@ const houseItems = Object.entries(HOUSES).map(([n, text]) => {
   const mine = all.filter((p) => p.kind === 'planet' && p.house === Number(n)).map((p) => p.name);
   return { title: `${ordinal(Number(n))} house`, text: `The area of ${text}.`, yours: mine.length ? `Your planets here: ${mine.join(', ')}` : null };
 });
-const aspectItems = Object.values(ASPECT_TEXT).map((a) => ({
-  title: `${a.name[0].toUpperCase() + a.name.slice(1)} · ${a.angle}°`,
-  text: `Two planets ${a.plain}: ${a.meaning}.`,
-}));
-
 // With a chart, each heading says something about YOURS.
 const count = (items) => items.filter((i) => i.yours).length;
 const sub = (general, mine) => (chart ? mine : general);
 $('library-sections').append(
-  librarySection('The planets', sub('The what: 10 parts of you', 'The what: 10 parts of you, and the sign each of yours is in'), planetItems),
   librarySection('The signs', sub('The how: 12 styles', `The how: your planets are spread over ${count(signItems)} of the 12`), signItems),
   librarySection('The houses', sub('The where: 12 areas of life', chart?.houses ? `The where: your planets are in ${count(houseItems)} of the 12 areas of life` : 'The where: 12 areas of life (yours need a birth time)'), houseItems),
-  librarySection('The aspects', sub('How planets talk to each other', `How planets talk: your chart has ${chart ? chart.aspects.length : 0} of these lines`), aspectItems),
 );
-if (!chart) $('library-lede').textContent = 'Every planet, sign, house and angle, explained simply.';
+if (!chart) $('library-lede').textContent = 'What each of the 12 signs and 12 houses means.';
 
 // --- Playground -------------------------------------------------------------
 
@@ -135,6 +122,17 @@ if (yours === null) $('pg-whose').textContent = 'just two planets: the Sun and t
 setUpPlayground($('playground-wheel'), $('playground-readout'), yours);
 
 // --- One topic --------------------------------------------------------------
+
+// The sign of one of your placements, or null if it isn't certain.
+const certainSign = (id) => (byId[id] && !byId[id].uncertain ? byId[id].sign : null);
+// The sign a house starts in, or null without a birth time.
+const houseSign = (n) => chart?.houses?.[n - 1]?.sign ?? null;
+
+// "Putting it together": the topic's short sentences, skipping any
+// part that needs a birth time you haven't given.
+function together(t) {
+  return t.together(certainSign, houseSign).filter(Boolean).join(' ');
+}
 
 function itemBox(head, body) {
   const box = make('article', 'topic-item');
@@ -165,6 +163,17 @@ function placementItem(item) {
   } else {
     // Only what's new for this topic: you've just read the rest in My Chart.
     body.append(make('p', 'lens', item.lens(p)));
+    if (item.more) {
+      const text = item.more(p, certainSign);
+      if (text) body.append(make('p', '', text));
+    }
+    if (item.sides) {
+      const strength = make('p', 'side');
+      strength.append(make('strong', '', 'Strength: '), STRENGTH[p.sign] + '.');
+      const watch = make('p', 'side');
+      watch.append(make('strong', '', 'Watch out for: '), WATCH[p.sign] + '.');
+      body.append(strength, watch);
+    }
   }
   return itemBox(head, body);
 }
@@ -179,10 +188,9 @@ function houseItem(item) {
 
   const body = make('div', 'topic-item-body');
   body.append(make('p', 'lens', item.lens(sign)));
-  body.append(make('p', 'quiet', `This area of your life starts in ${sign}, so it has a ${SIGN_TRAITS[sign]} feel.`));
-  body.append(make('p', '', inside.length
-    ? `Planets here: ${inside.map((p) => p.name).join(', ')}. Having planets in a house puts extra focus on that area of life.`
-    : 'No planets here. That’s very common and doesn’t mean this area is empty in your life: the sign it starts in still describes it.'));
+  // Planets inside the house add extra focus. (No planets is common
+  // and means nothing special, so then there's nothing to add.)
+  if (inside.length) body.append(make('p', '', `Planets here: ${inside.map((p) => p.name).join(', ')}. Having planets in a house puts extra focus on that area of your life.`));
   return itemBox(head, body);
 }
 
@@ -228,6 +236,7 @@ function showTopic(t) {
   document.title = `${t.name} · Explore · ORBIT`;
   document.body.style.setProperty('--topic', t.dot);
   $('topic-title').textContent = t.name;
+  $('topic-together').textContent = chart ? together(t) : '';
   // Save this topic to your Profile (only with your own chart).
   $('topic-save').replaceChildren(chart && !birth.isSample ? saveButton({ kind: 'topic', id: t.id, title: t.name }) : '');
 
