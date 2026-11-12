@@ -763,3 +763,5 @@ Each label sits on the side nearest to what it points at, and they're nudged so 
 **AI vs me:** Me: listed everything that felt AI, decided the journey idea, chose to keep Bodoni titles but make the small text normal, to remove the wheel labels, and to make the library and playground about the user. Claude: suggested the order of the stages and made the changes.
 
 **Titles (my words):** I went through every title and changed the ones that sounded AI: "A map of the sky the moment you were born" → "The sky the moment you were born"; Explore → "Ask your chart"; "How your charts talk to each other" → "Your charts, together".
+
+Also: removed "You’ve met your Big Three. Here’s everything else:" from the start of the My Chart intro (my decision: too much).
