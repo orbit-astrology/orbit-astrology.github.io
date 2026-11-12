@@ -9,17 +9,17 @@
 //   4. write "Your chart, explained": one section per placement
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611121741';
-import { formatOffset } from '../astro/time.js?v=202611121741';
-import { drawWheel } from '../wheel.js?v=202611121741';
-import { placeTip } from '../tip-position.js?v=202611121741';
-import { setUpGlossary, termButton } from '../glossary.js?v=202611121741';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611121741';
-import { loadBirth } from '../store.js?v=202611121741';
-import { saveButton } from '../save-button.js?v=202611121741';
-import { runTour } from '../tour.js?v=202611121741';
-import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611121741';
-import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202611121741';
+import { calculateChart } from '../astro/chart.js?v=202611121743';
+import { formatOffset } from '../astro/time.js?v=202611121743';
+import { drawWheel } from '../wheel.js?v=202611121743';
+import { placeTip } from '../tip-position.js?v=202611121743';
+import { setUpGlossary, termButton } from '../glossary.js?v=202611121743';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611121743';
+import { loadBirth } from '../store.js?v=202611121743';
+import { saveButton } from '../save-button.js?v=202611121743';
+import { runTour } from '../tour.js?v=202611121743';
+import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611121743';
+import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202611121743';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
@@ -264,33 +264,7 @@ $('show-list').addEventListener('click', () => setView(true));
 const jump = $('jump-links');
 const readings = $('readings');
 
-const dateText = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
-  .format(new Date(Date.UTC(birth.year, birth.month - 1, birth.day)));
-const pad = (n) => String(n).padStart(2, '0');
-const utcTime = chart.utc.slice(11, 16);
 
-function howWeKnow(p) {
-  const steps = [];
-  if (chart.timeKnown) {
-    steps.push(`${birth.isSample ? `${birth.name} was` : 'You were'} born on ${dateText} at ${pad(birth.hour)}:${pad(birth.minute)} in ${birth.place.label}.`);
-    steps.push(`On that date the clocks there were at ${formatOffset(chart.offsetMinutes)}, so the exact moment was ${utcTime} in world time (UTC).`);
-  } else {
-    steps.push(`Born on ${dateText} in ${birth.place.label}, time unknown.`);
-    steps.push('Without a time, ORBIT checked the whole day, from 00:00 to 23:59, and shows positions for midday.');
-  }
-  const start = SIGNS[p.sign] ? Object.keys(SIGNS).indexOf(p.sign) * 30 : 0;
-  steps.push(`At that moment, ${p.kind === 'angle' ? `your ${p.name}` : p.name} was at ${p.longitude.toFixed(2)}° around the zodiac (counting from the start of Aries).`);
-  if (!p.uncertain) {
-    steps.push(`Each sign covers 30°. ${p.sign} runs from ${start}° to ${start + 30}°, so it was ${Math.floor(p.degree)}° into ${p.sign}.`);
-  }
-  if (p.kind === 'planet' && p.house && chart.houses) {
-    const h = chart.houses[p.house - 1].longitude;
-    const next = chart.houses[p.house % 12].longitude;
-    steps.push(`Your ${ordinal(p.house)} house runs from ${h.toFixed(1)}° to ${next.toFixed(1)}°, so at the time you gave it falls in that house.`);
-    if (p.houseUncertain) steps.push(`Your time is approximate, so ORBIT checked the whole window: during it, this falls in your ${houseText(p)}.`);
-  }
-  return steps;
-}
 
 for (const p of all) {
   // Quick link
@@ -357,13 +331,6 @@ for (const p of all) {
     }
   }
 
-  const details = make('details', 'how-we-know');
-  details.append(make('summary', '', 'How we know this'));
-  const ol = make('ol');
-  for (const step of howWeKnow(p)) ol.append(make('li', '', step));
-  details.append(ol);
-  more.append(details);
-
   const back = make('a', 'back-to-wheel', '↑ Back to the wheel');
   back.href = '#main';
   more.append(back);
@@ -379,6 +346,31 @@ for (const p of all) {
   section.append(head, body);
   readings.append(section);
 }
+
+// --- How we know this: once, for the whole chart --------------------
+// The same steps for every planet, so they're shown once at the end
+// instead of under each reading.
+
+const dateText = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
+  .format(new Date(Date.UTC(birth.year, birth.month - 1, birth.day)));
+const pad = (n) => String(n).padStart(2, '0');
+const who = birth.isSample ? `${birth.name} was` : 'You were';
+const steps = chart.timeKnown
+  ? [
+    `${who} born on ${dateText} at ${pad(birth.hour)}:${pad(birth.minute)} in ${birth.place.label}.`,
+    `On that date the clocks there were at ${formatOffset(chart.offsetMinutes)}, so the exact moment was ${chart.utc.slice(11, 16)} in world time (UTC).`,
+  ]
+  : [
+    `${who} born on ${dateText} in ${birth.place.label}, time unknown.`,
+    'Without a time, ORBIT checked the whole day and shows positions for midday. That’s why there’s no Rising sign or houses.',
+  ];
+steps.push(
+  'For that moment, the Astronomy Engine library calculated where the Sun, Moon and each planet were in the sky.',
+  `Each sign covers 30° of the circle, so each planet’s position tells us its sign. For example, your Sun was at ${byId.sun.longitude.toFixed(1)}°, which is ${Math.floor(byId.sun.degree)}° into ${byId.sun.sign}.`,
+);
+if (chart.houses) steps.push('Your birth time and place give the Rising sign and where each of the 12 houses starts.');
+const ol = $('how-we-know-steps');
+for (const step of steps) ol.append(make('li', '', step));
 
 setUpGlossary();
 

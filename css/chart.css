@@ -92,10 +92,6 @@
 .connections-list strong { font-weight: 650; }
 .connections-list .maybe { color: var(--bone-soft); font-size: 14px; }
 
-.how-we-know { margin-top: 20px; }
-.how-we-know summary { cursor: pointer; font-weight: 650; font-size: 15px; color: var(--bone-soft); padding: 6px 0; }
-.how-we-know ol { margin: 8px 0 0; padding-left: 20px; color: var(--bone-soft); font-size: 15px; }
-.how-we-know li { margin-bottom: 4px; }
 
 .back-to-wheel { font-size: 14px; font-weight: 650; color: var(--champagne); }
 
@@ -144,3 +140,9 @@
   .tour-title { font-size: 1.5rem; }
   .tour-text { font-size: 15px; max-width: none; }
 }
+
+/* "How we know all this": once, at the end of "Your chart, explained" */
+.how-we-know { margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--line); }
+.how-we-know summary { cursor: pointer; font-weight: 600; font-size: 16px; color: var(--bone-soft); padding: 6px 0; }
+.how-we-know ol { margin: 8px 0 12px; padding-left: 20px; color: var(--bone-soft); font-size: 15px; max-width: 70ch; }
+.how-we-know li { margin-bottom: 6px; }

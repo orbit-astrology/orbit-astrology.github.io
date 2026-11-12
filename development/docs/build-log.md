@@ -771,3 +771,4 @@ Also removed the last step’s closing line ("Now hover over anything to learn m
 
 Also: removed the hover explanations from the words in "How to read the wheel" (signs, planets, houses, aspects, ASC and MC), because the text right below each one already explains it (my decision: the pop-ups got in the way there).
 Also: removed the line under "Your chart, explained" ("One short line for each part of you…"): the "Read more" buttons already say it (my decision).
+Also: "How we know this" was repeated under every planet. It’s now shown once, as "How we know all this" at the end of "Your chart, explained", with a link to How ORBIT works (my decision: keep it, but not on every part).
