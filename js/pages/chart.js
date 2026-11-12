@@ -9,17 +9,17 @@
 //   4. write "Your chart, explained": one section per placement
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611121743';
-import { formatOffset } from '../astro/time.js?v=202611121743';
-import { drawWheel } from '../wheel.js?v=202611121743';
-import { placeTip } from '../tip-position.js?v=202611121743';
-import { setUpGlossary, termButton } from '../glossary.js?v=202611121743';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611121743';
-import { loadBirth } from '../store.js?v=202611121743';
-import { saveButton } from '../save-button.js?v=202611121743';
-import { runTour } from '../tour.js?v=202611121743';
-import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611121743';
-import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202611121743';
+import { calculateChart } from '../astro/chart.js?v=202611121744';
+import { formatOffset } from '../astro/time.js?v=202611121744';
+import { drawWheel } from '../wheel.js?v=202611121744';
+import { placeTip } from '../tip-position.js?v=202611121744';
+import { setUpGlossary, termButton } from '../glossary.js?v=202611121744';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611121744';
+import { loadBirth } from '../store.js?v=202611121744';
+import { saveButton } from '../save-button.js?v=202611121744';
+import { runTour } from '../tour.js?v=202611121744';
+import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611121744';
+import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202611121744';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
@@ -330,10 +330,6 @@ for (const p of all) {
       more.append(title, ul);
     }
   }
-
-  const back = make('a', 'back-to-wheel', '↑ Back to the wheel');
-  back.href = '#main';
-  more.append(back);
 
   const toggle = make('button', 'link-button read-more', 'Read more');
   toggle.type = 'button';

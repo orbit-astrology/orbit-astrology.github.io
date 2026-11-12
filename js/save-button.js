@@ -4,7 +4,7 @@
 // Saved things appear on the Profile page. Saved only in this browser.
 // ---------------------------------------------------------------
 
-import { loadSaved, saveSaved } from './store.js?v=202611121743';
+import { loadSaved, saveSaved } from './store.js?v=202611121744';
 
 // item: { kind: 'placement' | 'topic', id, title, sign }
 export function saveButton(item) {

@@ -93,7 +93,6 @@
 .connections-list .maybe { color: var(--bone-soft); font-size: 14px; }
 
 
-.back-to-wheel { font-size: 14px; font-weight: 650; color: var(--champagne); }
 
 @media (max-width: 760px) {
   .how-to-read { max-width: none; }
