@@ -773,3 +773,4 @@ Also: removed the hover explanations from the words in "How to read the wheel" (
 Also: removed the line under "Your chart, explained" ("One short line for each part of you…"): the "Read more" buttons already say it (my decision).
 Also: "How we know this" was repeated under every planet. It’s now shown once, as "How we know all this" at the end of "Your chart, explained", with a link to How ORBIT works (my decision: keep it, but not on every part).
 Also: removed "↑ Back to the wheel" from each reading, so the only button at the end is "Show less" (my decision: too many things to click).
+Also: Explore intro changed to "Here your chart comes together. Choose a part of your life:" (my words for the first part).
