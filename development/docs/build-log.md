@@ -765,3 +765,5 @@ Each label sits on the side nearest to what it points at, and they're nudged so 
 **Titles (my words):** I went through every title and changed the ones that sounded AI: "A map of the sky the moment you were born" → "The sky the moment you were born"; Explore → "Ask your chart"; "How your charts talk to each other" → "Your charts, together".
 
 Also: removed "You’ve met your Big Three. Here’s everything else:" from the start of the My Chart intro (my decision: too much).
+
+Also: in "Watch your chart build", removed the lines "Your Moon is in Aries…" (planets step) and "Your Moon is in the 6th house…" (houses step), because they explained only one planet and none of the others (my decision).

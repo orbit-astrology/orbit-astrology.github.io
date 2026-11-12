@@ -9,17 +9,17 @@
 //   4. write "Your chart, explained": one section per placement
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611121731';
-import { formatOffset } from '../astro/time.js?v=202611121731';
-import { drawWheel } from '../wheel.js?v=202611121731';
-import { placeTip } from '../tip-position.js?v=202611121731';
-import { setUpGlossary, termButton } from '../glossary.js?v=202611121731';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611121731';
-import { loadBirth } from '../store.js?v=202611121731';
-import { saveButton } from '../save-button.js?v=202611121731';
-import { runTour } from '../tour.js?v=202611121731';
-import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611121731';
-import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202611121731';
+import { calculateChart } from '../astro/chart.js?v=202611121732';
+import { formatOffset } from '../astro/time.js?v=202611121732';
+import { drawWheel } from '../wheel.js?v=202611121732';
+import { placeTip } from '../tip-position.js?v=202611121732';
+import { setUpGlossary, termButton } from '../glossary.js?v=202611121732';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611121732';
+import { loadBirth } from '../store.js?v=202611121732';
+import { saveButton } from '../save-button.js?v=202611121732';
+import { runTour } from '../tour.js?v=202611121732';
+import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611121732';
+import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202611121732';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
@@ -390,10 +390,6 @@ if (location.hash && $(location.hash.slice(1))) {
 // --- 5. Watch your chart build, step by step (js/tour.js) -----------
 
 function tourSteps() {
-  const sun = byId.sun;
-  const moon = byId.moon;
-  // The example uses your Moon, or your Sun if the Moon's sign isn't certain.
-  const example = moon.uncertain ? sun : moon;
   // Each step: { intro, points: [{ label, text }], outro } (shown by js/tour.js)
   const steps = [
     { layers: ['signs'], title: 'The 12 signs',
@@ -409,22 +405,16 @@ function tourSteps() {
         { label: 'Sun', text: 'who you are' },
         { label: 'Moon', text: 'how you feel' },
         { label: 'Venus', text: 'how you love' },
-      ],
-      outro: `Your ${example.name} is in ${example.sign}: ${SIGNS[example.sign].how}.` },
+      ] },
   ];
   if (chart.houses) {
-    // A planet whose house is certain, to show what a house means.
-    const inHouse = [moon, sun].find((p) => p.house && !p.houseUncertain);
     steps.push({ layers: ['houses'], title: 'The houses',
       intro: 'The 12 numbered slices are the houses. Each house is an area of life.',
       points: [
         { label: '4th house', text: 'home and family' },
         { label: '7th house', text: 'partners' },
         { label: '10th house', text: 'career' },
-      ],
-      outro: inHouse
-        ? `Your ${inHouse.name} is in the ${ordinal(inHouse.house)} house (${HOUSES[inHouse.house]}): that’s where it shows up most.`
-        : '' });
+      ] });
   }
   steps.push({ layers: ['aspects'], title: 'The lines',
     intro: 'A line means two planets affect each other.',
