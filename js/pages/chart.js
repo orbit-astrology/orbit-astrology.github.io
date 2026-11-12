@@ -9,17 +9,17 @@
 //   4. write "Your chart, explained": one section per placement
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611121748';
-import { formatOffset } from '../astro/time.js?v=202611121748';
-import { drawWheel } from '../wheel.js?v=202611121748';
-import { placeTip } from '../tip-position.js?v=202611121748';
-import { setUpGlossary, termButton } from '../glossary.js?v=202611121748';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611121748';
-import { loadBirth } from '../store.js?v=202611121748';
-import { saveButton } from '../save-button.js?v=202611121748';
-import { runTour } from '../tour.js?v=202611121748';
-import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611121748';
-import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202611121748';
+import { calculateChart } from '../astro/chart.js?v=202611121751';
+import { formatOffset } from '../astro/time.js?v=202611121751';
+import { drawWheel } from '../wheel.js?v=202611121751';
+import { placeTip } from '../tip-position.js?v=202611121751';
+import { setUpGlossary, termButton } from '../glossary.js?v=202611121751';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611121751';
+import { loadBirth } from '../store.js?v=202611121751';
+import { saveButton } from '../save-button.js?v=202611121751';
+import { runTour } from '../tour.js?v=202611121751';
+import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611121751';
+import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202611121751';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
@@ -291,10 +291,6 @@ for (const p of all) {
   if (p.retrograde) meta.append(' · ', termButton('retrograde', 'retrograde'));
   if (p.uncertain) meta.append('Depends on your birth time · ', termButton(timeTerm, 'why?'));
   head.append(meta);
-  // Save this reading to your Profile (not for the made-up sample).
-  if (!birth.isSample) {
-    head.append(saveButton({ kind: 'placement', id: p.id, title: `${p.short} in ${signLabel(p)}`, sign: signLabel(p) }));
-  }
 
   const body = make('div', 'reading-body');
   const pieces = grammar(p);
@@ -336,6 +332,11 @@ for (const p of all) {
   toggle.setAttribute('aria-expanded', 'false');
   toggle.setAttribute('aria-controls', more.id);
   toggle.addEventListener('click', () => openReading(section, more.hidden));
+  // Save this reading to your Profile (not for the made-up sample).
+  // It's inside "Read more", so the list of planets stays calm.
+  if (!birth.isSample) {
+    more.append(saveButton({ kind: 'placement', id: p.id, title: `${p.short} in ${signLabel(p)}`, sign: signLabel(p) }));
+  }
   // The button sits after the hidden part, so it's always at the end.
   body.append(more, toggle);
 

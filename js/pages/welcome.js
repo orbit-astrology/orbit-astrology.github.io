@@ -13,13 +13,13 @@
 // replaced by a "Welcome back" link to your universe.
 // ---------------------------------------------------------------
 
-import { skyAt } from '../astro/sky.js?v=202611121748';
-import { drawWheel } from '../wheel.js?v=202611121748';
-import { setUpGlossary } from '../glossary.js?v=202611121748';
-import { setUpBirthForm } from '../birth-form.js?v=202611121748';
-import { startCloud, currentUser, cloudReady } from '../cloud.js?v=202611121748';
-import { setUpAccountPanel } from '../account-panel.js?v=202611121748';
-import { saveBirth, loadBirth, sameBirth, startFresh, SAMPLE_BIRTH } from '../store.js?v=202611121748';
+import { skyAt } from '../astro/sky.js?v=202611121751';
+import { drawWheel } from '../wheel.js?v=202611121751';
+import { setUpGlossary } from '../glossary.js?v=202611121751';
+import { setUpBirthForm } from '../birth-form.js?v=202611121751';
+import { startCloud, currentUser, cloudReady } from '../cloud.js?v=202611121751';
+import { setUpAccountPanel } from '../account-panel.js?v=202611121751';
+import { saveBirth, loadBirth, sameBirth, startFresh, SAMPLE_BIRTH } from '../store.js?v=202611121751';
 
 const $ = (id) => document.getElementById(id);
 
@@ -29,9 +29,6 @@ setUpGlossary();
 
 const sky = skyAt(new Date());
 $('sky-now').append(drawWheel(sky, { label: 'The sky right now' }));
-const sunNow = sky.bodies.find((b) => b.id === 'sun').sign;
-const moonNow = sky.bodies.find((b) => b.id === 'moon').sign;
-$('sky-caption').textContent = `The faint wheel is the real sky right now: the Sun is in ${sunNow} and the Moon is in ${moonNow}.`;
 
 // --- A first glimpse: your Sun and Moon -----------------------------
 // As soon as a whole birthday is typed, show the Sun and Moon signs,

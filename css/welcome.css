@@ -22,7 +22,6 @@
 }
 /* Upright, not italic: the thin italic strokes were hard to read (friend feedback). */
 .welcome-tagline { font: 600 clamp(1.25rem, 2vw, 1.7rem)/1.3 var(--serif); margin: 0 0 14px; }
-.sky-caption { font-size: 13px; margin: 28px 0 0; }
 
 /* The real sky right now, drawn faintly on the right of the title.
    It fades out towards the left (a "mask"), so the words always sit on a

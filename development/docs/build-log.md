@@ -775,3 +775,16 @@ Also: "How we know this" was repeated under every planet. It’s now shown once,
 Also: removed "↑ Back to the wheel" from each reading, so the only button at the end is "Show less" (my decision: too many things to click).
 Also: Explore intro changed to "Here your chart comes together. Choose a part of your life:" (my words for the first part).
 Also: topic pages (Explore) now only show what’s new for that topic. Removed the intro paragraph, the degree, the "It sits in your … house" line and "Read the full explanation in My Chart →", because you’ve just read those in My Chart (my decision: no repeating).
+
+## 12 Nov 2026 · Less overwhelming: cutting what isn't needed
+
+**Why:** I want the user not to get overwhelmed or go back and forth. Claude went through every page looking for things that are unnecessary, too much, or in the wrong place.
+
+**What changed:**
+- **My Universe:** no wheel at the top any more, and no "Start with your Big Three" button. The page opens with the title, your birth line and your Big Three straight away. The wheel now appears for the first time at the next step, My Chart (it was shown twice on this page before, at the top and in Travel through time). The Big Three columns no longer step down like stairs.
+- **My Chart:** "Save to my profile" moved inside "Read more", so the list of 12 planets doesn't have 12 buttons.
+- **Profile:** the intro line was removed, the account box is folded (just Log in / Create account until you choose), and "Your data" is one short line instead of two paragraphs.
+- **First page:** removed the small caption about the faint wheel and the "Calculation lab" link (a tool for me, not for users).
+- **Every page:** the footer no longer says "Planet positions: Astronomy Engine · Tropical zodiac, Placidus houses" (technical words with no explanation). That information is on How ORBIT works, which is still linked.
+
+**AI vs me:** Me: asked for everything unnecessary or overwhelming to go. Claude: did the audit and made the changes; I review them on the live site.

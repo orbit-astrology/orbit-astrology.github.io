@@ -12,15 +12,15 @@
 // honestly where your data is.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611121748';
-import { setUpGlossary } from '../glossary.js?v=202611121748';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611121748';
-import { setUpBirthForm } from '../birth-form.js?v=202611121748';
-import { placements, risingText, marginText } from '../readings.js?v=202611121748';
-import { topicById } from '../content/topics.js?v=202611121748';
-import { startCloud, cloudReady, currentUser, deleteAccount } from '../cloud.js?v=202611121748';
-import { setUpAccountPanel } from '../account-panel.js?v=202611121748';
-import { loadBirth, saveBirth, loadPeople, loadSaved, saveSaved, ALL_KEYS } from '../store.js?v=202611121748';
+import { calculateChart } from '../astro/chart.js?v=202611121751';
+import { setUpGlossary } from '../glossary.js?v=202611121751';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611121751';
+import { setUpBirthForm } from '../birth-form.js?v=202611121751';
+import { placements, risingText, marginText } from '../readings.js?v=202611121751';
+import { topicById } from '../content/topics.js?v=202611121751';
+import { startCloud, currentUser, deleteAccount } from '../cloud.js?v=202611121751';
+import { setUpAccountPanel } from '../account-panel.js?v=202611121751';
+import { loadBirth, saveBirth, loadPeople, loadSaved, saveSaved, ALL_KEYS } from '../store.js?v=202611121751';
 
 const $ = (id) => document.getElementById(id);
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -206,11 +206,8 @@ function showData() {
   const c = counts();
   // Where your data lives depends on whether you're logged in.
   $('data-where').textContent = c.account
-    ? 'You’re logged in, so everything is saved in this browser and in your ORBIT account, which you can open on any device.'
-    : 'You’re not logged in, so everything is saved only in this browser, on this device. It doesn’t follow you to your phone or another computer, and clearing your browser data deletes it.';
-  $('data-server').textContent = c.account
-    ? 'Your account is stored with Supabase (ORBIT’s database), protected so that only you can read it. The place search also receives the city name you type.'
-    : `Your birth details are never sent to a server. The only thing that leaves your browser is the city name you type into the place search.${cloudReady ? ' Create an account above to keep them safe online.' : ''}`;
+    ? 'Saved in this browser and in your ORBIT account, so you can open it on any device.'
+    : 'Saved only in this browser, on this device.';
   const list = $('data-list');
   list.replaceChildren(
     ...(c.account ? [make('li', '', `Your account: ${c.account}`)] : []),
@@ -283,6 +280,7 @@ me = loadBirth();
 setUpAccountPanel({
   mode,
   keepByDefault: true, // on Profile you usually sign up to keep the chart you just made
+  collapsed: true, // only the Log in / Create account buttons until you choose one
   onChange() {
     me = loadBirth();
     showDetails();
