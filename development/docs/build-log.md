@@ -744,7 +744,7 @@ Each label sits on the side nearest to what it points at, and they're nudged so 
 **The journey:** each page is one stage. It opens with a line linking it to the stage before, and ends with a "Next" link:
 1. First page: your Sun and Moon (a first glimpse)
 2. My Universe: your Big Three → "Next: see your whole chart"
-3. My Chart: all your planets → "Next: your life, area by area"
+3. My Chart: all your planets → "Next: ask your chart"
 4. Explore: love, feelings, work… built from the parts you've read → "Next: you and your people"
 5. Connections: your chart next to someone else's
 
@@ -756,8 +756,10 @@ Each label sits on the side nearest to what it points at, and they're nudged so 
 - **No labels around the wheel** (and no Show/Hide labels button). The "How to read the wheel" guide next to it already does that job.
 - **"This week":** a plain title, no boxed tags. Each moment says "For you" or "For everyone" under the day.
 - **Readings open in place:** on My Chart each part shows one short paragraph; "Read more" opens the rest on the same page ("Show less" closes it). Clicking a planet on the wheel opens its reading. On My Universe, "Read more" under each of the Big Three opens the longer explanation right there instead of taking you to another page.
-- **Explore:** new title "Your life, area by area". The topic rows have no numbers, coloured dots or questions; instead each shows the parts of *your* chart it's built from ("Your Venus in Scorpio, Mars in Taurus…"). Plainer topic names: Who you are, Your feelings, Love, Work and direction, How you grow.
+- **Explore:** new title "Ask your chart". The topic rows have no numbers, coloured dots or questions; instead each shows the parts of *your* chart it's built from ("Your Venus in Scorpio, Mars in Taurus…"). Plainer topic names: Who you are, Your feelings, Love, Work and direction, How you grow.
 - **The library is now "The pieces of your chart"**, and each heading talks about yours ("your planets are spread over 8 of the 12 signs").
 - **The playground is now "How two planets talk"** and starts with *your own* Sun and Moon at their real distance.
 
 **AI vs me:** Me: listed everything that felt AI, decided the journey idea, chose to keep Bodoni titles but make the small text normal, to remove the wheel labels, and to make the library and playground about the user. Claude: suggested the order of the stages and made the changes.
+
+**Titles (my words):** I went through every title and changed the ones that sounded AI: "A map of the sky the moment you were born" → "The sky the moment you were born"; Explore → "Ask your chart"; "How your charts talk to each other" → "Your charts, together".
