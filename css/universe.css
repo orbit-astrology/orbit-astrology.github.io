@@ -1,11 +1,16 @@
 /* universe.css: My Universe, your personal home page. */
 
 /* Top: title on the left, your real chart on the right */
-.hero { padding-top: 40px; }
-.hero-text { display: flex; flex-direction: column; gap: 12px; }
+.hero {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 32px;
+  padding-top: 32px; position: relative; min-height: min(640px, calc(100vh - 80px));
+}
+.hero-text { flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+.hero-text .title { margin-top: -6px; }
+.hero-wheel { flex: 0 1 auto; width: min(520px, calc(100vh - 140px), 100%); margin-left: auto; }
 
 /* Your Big Three: three columns stepping down like planets on a path */
-.big-three { padding-block: 32px 24px; }
+.big-three { padding-block: 40px 24px; }
 .big-three-intro {
   font: 450 16px/1.6 var(--sans); color: var(--bone-soft);
   padding-bottom: 20px; border-bottom: 1px solid var(--champagne); margin: 0;
@@ -47,6 +52,10 @@
 .save { padding-block: 48px 0; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
 .save p { margin: 0; max-width: 52ch; }
 .save-title { font-size: clamp(1.4rem, 2.2vw, 1.8rem); }
+
+@media (max-width: 760px) {
+  .hero-wheel { margin-right: 0; max-width: 92vw; margin-inline: auto; }
+}
 
 /* Travel through time. On a laptop: text, controls and results on the left,
    the wheel on the right, staying in view while you scroll the results.

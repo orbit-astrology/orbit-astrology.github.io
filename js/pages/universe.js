@@ -8,15 +8,16 @@
 //   - this week's sky, matched against your chart
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611121751';
-import { weeklyEvents } from '../astro/sky.js?v=202611121751';
-import { risingText, marginText, placements, reading } from '../readings.js?v=202611121751';
-import { setUpTimeTravel } from '../time-travel.js?v=202611121751';
-import { cloudReady, currentUser } from '../cloud.js?v=202611121751';
-import { setUpGlossary } from '../glossary.js?v=202611121751';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611121751';
-import { loadBirth } from '../store.js?v=202611121751';
-import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202611121751';
+import { calculateChart } from '../astro/chart.js?v=202611121755';
+import { weeklyEvents } from '../astro/sky.js?v=202611121755';
+import { risingText, marginText, placements, reading } from '../readings.js?v=202611121755';
+import { drawWheel } from '../wheel.js?v=202611121755';
+import { setUpTimeTravel } from '../time-travel.js?v=202611121755';
+import { cloudReady, currentUser } from '../cloud.js?v=202611121755';
+import { setUpGlossary } from '../glossary.js?v=202611121755';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611121755';
+import { loadBirth } from '../store.js?v=202611121755';
+import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202611121755';
 
 const $ = (id) => document.getElementById(id);
 
@@ -53,7 +54,9 @@ $('born-line').textContent = `${who} ${dateText} · ${timeText} · ${birth.place
 
 // --- Chart wheel ----------------------------------------------------
 
-// (The wheel itself waits for the next step, My Chart.)
+const summary = `Your birth chart wheel. Sun in ${body('sun').sign}, Moon in ${body('moon').possibleSigns?.join(' or ') ?? body('moon').sign}` +
+  (chart.angles ? `, Rising sign ${risingText(chart)}.` : '. Rising sign unknown because the birth time is unknown.');
+$('hero-wheel').append(drawWheel(chart, { label: summary }));
 
 // --- Big Three --------------------------------------------------------
 

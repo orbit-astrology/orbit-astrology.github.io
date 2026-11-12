@@ -788,3 +788,5 @@ Also: topic pages (Explore) now only show what’s new for that topic. Removed t
 - **Every page:** the footer no longer says "Planet positions: Astronomy Engine · Tropical zodiac, Placidus houses" (technical words with no explanation). That information is on How ORBIT works, which is still linked.
 
 **AI vs me:** Me: asked for everything unnecessary or overwhelming to go. Claude: did the audit and made the changes; I review them on the live site.
+
+**Change of mind (me):** I brought back the wheel at the top of My Universe and the "Start with your Big Three ↓" button. The title says "The sky you were born under", so the sky has to be there. The Big Three stay in a straight line.
