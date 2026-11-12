@@ -7,15 +7,15 @@
 // so the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611121745';
-import { setUpGlossary, termButton } from '../glossary.js?v=202611121745';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611121745';
-import { loadBirth, saveBirth, SAMPLE_BIRTH } from '../store.js?v=202611121745';
-import { saveButton } from '../save-button.js?v=202611121745';
-import { setUpPlayground } from '../playground.js?v=202611121745';
-import { TOPICS, topicById } from '../content/topics.js?v=202611121745';
-import { PLANETS, PLANET_DETAIL, SIGNS, SIGN_DETAIL, HOUSES, ASPECT_TEXT, SIGN_TRAITS } from '../content/basics.js?v=202611121745';
-import { placements, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202611121745';
+import { calculateChart } from '../astro/chart.js?v=202611121748';
+import { setUpGlossary, termButton } from '../glossary.js?v=202611121748';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611121748';
+import { loadBirth, saveBirth, SAMPLE_BIRTH } from '../store.js?v=202611121748';
+import { saveButton } from '../save-button.js?v=202611121748';
+import { setUpPlayground } from '../playground.js?v=202611121748';
+import { TOPICS, topicById } from '../content/topics.js?v=202611121748';
+import { PLANETS, PLANET_DETAIL, SIGNS, SIGN_DETAIL, HOUSES, ASPECT_TEXT, SIGN_TRAITS } from '../content/basics.js?v=202611121748';
+import { placements, connections, ordinal, orList, houseText } from '../readings.js?v=202611121748';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
@@ -151,8 +151,10 @@ function placementItem(item) {
   head.append(make('h2', 'topic-item-title', `${p.short} in ${p.uncertain ? orList(p.possibleSigns) : p.sign}`));
   const meta = make('p', 'topic-item-meta');
   if (p.uncertain) meta.append('Depends on your birth time · ', termButton(chart.timeKnown ? 'approximate-time' : 'unknown-time', 'why?'));
-  else meta.append(degreeText(p.degree));
-  if (p.kind === 'planet' && p.house) meta.append(' · ', termButton('house', houseText(p)));
+  if (p.kind === 'planet' && p.house) {
+    if (meta.childNodes.length) meta.append(' · ');
+    meta.append(termButton('house', houseText(p)));
+  }
   head.append(meta);
 
   const body = make('div', 'topic-item-body');
@@ -161,16 +163,9 @@ function placementItem(item) {
     body.append(make('p', 'lens', `Your ${p.name} could be in ${orList(p.possibleSigns)}, because ${why}.`));
     for (const sign of p.possibleSigns) body.append(make('p', '', `If it’s ${sign}: ${item.lens({ ...p, sign })}`));
   } else {
+    // Only what's new for this topic: you've just read the rest in My Chart.
     body.append(make('p', 'lens', item.lens(p)));
-    if (p.kind === 'planet' && p.house) {
-      body.append(make('p', 'quiet', p.houseUncertain
-        ? `Your birth time is approximate, so it could sit in your ${houseText(p)}: ${p.possibleHouses.map((h) => HOUSES[h]).join(', or ')}.`
-        : `It sits in your ${ordinal(p.house)} house, so this shows up most in the area of ${HOUSES[p.house]}.`));
-    }
   }
-  const link = make('a', 'text-link', 'Read the full explanation in My Chart →');
-  link.href = `chart.html#${p.id}`;
-  body.append(link);
   return itemBox(head, body);
 }
 
@@ -233,7 +228,6 @@ function showTopic(t) {
   document.title = `${t.name} · Explore · ORBIT`;
   document.body.style.setProperty('--topic', t.dot);
   $('topic-title').textContent = t.name;
-  $('topic-intro').textContent = t.intro;
   // Save this topic to your Profile (only with your own chart).
   $('topic-save').replaceChildren(chart && !birth.isSample ? saveButton({ kind: 'topic', id: t.id, title: t.name }) : '');
 

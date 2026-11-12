@@ -13,12 +13,11 @@
 // Status: first draft written with AI. Salma reviews and edits.
 // ---------------------------------------------------------------
 
-import { SIGN_TRAITS as T, SIGNS, MOON_IN, HOUSES } from './basics.js?v=202611121745';
+import { SIGN_TRAITS as T, SIGNS, MOON_IN, HOUSES } from './basics.js?v=202611121748';
 
 export const TOPICS = [
   {
     id: 'identity', name: 'Who you are', dot: '#C0A9B6',
-    intro: 'Three parts of your chart describe your personality best: your Sun (your core self), your Rising sign (how you come across) and Mercury (how you think and talk).',
     items: [
       { type: 'placement', id: 'sun', lens: (p) => `At your core you’re ${T[p.sign]}. This side of you gets stronger the more you live it.` },
       { type: 'placement', id: 'rising', lens: (p) => `People often first see you as ${T[p.sign]}, even before they know the real you.` },
@@ -27,7 +26,6 @@ export const TOPICS = [
   },
   {
     id: 'emotions', name: 'Your feelings', dot: '#A8B4C4',
-    intro: 'Your Moon is the main key to your feelings. Your 4th house, the area of home and family, shows where you go to feel safe.',
     items: [
       { type: 'placement', id: 'moon', lens: (p) => `Emotionally you’re ${T[p.sign]}. ${MOON_IN[p.sign]}` },
       { type: 'house', number: 4, lens: (sign) => `Home, for you, feels best when it lets you be ${T[sign]}.` },
@@ -36,7 +34,6 @@ export const TOPICS = [
   },
   {
     id: 'love', name: 'Love', dot: '#C9A3A6',
-    intro: 'Venus shows how you love and what you’re drawn to. Mars shows how you go after what (and who) you want. Your 7th house, the area of partners, shows what you look for in a relationship.',
     items: [
       { type: 'placement', id: 'venus', lens: (p) => `You love in a way that’s ${T[p.sign]}, and you’re drawn to people and things that feel that way too.` },
       { type: 'placement', id: 'mars', lens: (p) => `When you like someone, you go after them ${SIGNS[p.sign].how}.` },
@@ -47,7 +44,6 @@ export const TOPICS = [
   },
   {
     id: 'career', name: 'Work and direction', dot: '#CDBB92',
-    intro: 'Your Midheaven, the top of your chart, shows the direction you’re drawn to. Saturn shows where you build things slowly and earn them. Your 10th and 6th houses cover career and daily work.',
     items: [
       { type: 'placement', id: 'midheaven', lens: (p) => `You’re drawn to work and a reputation that feel ${T[p.sign]}.` },
       { type: 'placement', id: 'saturn', lens: (p) => `Success tends to come when you’re ${T[p.sign]}, step by step. It might feel slow, but what you build here lasts.` },
@@ -57,7 +53,6 @@ export const TOPICS = [
   },
   {
     id: 'growth', name: 'How you grow', dot: '#B0B89E',
-    intro: 'Jupiter shows where you grow easily. Saturn and Pluto show where you grow through effort and change. Tense angles between planets are often where you learn the most.',
     items: [
       { type: 'placement', id: 'jupiter', lens: (p) => `You grow when you let yourself be ${T[p.sign]}. Traditionally, this is where luck finds you.` },
       { type: 'placement', id: 'saturn', lens: (p) => `A life lesson: learning to be ${T[p.sign]}, without being too hard on yourself.` },

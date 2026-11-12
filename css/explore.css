@@ -69,7 +69,7 @@
 /* --- One topic --- */
 .topic-head { padding-top: 28px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
 .topic-head .back { margin-bottom: 10px; }
-.topic-head .lede { margin-top: 6px; }
+#topic-save { margin-top: 10px; }
 .time-note { margin: 0; max-width: 60ch; }
 
 .topic-item { display: flex; flex-wrap: wrap; gap: 16px 64px; padding-block: 32px; border-bottom: 1px solid var(--line); }
