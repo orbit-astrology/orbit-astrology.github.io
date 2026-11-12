@@ -9,17 +9,17 @@
 //   4. write "Your chart, explained": one section per placement
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611111937';
-import { formatOffset } from '../astro/time.js?v=202611111937';
-import { drawWheel } from '../wheel.js?v=202611111937';
-import { placeTip } from '../tip-position.js?v=202611111937';
-import { setUpGlossary, termButton } from '../glossary.js?v=202611111937';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611111937';
-import { loadBirth } from '../store.js?v=202611111937';
-import { saveButton } from '../save-button.js?v=202611111937';
-import { runTour } from '../tour.js?v=202611111937';
-import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611111937';
-import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202611111937';
+import { calculateChart } from '../astro/chart.js?v=202611121727';
+import { formatOffset } from '../astro/time.js?v=202611121727';
+import { drawWheel } from '../wheel.js?v=202611121727';
+import { placeTip } from '../tip-position.js?v=202611121727';
+import { setUpGlossary, termButton } from '../glossary.js?v=202611121727';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611121727';
+import { loadBirth } from '../store.js?v=202611121727';
+import { saveButton } from '../save-button.js?v=202611121727';
+import { runTour } from '../tour.js?v=202611121727';
+import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611121727';
+import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202611121727';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
