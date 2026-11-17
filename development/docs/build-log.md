@@ -911,3 +911,11 @@ Also: topic pages (Explore) now only show what’s new for that topic. Removed t
 **What changed:** Removed the small caption under each constellation ("The stars Leo is named after"). The drawing speaks for itself, with the sign's name just below it. Screen readers still read "The stars of Leo".
 
 **AI vs me:** I decided to remove the captions. Claude made the change.
+
+### 17 Nov: Fix, the angle playground jumped on phones
+
+**What was wrong:** In "How two planets talk" (Explore), the text above the circle changes length as you drag the Moon: two lines for "No special angle", four for a trine. On a phone the text sits above the circle, so the circle jumped up and down under your finger. Salma found it in a screen recording on her iPhone.
+
+**The fix:** When the page loads, the playground tries every angle once, measures the tallest text and keeps that much space, so the circle never moves. It measures again if the screen size changes or the fonts load late. Tested at phone widths (320 and 375) and on a computer: the circle stays in the same place at every angle.
+
+**AI vs me:** I found the problem on my phone. Claude found the cause and fixed it.

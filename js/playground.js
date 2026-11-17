@@ -7,9 +7,9 @@
 // explains that aspect.
 // ---------------------------------------------------------------
 
-import { ASPECTS } from './astro/settings.js?v=202611172045';
-import { aspectBetween } from './astro/aspects.js?v=202611172045';
-import { ASPECT_TEXT } from './content/basics.js?v=202611172045';
+import { ASPECTS } from './astro/settings.js?v=202611172049';
+import { aspectBetween } from './astro/aspects.js?v=202611172049';
+import { ASPECT_TEXT } from './content/basics.js?v=202611172049';
 
 const NS = 'http://www.w3.org/2000/svg';
 const C = 200;   // centre of the 400 × 400 drawing
@@ -145,5 +145,30 @@ export function setUpPlayground(box, readout, yours = null) {
     update();
   });
 
-  update();
+  // Keep the text box the same height whatever it says. Otherwise, on a
+  // phone, the circle jumps up and down under your finger as the text
+  // gets longer or shorter. We try every angle once, measure the tallest
+  // text, and keep that much space. Done again if the screen size changes.
+  function reserveSpace() {
+    const saved = angle;
+    readout.style.minHeight = '';
+    let tallest = 0;
+    for (const a of [start, ...Array.from({ length: 181 }, (_, i) => FIXED + i)]) {
+      angle = a;
+      update();
+      tallest = Math.max(tallest, readout.offsetHeight);
+    }
+    angle = saved;
+    update();
+    readout.style.minHeight = `${tallest}px`;
+  }
+  reserveSpace();
+  let lastWidth = window.innerWidth;
+  window.addEventListener('resize', () => {
+    if (window.innerWidth === lastWidth) return; // phones resize when the address bar hides: ignore that
+    lastWidth = window.innerWidth;
+    reserveSpace();
+  });
+  // The fonts may arrive after this runs and change the text size.
+  document.fonts?.ready.then(reserveSpace);
 }
