@@ -829,3 +829,15 @@ Also: topic pages (Explore) now only show what’s new for that topic. Removed t
 - Small fix: "(a transit)." no longer breaks across two lines.
 
 **AI vs me:** Me: noticed the Next link was in the wrong place and asked for a subtitle that shows This week is the engaging extra part. Claude: moved it and suggested the label wording.
+
+## 17 Nov 2026 · Tapping the wheel on a phone
+
+**Problem I found:** on my phone you can't hover. Tapping a planet took me straight down to its explanation, so I never saw the small box that says what it is.
+
+**What changed (My Chart and Connections):**
+- On phones and tablets, tapping a planet, a line or a sign **only opens the box**. Nothing jumps.
+- The box now has its own button, **"Read the full explanation ↓"**, for when you want to go further. Before, you had to "tap the symbol again", which was easy to do by accident.
+- The instructions change on phones: "Tap anything on the wheel to see what it is" instead of "Hover over…".
+- On a laptop nothing changed: hover shows the box, click goes to the explanation.
+
+**AI vs me:** Me: tested on my phone and found the problem. Claude: changed how taps work and added the button.

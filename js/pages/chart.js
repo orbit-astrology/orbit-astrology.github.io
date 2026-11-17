@@ -9,17 +9,17 @@
 //   4. write "Your chart, explained": one section per placement
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611171357';
-import { formatOffset } from '../astro/time.js?v=202611171357';
-import { drawWheel } from '../wheel.js?v=202611171357';
-import { placeTip } from '../tip-position.js?v=202611171357';
-import { setUpGlossary, termButton } from '../glossary.js?v=202611171357';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611171357';
-import { loadBirth } from '../store.js?v=202611171357';
-import { saveButton } from '../save-button.js?v=202611171357';
-import { runTour } from '../tour.js?v=202611171357';
-import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611171357';
-import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202611171357';
+import { calculateChart } from '../astro/chart.js?v=202611171402';
+import { formatOffset } from '../astro/time.js?v=202611171402';
+import { drawWheel } from '../wheel.js?v=202611171402';
+import { placeTip } from '../tip-position.js?v=202611171402';
+import { setUpGlossary, termButton } from '../glossary.js?v=202611171402';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611171402';
+import { loadBirth } from '../store.js?v=202611171402';
+import { saveButton } from '../save-button.js?v=202611171402';
+import { runTour } from '../tour.js?v=202611171402';
+import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611171402';
+import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202611171402';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
@@ -63,9 +63,14 @@ const tip = $('tip');
 const area = $('wheel-area');
 let tipOwner = null;     // the thing the explanation box is currently about
 let lastPointer = 'mouse';
-let tipBeforeTap = null; // what the box showed just before a tap (phones)
 let tapped = null;       // the sign or house whose box was opened by the last tap or click
-area.addEventListener('pointerdown', (e) => { lastPointer = e.pointerType; tipBeforeTap = tipOwner; }, true);
+// Phones and tablets have no mouse to hover with. There, tapping only opens
+// the box, and the box has its own button to go to the full explanation.
+const touchScreen = () => lastPointer === 'touch' || matchMedia('(hover: none)').matches;
+if (touchScreen()) {
+  $('chart-lede').textContent = 'All your planets, on one map. Tap anything on the wheel to see what it is.';
+}
+area.addEventListener('pointerdown', (e) => { lastPointer = e.pointerType; }, true);
 // On phones there's no "mouse leaving", so the box closes when you tap
 // anywhere outside the wheel instead.
 document.addEventListener('pointerdown', (e) => {
@@ -83,9 +88,8 @@ function planetTip(p) {
     meta: p.uncertain ? 'Depends on your birth time' : meta.join(' · '),
     text: `${capital(p.what)}: ${how}.`,
     // Say WHAT to click: the box itself disappears when the mouse moves to it.
-    action: lastPointer === 'touch'
-      ? `Tap the ${p.name} symbol again to read its full explanation ↓`
-      : `Click the ${p.name} symbol on the wheel to read its full explanation ↓`,
+    action: `Click the ${p.name} symbol on the wheel to read its full explanation ↓`,
+    go: () => goToReading(p.id), // the button in the box on phones
   };
 }
 
@@ -112,8 +116,8 @@ function houseTip(n) {
 function angleTip(id) {
   const p = byId[id];
   return id === 'rising'
-    ? { title: `Rising sign: ${signLabel(p)}`, meta: 'ASC, the Ascendant', text: 'The sign coming up over the horizon when you were born: how you come across.', action: 'Click to read more ↓' }
-    : { title: `Midheaven: ${signLabel(p)}`, meta: 'MC, the top of the chart', text: 'Linked to your direction in life and how you want to be seen.', action: 'Click to read more ↓' };
+    ? { title: `Rising sign: ${signLabel(p)}`, meta: 'ASC, the Ascendant', text: 'The sign coming up over the horizon when you were born: how you come across.', action: 'Double-click to read more ↓', go: () => goToReading(id) }
+    : { title: `Midheaven: ${signLabel(p)}`, meta: 'MC, the top of the chart', text: 'Linked to your direction in life and how you want to be seen.', action: 'Double-click to read more ↓', go: () => goToReading(id) };
 }
 
 function showTip(owner, content) {
@@ -122,8 +126,17 @@ function showTip(owner, content) {
     make('h3', '', content.title),
     make('p', 'tip-meta', content.meta),
     make('p', '', content.text),
-    make('p', 'tip-action', content.action),
   );
+  if (touchScreen() && content.go) {
+    // Phones: a real button inside the box, instead of "tap again".
+    const button = make('button', 'tip-go', 'Read the full explanation ↓');
+    button.type = 'button';
+    button.addEventListener('click', () => { const go = content.go; hideTip(); unfocus(); go(); });
+    tip.append(button);
+  } else if (content.action) {
+    tip.append(make('p', 'tip-action', content.action));
+  }
+  tip.classList.toggle('has-button', touchScreen() && Boolean(content.go));
   tip.hidden = false;
   placeTip(tip, owner, svg, area); // beside the wheel, never on top of it
 }
@@ -178,7 +191,7 @@ for (const g of svg.querySelectorAll('.planet')) {
   g.setAttribute('role', 'button');
   g.setAttribute('aria-label', `${p.name} in ${signLabel(p)}, ${p.uncertain ? '' : `${Math.floor(p.degree)} degrees`}${p.house ? `, ${houseText(p)}` : ''}. Open its explanation.`);
   const enter = () => { showTip(g, planetTip(p)); focusPlanet(p.id); };
-  const leave = () => { if (lastPointer === 'touch') return; hideTip(); unfocus(); };
+  const leave = () => { if (touchScreen()) return; hideTip(); unfocus(); };
   g.addEventListener('mouseenter', enter);
   g.addEventListener('mouseleave', leave);
   g.addEventListener('focus', enter);
@@ -189,8 +202,8 @@ for (const g of svg.querySelectorAll('.planet')) {
     goToReading(p.id);
   };
   g.addEventListener('click', () => {
-    // On a phone, the first tap shows the box; the second tap opens the reading.
-    if (lastPointer === 'touch' && tipBeforeTap !== g) { enter(); return; }
+    // On a phone, a tap only shows the box (with its own button to read more).
+    if (touchScreen()) { enter(); return; }
     open();
   });
   g.addEventListener('keydown', (e) => {
@@ -201,7 +214,7 @@ for (const g of svg.querySelectorAll('.planet')) {
 // Signs, houses and the ASC/MC labels: hover or tap to see what they are.
 function hoverable(node, content) {
   node.addEventListener('mouseenter', () => showTip(node, content()));
-  node.addEventListener('mouseleave', () => { if (lastPointer !== 'touch') hideTip(); });
+  node.addEventListener('mouseleave', () => { if (!touchScreen()) hideTip(); });
   node.addEventListener('click', () => {
     // A tap or click opens the box; doing it again on the same thing closes it.
     if (tapped === node) { hideTip(); return; }
