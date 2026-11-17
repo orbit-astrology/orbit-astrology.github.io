@@ -52,6 +52,8 @@
 }
 .login-link:hover { background: var(--champagne); color: var(--ink); }
 .welcome-account[hidden] { display: none; }
+/* No line under the account box when the birth form below it is hidden. */
+.welcome-account:has(~ #create[hidden]) { border-bottom: 0; padding-bottom: 0; }
 .welcome-back { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
 .welcome-back p { margin: 0; }
 .welcome-back[hidden], #create[hidden] { display: none; }

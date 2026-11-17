@@ -847,3 +847,14 @@ Also: topic pages (Explore) now only show what’s new for that topic. Removed t
 **What changed:** on the first page, "birth chart" in the intro is now plain text instead of a word you can hover to open a definition box. The box appeared over the background wheel and felt like too much on the very first screen.
 
 **AI vs me:** Me: asked for it to go. Claude: removed it.
+
+## 17 Nov 2026 · First page: logging in without the birth form
+
+**Problem I found:** pressing "Log in or sign up" opened the account box on top of the birth form, so you saw two forms at once.
+
+**What changed:**
+- While you log in or sign up, **only the account box shows**. The birth form is hidden.
+- The top button turns into **"Close"**, which brings the birth form back.
+- After you log in: if your account already has a chart, you go straight to My Universe. If not (a new account), the birth form comes back so you can add your birth details.
+
+**AI vs me:** Me: decided the order (account first, then birth details). Claude: built it.

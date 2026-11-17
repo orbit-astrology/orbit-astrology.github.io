@@ -13,13 +13,13 @@
 // replaced by a "Welcome back" link to your universe.
 // ---------------------------------------------------------------
 
-import { skyAt } from '../astro/sky.js?v=202611171404';
-import { drawWheel } from '../wheel.js?v=202611171404';
-import { setUpGlossary } from '../glossary.js?v=202611171404';
-import { setUpBirthForm } from '../birth-form.js?v=202611171404';
-import { startCloud, currentUser, cloudReady } from '../cloud.js?v=202611171404';
-import { setUpAccountPanel } from '../account-panel.js?v=202611171404';
-import { saveBirth, loadBirth, sameBirth, startFresh, SAMPLE_BIRTH } from '../store.js?v=202611171404';
+import { skyAt } from '../astro/sky.js?v=202611171406';
+import { drawWheel } from '../wheel.js?v=202611171406';
+import { setUpGlossary } from '../glossary.js?v=202611171406';
+import { setUpBirthForm } from '../birth-form.js?v=202611171406';
+import { startCloud, currentUser, cloudReady } from '../cloud.js?v=202611171406';
+import { setUpAccountPanel } from '../account-panel.js?v=202611171406';
+import { saveBirth, loadBirth, sameBirth, startFresh, SAMPLE_BIRTH } from '../store.js?v=202611171406';
 
 const $ = (id) => document.getElementById(id);
 
@@ -97,9 +97,13 @@ function showRightSide() {
   $('account').hidden = !loggedIn && !accountOpen;
   $('login-link').hidden = loggedIn || !cloudReady;
   $('login-link').setAttribute('aria-expanded', String(accountOpen));
+  // The top button says "Close" while the log-in box is open.
+  $('login-link').textContent = accountOpen && !loggedIn ? 'Close' : 'Log in or sign up';
   const welcomeBack = loggedIn && hasChart();
   $('welcome-back').hidden = !welcomeBack;
-  $('create').hidden = welcomeBack;
+  // While you're logging in or signing up, only the account box shows.
+  // Once you're in (and have no chart yet), the birth form comes back.
+  $('create').hidden = welcomeBack || (accountOpen && !loggedIn);
   $('continue-link').hidden = welcomeBack || !hasChart();
 }
 
@@ -135,7 +139,8 @@ $('sample').addEventListener('click', () => goToUniverse(SAMPLE_BIRTH, (m) => { 
 const mode = await startCloud(); // logs you in from an email link, and syncs
 showRightSide();
 
-// "Log in" at the top opens the account box (press again to close it).
+// "Log in or sign up" at the top opens the account box instead of the
+// birth form ("Close" brings the form back).
 $('login-link').addEventListener('click', () => {
   accountOpen = !accountOpen;
   showRightSide();
