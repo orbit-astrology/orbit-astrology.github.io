@@ -14,9 +14,9 @@
 // "friend-place" on Connections.
 // ---------------------------------------------------------------
 
-import { calculateChart } from './astro/chart.js?v=202611171353';
-import { searchPlaces } from './astro/places.js?v=202611171353';
-import { formatOffset } from './astro/time.js?v=202611171353';
+import { calculateChart } from './astro/chart.js?v=202611171357';
+import { searchPlaces } from './astro/places.js?v=202611171357';
+import { formatOffset } from './astro/time.js?v=202611171357';
 
 // Options:
 //   form, prefix  – the <form> and the start of its ids

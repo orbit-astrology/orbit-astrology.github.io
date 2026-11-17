@@ -104,3 +104,4 @@
   .placement { padding-block: 24px; }
   .placement + .placement { border-top: 1px solid var(--line); }
 }
+.no-break { white-space: nowrap; } /* keeps "(a transit)." together on one line */

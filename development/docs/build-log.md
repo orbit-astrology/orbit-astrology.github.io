@@ -818,3 +818,14 @@ Also: topic pages (Explore) now only show what’s new for that topic. Removed t
 - **My Chart:** the small explanations in brackets ("who you are", "carefully and helpfully") are a little bigger, so they're readable on a phone.
 
 **AI vs me:** Me: asked Adrián for feedback and decided to act on it. Claude: did the phone check and made these fixes for me to review on my phone.
+
+## 17 Nov 2026 · My Universe: "Next" moved to the end
+
+**Problem I found:** "Next: See your whole chart →" sat right after the Big Three, so people would click it before ever seeing This week and Travel through time.
+
+**What changed:**
+- "Next: See your whole chart →" is now the last thing on the page, after "Your universe is saved".
+- A small label above This week, **"Your chart, day by day"**, shows that this part is the extra, fun part: your chart in the real sky, about you specifically.
+- Small fix: "(a transit)." no longer breaks across two lines.
+
+**AI vs me:** Me: noticed the Next link was in the wrong place and asked for a subtitle that shows This week is the engaging extra part. Claude: moved it and suggested the label wording.
