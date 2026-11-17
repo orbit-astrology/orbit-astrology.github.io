@@ -215,6 +215,7 @@ select {
   width: max-content; max-width: min(300px, 80vw);
   padding: 12px 14px; background: var(--bone); color: var(--ink);
   font: 14px/1.5 var(--sans); letter-spacing: 0; text-transform: none; text-align: left;
+  white-space: normal; /* wraps inside the box, even when the word around it must not break */
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
 }
 /* The pop-up always keeps dark text on its light box, whatever page

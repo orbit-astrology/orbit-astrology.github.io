@@ -17,11 +17,11 @@
 // Status: first draft written with AI. Salma reviews and edits.
 // ---------------------------------------------------------------
 
-import { SIGN_TRAITS as T, SIGNS, HOUSES } from './basics.js?v=202611171410';
+import { SIGN_TRAITS as T, SIGNS, HOUSES } from './basics.js?v=202611171412';
 import {
   WATCH, MERCURY_TOPIC, MOON_TOPIC, VENUS_TOPIC, MARS_TOPIC,
   MIDHEAVEN_TOPIC, SATURN_TOPIC, JUPITER_TOPIC,
-} from './topic-texts.js?v=202611171410';
+} from './topic-texts.js?v=202611171412';
 
 // "Putting it together" helpers. sign(id) gives the sign of one of
 // your placements, or null if it isn't certain (no birth time).

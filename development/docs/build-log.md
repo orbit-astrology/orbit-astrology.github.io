@@ -866,3 +866,13 @@ Also: topic pages (Explore) now only show what’s new for that topic. Removed t
 **What changed:** every one of these words now has a **dashed gold line** underneath, on every page and in every browser. When you point at it, the line turns solid. (The old dotted underline didn't show up in Safari, because Safari doesn't draw underlines on this kind of element; a border line works everywhere.)
 
 **AI vs me:** Me: asked for a dashed line so people know they can learn something there. Claude: found why it was missing and made it work everywhere.
+
+## 17 Nov 2026 · Fix: the "transit" explanation ran out of its box
+
+**Problem I found:** on My Universe, the explanation box for "a transit" was too narrow and the text ran outside it, over the page.
+
+**Why:** to stop "(a transit)." breaking across two lines, that bit of text was told never to wrap, and the box inside it copied that rule.
+
+**Fix:** the explanation boxes always wrap their text, whatever is around them.
+
+**AI vs me:** Me: spotted it. Claude: found the cause (its own earlier change) and fixed it.
