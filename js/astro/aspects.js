@@ -4,8 +4,8 @@
 // 90°, 120° or 180°, give or take an "orb" (see settings.js).
 // ---------------------------------------------------------------
 
-import { ASPECTS } from './settings.js?v=202611171402';
-import { separation } from './zodiac.js?v=202611171402';
+import { ASPECTS } from './settings.js?v=202611171404';
+import { separation } from './zodiac.js?v=202611171404';
 
 // Which aspect, if any, two longitudes make. Returns the closest
 // matching aspect, or null.

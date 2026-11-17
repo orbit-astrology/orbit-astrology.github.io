@@ -841,3 +841,9 @@ Also: topic pages (Explore) now only show what’s new for that topic. Removed t
 - On a laptop nothing changed: hover shows the box, click goes to the explanation.
 
 **AI vs me:** Me: tested on my phone and found the problem. Claude: changed how taps work and added the button.
+
+## 17 Nov 2026 · First page: no pop-up on "birth chart"
+
+**What changed:** on the first page, "birth chart" in the intro is now plain text instead of a word you can hover to open a definition box. The box appeared over the background wheel and felt like too much on the very first screen.
+
+**AI vs me:** Me: asked for it to go. Claude: removed it.
