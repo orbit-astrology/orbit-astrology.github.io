@@ -905,3 +905,9 @@ Also: topic pages (Explore) now only show what’s new for that topic. Removed t
 **What changed:** A thin line now separates "Next: See your whole chart" from "Your universe is saved…", and the saved message (title, text and buttons) is centred again, so it closes the page like a sign-off.
 
 **AI vs me:** I asked for the line and for the message to go back to the centre. Claude changed the styles and checked computer and phone sizes.
+
+### 17 Nov: Constellations without captions
+
+**What changed:** Removed the small caption under each constellation ("The stars Leo is named after"). The drawing speaks for itself, with the sign's name just below it. Screen readers still read "The stars of Leo".
+
+**AI vs me:** I decided to remove the captions. Claude made the change.

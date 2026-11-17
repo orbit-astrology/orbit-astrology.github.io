@@ -5,12 +5,12 @@
 // page only proves the numbers are right.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../../js/astro/chart.js?v=202611172044';
-import { searchPlaces } from '../../js/astro/places.js?v=202611172044';
-import { formatLongitude } from '../../js/astro/zodiac.js?v=202611172044';
-import { formatOffset } from '../../js/astro/time.js?v=202611172044';
-import { REFERENCE_CHARTS } from '../tests/reference-charts.js?v=202611172044';
-import { runChecks } from '../tests/checks.js?v=202611172044';
+import { calculateChart } from '../../js/astro/chart.js?v=202611172045';
+import { searchPlaces } from '../../js/astro/places.js?v=202611172045';
+import { formatLongitude } from '../../js/astro/zodiac.js?v=202611172045';
+import { formatOffset } from '../../js/astro/time.js?v=202611172045';
+import { REFERENCE_CHARTS } from '../tests/reference-charts.js?v=202611172045';
+import { runChecks } from '../tests/checks.js?v=202611172045';
 
 const $ = (id) => document.getElementById(id);
 

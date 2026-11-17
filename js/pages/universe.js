@@ -8,17 +8,17 @@
 //   - this week's sky, matched against your chart
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611172044';
-import { weeklyEvents } from '../astro/sky.js?v=202611172044';
-import { risingText, marginText, placements, reading } from '../readings.js?v=202611172044';
-import { drawWheel } from '../wheel.js?v=202611172044';
-import { drawConstellation } from '../constellations.js?v=202611172044';
-import { setUpTimeTravel } from '../time-travel.js?v=202611172044';
-import { cloudReady, currentUser } from '../cloud.js?v=202611172044';
-import { setUpGlossary } from '../glossary.js?v=202611172044';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611172044';
-import { loadBirth } from '../store.js?v=202611172044';
-import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202611172044';
+import { calculateChart } from '../astro/chart.js?v=202611172045';
+import { weeklyEvents } from '../astro/sky.js?v=202611172045';
+import { risingText, marginText, placements, reading } from '../readings.js?v=202611172045';
+import { drawWheel } from '../wheel.js?v=202611172045';
+import { drawConstellation } from '../constellations.js?v=202611172045';
+import { setUpTimeTravel } from '../time-travel.js?v=202611172045';
+import { cloudReady, currentUser } from '../cloud.js?v=202611172045';
+import { setUpGlossary } from '../glossary.js?v=202611172045';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611172045';
+import { loadBirth } from '../store.js?v=202611172045';
+import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202611172045';
 
 const $ = (id) => document.getElementById(id);
 
@@ -85,11 +85,9 @@ function placement({ label, sign, text, note, id, constellation }) {
   // comes into view. Only when the sign is certain: never a guess.
   const stars = constellation && drawConstellation(constellation);
   if (stars) {
-    const figure = document.createElement('figure');
+    const figure = document.createElement('div');
     figure.className = 'placement-stars';
-    const caption = document.createElement('figcaption');
-    caption.textContent = `The stars ${constellation} is named after`;
-    figure.append(stars.svg, caption);
+    figure.append(stars.svg);
     col.append(figure);
     col.playStars = stars.play;
   }

@@ -27,7 +27,6 @@
    Lines start hidden and draw in; stars light up as a line reaches them. */
 .placement-stars { margin: 4px 0 6px; display: flex; flex-direction: column; gap: 6px; }
 .placement-stars svg { width: 180px; height: 108px; display: block; overflow: visible; }
-.placement-stars figcaption { font-size: 13px; letter-spacing: 0.02em; color: var(--bone-soft); }
 .c-line { stroke: var(--bone); stroke-opacity: 0.55; stroke-width: 1; }
 .c-star { fill: var(--champagne); opacity: 0; }
 .drawn .c-line { animation-name: draw-line; animation-timing-function: ease-out; animation-fill-mode: forwards; }
