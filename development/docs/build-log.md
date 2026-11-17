@@ -858,3 +858,11 @@ Also: topic pages (Explore) now only show what’s new for that topic. Removed t
 - After you log in: if your account already has a chart, you go straight to My Universe. If not (a new account), the birth form comes back so you can add your birth details.
 
 **AI vs me:** Me: decided the order (account first, then birth details). Claude: built it.
+
+## 17 Nov 2026 · Words you can learn about: a clear dashed line
+
+**Problem I found:** words like "Big Three" open a little explanation, but on my laptop (Safari) there was no line under them, so you couldn't tell.
+
+**What changed:** every one of these words now has a **dashed gold line** underneath, on every page and in every browser. When you point at it, the line turns solid. (The old dotted underline didn't show up in Safari, because Safari doesn't draw underlines on this kind of element; a border line works everywhere.)
+
+**AI vs me:** Me: asked for a dashed line so people know they can learn something there. Claude: found why it was missing and made it work everywhere.

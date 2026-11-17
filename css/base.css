@@ -199,15 +199,17 @@ select {
 .error-text:empty { display: none; }
 
 /* --- 6. "What does this word mean?" pop-ups ----------------------- */
-/* Any astrology word with a dotted underline can be hovered, focused
+/* Any astrology word with a dashed underline can be hovered, focused
    or tapped to show a one-line plain explanation (js/glossary.js). */
 
 .term {
   font: inherit; color: inherit; text-transform: inherit; letter-spacing: inherit; background: none; border: 0; padding: 0; margin: 0;
   cursor: help; position: relative; display: inline;
-  text-decoration: underline dotted; text-decoration-color: var(--champagne);
-  text-underline-offset: 4px; text-decoration-thickness: 1px;
+  /* A dashed gold line under the word: "there's something to learn here".
+     A border (not an underline) so it looks the same in every browser. */
+  text-decoration: none; border-bottom: 1.5px dashed var(--champagne); padding-bottom: 1px;
 }
+.term:hover, .term:focus-visible { border-bottom-style: solid; }
 .term-popup {
   position: absolute; z-index: 50; left: 0; top: calc(100% + 8px);
   width: max-content; max-width: min(300px, 80vw);
