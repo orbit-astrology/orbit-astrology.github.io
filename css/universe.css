@@ -49,7 +49,7 @@
 .week-day { font-weight: 600; }
 
 /* Saved in this browser */
-.save { padding-block: 48px 0; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; } /* left-aligned, like the rest of the site */
+.save { padding-block: 8px 64px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; } /* left-aligned, like the rest of the site */
 .save p { margin: 0; max-width: 52ch; }
 .save-title { font-size: clamp(1.4rem, 2.2vw, 1.8rem); }
 

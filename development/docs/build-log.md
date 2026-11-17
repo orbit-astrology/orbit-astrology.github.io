@@ -876,3 +876,9 @@ Also: topic pages (Explore) now only show what’s new for that topic. Removed t
 **Fix:** the explanation boxes always wrap their text, whatever is around them.
 
 **AI vs me:** Me: spotted it. Claude: found the cause (its own earlier change) and fixed it.
+
+### 17 Nov: My Universe, "Next" above the saved message
+
+**What changed:** At the end of My Universe, "Next: See your whole chart" now comes before "Your universe is saved…", so the next step follows straight on from This week and the account message closes the page.
+
+**AI vs me:** I decided the order. Claude moved the section and adjusted the spacing.
