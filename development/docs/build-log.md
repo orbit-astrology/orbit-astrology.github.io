@@ -899,3 +899,9 @@ Also: topic pages (Explore) now only show what’s new for that topic. Removed t
 - Restrained motion: about 2 seconds per drawing, and it only plays once. People whose device asks for less motion see the finished drawing straight away.
 
 **AI vs me:** I chose this idea and where it goes (My Universe). Claude wrote the code, entered the star positions and checked it on computer and phone sizes.
+
+### 17 Nov: My Universe, saved message centred under a line
+
+**What changed:** A thin line now separates "Next: See your whole chart" from "Your universe is saved…", and the saved message (title, text and buttons) is centred again, so it closes the page like a sign-off.
+
+**AI vs me:** I asked for the line and for the message to go back to the centre. Claude changed the styles and checked computer and phone sizes.
