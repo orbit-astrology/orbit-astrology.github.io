@@ -23,6 +23,23 @@
 .placement p { margin: 0; max-width: 32ch; }
 .placement .note { font-size: 14px; color: var(--bone-soft); }
 /* The longer explanation that "Read more" opens */
+/* The stars each sign is named after (js/constellations.js).
+   Lines start hidden and draw in; stars light up as a line reaches them. */
+.placement-stars { margin: 4px 0 6px; display: flex; flex-direction: column; gap: 6px; }
+.placement-stars svg { width: 180px; height: 108px; display: block; overflow: visible; }
+.placement-stars figcaption { font-size: 13px; letter-spacing: 0.02em; color: var(--bone-soft); }
+.c-line { stroke: var(--bone); stroke-opacity: 0.55; stroke-width: 1; }
+.c-star { fill: var(--champagne); opacity: 0; }
+.drawn .c-line { animation-name: draw-line; animation-timing-function: ease-out; animation-fill-mode: forwards; }
+.drawn .c-star { animation: light-star 500ms ease-out forwards; }
+@keyframes draw-line { to { stroke-dashoffset: 0; } }
+@keyframes light-star { from { opacity: 0; } to { opacity: 1; } }
+/* People who ask their device for less motion see the finished drawing. */
+@media (prefers-reduced-motion: reduce) {
+  .c-line { stroke-dashoffset: 0 !important; }
+  .c-star { opacity: 1; }
+  .drawn .c-line, .drawn .c-star { animation: none; }
+}
 .placement-more { display: flex; flex-direction: column; gap: 10px; }
 .placement-more p { color: var(--bone-soft); font-size: 15px; max-width: 40ch; }
 

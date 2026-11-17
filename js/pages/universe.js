@@ -8,16 +8,17 @@
 //   - this week's sky, matched against your chart
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611171610';
-import { weeklyEvents } from '../astro/sky.js?v=202611171610';
-import { risingText, marginText, placements, reading } from '../readings.js?v=202611171610';
-import { drawWheel } from '../wheel.js?v=202611171610';
-import { setUpTimeTravel } from '../time-travel.js?v=202611171610';
-import { cloudReady, currentUser } from '../cloud.js?v=202611171610';
-import { setUpGlossary } from '../glossary.js?v=202611171610';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611171610';
-import { loadBirth } from '../store.js?v=202611171610';
-import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202611171610';
+import { calculateChart } from '../astro/chart.js?v=202611172042';
+import { weeklyEvents } from '../astro/sky.js?v=202611172042';
+import { risingText, marginText, placements, reading } from '../readings.js?v=202611172042';
+import { drawWheel } from '../wheel.js?v=202611172042';
+import { drawConstellation } from '../constellations.js?v=202611172042';
+import { setUpTimeTravel } from '../time-travel.js?v=202611172042';
+import { cloudReady, currentUser } from '../cloud.js?v=202611172042';
+import { setUpGlossary } from '../glossary.js?v=202611172042';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611172042';
+import { loadBirth } from '../store.js?v=202611172042';
+import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202611172042';
 
 const $ = (id) => document.getElementById(id);
 
@@ -63,7 +64,7 @@ $('hero-wheel').append(drawWheel(chart, { label: summary }));
 // The longer explanation for "Read more" (the same words as on My Chart).
 const readingsById = Object.fromEntries(placements(chart).map((p) => [p.id, reading(chart, p).slice(1)]));
 
-function placement({ label, sign, text, note, id }) {
+function placement({ label, sign, text, note, id, constellation }) {
   const col = document.createElement('article');
   col.className = 'placement';
 
@@ -78,7 +79,22 @@ function placement({ label, sign, text, note, id }) {
   const textEl = document.createElement('p');
   textEl.append(text);
 
-  col.append(eyebrow, signEl, textEl);
+  col.append(eyebrow);
+
+  // The stars this sign is named after, drawn line by line when the card
+  // comes into view. Only when the sign is certain: never a guess.
+  const stars = constellation && drawConstellation(constellation);
+  if (stars) {
+    const figure = document.createElement('figure');
+    figure.className = 'placement-stars';
+    const caption = document.createElement('figcaption');
+    caption.textContent = `The stars ${constellation} is named after`;
+    figure.append(stars.svg, caption);
+    col.append(figure);
+    col.playStars = stars.play;
+  }
+
+  col.append(signEl, textEl);
 
   if (note) {
     const noteEl = document.createElement('p');
@@ -119,7 +135,7 @@ const cards = [];
 
 cards.push(placement({
   label: 'Sun · who you are',
-  sign: sun.sign, text: SUN_IN[sun.sign], id: 'sun',
+  sign: sun.sign, text: SUN_IN[sun.sign], id: 'sun', constellation: sun.sign,
 }));
 
 if (moon.uncertain) {
@@ -134,7 +150,7 @@ if (moon.uncertain) {
 } else {
   cards.push(placement({
     label: 'Moon · how you feel',
-    sign: moon.sign, text: MOON_IN[moon.sign], id: 'moon',
+    sign: moon.sign, text: MOON_IN[moon.sign], id: 'moon', constellation: moon.sign,
   }));
 }
 
@@ -152,7 +168,7 @@ if (chart.angles?.ascendant.uncertain) {
   const rising = chart.angles.ascendant.sign;
   cards.push(placement({
     label: 'Rising · how you come across',
-    sign: rising, text: RISING_IN[rising], id: 'rising',
+    sign: rising, text: RISING_IN[rising], id: 'rising', constellation: rising,
   }));
 } else {
   cards.push(placement({
@@ -164,6 +180,23 @@ if (chart.angles?.ascendant.uncertain) {
 }
 
 $('big-three').append(...cards);
+
+// Draw each constellation when its card scrolls into view. If several
+// appear together (on a wide screen), they draw one after another.
+const toDraw = cards.filter((card) => card.playStars);
+if ('IntersectionObserver' in window) {
+  const watcher = new IntersectionObserver((entries) => {
+    const seen = entries.filter((e) => e.isIntersecting).map((e) => e.target);
+    seen.sort((a, b) => toDraw.indexOf(a) - toDraw.indexOf(b));
+    seen.forEach((card, i) => {
+      setTimeout(card.playStars, i * 700);
+      watcher.unobserve(card);
+    });
+  }, { threshold: 0.5 });
+  toDraw.forEach((card) => watcher.observe(card));
+} else {
+  toDraw.forEach((card) => card.playStars());
+}
 
 // --- Your sky this week ------------------------------------------------
 

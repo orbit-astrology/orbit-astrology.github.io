@@ -888,3 +888,14 @@ Also: topic pages (Explore) now only show what’s new for that topic. Removed t
 **What changed:** In each reading on the Birth Chart page, the degree (for example "24° (late in the sign)") is now plain text, with no dashed line or pop-up. The words in brackets already say what it means, and repeating the same pop-up under every planet was too much.
 
 **AI vs me:** I asked for it to be removed. Claude changed the code.
+
+### 17 Nov: Design experiment, constellations that draw themselves
+
+**What changed:** Adrián suggested this was the time to try a design feature. On My Universe, each of your Big Three (Sun, Moon, Rising) now shows the stars its sign is named after. When the card scrolls into view, the lines draw one after another and each star lights up as a line reaches it. On a wide screen the three draw in turn: Sun, then Moon, then Rising. A small caption explains it in plain words ("The stars Leo is named after").
+
+**Decisions:**
+- The star positions are real (taken from where each star sits in the sky), drawn as the usual simple stick figures. They live in a new file, `js/constellations.js`.
+- A drawing only appears when the sign is certain. If the Moon or Rising could be more than one sign, or the Rising sign is unknown, there's no drawing, so we never show a guess.
+- Restrained motion: about 2 seconds per drawing, and it only plays once. People whose device asks for less motion see the finished drawing straight away.
+
+**AI vs me:** I chose this idea and where it goes (My Universe). Claude wrote the code, entered the star positions and checked it on computer and phone sizes.
