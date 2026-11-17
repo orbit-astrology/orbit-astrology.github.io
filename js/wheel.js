@@ -15,8 +15,8 @@
 // the left instead.
 // ---------------------------------------------------------------
 
-import { SIGNS as SIGN_NAMES } from './astro/settings.js?v=202611121802';
-import { PLANETS } from './content/basics.js?v=202611121802';
+import { SIGNS as SIGN_NAMES } from './astro/settings.js?v=202611171353';
+import { PLANETS } from './content/basics.js?v=202611171353';
 
 const C = 300;           // centre of the 600 × 600 drawing
 const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -238,9 +238,12 @@ export function drawWheel(chart, options = {}) {
     svg.append(lines, hits);
   }
 
-  svg.append(drawPlanets(chart.bodies.filter(keep), screen, { dot: 122, symbol: 160, leader: 146, person: 'you' }));
+  // On a phone the symbols are drawn bigger (see wheel.css), so they need
+  // more space between them and a bigger area to tap.
+  const phone = window.matchMedia('(max-width: 600px)').matches;
+  svg.append(drawPlanets(chart.bodies.filter(keep), screen, { dot: 122, symbol: 160, leader: 146, person: 'you', gap: phone ? 11 : 8, hit: phone ? 20 : 15 }));
   if (partner) {
-    svg.append(drawPlanets(partner.chart.bodies.filter(keep), screen, { dot: 80, symbol: 101, leader: 92, person: 'them', gap: 12 }));
+    svg.append(drawPlanets(partner.chart.bodies.filter(keep), screen, { dot: 80, symbol: 101, leader: 92, person: 'them', gap: phone ? 15 : 12, hit: phone ? 15 : 12 }));
   }
 
   return svg;
@@ -263,7 +266,7 @@ function drawPlanets(bodies, screen, at) {
     }
     g.append(el('circle', { cx: dx.toFixed(1), cy: dy.toFixed(1), r: 2.6, class: 'planet-dot' }));
     // A larger invisible circle around the symbol, so it's easy to hover or tap.
-    g.append(el('circle', { cx: sx.toFixed(1), cy: sy.toFixed(1), r: at.person === 'them' ? 12 : 15, class: 'planet-hit' }));
+    g.append(el('circle', { cx: sx.toFixed(1), cy: sy.toFixed(1), r: at.hit, class: 'planet-hit' }));
     g.append(el('text', { x: sx.toFixed(1), y: sy.toFixed(1), class: 'planet-symbol', 'text-anchor': 'middle', 'dominant-baseline': 'central' }, PLANETS[body.id].symbol + TEXT));
     planets.append(g);
   }

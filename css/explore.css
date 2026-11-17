@@ -97,3 +97,10 @@
 @media (max-width: 700px) {
   .topic-go { display: none; }
 }
+
+/* Phones: "The signs" goes above its line instead of squeezed beside it. */
+@media (max-width: 600px) {
+  .library-sections summary { flex-wrap: wrap; gap: 4px 16px; }
+  .lib-name { flex: 1 0 auto; }
+  .lib-sub { order: 3; flex-basis: 100%; }
+}

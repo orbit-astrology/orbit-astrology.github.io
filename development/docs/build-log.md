@@ -803,3 +803,18 @@ Also: topic pages (Explore) now only show what’s new for that topic. Removed t
 - **The library** lost "The planets" and "The aspects", because My Chart and "How two planets talk" already explain them. It's now "All 12 signs and houses", with yours marked.
 
 **AI vs me:** Me: noticed the topics said nothing new and that the library repeated My Chart; chose real topic content. Claude: drafted the texts (first draft with AI, I review and edit) and built the "Putting it together" sentences.
+
+## 17 Nov 2026 · Phone check after Adrián's feedback
+
+**Feedback (Adrián, 17 Nov):** the structure and consistency are better; now focus on the user experience and on mobile, so it works smoothly on every screen size. This is also the time to try design experiments.
+
+**What we checked:** every page at two phone sizes (375 px, like an iPhone SE, and 320 px, the smallest common phone): sideways scrolling, text that is too small, things too small to tap, and tapping the wheel and the tour. No page scrolls sideways and there were no errors.
+
+**What changed (phones only, laptops look the same):**
+- **The wheel:** the planet symbols are bigger and spaced further apart, with a bigger area to tap. Before they were about 10 px tall and hard to hit with a finger.
+- **My Universe:** the Big Three sit closer together with a thin line between them, instead of big empty gaps.
+- **Explore library:** "The signs" / "The houses" sit above their line instead of being squeezed beside it.
+- **My Universe, "Your universe is saved":** now left-aligned like everything else (it was the only centred section, with its buttons not lined up under the text).
+- **My Chart:** the small explanations in brackets ("who you are", "carefully and helpfully") are a little bigger, so they're readable on a phone.
+
+**AI vs me:** Me: asked Adrián for feedback and decided to act on it. Claude: did the phone check and made these fixes for me to review on my phone.

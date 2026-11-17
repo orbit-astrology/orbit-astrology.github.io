@@ -57,3 +57,10 @@
 .wheel .planets.them .planet:focus-visible .planet-hit,
 .wheel .planets.them .planet.active .planet-hit { stroke: var(--lilac); }
 
+
+/* Phones: the wheel is small, so the planet symbols are drawn bigger
+   to stay readable and easy to tap (wheel.js also spaces them out more). */
+@media (max-width: 600px) {
+  .wheel .planet-symbol { font-size: 25px; }
+  .wheel .planets.them .planet-symbol { font-size: 20px; }
+}
