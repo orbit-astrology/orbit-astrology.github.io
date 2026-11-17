@@ -8,17 +8,17 @@
 //   - this week's sky, matched against your chart
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611172049';
-import { weeklyEvents } from '../astro/sky.js?v=202611172049';
-import { risingText, marginText, placements, reading } from '../readings.js?v=202611172049';
-import { drawWheel } from '../wheel.js?v=202611172049';
-import { drawConstellation } from '../constellations.js?v=202611172049';
-import { setUpTimeTravel } from '../time-travel.js?v=202611172049';
-import { cloudReady, currentUser } from '../cloud.js?v=202611172049';
-import { setUpGlossary } from '../glossary.js?v=202611172049';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611172049';
-import { loadBirth } from '../store.js?v=202611172049';
-import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202611172049';
+import { calculateChart } from '../astro/chart.js?v=202611172050';
+import { weeklyEvents } from '../astro/sky.js?v=202611172050';
+import { risingText, marginText, placements, reading } from '../readings.js?v=202611172050';
+import { drawWheel } from '../wheel.js?v=202611172050';
+import { drawConstellation } from '../constellations.js?v=202611172050';
+import { setUpTimeTravel } from '../time-travel.js?v=202611172050';
+import { cloudReady, currentUser } from '../cloud.js?v=202611172050';
+import { setUpGlossary } from '../glossary.js?v=202611172050';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611172050';
+import { loadBirth } from '../store.js?v=202611172050';
+import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202611172050';
 
 const $ = (id) => document.getElementById(id);
 

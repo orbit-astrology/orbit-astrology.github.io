@@ -7,9 +7,9 @@
 // explains that aspect.
 // ---------------------------------------------------------------
 
-import { ASPECTS } from './astro/settings.js?v=202611172049';
-import { aspectBetween } from './astro/aspects.js?v=202611172049';
-import { ASPECT_TEXT } from './content/basics.js?v=202611172049';
+import { ASPECTS } from './astro/settings.js?v=202611172050';
+import { aspectBetween } from './astro/aspects.js?v=202611172050';
+import { ASPECT_TEXT } from './content/basics.js?v=202611172050';
 
 const NS = 'http://www.w3.org/2000/svg';
 const C = 200;   // centre of the 400 × 400 drawing
@@ -68,6 +68,8 @@ export function setUpPlayground(box, readout, yours = null) {
     return d > 180 ? 360 - d : d;
   }
 
+  let lastText = null; // what the text box last showed
+
   function update() {
     const [mx, my] = point(R, angle);
     for (const n of [moving, hit]) { n.setAttribute('cx', mx); n.setAttribute('cy', my); }
@@ -77,6 +79,11 @@ export function setUpPlayground(box, readout, yours = null) {
     line.setAttribute('x2', mx); line.setAttribute('y2', my);
 
     const sep = Math.round(separation());
+    // The text only changes when the angle reaches a new whole degree, so
+    // we skip rebuilding it the rest of the time (that keeps dragging smooth).
+    const textKey = `${sep}|${angle === start}`;
+    if (textKey === lastText) return;
+    lastText = textKey;
     const aspect = aspectBetween(FIXED, angle);
     line.setAttribute('class', aspect
       ? `link ${['trine', 'sextile'].includes(aspect.type) ? 'soft' : ''}`
@@ -120,7 +127,10 @@ export function setUpPlayground(box, readout, yours = null) {
   }
 
   // Dragging with a mouse or finger
+  // A finger sends many more "moved" messages than the screen can draw,
+  // so we keep only the latest one and redraw once per screen refresh.
   let dragging = false;
+  let waiting = null; // the latest finger position not drawn yet
   function moveTo(e) {
     const r = svg.getBoundingClientRect();
     const x = ((e.clientX - r.left) / r.width) * 400 - C;
@@ -128,12 +138,25 @@ export function setUpPlayground(box, readout, yours = null) {
     angle = (Math.atan2(y, x) * 180) / Math.PI;
     update();
   }
-  for (const n of [moving, hit]) {
-    n.addEventListener('pointerdown', (e) => { dragging = true; n.setPointerCapture(e.pointerId); moving.focus(); moveTo(e); });
-    n.addEventListener('pointermove', (e) => { if (dragging) moveTo(e); });
-    n.addEventListener('pointerup', () => { dragging = false; });
-    n.addEventListener('pointercancel', () => { dragging = false; });
+  function moveSoon(e) {
+    const first = waiting === null;
+    waiting = { clientX: e.clientX, clientY: e.clientY };
+    if (first) requestAnimationFrame(() => { moveTo(waiting); waiting = null; });
   }
+  // The whole circle listens, so the Moon keeps following even if your
+  // finger slips off it while dragging.
+  for (const n of [moving, hit]) {
+    n.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      dragging = true;
+      svg.setPointerCapture(e.pointerId);
+      moving.focus({ preventScroll: true });
+      moveTo(e);
+    });
+  }
+  svg.addEventListener('pointermove', (e) => { if (dragging) moveSoon(e); });
+  svg.addEventListener('pointerup', () => { dragging = false; });
+  svg.addEventListener('pointercancel', () => { dragging = false; });
 
   // Arrow keys: 1° at a time, or 10° with Shift
   moving.addEventListener('keydown', (e) => {

@@ -919,3 +919,16 @@ Also: topic pages (Explore) now only show what’s new for that topic. Removed t
 **The fix:** When the page loads, the playground tries every angle once, measures the tallest text and keeps that much space, so the circle never moves. It measures again if the screen size changes or the fonts load late. Tested at phone widths (320 and 375) and on a computer: the circle stays in the same place at every angle.
 
 **AI vs me:** I found the problem on my phone. Claude found the cause and fixed it.
+
+### 17 Nov: The angle playground, smoother dragging
+
+**What was wrong:** On Salma's phone the Moon lagged behind her finger. The page was doing too much work on every tiny finger movement: it rebuilt all the text each time, even when the number hadn't changed, and phones send many more movements than the screen can show.
+
+**The fix:**
+- The Moon is redrawn at most once per screen refresh, always at the latest finger position.
+- The text is only rebuilt when the angle reaches a new whole degree.
+- The whole circle now follows the drag, so the Moon keeps moving even if your finger slips off it.
+
+Tested: dragging all the way round, the Moon stays within a fraction of a degree of the finger, and the circle doesn't move.
+
+**AI vs me:** I noticed the lag on my phone. Claude found the causes and fixed them.
