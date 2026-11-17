@@ -10,20 +10,20 @@
 // the address means the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611171601';
-import { drawWheel } from '../wheel.js?v=202611171601';
-import { placeTip } from '../tip-position.js?v=202611171601';
-import { setUpGlossary, termButton } from '../glossary.js?v=202611171601';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611171601';
-import { setUpBirthForm } from '../birth-form.js?v=202611171601';
-import { makeShareLink, readShareCode } from '../share.js?v=202611171601';
-import { setUpAccountPanel } from '../account-panel.js?v=202611171601';
-import { startCloud, currentUser, myInvite, addMeTo } from '../cloud.js?v=202611171601';
-import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202611171601';
-import { risingText } from '../readings.js?v=202611171601';
-import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202611171601';
-import { PERSONAL, LENS_TAGS, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202611171601';
-import { PLANETS, SIGNS } from '../content/basics.js?v=202611171601';
+import { calculateChart } from '../astro/chart.js?v=202611171610';
+import { drawWheel } from '../wheel.js?v=202611171610';
+import { placeTip } from '../tip-position.js?v=202611171610';
+import { setUpGlossary, termButton } from '../glossary.js?v=202611171610';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611171610';
+import { setUpBirthForm } from '../birth-form.js?v=202611171610';
+import { makeShareLink, readShareCode } from '../share.js?v=202611171610';
+import { setUpAccountPanel } from '../account-panel.js?v=202611171610';
+import { startCloud, currentUser, myInvite, addMeTo } from '../cloud.js?v=202611171610';
+import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202611171610';
+import { risingText } from '../readings.js?v=202611171610';
+import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202611171610';
+import { PERSONAL, LENS_TAGS, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202611171610';
+import { PLANETS, SIGNS } from '../content/basics.js?v=202611171610';
 
 const $ = (id) => document.getElementById(id);
 const nameOf = (id) => id[0].toUpperCase() + id.slice(1);

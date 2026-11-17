@@ -882,3 +882,9 @@ Also: topic pages (Explore) now only show what’s new for that topic. Removed t
 **What changed:** At the end of My Universe, "Next: See your whole chart" now comes before "Your universe is saved…", so the next step follows straight on from This week and the account message closes the page.
 
 **AI vs me:** I decided the order. Claude moved the section and adjusted the spacing.
+
+### 17 Nov: Birth Chart, no pop-up on every degree
+
+**What changed:** In each reading on the Birth Chart page, the degree (for example "24° (late in the sign)") is now plain text, with no dashed line or pop-up. The words in brackets already say what it means, and repeating the same pop-up under every planet was too much.
+
+**AI vs me:** I asked for it to be removed. Claude changed the code.

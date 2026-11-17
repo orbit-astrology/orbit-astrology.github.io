@@ -9,17 +9,17 @@
 //   4. write "Your chart, explained": one section per placement
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611171601';
-import { formatOffset } from '../astro/time.js?v=202611171601';
-import { drawWheel } from '../wheel.js?v=202611171601';
-import { placeTip } from '../tip-position.js?v=202611171601';
-import { setUpGlossary, termButton } from '../glossary.js?v=202611171601';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611171601';
-import { loadBirth } from '../store.js?v=202611171601';
-import { saveButton } from '../save-button.js?v=202611171601';
-import { runTour } from '../tour.js?v=202611171601';
-import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611171601';
-import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202611171601';
+import { calculateChart } from '../astro/chart.js?v=202611171610';
+import { formatOffset } from '../astro/time.js?v=202611171610';
+import { drawWheel } from '../wheel.js?v=202611171610';
+import { placeTip } from '../tip-position.js?v=202611171610';
+import { setUpGlossary, termButton } from '../glossary.js?v=202611171610';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611171610';
+import { loadBirth } from '../store.js?v=202611171610';
+import { saveButton } from '../save-button.js?v=202611171610';
+import { runTour } from '../tour.js?v=202611171610';
+import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611171610';
+import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202611171610';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
@@ -298,7 +298,8 @@ for (const p of all) {
   h3.tabIndex = -1;
   head.append(h3);
   const meta = make('p', 'reading-meta');
-  if (!p.uncertain) meta.append(termButton('degree', `${Math.floor(p.degree)}°`), ` (${degreeText(p.degree).split('(')[1]}`);
+  // The degree is plain text: "(early in the sign)" already explains it.
+  if (!p.uncertain) meta.append(`${Math.floor(p.degree)}° (${degreeText(p.degree).split('(')[1]}`);
   if (p.kind === 'planet' && p.house) meta.append(' · ', termButton('house', houseText(p)));
   if (p.houseUncertain) meta.append(' · ', termButton('approximate-time', 'approximate time'));
   if (p.retrograde) meta.append(' · ', termButton('retrograde', 'retrograde'));
