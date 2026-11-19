@@ -932,3 +932,11 @@ Also: topic pages (Explore) now only show what’s new for that topic. Removed t
 Tested: dragging all the way round, the Moon stays within a fraction of a degree of the finger, and the circle doesn't move.
 
 **AI vs me:** I noticed the lag on my phone. Claude found the causes and fixed them.
+
+### 19 Nov: Fewer words on the birth form
+
+**What changed:** On the first page (and the same form on Profile), two texts are shorter:
+- Under "Time of birth": "Don’t know it? Leave it empty. Why?" The "Why?" pop-up still explains what happens without a birth time.
+- Under the button: "Saved in this browser." instead of the longer sentence about accounts.
+
+**AI vs me:** I found the form too wordy and asked for less text. Claude shortened it.
