@@ -1002,3 +1002,9 @@ Both pages use one shared function (`js/born-line.js`) and one style (`.born` in
 **What changed:** Removed the "Start with your Big Three ↓" button from the top of My Universe. The top now has just the title and your birth details next to the wheel, and the Big Three come straight after as you scroll.
 
 **AI vs me:** I asked for it to be removed. Claude made the change.
+
+### 20 Nov: My Chart, birth date under the wheel
+
+**What changed:** On My Chart, the birth date block moved from under the page title to under the wheel, on the left. The top of the page is calmer, and the date sits next to the chart it belongs to.
+
+**AI vs me:** I chose the new place. Claude moved it and checked it on computer and phone.
