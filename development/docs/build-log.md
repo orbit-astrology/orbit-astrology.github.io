@@ -1076,3 +1076,12 @@ Titles and names stay in Bodoni (for example "Sun in Virgo", "Waning gibbous", "
 2. When they're calculated live (the slider, Friendship/Romance), each version is drawn once out of sight, measured, and the box is given the tallest height.
 
 **AI vs me:** I noticed the line jumping when I tapped, and asked for it never to happen on the whole website. I also asked for the titles to stop following me. Claude found every place this happened, fixed it and checked that nothing moves on computer and phone.
+
+## 20 November 2026 (night): Fewer title-font words on Explore; numbers removed; pop-up fix
+
+**What changed:**
+- **Only the section titles use Bodoni on Explore now.** The element names (Fire, Earth…), the name above the element text, the Moon phase name ("Waning gibbous") and the life moment names are now in Manrope, like the rest of the text, so they're easier to read. Bodoni stays for the three section titles ("Your elements", "The Moon you were born under", "Your big life moments").
+- **The big numbers 01, 02, 03 are gone** from above the section titles.
+- **Fixed an empty-looking pop-up.** When a dashed word sat inside bold text (like "Waning **gibbous**" under the Moon shapes), the word's name at the top of the pop-up took the light colour of the text around it, so it was invisible on the light box and looked like blank space. The name now always shows in dark ink. Checked every dashed word on every page.
+
+**AI vs me:** I asked for the title font to be removed from the rest of the names, for the numbers to go, and pointed out the pop-up that looked empty. Claude changed the fonts, removed the numbers and found why the pop-up title was invisible.

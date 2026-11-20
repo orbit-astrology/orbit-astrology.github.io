@@ -8,11 +8,11 @@
 // js/content/personal-texts.js.
 // ---------------------------------------------------------------
 
-import { elementBalance, birthMoonPhase, lifeMoments, PHASES } from './astro/personal.js?v=202611201858';
-import { ELEMENTS, ELEMENT_PAIRS, PHASE_TEXT, PHASE_LIFE, MOMENT_TEXT, RETURN_THEME } from './content/personal-texts.js?v=202611201858';
-import { PLANETS } from './content/basics.js?v=202611201858';
-import { stack } from './steady.js?v=202611201858';
-import { termButton } from './glossary.js?v=202611201858';
+import { elementBalance, birthMoonPhase, lifeMoments, PHASES } from './astro/personal.js?v=202611202105';
+import { ELEMENTS, ELEMENT_PAIRS, PHASE_TEXT, PHASE_LIFE, MOMENT_TEXT, RETURN_THEME } from './content/personal-texts.js?v=202611202105';
+import { PLANETS } from './content/basics.js?v=202611202105';
+import { stack } from './steady.js?v=202611202105';
+import { termButton } from './glossary.js?v=202611202105';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const make = (tag, className, text) => {
@@ -56,16 +56,16 @@ const termed = (tag, className, text, keys) => {
   return n;
 };
 
-// A numbered section: on the left its number, title and a short
+// A section: on the left its title and a short
 // introduction; on the right ("body") the part about you.
 // Returns [section, body].
-function section(id, number, title, intro) {
+function section(id, title, intro) {
   const box = make('section', 'personal wrap');
   box.setAttribute('aria-labelledby', `${id}-title`);
   const head = make('div', 'personal-head');
   const h2 = make('h2', 'section-title', title);
   h2.id = `${id}-title`;
-  head.append(make('p', 'personal-number', number), h2, termed('p', 'lede', intro));
+  head.append(h2, termed('p', 'lede', intro));
   const body = make('div', 'personal-body');
   box.append(head, body);
   return [box, body];
@@ -112,7 +112,7 @@ function elementsSection(chart) {
   const top = names.filter((n) => balance[n].length === most);
   const low = names.filter((n) => balance[n].length === least);
 
-  const [box, body] = section('elements', '01', 'Your elements',
+  const [box, body] = section('elements', 'Your elements',
     'Every sign belongs to one of four elements: Fire, Earth, Air or Water. Each element is a way of meeting the world. Here is where your ten planets are. Tap an element to read about it.');
 
   // The headline: your strongest element(s).
@@ -205,7 +205,7 @@ function moonDrawing(angle, southern) {
 function moonSection(chart) {
   const { angle, phases, lit } = birthMoonPhase(chart);
   const southern = chart.input.place.latitude < 0;
-  const [box, body] = section('moon-phase', '02', 'The Moon you were born under',
+  const [box, body] = section('moon-phase', 'The Moon you were born under',
     'The Moon’s shape changes through the month, depending on where it is compared with the Sun. This is how it looked on the day you were born.');
 
   const inner = make('div', 'moon-phase');
@@ -286,7 +286,7 @@ const SHAPE = { 'jupiter-return': 'circle', 'saturn-return': 'square', 'uranus-o
 
 function momentsSection(chart, now = new Date()) {
   const all = lifeMoments(chart);
-  const [box, body] = section('moments', '03', 'Your big life moments',
+  const [box, body] = section('moments', 'Your big life moments',
     'The slow planets take years to travel around the sky. When one comes back to where it was when you were born (a return), or reaches the opposite side (an opposition), astrologers see a turning point in your life. These are your real dates.');
   if (!all.length) return box;
 

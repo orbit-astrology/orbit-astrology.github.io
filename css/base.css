@@ -220,8 +220,10 @@ select {
 }
 /* The pop-up always keeps dark text on its light box, whatever page
    styles are around it (".term >" makes this rule win). */
-.term > .term-popup { color: var(--ink); }
-.term-popup strong { display: block; font-family: var(--serif); font-weight: 400; font-size: 18px; margin-bottom: 2px; }
+.term > .term-popup, .term > .term-popup strong { color: var(--ink); }
+/* The word's name at the top of the pop-up: dark, in its own light box,
+   whatever the sentence around it looks like (bold, light colour...). */
+.term > .term-popup strong { display: block; font-family: var(--serif); font-weight: 400; font-size: 18px; letter-spacing: 0; margin-bottom: 2px; }
 .term-popup[hidden] { display: none; }
 
 /* --- 7. Footer ---------------------------------------------------- */

@@ -58,13 +58,12 @@
 
 
 /* --- About you: elements, birth Moon, big life moments (js/personal-sections.js) --- */
-/* Each section: a champagne line, then the number, title and intro on
+/* Each section: a champagne line, then the title and intro on
    the left and the part about you on the right (stacked on small screens). */
 .personal { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.1fr); gap: 24px 64px; padding-block: 0 80px; align-items: start; }
 .personal::before { content: ''; grid-column: 1 / -1; border-top: 1px solid var(--champagne); margin-bottom: 32px; }
 .personal-head { display: flex; flex-direction: column; gap: 12px; }
 .personal-head .section-title { margin: 0; }
-.personal-number { margin: 0; font: 500 clamp(2.6rem, 4vw, 3.6rem)/1 var(--serif); color: var(--champagne); }
 .personal .lede { max-width: 40ch; }
 .personal-body { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 .personal-body p { margin: 0; }
@@ -84,7 +83,7 @@
 .element-col.strongest::before { content: ''; position: absolute; left: 0; right: 0; top: -1px; border-top: 1px solid var(--champagne); }
 .element-symbol { width: 34px; height: 34px; margin-bottom: 10px; fill: none; stroke: var(--bone-soft); stroke-width: 1.4; }
 .element-col.strongest .element-symbol { stroke: var(--champagne); }
-.element-name { font: 500 26px/1.15 var(--serif); }
+.element-name { font: 600 22px/1.2 var(--sans); }
 .element-signs { font-size: 13px; color: var(--bone-soft); min-height: 2.6em; }
 .element-planets { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; min-height: 30px; font-size: 24px; color: var(--bone-soft);
   font-family: 'Segoe UI Symbol', 'Apple Symbols', 'Noto Sans Symbols', var(--serif); }
@@ -92,7 +91,7 @@
 .element-col.strongest .element-planets, .element-col.strongest .element-count { color: var(--champagne); }
 .element-panel { border-left: 1px solid var(--champagne); padding: 4px 0 4px 20px; max-width: 64ch; }
 .element-panel > div { display: flex; flex-direction: column; gap: 6px; }
-.element-panel-name { font: 500 22px var(--serif); color: var(--champagne); }
+.element-panel-name { font: 600 19px/1.3 var(--sans); color: var(--champagne); }
 .element-panel-where { font-weight: 650; }
 
 /* The Moon you were born under */
@@ -103,7 +102,7 @@
 .moon-dark { fill: var(--bone); fill-opacity: 0.08; stroke: var(--bone); stroke-opacity: 0.35; stroke-width: 1; }
 .moon-lit { fill: var(--bone); }
 .moon-phase-text { flex: 1 1 320px; display: flex; flex-direction: column; gap: 10px; max-width: 60ch; }
-.moon-phase-name { font: 500 clamp(1.6rem, 2.4vw, 2.1rem)/1.15 var(--serif); }
+.moon-phase-name { font: 600 clamp(1.4rem, 2vw, 1.75rem)/1.2 var(--sans); }
 
 /* The Moon's month: eight tappable shapes */
 .moon-cycle-title { margin-top: 24px !important; }
@@ -143,7 +142,7 @@
 
 .moment-feature { display: flex; flex-direction: column; gap: 18px; margin-top: 12px; padding: 26px 0 0; border-top: 1px solid var(--line); }
 .moment-feature-content { display: flex; flex-direction: column; gap: 10px; max-width: 64ch; }
-.moment-feature-name { margin: 0; font: 500 clamp(1.6rem, 2.4vw, 2.1rem)/1.15 var(--serif); }
+.moment-feature-name { margin: 0; font: 600 clamp(1.4rem, 2vw, 1.75rem)/1.2 var(--sans); }
 .moment-feature-when { font-weight: 650; color: var(--champagne); }
 .moment-feature-theme { color: var(--bone); font-style: italic; }
 .moment-steps { display: flex; gap: 24px; }
