@@ -7,15 +7,16 @@
 // so the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611201701';
-import { setUpGlossary, termButton } from '../glossary.js?v=202611201701';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611201701';
-import { loadBirth, saveBirth, SAMPLE_BIRTH } from '../store.js?v=202611201701';
-import { saveButton } from '../save-button.js?v=202611201701';
-import { TOPICS, topicById } from '../content/topics.js?v=202611201701';
-import { STRENGTH, WATCH } from '../content/topic-texts.js?v=202611201701';
-import { HOUSES } from '../content/basics.js?v=202611201701';
-import { placements, connections, ordinal, orList, houseText } from '../readings.js?v=202611201701';
+import { calculateChart } from '../astro/chart.js?v=202611201706';
+import { setUpGlossary, termButton } from '../glossary.js?v=202611201706';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611201706';
+import { loadBirth, saveBirth, SAMPLE_BIRTH } from '../store.js?v=202611201706';
+import { saveButton } from '../save-button.js?v=202611201706';
+import { addPersonalSections } from '../personal-sections.js?v=202611201706';
+import { TOPICS, topicById } from '../content/topics.js?v=202611201706';
+import { STRENGTH, WATCH } from '../content/topic-texts.js?v=202611201706';
+import { HOUSES } from '../content/basics.js?v=202611201706';
+import { placements, connections, ordinal, orList, houseText } from '../readings.js?v=202611201706';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
@@ -67,6 +68,10 @@ for (const t of TOPICS) {
   $('topic-list').append(li);
 }
 if (!chart) $('no-chart-note').hidden = false;
+
+// --- About you: elements, birth Moon, big life moments --------------------
+// Under the topics (js/personal-sections.js). Only with a real chart.
+if (chart) addPersonalSections(chart, document.querySelector('#hub .next-step'));
 $('try-sample').addEventListener('click', (e) => {
   e.preventDefault();
   saveBirth(SAMPLE_BIRTH);

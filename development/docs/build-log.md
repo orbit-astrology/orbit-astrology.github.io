@@ -1020,3 +1020,17 @@ Their code is gone too: the library part of `js/pages/explore.js`, the file `js/
 **Why:** Explore was the one page made of three separate things stacked one after another, so it felt long and unclear. "Ask your chart" is the part that brings your chart together. The signs, houses and aspects are still explained on My Chart, in the readings and in the pop-ups.
 
 **AI vs me:** I decided "Ask your chart" stays and the other two go. Claude removed them and checked the page with and without a chart, on computer and phone.
+
+### 20 Nov: Explore, three new sections about YOU
+
+**What changed:** Under "Ask your chart", Explore now has three new sections, all calculated from your real chart:
+
+1. **Your elements.** Each sign belongs to Fire, Earth, Air or Water. A row for each element shows the symbol of every one of your ten planets in it, then what it says about you ("You're mostly Earth…") and which element you have least of. If a planet's sign isn't certain (no birth time), it isn't counted, and the page says so.
+2. **The Moon you were born under.** The Moon's shape on your birthday (new, crescent, full…), drawn as a real Moon. It's calculated from the angle between your Sun and Moon, and drawn the other way round if you were born south of the equator, because that's how the Moon looks there. If the shape changed during your birthday and there's no birth time, it shows both and explains why.
+3. **Your big life moments.** Real dates when Jupiter (every ~12 years) and Saturn (every ~29 years) come back to where they were when you were born, and when Uranus reaches the opposite side (around 40–42). It's a timeline up to age 90: past moments are marked "Done" and the next one "Next".
+
+**How it works:** `js/astro/personal.js` does the maths. For the life moments it steps through time a few days at a time and finds the exact days each planet crosses your birth position, up to three times when it moves backwards (retrograde). The words are in `js/content/personal-texts.js`, and `js/personal-sections.js` puts it all on the page.
+
+**Why:** The old sections ("All 12 signs and houses" and the angle circle) were general, not about you. These answer things people actually want to know about themselves.
+
+**AI vs me:** I asked for something personal instead of general explanations, and chose these three from Claude's ideas. Claude wrote the calculations, the texts and the design, and tested them with three different charts (with and without a birth time), on computer and phone. All 83 accuracy checks pass.

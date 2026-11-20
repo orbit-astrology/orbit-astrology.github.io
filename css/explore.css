@@ -50,3 +50,50 @@
   .topic-go { display: none; }
 }
 
+
+/* --- About you: elements, birth Moon, big life moments (js/personal-sections.js) --- */
+.personal { padding-block: 56px 8px; display: flex; flex-direction: column; gap: 14px; }
+.personal .lede { max-width: 62ch; }
+.personal-summary { margin: 8px 0 0; font: 500 clamp(1.1rem, 1.5vw, 1.3rem)/1.45 var(--serif); color: var(--bone); max-width: 60ch; }
+.personal .quiet { margin: 0; max-width: 62ch; }
+
+/* Elements: one row each, with a symbol for every planet in it */
+.element-rows { list-style: none; margin: 10px 0 0; padding: 0; border-top: 1px solid var(--champagne); max-width: 820px; }
+.element-row { display: flex; align-items: center; gap: 12px 28px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.element-label { flex: 0 0 220px; display: flex; flex-direction: column; gap: 2px; }
+.element-name { font: 500 22px/1.15 var(--serif); }
+.element-signs { font-size: 13px; color: var(--bone-soft); }
+.element-planets { flex: 1; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 22px; color: var(--bone-soft);
+  font-family: 'Segoe UI Symbol', 'Apple Symbols', 'Noto Sans Symbols', var(--serif); }
+.element-count { font: 650 15px var(--sans); color: var(--bone-soft); min-width: 1.5em; text-align: right; }
+.element-row.strongest .element-planets, .element-row.strongest .element-count { color: var(--champagne); }
+
+/* The Moon you were born under */
+.moon-phase { display: flex; flex-wrap: wrap; align-items: center; gap: 24px 48px; margin-top: 8px; border-top: 1px solid var(--champagne); padding-top: 28px; }
+.moon-drawing { width: 150px; height: 150px; flex: 0 0 auto; }
+.moon-dark { fill: var(--bone); fill-opacity: 0.08; stroke: var(--bone); stroke-opacity: 0.35; stroke-width: 1; }
+.moon-lit { fill: var(--bone); }
+.moon-phase-text { flex: 1 1 320px; display: flex; flex-direction: column; gap: 8px; max-width: 60ch; }
+.moon-phase-text p { margin: 0; }
+.moon-phase-name { font: 500 clamp(1.5rem, 2.2vw, 1.9rem)/1.15 var(--serif); }
+
+/* Big life moments: what each one is, then your timeline */
+.moment-key { margin: 6px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px 40px; }
+.moment-key dt { font-weight: 650; color: var(--champagne); }
+.moment-key dd { margin: 4px 0 0; color: var(--bone-soft); font-size: 15px; }
+.moment-list { list-style: none; margin: 18px 0 0; padding: 0; border-top: 1px solid var(--champagne); max-width: 820px; }
+.moment { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 24px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.moment-when { flex: 0 0 190px; font-size: 15px; color: var(--bone-soft); }
+.moment-name { flex: 1 1 220px; font: 500 19px/1.25 var(--serif); }
+.moment-age { font-size: 15px; color: var(--bone-soft); }
+.moment-tag { min-width: 3.5em; text-align: right; font: 650 13px var(--sans); letter-spacing: 0.06em; text-transform: uppercase; }
+.moment.past { opacity: 0.55; }
+.moment.past .moment-tag { color: var(--bone-soft); }
+.moment.next .moment-name, .moment.next .moment-tag { color: var(--champagne); }
+
+@media (max-width: 600px) {
+  .element-row { flex-wrap: wrap; }
+  .element-label { flex-basis: 100%; }
+  .moment-when { flex-basis: 100%; }
+  .moon-drawing { width: 120px; height: 120px; }
+}
