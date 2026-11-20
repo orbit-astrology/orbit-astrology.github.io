@@ -956,3 +956,11 @@ Tested: dragging all the way round, the Moon stays within a fraction of a degree
 **AI vs me:** I noticed the contrast problem and chose the colour. Claude made the comparison and changed the code.
 
 Note: the final deadline moved to Monday 23 November.
+
+### 20 Nov: One colour per page, no darker band
+
+**What was wrong:** The lower part of Connections (the "Your charts, together" section) sat on a slightly darker band, then the normal page colour came back before the footer. The change of colour looked odd. My Chart and Profile had the same darker band.
+
+**What changed:** The band is gone on all three pages. Each page is now one colour from top to bottom (as in the style guide), and a thin line still separates the sections.
+
+**AI vs me:** I noticed the odd colour change. Claude removed the band everywhere it was used and checked the three pages.

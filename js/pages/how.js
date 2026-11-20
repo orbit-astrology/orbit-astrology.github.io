@@ -5,8 +5,8 @@
 // themselves.
 // ---------------------------------------------------------------
 
-import { setUpMenu } from '../layout.js?v=202611201619';
-import { setUpGlossary } from '../glossary.js?v=202611201619';
+import { setUpMenu } from '../layout.js?v=202611201621';
+import { setUpGlossary } from '../glossary.js?v=202611201621';
 
 setUpMenu();
 setUpGlossary();

@@ -57,7 +57,9 @@
 .placements-table td.quiet { color: var(--bone-soft); }
 
 /* Your chart, explained: a slightly darker band of the same colour */
-.explained { background: rgba(0, 0, 0, 0.14); border-top: 1px solid var(--line); padding-block: 56px; }
+/* The explanations section: same colour as the rest of the page (one colour per page),
+   separated only by a thin line. */
+.explained { border-top: 1px solid var(--line); padding-block: 56px 0; }
 .explained .lede { margin: 12px 0 28px; }
 
 .jump-links ul {
