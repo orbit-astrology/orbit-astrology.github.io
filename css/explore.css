@@ -48,7 +48,6 @@
 /* On a phone the whole row is the link, so the arrow isn't needed. */
 @media (max-width: 900px) {
   .personal { grid-template-columns: 1fr; }
-  .personal-head { position: static; }
   .personal .lede { max-width: 60ch; }
 }
 @media (max-width: 700px) {
@@ -63,7 +62,7 @@
    the left and the part about you on the right (stacked on small screens). */
 .personal { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.1fr); gap: 24px 64px; padding-block: 0 80px; align-items: start; }
 .personal::before { content: ''; grid-column: 1 / -1; border-top: 1px solid var(--champagne); margin-bottom: 32px; }
-.personal-head { display: flex; flex-direction: column; gap: 12px; position: sticky; top: 96px; }
+.personal-head { display: flex; flex-direction: column; gap: 12px; }
 .personal-head .section-title { margin: 0; }
 .personal-number { margin: 0; font: 500 clamp(2.6rem, 4vw, 3.6rem)/1 var(--serif); color: var(--champagne); }
 .personal .lede { max-width: 40ch; }
@@ -91,7 +90,8 @@
   font-family: 'Segoe UI Symbol', 'Apple Symbols', 'Noto Sans Symbols', var(--serif); }
 .element-count { font: 650 12px var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--bone-soft); margin-top: 6px; }
 .element-col.strongest .element-planets, .element-col.strongest .element-count { color: var(--champagne); }
-.element-panel { border-left: 1px solid var(--champagne); padding: 4px 0 4px 20px; display: flex; flex-direction: column; gap: 6px; max-width: 64ch; min-height: 9em; }
+.element-panel { border-left: 1px solid var(--champagne); padding: 4px 0 4px 20px; max-width: 64ch; }
+.element-panel > div { display: flex; flex-direction: column; gap: 6px; }
 .element-panel-name { font: 500 22px var(--serif); color: var(--champagne); }
 .element-panel-where { font-weight: 650; }
 
@@ -115,7 +115,7 @@
 .moon-step-tag { min-height: 1.2em; font: 650 11px var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--champagne); }
 .moon-step.yours .moon-step-name { color: var(--bone); }
 .moon-step[aria-pressed="true"] { border-color: var(--champagne); background: rgba(255, 255, 255, .04); }
-.moon-cycle-panel { min-height: 3.2em; color: var(--bone-soft); max-width: 64ch; }
+.moon-cycle-panel { color: var(--bone-soft); max-width: 64ch; }
 .moon-cycle-panel strong { color: var(--bone); font-weight: 650; }
 
 /* Big life moments: the lifeline, then the chosen moment in full */
@@ -141,7 +141,7 @@
 .lifeline-key > span { display: inline-flex; align-items: center; gap: 8px; }
 .lifeline-key .quiet { margin-left: auto; }
 
-.moment-feature { display: flex; flex-direction: column; gap: 18px; margin-top: 12px; padding: 26px 0 0; border-top: 1px solid var(--line); min-height: 18em; }
+.moment-feature { display: flex; flex-direction: column; gap: 18px; margin-top: 12px; padding: 26px 0 0; border-top: 1px solid var(--line); }
 .moment-feature-content { display: flex; flex-direction: column; gap: 10px; max-width: 64ch; }
 .moment-feature-name { margin: 0; font: 500 clamp(1.6rem, 2.4vw, 2.1rem)/1.15 var(--serif); }
 .moment-feature-when { font-weight: 650; color: var(--champagne); }
@@ -162,7 +162,7 @@
   .personal .lifeline-lived { transform: scaleX(0); }
   .personal.shown .lifeline-lived { animation: grow 1.4s ease .2s forwards; }
   .personal.shown .lifeline-mark { animation: fade-in .5s ease forwards; animation-delay: calc(.4s + var(--i) * .08s); }
-  .element-panel > *, .moon-cycle-panel, .moment-feature-content { animation: fade-in .35s ease; }
+  .personal .stack-shown { animation: fade-in .35s ease; }
 }
 @keyframes fade-up { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
@@ -172,7 +172,6 @@
 
 @media (max-width: 900px) {
   .personal { grid-template-columns: 1fr; }
-  .personal-head { position: static; }
   .personal .lede { max-width: 60ch; }
 }
 @media (max-width: 700px) {

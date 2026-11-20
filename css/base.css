@@ -286,3 +286,10 @@ select {
 .born-label { font: 650 13px var(--sans); letter-spacing: 0.08em; text-transform: uppercase; color: var(--champagne); }
 .born-date { font: 600 clamp(1.15rem, 1.6vw, 1.35rem)/1.3 var(--sans); color: var(--bone); }
 .born-rest { font-size: 16px; color: var(--bone-soft); }
+
+/* Boxes whose words change when you tap something (js/steady.js):
+   every version sits in the same spot, only the chosen one shows,
+   so the box keeps the height of the longest and nothing below moves. */
+.stack { display: grid; }
+.stack > * { grid-area: 1 / 1; visibility: hidden; }
+.stack > .stack-shown { visibility: visible; }

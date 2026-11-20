@@ -10,20 +10,21 @@
 // the address means the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611201854';
-import { drawWheel } from '../wheel.js?v=202611201854';
-import { placeTip } from '../tip-position.js?v=202611201854';
-import { setUpGlossary, termButton } from '../glossary.js?v=202611201854';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611201854';
-import { setUpBirthForm } from '../birth-form.js?v=202611201854';
-import { makeShareLink, readShareCode } from '../share.js?v=202611201854';
-import { setUpAccountPanel } from '../account-panel.js?v=202611201854';
-import { startCloud, currentUser, myInvite, addMeTo } from '../cloud.js?v=202611201854';
-import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202611201854';
-import { risingText } from '../readings.js?v=202611201854';
-import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202611201854';
-import { PERSONAL, LENS_TAGS, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202611201854';
-import { PLANETS, SIGNS } from '../content/basics.js?v=202611201854';
+import { calculateChart } from '../astro/chart.js?v=202611201858';
+import { drawWheel } from '../wheel.js?v=202611201858';
+import { placeTip } from '../tip-position.js?v=202611201858';
+import { setUpGlossary, termButton } from '../glossary.js?v=202611201858';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611201858';
+import { setUpBirthForm } from '../birth-form.js?v=202611201858';
+import { makeShareLink, readShareCode } from '../share.js?v=202611201858';
+import { setUpAccountPanel } from '../account-panel.js?v=202611201858';
+import { startCloud, currentUser, myInvite, addMeTo } from '../cloud.js?v=202611201858';
+import { loadBirth, saveBirth, loadPeople, savePeople } from '../store.js?v=202611201858';
+import { risingText } from '../readings.js?v=202611201858';
+import { compareCharts, explainLink, summarise, signText } from '../compare.js?v=202611201858';
+import { PERSONAL, LENS_TAGS, LINK_TYPES, THEIR_WHAT, SAMPLE_PERSON } from '../content/connections.js?v=202611201858';
+import { PLANETS, SIGNS } from '../content/basics.js?v=202611201858';
+import { measureTallest } from '../steady.js?v=202611201858';
 
 const $ = (id) => document.getElementById(id);
 const nameOf = (id) => id[0].toUpperCase() + id.slice(1);
@@ -404,13 +405,33 @@ for (const button of document.querySelectorAll('[data-lens]')) {
   });
 }
 
+// Draws the links once as friendship and once as romance (for measuring).
+function bothLenses() {
+  const chosen = lens;
+  return ['friendship', 'romance'].map((l) => () => { lens = l; renderLinks(); lens = chosen; });
+}
+// When the window changes width the text wraps differently: measure again.
+let lensWidth = window.innerWidth;
+window.addEventListener('resize', () => {
+  if (!current || window.innerWidth === lensWidth) return;
+  lensWidth = window.innerWidth;
+  measureTallest(document.querySelector('.links-area'), bothLenses, renderLinks);
+});
+
 // Show the chosen lens. `changed` is true when you just clicked the
 // switch: then the changed parts briefly light up.
 function showLens(changed = false) {
   for (const button of document.querySelectorAll('[data-lens]')) {
     button.setAttribute('aria-pressed', String(button.dataset.lens === lens));
   }
-  renderLinks();
+  if (changed) {
+    renderLinks();
+  } else {
+    // A new person: draw both versions once to find the taller one, and
+    // keep the box that tall (js/steady.js), so switching between
+    // Friendship and Romance never moves the page below.
+    measureTallest(document.querySelector('.links-area'), bothLenses, renderLinks);
+  }
   if (changed) {
     for (const node of document.querySelectorAll('.link-meaning')) {
       node.classList.remove('flash');

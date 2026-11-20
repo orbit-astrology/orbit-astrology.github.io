@@ -12,10 +12,11 @@
 // with the same code as your birth chart (js/astro/sky.js).
 // ---------------------------------------------------------------
 
-import { skyAt } from './astro/sky.js?v=202611201854';
-import { findCrossAspects } from './astro/aspects.js?v=202611201854';
-import { drawWheel } from './wheel.js?v=202611201854';
-import { PLANETS, ASPECT_TEXT } from './content/basics.js?v=202611201854';
+import { skyAt } from './astro/sky.js?v=202611201858';
+import { findCrossAspects } from './astro/aspects.js?v=202611201858';
+import { drawWheel } from './wheel.js?v=202611201858';
+import { PLANETS, ASPECT_TEXT } from './content/basics.js?v=202611201858';
+import { reserveHeight } from './steady.js?v=202611201858';
 
 const DAY = 86400000;
 const CLOSE = 1.5; // degrees: how close an angle must be to count
@@ -50,34 +51,20 @@ export function setUpTimeTravel({ chart, wheelBox, slider, dateLabel, list, more
   today.setHours(12, 0, 0, 0);
   let timer = null;
   let showAll = false; // the list starts short; "Show all" opens it (and it stays open)
+  const results = list.parentElement; // the list and its "Show more" button
 
-  function show(offsetDays) {
-    const date = new Date(today.getTime() + offsetDays * DAY);
+  // Close angles between the sky on a day and your chart.
+  function linksOn(date) {
     const sky = skyAt(date);
-
-    // Close angles between the sky that day and your chart.
     const links = findCrossAspects(yourPoints(chart), sky.bodies)
       .filter((l) => l.orb <= CLOSE && l.from !== 'rising');
     const risingLinks = findCrossAspects(yourPoints(chart).filter((p) => p.id === 'rising'), sky.bodies)
       .filter((l) => l.orb <= CLOSE);
+    return { sky, links, risingLinks };
+  }
 
-    // The wheel: your chart outside, that day's sky inside, lines between.
-    wheelBox.replaceChildren(drawWheel(chart, {
-      aspects: false,
-      partner: { chart: sky, aspects: links },
-      label: `Your birth chart with the sky on ${dateFormat.format(date)}: ${links.length + risingLinks.length} close angles to your planets.`,
-    }));
-
-    // The date, and how far it is from today.
-    const when = offsetDays === 0 ? 'Today'
-      : offsetDays === 1 ? 'Tomorrow'
-        : offsetDays === -1 ? 'Yesterday'
-          : offsetDays > 0 ? `In ${offsetDays} days` : `${-offsetDays} days ago`;
-    dateLabel.replaceChildren(dateFormat.format(date), Object.assign(document.createElement('span'), { textContent: when }));
-    slider.value = String(offsetDays);
-    slider.setAttribute('aria-valuetext', `${dateFormat.format(date)} (${when.toLowerCase()})`);
-
-    // The explanations.
+  // The list that explains the angles on one day.
+  function drawList(links, risingLinks) {
     list.replaceChildren();
     const all = [...links, ...risingLinks].sort((a, b) => a.orb - b.orb);
     if (!all.length) {
@@ -101,6 +88,32 @@ export function setUpTimeTravel({ chart, wheelBox, slider, dateLabel, list, more
     moreButton.textContent = `Show ${extra} more`;
   }
 
+  function show(offsetDays) {
+    const date = new Date(today.getTime() + offsetDays * DAY);
+    const { sky, links, risingLinks } = linksOn(date);
+    // The wheel: your chart outside, that day's sky inside, lines between.
+    wheelBox.replaceChildren(drawWheel(chart, {
+      aspects: false,
+      partner: { chart: sky, aspects: links },
+      label: `Your birth chart with the sky on ${dateFormat.format(date)}: ${links.length + risingLinks.length} close angles to your planets.`,
+    }));
+
+    // The date, and how far it is from today.
+    const when = offsetDays === 0 ? 'Today'
+      : offsetDays === 1 ? 'Tomorrow'
+        : offsetDays === -1 ? 'Yesterday'
+          : offsetDays > 0 ? `In ${offsetDays} days` : `${-offsetDays} days ago`;
+    dateLabel.replaceChildren(dateFormat.format(date), Object.assign(document.createElement('span'), { textContent: when }));
+    slider.value = String(offsetDays);
+    slider.setAttribute('aria-valuetext', `${dateFormat.format(date)} (${when.toLowerCase()})`);
+
+    drawList(links, risingLinks);
+    // A day longer than any we checked: keep the new, taller height.
+    if (results.style.minHeight && results.offsetHeight > parseFloat(results.style.minHeight)) {
+      results.style.minHeight = `${results.offsetHeight}px`;
+    }
+  }
+
   const go = (offset) => show(Math.max(Number(slider.min), Math.min(Number(slider.max), offset)));
   const current = () => Number(slider.value);
 
@@ -121,10 +134,20 @@ export function setUpTimeTravel({ chart, wheelBox, slider, dateLabel, list, more
     }, 150);
   }
 
+  // The list keeps the height of its longest day (js/steady.js), so the
+  // page under it doesn't jump while you move through the days. We check
+  // a day every 5 days across the slider to find the longest.
+  const sampleDays = [];
+  for (let d = Number(slider.min); d <= Number(slider.max); d += 5) sampleDays.push(d);
+  const remeasure = reserveHeight(results,
+    () => sampleDays.map((d) => () => { const l = linksOn(new Date(today.getTime() + d * DAY)); drawList(l.links, l.risingLinks); }),
+    () => { const l = linksOn(new Date(today.getTime() + current() * DAY)); drawList(l.links, l.risingLinks); });
+
   moreButton.addEventListener('click', () => {
     showAll = true;
     for (const li of list.children) li.hidden = false;
     moreButton.hidden = true;
+    remeasure();
   });
 
   slider.addEventListener('input', () => { stop(); show(current()); });

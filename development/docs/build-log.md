@@ -1064,3 +1064,15 @@ Their code is gone too: the library part of `js/pages/explore.js`, the file `js/
 Titles and names stay in Bodoni (for example "Sun in Virgo", "Waning gibbous", "Fire"). The rule is now written in the style guide, so it holds for anything added later.
 
 **AI vs me:** I noticed the explanations were hard to read in the title font and set the rule. Claude found every place it happened and changed them.
+
+## 20 November 2026 (evening): Nothing moves when you tap; titles don't follow you
+
+**What changed:**
+- **The page stays still when you tap something.** Before, choosing a different element, Moon shape or life moment changed how much text there was, so the line under the section jumped up or down. Now each of these boxes keeps the height of its longest version, and only the words change. This was fixed everywhere on the site where tapping changes the text: the three sections on Explore, the "day by day" slider on My Universe and the Friendship/Romance switch on Connections. The "Read more" buttons still open more text, because that's what you ask for when you press them.
+- **The section titles on Explore no longer follow you down the page** (01 Your elements…). They stay where they are.
+
+**How it works:** a new small file, `js/steady.js`, does this in two ways:
+1. When all the versions can be made in advance (Explore), they're placed on top of each other in the same spot and only the chosen one is shown. The box is automatically as tall as the longest one.
+2. When they're calculated live (the slider, Friendship/Romance), each version is drawn once out of sight, measured, and the box is given the tallest height.
+
+**AI vs me:** I noticed the line jumping when I tapped, and asked for it never to happen on the whole website. I also asked for the titles to stop following me. Claude found every place this happened, fixed it and checked that nothing moves on computer and phone.

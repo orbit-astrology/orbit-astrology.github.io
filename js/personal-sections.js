@@ -8,10 +8,11 @@
 // js/content/personal-texts.js.
 // ---------------------------------------------------------------
 
-import { elementBalance, birthMoonPhase, lifeMoments, PHASES } from './astro/personal.js?v=202611201854';
-import { ELEMENTS, ELEMENT_PAIRS, PHASE_TEXT, PHASE_LIFE, MOMENT_TEXT, RETURN_THEME } from './content/personal-texts.js?v=202611201854';
-import { PLANETS } from './content/basics.js?v=202611201854';
-import { termButton, setUpGlossary } from './glossary.js?v=202611201854';
+import { elementBalance, birthMoonPhase, lifeMoments, PHASES } from './astro/personal.js?v=202611201858';
+import { ELEMENTS, ELEMENT_PAIRS, PHASE_TEXT, PHASE_LIFE, MOMENT_TEXT, RETURN_THEME } from './content/personal-texts.js?v=202611201858';
+import { PLANETS } from './content/basics.js?v=202611201858';
+import { stack } from './steady.js?v=202611201858';
+import { termButton } from './glossary.js?v=202611201858';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const make = (tag, className, text) => {
@@ -143,12 +144,11 @@ function elementsSection(chart) {
   });
   body.append(grid);
 
-  // The reading for the chosen element (your strongest at first).
+  // The reading for each element. All four are built now and stacked
+  // in one spot (js/steady.js), so changing element never moves the page.
   const panel = make('div', 'element-panel');
   panel.setAttribute('aria-live', 'polite');
-  body.append(panel);
-  choosable(buttons, (i) => {
-    const n = names[i];
+  const versions = names.map((n) => {
     const here = balance[n];
     const where = here.length
       ? `Your ${listOf(here.map((b) => b.name))} ${here.length === 1 ? 'is' : 'are'} in ${n}.`
@@ -156,8 +156,12 @@ function elementsSection(chart) {
     const text = top.includes(n)
       ? `${ELEMENTS[n].like[0].toUpperCase()}${ELEMENTS[n].like.slice(1)}. ${ELEMENTS[n].more}`
       : `${ELEMENTS[n].more}${low.length === 1 && low[0] === n ? ` Having little ${n}: ${ELEMENTS[n].little}. That’s not a lack, just a different way of being.` : ''}`;
-    panel.replaceChildren(make('p', 'element-panel-name', n), make('p', 'element-panel-where', where), make('p', '', text));
-  }, names.indexOf(top[0]));
+    const v = make('div');
+    v.append(make('p', 'element-panel-name', n), make('p', 'element-panel-where', where), make('p', '', text));
+    return v;
+  });
+  body.append(panel);
+  choosable(buttons, stack(panel, versions), names.indexOf(top[0]));
 
   if (balance.unsure.length) {
     body.append(make('p', 'quiet', `Not counted: your ${listOf(balance.unsure.map((b) => b.name))}, which changed sign on your birthday, so it depends on your birth time.`));
@@ -236,18 +240,17 @@ function moonSection(chart) {
     return step;
   });
   body.append(cycle);
-  const panel = make('p', 'moon-cycle-panel');
+  const panel = make('div', 'moon-cycle-panel');
   panel.setAttribute('aria-live', 'polite');
+  const phaseTerms = ['waxing-waning', 'gibbous', 'crescent', 'moon-quarter'];
+  const versions = PHASES.map((name) => {
+    const v = make('p');
+    if (phases.includes(name)) v.append(termed('strong', '', name, phaseTerms), ': your Moon. Tap the others to compare.');
+    else v.append(termed('strong', '', name, phaseTerms), ': ', PHASE_TEXT[name].replace(/^.*?\. /, ''));
+    return v;
+  });
   body.append(panel);
-  choosable(buttons, (i) => {
-    const name = PHASES[i];
-    if (phases.includes(name)) {
-      panel.replaceChildren(termed('strong', '', name, ['waxing-waning', 'gibbous', 'crescent', 'moon-quarter']), ': your Moon. Tap the others to compare.');
-    } else {
-      panel.replaceChildren(termed('strong', '', name, ['waxing-waning', 'gibbous', 'crescent', 'moon-quarter']), ': ', PHASE_TEXT[name].replace(/^.*?\. /, ''));
-    }
-    setUpGlossary(panel);
-  }, PHASES.indexOf(phases[0]));
+  choosable(buttons, stack(panel, versions), PHASES.indexOf(phases[0]));
   return box;
 }
 
@@ -340,11 +343,10 @@ function momentsSection(chart, now = new Date()) {
   next.type = 'button';
   const steps = make('div', 'moment-steps');
   steps.append(prev, next);
-  let current = nextIndex;
 
-  const show = (i) => {
-    current = i;
-    const m = all[i];
+  // Every moment is built now and stacked in one spot (js/steady.js),
+  // so stepping through them never moves the page.
+  const versions = all.map((m, i) => {
     const past = m.end < now;
     const label = i === nextIndex && !past ? 'Your next big moment' : past ? 'Already happened' : 'Coming later';
     const content = make('div', 'moment-feature-content');
@@ -361,8 +363,15 @@ function momentsSection(chart, now = new Date()) {
     if (theme && !natal.uncertain) {
       content.append(make('p', 'moment-feature-theme', `Your ${m.body} is in ${natal.sign}, so for you this one is said to be about ${theme}.`));
     }
-    feature.replaceChildren(content, steps);
-    setUpGlossary(feature);
+    return content;
+  });
+  const holder = make('div');
+  feature.append(holder, steps);
+  const showVersion = stack(holder, versions);
+  let current = nextIndex;
+  const show = (i) => {
+    current = i;
+    showVersion(i);
     prev.disabled = i === 0;
     next.disabled = i === all.length - 1;
   };
