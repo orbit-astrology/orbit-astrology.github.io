@@ -1034,3 +1034,15 @@ Their code is gone too: the library part of `js/pages/explore.js`, the file `js/
 **Why:** The old sections ("All 12 signs and houses" and the angle circle) were general, not about you. These answer things people actually want to know about themselves.
 
 **AI vs me:** I asked for something personal instead of general explanations, and chose these three from Claude's ideas. Claude wrote the calculations, the texts and the design, and tested them with three different charts (with and without a birth time), on computer and phone. All 83 accuracy checks pass.
+
+## 20 November 2026 (evening): Explore's "about you" sections, clearer and more engaging
+
+**What changed:** I said the three new sections looked messy, dull and like one big block, with too much empty space. They were redesigned:
+
+- **Clearly separate sections.** Each one starts with a champagne line and a big number (01, 02, 03). On a computer the title and introduction sit on the left and the part about you fills the right, so there's no big empty half. On a phone they stack.
+- **Your elements.** Each element has its old symbol (a triangle: Fire and Air point up, Earth and Water down). The four elements are buttons: tap one to read what it's like and which of your planets are in it. Your strongest element is shown first. There's also a new sentence about what your mix of two elements means together (for example Fire and Earth: "a doer with a plan").
+- **The Moon you were born under.** The Moon is bigger, with a soft glow, and a second paragraph about how the shape is said to show in everyday life. Below it, the Moon's whole month shows as eight small Moons with yours marked "You". Tap any shape to read about people born under it.
+- **Your big life moments.** The long list was replaced by a lifeline from birth to age 90. It has a mark for each moment (circle = Jupiter return, square = Saturn return, diamond = Uranus opposition), a line for "You, now" and the part you've already lived in champagne. Tap a mark, or use "Earlier" and "Later", to read that moment in full. For Jupiter and Saturn returns it also says what the return is said to be about for you, from the sign that planet was in when you were born (for example "Your Saturn is in Leo, so… learning to trust your own talent").
+- **Gentle movement.** When you scroll to a section, it draws itself in once: the triangles draw their lines, the planet symbols, Moons and lifeline marks fade in one by one, and the lived part of the lifeline grows. With "reduce motion" turned on, everything simply appears.
+
+**AI vs me:** I gave the feedback: messy, dull, separate the sections, better visuals, less blank space, more engaging but not overwhelming. Claude chose how to do it, wrote the new texts and code, and tested it on computer and phone with three charts. All 83 accuracy checks pass.

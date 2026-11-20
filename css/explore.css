@@ -46,54 +46,142 @@
 .topic-nav a:hover { text-decoration: underline; }
 
 /* On a phone the whole row is the link, so the arrow isn't needed. */
+@media (max-width: 900px) {
+  .personal { grid-template-columns: 1fr; }
+  .personal-head { position: static; }
+  .personal .lede { max-width: 60ch; }
+}
 @media (max-width: 700px) {
+  .moon-cycle { grid-template-columns: repeat(4, 1fr); }
+  .lifeline-key .quiet { margin-left: 0; }
   .topic-go { display: none; }
 }
 
 
 /* --- About you: elements, birth Moon, big life moments (js/personal-sections.js) --- */
-.personal { padding-block: 56px 8px; display: flex; flex-direction: column; gap: 14px; }
-.personal .lede { max-width: 62ch; }
-.personal-summary { margin: 8px 0 0; font: 500 clamp(1.1rem, 1.5vw, 1.3rem)/1.45 var(--serif); color: var(--bone); max-width: 60ch; }
-.personal .quiet { margin: 0; max-width: 62ch; }
+/* Each section: a champagne line, then the number, title and intro on
+   the left and the part about you on the right (stacked on small screens). */
+.personal { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.1fr); gap: 24px 64px; padding-block: 0 80px; align-items: start; }
+.personal::before { content: ''; grid-column: 1 / -1; border-top: 1px solid var(--champagne); margin-bottom: 32px; }
+.personal-head { display: flex; flex-direction: column; gap: 12px; position: sticky; top: 96px; }
+.personal-head .section-title { margin: 0; }
+.personal-number { margin: 0; font: 500 clamp(2.6rem, 4vw, 3.6rem)/1 var(--serif); color: var(--champagne); }
+.personal .lede { max-width: 40ch; }
+.personal-body { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.personal-body p { margin: 0; }
+.personal-summary { font: 500 clamp(1.5rem, 2.3vw, 2rem)/1.25 var(--serif); color: var(--bone); }
+.personal-text { max-width: 62ch; }
+/* Shared look for the tappable parts: plain, square, a thin line when chosen */
+.personal button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: inherit; }
+.personal button:focus-visible { outline: 1px solid var(--champagne); outline-offset: 3px; }
 
-/* Elements: one row each, with a symbol for every planet in it */
-.element-rows { list-style: none; margin: 10px 0 0; padding: 0; border-top: 1px solid var(--champagne); max-width: 820px; }
-.element-row { display: flex; align-items: center; gap: 12px 28px; padding: 14px 0; border-bottom: 1px solid var(--line); }
-.element-label { flex: 0 0 220px; display: flex; flex-direction: column; gap: 2px; }
-.element-name { font: 500 22px/1.15 var(--serif); }
-.element-signs { font-size: 13px; color: var(--bone-soft); }
-.element-planets { flex: 1; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 22px; color: var(--bone-soft);
+/* Elements: four tappable columns */
+.element-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 8px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.personal .element-col { display: flex; flex-direction: column; gap: 4px; padding: 20px 18px 20px; border-right: 1px solid var(--line); position: relative; transition: background-color .25s ease; }
+.personal .element-col:last-child { border-right: 0; }
+.element-col:hover { background: rgba(255, 255, 255, .03); }
+.element-col[aria-pressed="true"] { background: rgba(255, 255, 255, .05); }
+.element-col[aria-pressed="true"]::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; border-bottom: 1px solid var(--champagne); }
+.element-col.strongest::before { content: ''; position: absolute; left: 0; right: 0; top: -1px; border-top: 1px solid var(--champagne); }
+.element-symbol { width: 34px; height: 34px; margin-bottom: 10px; fill: none; stroke: var(--bone-soft); stroke-width: 1.4; }
+.element-col.strongest .element-symbol { stroke: var(--champagne); }
+.element-name { font: 500 26px/1.15 var(--serif); }
+.element-signs { font-size: 13px; color: var(--bone-soft); min-height: 2.6em; }
+.element-planets { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; min-height: 30px; font-size: 24px; color: var(--bone-soft);
   font-family: 'Segoe UI Symbol', 'Apple Symbols', 'Noto Sans Symbols', var(--serif); }
-.element-count { font: 650 15px var(--sans); color: var(--bone-soft); min-width: 1.5em; text-align: right; }
-.element-row.strongest .element-planets, .element-row.strongest .element-count { color: var(--champagne); }
+.element-count { font: 650 12px var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--bone-soft); margin-top: 6px; }
+.element-col.strongest .element-planets, .element-col.strongest .element-count { color: var(--champagne); }
+.element-panel { border-left: 1px solid var(--champagne); padding: 4px 0 4px 20px; display: flex; flex-direction: column; gap: 6px; max-width: 64ch; min-height: 9em; }
+.element-panel-name { font: 500 22px var(--serif); color: var(--champagne); }
+.element-panel-where { font-weight: 650; }
 
 /* The Moon you were born under */
-.moon-phase { display: flex; flex-wrap: wrap; align-items: center; gap: 24px 48px; margin-top: 8px; border-top: 1px solid var(--champagne); padding-top: 28px; }
-.moon-drawing { width: 150px; height: 150px; flex: 0 0 auto; }
+.moon-phase { display: flex; flex-wrap: wrap; align-items: center; gap: 24px 48px; }
+.moon-big { position: relative; flex: 0 0 auto; }
+.moon-big::before { content: ''; position: absolute; inset: -18%; border-radius: 50%; background: radial-gradient(closest-side, rgba(236, 228, 214, .14), transparent); }
+.moon-big .moon-drawing { position: relative; width: 180px; height: 180px; display: block; }
 .moon-dark { fill: var(--bone); fill-opacity: 0.08; stroke: var(--bone); stroke-opacity: 0.35; stroke-width: 1; }
 .moon-lit { fill: var(--bone); }
-.moon-phase-text { flex: 1 1 320px; display: flex; flex-direction: column; gap: 8px; max-width: 60ch; }
-.moon-phase-text p { margin: 0; }
-.moon-phase-name { font: 500 clamp(1.5rem, 2.2vw, 1.9rem)/1.15 var(--serif); }
+.moon-phase-text { flex: 1 1 320px; display: flex; flex-direction: column; gap: 10px; max-width: 60ch; }
+.moon-phase-name { font: 500 clamp(1.6rem, 2.4vw, 2.1rem)/1.15 var(--serif); }
 
-/* Big life moments: what each one is, then your timeline */
-.moment-key { margin: 6px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px 40px; }
-.moment-key dt { font-weight: 650; color: var(--champagne); }
-.moment-key dd { margin: 4px 0 0; color: var(--bone-soft); font-size: 15px; }
-.moment-list { list-style: none; margin: 18px 0 0; padding: 0; border-top: 1px solid var(--champagne); max-width: 820px; }
-.moment { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 24px; padding: 12px 0; border-bottom: 1px solid var(--line); }
-.moment-when { flex: 0 0 190px; font-size: 15px; color: var(--bone-soft); }
-.moment-name { flex: 1 1 220px; font: 500 19px/1.25 var(--serif); }
-.moment-age { font-size: 15px; color: var(--bone-soft); }
-.moment-tag { min-width: 3.5em; text-align: right; font: 650 13px var(--sans); letter-spacing: 0.06em; text-transform: uppercase; }
-.moment.past { opacity: 0.55; }
-.moment.past .moment-tag { color: var(--bone-soft); }
-.moment.next .moment-name, .moment.next .moment-tag { color: var(--champagne); }
+/* The Moon's month: eight tappable shapes */
+.moon-cycle-title { margin-top: 24px !important; }
+.moon-cycle { display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; border-top: 1px solid var(--line); padding-top: 14px; }
+.personal .moon-step { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; padding: 12px 4px 10px; border: 1px solid transparent; transition: border-color .25s ease, background-color .25s ease; }
+.moon-step .moon-drawing { width: 100%; max-width: 54px; height: auto; transition: transform .3s ease; }
+.moon-step:hover .moon-drawing { transform: translateY(-3px); }
+.moon-step-name { font-size: 12px; line-height: 1.3; color: var(--bone-soft); }
+.moon-step-tag { min-height: 1.2em; font: 650 11px var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--champagne); }
+.moon-step.yours .moon-step-name { color: var(--bone); }
+.moon-step[aria-pressed="true"] { border-color: var(--champagne); background: rgba(255, 255, 255, .04); }
+.moon-cycle-panel { min-height: 3.2em; color: var(--bone-soft); max-width: 64ch; }
+.moon-cycle-panel strong { color: var(--bone); font-weight: 650; }
 
-@media (max-width: 600px) {
-  .element-row { flex-wrap: wrap; }
-  .element-label { flex-basis: 100%; }
-  .moment-when { flex-basis: 100%; }
-  .moon-drawing { width: 120px; height: 120px; }
+/* Big life moments: the lifeline, then the chosen moment in full */
+.lifeline { margin: 0; }
+.lifeline-track { position: relative; height: 84px; margin: 0 10px; border-bottom: 1px solid var(--bone-soft); }
+.lifeline-lived { position: absolute; left: 0; bottom: -1px; border-bottom: 2px solid var(--champagne); transform-origin: left; }
+.lifeline-tick { position: absolute; bottom: -24px; transform: translateX(-50%); font-size: 12px; color: var(--bone-soft); }
+.lifeline-tick::before { content: ''; position: absolute; left: 50%; top: -6px; height: 5px; border-left: 1px solid var(--bone-soft); }
+.lifeline-now { position: absolute; top: 0; bottom: 0; border-left: 1px solid var(--champagne); padding-left: 6px; font: 650 11px var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--champagne); white-space: nowrap; }
+/* The marks: big enough to tap (the shape is drawn inside) */
+.personal .lifeline-mark { position: absolute; bottom: 4px; width: 30px; height: 30px; margin-left: -15px; display: grid; place-items: center; }
+.lifeline-mark.square { bottom: 22px; }
+.lifeline-mark.diamond { bottom: 40px; }
+.lifeline-mark::before, .lifeline-shape { content: ''; display: inline-block; width: 11px; height: 11px; background: var(--bone); transition: transform .2s ease, background-color .2s ease; }
+.lifeline-mark.circle::before, .lifeline-shape.circle { border-radius: 50%; }
+.lifeline-mark.diamond::before, .lifeline-shape.diamond { width: 9px; height: 9px; transform: rotate(45deg); }
+.lifeline-mark.past::before { background: transparent; box-shadow: inset 0 0 0 1px var(--bone-soft); }
+.lifeline-mark:hover::before { transform: scale(1.4); }
+.lifeline-mark.diamond:hover::before { transform: rotate(45deg) scale(1.4); }
+.lifeline-mark[aria-pressed="true"]::before { background: var(--champagne); box-shadow: 0 0 0 4px rgba(205, 187, 146, .3); transform: scale(1.3); }
+.lifeline-mark.diamond[aria-pressed="true"]::before { transform: rotate(45deg) scale(1.3); }
+.lifeline-key { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 40px; font-size: 14px; color: var(--bone-soft); }
+.lifeline-key > span { display: inline-flex; align-items: center; gap: 8px; }
+.lifeline-key .quiet { margin-left: auto; }
+
+.moment-feature { display: flex; flex-direction: column; gap: 18px; margin-top: 12px; padding: 26px 0 0; border-top: 1px solid var(--line); min-height: 18em; }
+.moment-feature-content { display: flex; flex-direction: column; gap: 10px; max-width: 64ch; }
+.moment-feature-name { margin: 0; font: 500 clamp(1.6rem, 2.4vw, 2.1rem)/1.15 var(--serif); }
+.moment-feature-when { font-weight: 650; color: var(--champagne); }
+.moment-feature-theme { color: var(--bone); font-style: italic; }
+.moment-steps { display: flex; gap: 24px; }
+.personal .moment-step { font: 650 13px var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--champagne); border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+.personal .moment-step:disabled { opacity: .3; cursor: default; }
+
+/* --- Drawing in, once, when you scroll to a section --- */
+@media (prefers-reduced-motion: no-preference) {
+  .personal .element-symbol path { stroke-dasharray: 120; stroke-dashoffset: 120; }
+  .personal.shown .element-symbol path { animation: draw-line 1.4s ease forwards; }
+  .personal .element-planet, .personal .moon-step, .personal .lifeline-mark { opacity: 0; }
+  .personal.shown .element-planet { animation: fade-up .6s ease forwards; animation-delay: calc(.5s + var(--i) * .15s); }
+  .personal.shown .moon-step { animation: fade-up .6s ease forwards; animation-delay: calc(.2s + var(--i) * .1s); }
+  .personal .moon-big { opacity: 0; transform: scale(.94); }
+  .personal.shown .moon-big { animation: moon-rise 1.4s ease forwards; }
+  .personal .lifeline-lived { transform: scaleX(0); }
+  .personal.shown .lifeline-lived { animation: grow 1.4s ease .2s forwards; }
+  .personal.shown .lifeline-mark { animation: fade-in .5s ease forwards; animation-delay: calc(.4s + var(--i) * .08s); }
+  .element-panel > *, .moon-cycle-panel, .moment-feature-content { animation: fade-in .35s ease; }
+}
+@keyframes fade-up { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes moon-rise { to { opacity: 1; transform: none; } }
+@keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes draw-line { to { stroke-dashoffset: 0; } }
+
+@media (max-width: 900px) {
+  .personal { grid-template-columns: 1fr; }
+  .personal-head { position: static; }
+  .personal .lede { max-width: 60ch; }
+}
+@media (max-width: 700px) {
+  .element-grid { grid-template-columns: 1fr 1fr; }
+  .personal .element-col { padding: 16px 14px; }
+  .personal .element-col:nth-child(2) { border-right: 0; }
+  .personal .element-col:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .moon-cycle { grid-template-columns: repeat(4, 1fr); }
+  .moon-big .moon-drawing { width: 140px; height: 140px; }
+  .lifeline-key .quiet { margin-left: 0; }
+  .lifeline-tick.odd { visibility: hidden; }
 }

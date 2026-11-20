@@ -8,10 +8,10 @@
 // js/content/personal-texts.js.
 // ---------------------------------------------------------------
 
-import { elementBalance, birthMoonPhase, lifeMoments } from './astro/personal.js?v=202611201706';
-import { ELEMENTS, PHASE_TEXT, MOMENT_TEXT } from './content/personal-texts.js?v=202611201706';
-import { PLANETS } from './content/basics.js?v=202611201706';
-import { termButton } from './glossary.js?v=202611201706';
+import { elementBalance, birthMoonPhase, lifeMoments, PHASES } from './astro/personal.js?v=202611201846';
+import { ELEMENTS, ELEMENT_PAIRS, PHASE_TEXT, PHASE_LIFE, MOMENT_TEXT, RETURN_THEME } from './content/personal-texts.js?v=202611201846';
+import { PLANETS } from './content/basics.js?v=202611201846';
+import { termButton } from './glossary.js?v=202611201846';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const make = (tag, className, text) => {
@@ -22,14 +22,50 @@ const make = (tag, className, text) => {
 };
 const listOf = (words) => (words.length < 2 ? words.join('') : `${words.slice(0, -1).join(', ')} and ${words.at(-1)}`);
 
-// A section with a title and a short introduction.
-function section(id, title, intro) {
+// A numbered section: on the left its number, title and a short
+// introduction; on the right ("body") the part about you.
+// Returns [section, body].
+function section(id, number, title, intro) {
   const box = make('section', 'personal wrap');
   box.setAttribute('aria-labelledby', `${id}-title`);
+  const head = make('div', 'personal-head');
   const h2 = make('h2', 'section-title', title);
   h2.id = `${id}-title`;
-  box.append(h2, make('p', 'lede', intro));
-  return box;
+  head.append(make('p', 'personal-number', number), h2, make('p', 'lede', intro));
+  const body = make('div', 'personal-body');
+  box.append(head, body);
+  return [box, body];
+}
+
+// The old symbol for each element, drawn as a triangle: Fire and Air
+// point up (they rise), Earth and Water point down. Air and Earth have
+// a line across.
+function elementSymbol(name) {
+  const svg = document.createElementNS(SVG_NS, 'svg');
+  svg.setAttribute('viewBox', '0 0 40 40');
+  svg.setAttribute('class', 'element-symbol');
+  svg.setAttribute('aria-hidden', 'true');
+  const up = name === 'Fire' || name === 'Air';
+  const tri = document.createElementNS(SVG_NS, 'path');
+  tri.setAttribute('d', up ? 'M20 5 L36 34 L4 34 Z' : 'M4 6 L36 6 L20 35 Z');
+  svg.append(tri);
+  if (name === 'Air' || name === 'Earth') {
+    const bar = document.createElementNS(SVG_NS, 'path');
+    bar.setAttribute('d', up ? 'M8 24 L32 24' : 'M8 16 L32 16');
+    svg.append(bar);
+  }
+  return svg;
+}
+
+// Makes a set of buttons work as tabs: one is "chosen" at a time, and
+// choosing one calls show(index). Used by all three sections.
+function choosable(buttons, show, start) {
+  const choose = (i) => {
+    buttons.forEach((b, n) => b.setAttribute('aria-pressed', String(n === i)));
+    show(i);
+  };
+  buttons.forEach((b, i) => b.addEventListener('click', () => choose(i)));
+  choose(start);
 }
 
 // --- 1. Your elements ------------------------------------------------
@@ -42,44 +78,56 @@ function elementsSection(chart) {
   const top = names.filter((n) => balance[n].length === most);
   const low = names.filter((n) => balance[n].length === least);
 
-  const box = section('elements', 'Your elements',
-    'Every sign belongs to one of four elements: Fire, Earth, Air or Water. Here is where your ten planets are.');
+  const [box, body] = section('elements', '01', 'Your elements',
+    'Every sign belongs to one of four elements: Fire, Earth, Air or Water. Each element is a way of meeting the world. Here is where your ten planets are. Tap an element to read about it.');
 
-  // One row per element: its name, its signs, and a symbol for each of your planets in it.
-  const rows = make('ul', 'element-rows');
-  for (const n of names) {
-    const row = make('li', `element-row${top.includes(n) ? ' strongest' : ''}`);
-    const label = make('div', 'element-label');
-    label.append(make('span', 'element-name', n), make('span', 'element-signs', ELEMENTS[n].signs));
-    const symbols = make('div', 'element-planets');
-    for (const body of balance[n]) {
-      const s = make('span', 'element-planet', PLANETS[body.id].symbol + '︎');
-      s.title = body.name;
-      symbols.append(s);
-    }
-    const count = balance[n].length;
-    symbols.setAttribute('aria-label', count ? `${count}: ${listOf(balance[n].map((b) => b.name))}` : 'none');
-    row.append(label, symbols, make('span', 'element-count', String(count)));
-    rows.append(row);
-  }
-  box.append(rows);
-
-  // What it says about you.
-  const summary = make('p', 'personal-summary');
+  // The headline: your strongest element(s).
   if (top.length === 1) {
-    summary.textContent = `You’re mostly ${top[0]}: ${ELEMENTS[top[0]].like}.`;
-    box.append(summary);
+    body.append(make('p', 'personal-summary', `You’re mostly ${top[0]}: ${ELEMENTS[top[0]].like}.`));
   } else {
-    // A tie: say each one in its own sentence, so it reads clearly.
-    summary.textContent = `You’re a mix of ${listOf(top)}.`;
-    box.append(summary);
-    for (const n of top) box.append(make('p', 'quiet', `${n}: ${ELEMENTS[n].like}.`));
+    body.append(make('p', 'personal-summary', `You’re a mix of ${listOf(top)}.`));
+    const pair = ELEMENT_PAIRS[top.join('+')];
+    if (pair) body.append(make('p', 'personal-text', pair));
   }
-  if (low.length === 1) {
-    box.append(make('p', 'quiet', `Least ${low[0]}${least === 0 ? ' (none at all)' : ''}: ${ELEMENTS[low[0]].little}. That’s not a lack, just a different way of being.`));
-  }
+
+  // Four columns, one per element: its old symbol, name, signs and a
+  // symbol for each of your planets in it. Each column is a button.
+  const grid = make('div', 'element-grid');
+  const buttons = names.map((n) => {
+    const col = make('button', `element-col${top.includes(n) ? ' strongest' : ''}`);
+    col.type = 'button';
+    col.append(elementSymbol(n), make('span', 'element-name', n), make('span', 'element-signs', ELEMENTS[n].signs));
+    const symbols = make('span', 'element-planets');
+    balance[n].forEach((planet, i) => {
+      const s = make('span', 'element-planet', PLANETS[planet.id].symbol + '︎');
+      s.style.setProperty('--i', i);
+      symbols.append(s);
+    });
+    const count = balance[n].length;
+    col.append(symbols, make('span', 'element-count', count === 1 ? '1 planet' : `${count} planets`));
+    grid.append(col);
+    return col;
+  });
+  body.append(grid);
+
+  // The reading for the chosen element (your strongest at first).
+  const panel = make('div', 'element-panel');
+  panel.setAttribute('aria-live', 'polite');
+  body.append(panel);
+  choosable(buttons, (i) => {
+    const n = names[i];
+    const here = balance[n];
+    const where = here.length
+      ? `Your ${listOf(here.map((b) => b.name))} ${here.length === 1 ? 'is' : 'are'} in ${n}.`
+      : `None of your planets are in ${n}.`;
+    const text = top.includes(n)
+      ? `${ELEMENTS[n].like[0].toUpperCase()}${ELEMENTS[n].like.slice(1)}. ${ELEMENTS[n].more}`
+      : `${ELEMENTS[n].more}${low.length === 1 && low[0] === n ? ` Having little ${n}: ${ELEMENTS[n].little}. That’s not a lack, just a different way of being.` : ''}`;
+    panel.replaceChildren(make('p', 'element-panel-name', n), make('p', 'element-panel-where', where), make('p', '', text));
+  }, names.indexOf(top[0]));
+
   if (balance.unsure.length) {
-    box.append(make('p', 'quiet', `Not counted: your ${listOf(balance.unsure.map((b) => b.name))}, which changed sign on your birthday, so it depends on your birth time.`));
+    body.append(make('p', 'quiet', `Not counted: your ${listOf(balance.unsure.map((b) => b.name))}, which changed sign on your birthday, so it depends on your birth time.`));
   }
   return box;
 }
@@ -120,22 +168,52 @@ function moonDrawing(angle, southern) {
 function moonSection(chart) {
   const { angle, phases, lit } = birthMoonPhase(chart);
   const southern = chart.input.place.latitude < 0;
-  const box = section('moon-phase', 'The Moon you were born under',
+  const [box, body] = section('moon-phase', '02', 'The Moon you were born under',
     'The Moon’s shape changes through the month, depending on where it is compared with the Sun. This is how it looked on the day you were born.');
 
   const inner = make('div', 'moon-phase');
-  inner.append(moonDrawing(angle, southern));
+  const big = make('div', 'moon-big');
+  big.append(moonDrawing(angle, southern));
+  inner.append(big);
   const text = make('div', 'moon-phase-text');
   text.append(make('p', 'moon-phase-name', phases.join(' or ')));
   text.append(make('p', 'quiet', `${chart.utcRange ? 'About ' : ''}${Math.round(lit * 100)}% lit${southern ? ', as seen from the southern half of the world, where you were born' : ''}.`));
   for (const name of phases) text.append(make('p', '', PHASE_TEXT[name]));
+  // With one certain shape, add how it's said to show in everyday life.
+  if (phases.length === 1) text.append(make('p', '', PHASE_LIFE[phases[0]]));
   if (phases.length > 1) {
     const why = make('p', 'quiet');
     why.append('The Moon changed shape on your birthday, so it depends on your birth time. ', termButton('unknown-time', 'Why?'));
     text.append(why);
   }
   inner.append(text);
-  box.append(inner);
+  body.append(inner);
+
+  // The whole month: the eight shapes in order, yours marked. Tap one
+  // to read about people born under it.
+  body.append(make('p', 'eyebrow moon-cycle-title', 'The Moon’s month · tap a shape'));
+  const cycle = make('div', 'moon-cycle');
+  const buttons = PHASES.map((name, i) => {
+    const step = make('button', `moon-step${phases.includes(name) ? ' yours' : ''}`);
+    step.type = 'button';
+    step.style.setProperty('--i', i);
+    step.append(moonDrawing(i * 45, southern), make('span', 'moon-step-name', name));
+    step.append(make('span', 'moon-step-tag', phases.includes(name) ? 'You' : ''));
+    cycle.append(step);
+    return step;
+  });
+  body.append(cycle);
+  const panel = make('p', 'moon-cycle-panel');
+  panel.setAttribute('aria-live', 'polite');
+  body.append(panel);
+  choosable(buttons, (i) => {
+    const name = PHASES[i];
+    if (phases.includes(name)) {
+      panel.replaceChildren(make('strong', '', `${name}: `), 'your Moon. Tap the others to compare.');
+    } else {
+      panel.replaceChildren(make('strong', '', `${name}: `), PHASE_TEXT[name].replace(/^.*?\. /, ''));
+    }
+  }, PHASES.indexOf(phases[0]));
   return box;
 }
 
@@ -148,47 +226,131 @@ const ordinal = (n) => {
   return `${n}${ending}`;
 };
 
-function momentsSection(chart, now = new Date()) {
-  const moments = lifeMoments(chart);
-  const box = section('moments', 'Your big life moments',
-    'The slow planets take years to travel around the sky. When one comes back to where it was when you were born, astrologers see a turning point. These are your real dates.');
+// "in 3 years", "in 8 months"...
+function fromNow(date, now) {
+  const months = Math.round((date - now) / (30.44 * 86400000));
+  if (months < 1) return 'happening now';
+  if (months < 12) return `in ${months} month${months === 1 ? '' : 's'}`;
+  const years = Math.round(months / 12);
+  return `in about ${years} year${years === 1 ? '' : 's'}`;
+}
 
-  // What each kind of moment means.
-  const key = make('dl', 'moment-key');
-  for (const id of Object.keys(MOMENT_TEXT)) {
-    const item = make('div');
-    item.append(make('dt', '', MOMENT_TEXT[id].name), make('dd', '', MOMENT_TEXT[id].what));
+const datesOf = (m) => (m.start.getMonth() === m.end.getMonth() && m.start.getFullYear() === m.end.getFullYear()
+  ? monthYear(m.start) : `${monthYear(m.start)} – ${monthYear(m.end)}`);
+const ageOf = (m) => (m.ageStart === m.ageEnd ? `at ${m.ageStart}` : `at ${m.ageStart}–${m.ageEnd}`);
+
+// "3 years ago", "8 months ago"...
+function ago(date, now) {
+  const years = Math.round((now - date) / (365.25 * 86400000));
+  return years < 1 ? 'less than a year ago' : `${years} year${years === 1 ? '' : 's'} ago`;
+}
+
+const SHAPE = { 'jupiter-return': 'circle', 'saturn-return': 'square', 'uranus-opposition': 'diamond' };
+
+function momentsSection(chart, now = new Date()) {
+  const all = lifeMoments(chart);
+  const [box, body] = section('moments', '03', 'Your big life moments',
+    'The slow planets take years to travel around the sky. When one comes back to where it was when you were born, or reaches the opposite side, astrologers see a turning point in your life. These are your real dates.');
+  if (!all.length) return box;
+
+  // Only number a moment if it happens more than once (1st, 2nd Saturn return).
+  const howMany = (id) => all.filter((m) => m.id === id).length;
+  const nameOf = (m) => (howMany(m.id) > 1 ? `${ordinal(m.number)} ${MOMENT_TEXT[m.id].name}` : MOMENT_TEXT[m.id].name);
+  let nextIndex = all.findIndex((m) => m.end >= now);
+  if (nextIndex < 0) nextIndex = all.length - 1;
+
+  // The lifeline: birth to 90, a mark for every moment (one shape per
+  // kind) and a line for today. Each mark is a button.
+  const born = new Date(chart.utc).getTime();
+  const untilAge = 90;
+  const at = (date) => `${Math.min(100, Math.max(0, ((date - born) / (365.25 * 86400000) / untilAge) * 100))}%`;
+  const figure = make('figure', 'lifeline');
+  const track = make('div', 'lifeline-track');
+  const lived = make('span', 'lifeline-lived');
+  lived.style.width = at(now);
+  track.append(lived);
+  for (let age = 0; age <= untilAge; age += 10) {
+    const tick = make('span', `lifeline-tick${age % 20 ? ' odd' : ''}`, String(age));
+    tick.style.left = `${(age / untilAge) * 100}%`;
+    track.append(tick);
+  }
+  const today = make('span', 'lifeline-now', 'You, now');
+  today.style.left = at(now);
+  track.append(today);
+  const marks = all.map((m, i) => {
+    const mark = make('button', `lifeline-mark ${SHAPE[m.id]}${m.end < now ? ' past' : ''}`);
+    mark.type = 'button';
+    mark.style.left = at(m.start);
+    mark.style.setProperty('--i', i);
+    mark.setAttribute('aria-label', `${nameOf(m)}, ${datesOf(m)}`);
+    track.append(mark);
+    return mark;
+  });
+  figure.append(track);
+  const key = make('figcaption', 'lifeline-key');
+  for (const id of Object.keys(SHAPE)) {
+    const item = make('span');
+    item.append(make('span', `lifeline-shape ${SHAPE[id]}`), MOMENT_TEXT[id].name);
     key.append(item);
   }
-  box.append(key);
+  key.append(make('span', 'quiet', 'Age · tap a mark'));
+  figure.append(key);
 
-  // Your timeline. Past moments are quieter; the next one is marked.
-  const next = moments.find((m) => m.end >= now);
-  // Only number a moment if it happens more than once (1st, 2nd Saturn return).
-  const howMany = (id) => moments.filter((m) => m.id === id).length;
-  const list = make('ol', 'moment-list');
-  for (const m of moments) {
+  // The chosen moment, told in full (your next one at first), with
+  // buttons to step to the one before or after.
+  const feature = make('article', 'moment-feature');
+  feature.setAttribute('aria-live', 'polite');
+  const prev = make('button', 'moment-step', '← Earlier');
+  const next = make('button', 'moment-step', 'Later →');
+  prev.type = 'button';
+  next.type = 'button';
+  const steps = make('div', 'moment-steps');
+  steps.append(prev, next);
+  let current = nextIndex;
+
+  const show = (i) => {
+    current = i;
+    const m = all[i];
     const past = m.end < now;
-    const row = make('li', `moment${past ? ' past' : ''}${m === next ? ' next' : ''}`);
-    const dates = m.start.getMonth() === m.end.getMonth() && m.start.getFullYear() === m.end.getFullYear()
-      ? monthYear(m.start) : `${monthYear(m.start)} – ${monthYear(m.end)}`;
-    const age = m.ageStart === m.ageEnd ? `at ${m.ageStart}` : `at ${m.ageStart}–${m.ageEnd}`;
-    row.append(
-      make('span', 'moment-when', dates),
-      make('span', 'moment-name', howMany(m.id) > 1 ? `${ordinal(m.number)} ${MOMENT_TEXT[m.id].name}` : MOMENT_TEXT[m.id].name),
-      make('span', 'moment-age', age),
-      make('span', 'moment-tag', past ? 'Done' : m === next ? 'Next' : ''),
+    const label = i === nextIndex && !past ? 'Your next big moment' : past ? 'Already happened' : 'Coming later';
+    const content = make('div', 'moment-feature-content');
+    content.append(
+      make('p', 'eyebrow', label),
+      make('h3', 'moment-feature-name', nameOf(m)),
+      make('p', 'moment-feature-when', `${datesOf(m)} · ${ageOf(m)} · ${past ? ago(m.end, now) : fromNow(m.start, now)}`),
+      make('p', '', MOMENT_TEXT[m.id].what),
     );
-    list.append(row);
-  }
-  box.append(list);
+    // Jupiter and Saturn come back to the sign they were in when you
+    // were born, so that sign says what this return is about for you.
+    const natal = chart.bodies.find((b) => b.name === m.body);
+    const theme = RETURN_THEME[m.body]?.[natal.sign];
+    if (theme && !natal.uncertain) {
+      content.append(make('p', 'moment-feature-theme', `Your ${m.body} is in ${natal.sign}, so for you this one is said to be about ${theme}.`));
+    }
+    feature.replaceChildren(content, steps);
+    prev.disabled = i === 0;
+    next.disabled = i === all.length - 1;
+  };
+  prev.addEventListener('click', () => marks[current - 1]?.click());
+  next.addEventListener('click', () => marks[current + 1]?.click());
+
+  body.append(figure, feature);
+  choosable(marks, show, nextIndex);
   return box;
 }
 
 // --- Putting them on the page -------------------------------------------
 
 export function addPersonalSections(chart, before) {
+  // Each section draws itself in once, when you scroll to it.
+  const watcher = 'IntersectionObserver' in window ? new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) { e.target.classList.add('shown'); watcher.unobserve(e.target); }
+    }
+  }, { threshold: 0.2 }) : null;
   for (const build of [elementsSection, moonSection, momentsSection]) {
-    before.before(build(chart));
+    const box = build(chart);
+    before.before(box);
+    if (watcher) watcher.observe(box); else box.classList.add('shown');
   }
 }

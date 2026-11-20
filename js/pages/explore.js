@@ -7,16 +7,16 @@
 // so the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611201706';
-import { setUpGlossary, termButton } from '../glossary.js?v=202611201706';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611201706';
-import { loadBirth, saveBirth, SAMPLE_BIRTH } from '../store.js?v=202611201706';
-import { saveButton } from '../save-button.js?v=202611201706';
-import { addPersonalSections } from '../personal-sections.js?v=202611201706';
-import { TOPICS, topicById } from '../content/topics.js?v=202611201706';
-import { STRENGTH, WATCH } from '../content/topic-texts.js?v=202611201706';
-import { HOUSES } from '../content/basics.js?v=202611201706';
-import { placements, connections, ordinal, orList, houseText } from '../readings.js?v=202611201706';
+import { calculateChart } from '../astro/chart.js?v=202611201846';
+import { setUpGlossary, termButton } from '../glossary.js?v=202611201846';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611201846';
+import { loadBirth, saveBirth, SAMPLE_BIRTH } from '../store.js?v=202611201846';
+import { saveButton } from '../save-button.js?v=202611201846';
+import { addPersonalSections } from '../personal-sections.js?v=202611201846';
+import { TOPICS, topicById } from '../content/topics.js?v=202611201846';
+import { STRENGTH, WATCH } from '../content/topic-texts.js?v=202611201846';
+import { HOUSES } from '../content/basics.js?v=202611201846';
+import { placements, connections, ordinal, orList, houseText } from '../readings.js?v=202611201846';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
