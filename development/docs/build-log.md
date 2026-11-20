@@ -996,3 +996,9 @@ Both pages use one shared function (`js/born-line.js`) and one style (`.born` in
 **What changed:** The birth date block was as big as the page title and in the same font, which competed with it. The date is now in Manrope (the text font), semi-bold and only a little bigger than normal text. The "BORN" label and the time and place stay as they were.
 
 **AI vs me:** I liked the idea but asked for it smaller and in a different font from the title. Claude changed the style.
+
+### 20 Nov: My Universe, no "Start with your Big Three" button
+
+**What changed:** Removed the "Start with your Big Three ↓" button from the top of My Universe. The top now has just the title and your birth details next to the wheel, and the Big Three come straight after as you scroll.
+
+**AI vs me:** I asked for it to be removed. Claude made the change.
