@@ -7,16 +7,16 @@
 // so the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611191308';
-import { setUpGlossary, termButton } from '../glossary.js?v=202611191308';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611191308';
-import { loadBirth, saveBirth, SAMPLE_BIRTH } from '../store.js?v=202611191308';
-import { saveButton } from '../save-button.js?v=202611191308';
-import { setUpPlayground } from '../playground.js?v=202611191308';
-import { TOPICS, topicById } from '../content/topics.js?v=202611191308';
-import { STRENGTH, WATCH } from '../content/topic-texts.js?v=202611191308';
-import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611191308';
-import { placements, connections, ordinal, orList, houseText } from '../readings.js?v=202611191308';
+import { calculateChart } from '../astro/chart.js?v=202611201619';
+import { setUpGlossary, termButton } from '../glossary.js?v=202611201619';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611201619';
+import { loadBirth, saveBirth, SAMPLE_BIRTH } from '../store.js?v=202611201619';
+import { saveButton } from '../save-button.js?v=202611201619';
+import { setUpPlayground } from '../playground.js?v=202611201619';
+import { TOPICS, topicById } from '../content/topics.js?v=202611201619';
+import { STRENGTH, WATCH } from '../content/topic-texts.js?v=202611201619';
+import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611201619';
+import { placements, connections, ordinal, orList, houseText } from '../readings.js?v=202611201619';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {

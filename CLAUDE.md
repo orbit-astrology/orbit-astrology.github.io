@@ -1,6 +1,6 @@
 # ORBIT: notes for anyone (or any AI) working on this project
 
-ORBIT is an interactive personal astrology website, a student project for Webs & Apps Design (final deadline 20 November 2026). The idea and creative direction belong to the student, Salma; AI helps with code and explains it.
+ORBIT is an interactive personal astrology website, a student project for Webs & Apps Design (final deadline Monday 23 November 2026, moved from 20 November by the teacher). The idea and creative direction belong to the student, Salma; AI helps with code and explains it.
 
 ## Non-negotiable rules
 

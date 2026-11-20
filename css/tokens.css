@@ -22,6 +22,7 @@
   --ink:        #1E1A17;              /* text on champagne buttons */
   --line:       rgba(233, 227, 216, 0.2); /* thin see-through dividers */
   --lilac:      #C4B3C6;              /* the sky this week */
+  --them:       var(--bone);          /* the other person's planets (Connections) */
   --error:      #F0B8B0;              /* error messages (readable on every page colour) */
 
   /* Fonts */

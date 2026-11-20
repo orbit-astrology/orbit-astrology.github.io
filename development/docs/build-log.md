@@ -940,3 +940,19 @@ Tested: dragging all the way round, the Moon stays within a fraction of a degree
 - Under the button: "Saved in this browser." instead of the longer sentence about accounts.
 
 **AI vs me:** I found the form too wordy and asked for less text. Claude shortened it.
+
+### 20 Nov: Connections, the other person's planets in white
+
+**What was wrong:** On a comparison page, the other person's planets and symbols were lilac. Lilac is almost the same colour as the Connections page (mauve), so they were very hard to see.
+
+**What changed:**
+- The other person's planets, symbols and lines on the wheel are now bone white, and their symbols are a little thicker.
+- In "Side by side", your column is gold and theirs is white, matching the wheel (gold for you, white for them).
+- Their symbols in the link titles and the "Inner ring" key are white too. The key now says "in white".
+- New colour name in `css/tokens.css`: `--them`. Changing it there changes the other person's colour everywhere on Connections.
+
+**Decisions:** Claude showed four options side by side (current lilac, lighter lilac, pale blue, bone white). I chose bone white.
+
+**AI vs me:** I noticed the contrast problem and chose the colour. Claude made the comparison and changed the code.
+
+Note: the final deadline moved to Monday 23 November.

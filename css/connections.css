@@ -31,7 +31,7 @@
 /* --- You & Sam --- */
 .compare-intro { flex-direction: row; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 40px; }
 .compare-intro-text { flex: 1 1 560px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
-.lilac { color: var(--lilac); }
+.them-colour { color: var(--them); }
 
 .wheel .aspect { stroke-opacity: 0.85; }
 
@@ -39,7 +39,9 @@
 .pair-explained { display: flex; flex-wrap: wrap; gap: 40px 64px; align-items: flex-start; }
 .side-by-side { flex: 1 1 300px; max-width: 400px; display: flex; flex-direction: column; gap: 12px; }
 .side-by-side th[scope="row"] { font: 600 15px var(--sans); letter-spacing: 0; text-transform: none; color: var(--bone); border-bottom: 1px solid var(--line); padding: 13px 16px 13px 0; text-align: left; }
-.side-by-side td:last-child { color: var(--lilac); }
+/* Like the wheel: your column in gold, theirs in white. */
+.side-by-side td:not(:last-child) { color: var(--champagne); }
+.side-by-side td:last-child { color: var(--them); }
 .links-area { flex: 1 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
 .links-summary { margin: 0; max-width: 70ch; color: var(--bone-soft); }
 
@@ -52,11 +54,11 @@
 }
 .link-kind.easy::before  { border-top: 2px dashed var(--champagne); }
 .link-kind.tense::before { border-top: 2px solid var(--bone); }
-.link-kind.blend::before { width: 8px; height: 8px; border-radius: 50%; background: var(--champagne); box-shadow: 5px 0 0 var(--lilac); margin-right: 13px; }
+.link-kind.blend::before { width: 8px; height: 8px; border-radius: 50%; background: var(--champagne); box-shadow: 5px 0 0 var(--them); margin-right: 13px; }
 .link-maybe { color: var(--error); }
 .link-title { font-size: 22px; line-height: 1.25; }
 .link-symbol { color: var(--champagne); font-family: 'Segoe UI Symbol', 'Apple Symbols', 'Noto Sans Symbols', var(--serif); margin-right: 8px; }
-.link-symbol.them { color: var(--lilac); margin: 0 0 0 8px; }
+.link-symbol.them { color: var(--them); margin: 0 0 0 8px; }
 .link-and { color: var(--bone-soft); }
 .link-text { margin: 6px 0 0; max-width: 72ch; color: var(--bone-soft); }
 /* The part that changes with Friendship / Romance, with a small label. */

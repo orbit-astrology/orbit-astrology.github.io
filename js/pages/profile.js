@@ -12,15 +12,15 @@
 // honestly where your data is.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611191308';
-import { setUpGlossary } from '../glossary.js?v=202611191308';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611191308';
-import { setUpBirthForm } from '../birth-form.js?v=202611191308';
-import { placements, risingText, marginText } from '../readings.js?v=202611191308';
-import { topicById } from '../content/topics.js?v=202611191308';
-import { startCloud, currentUser, deleteAccount } from '../cloud.js?v=202611191308';
-import { setUpAccountPanel } from '../account-panel.js?v=202611191308';
-import { loadBirth, saveBirth, loadPeople, loadSaved, saveSaved, ALL_KEYS } from '../store.js?v=202611191308';
+import { calculateChart } from '../astro/chart.js?v=202611201619';
+import { setUpGlossary } from '../glossary.js?v=202611201619';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611201619';
+import { setUpBirthForm } from '../birth-form.js?v=202611201619';
+import { placements, risingText, marginText } from '../readings.js?v=202611201619';
+import { topicById } from '../content/topics.js?v=202611201619';
+import { startCloud, currentUser, deleteAccount } from '../cloud.js?v=202611201619';
+import { setUpAccountPanel } from '../account-panel.js?v=202611201619';
+import { loadBirth, saveBirth, loadPeople, loadSaved, saveSaved, ALL_KEYS } from '../store.js?v=202611201619';
 
 const $ = (id) => document.getElementById(id);
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
