@@ -8,10 +8,10 @@
 // js/content/personal-texts.js.
 // ---------------------------------------------------------------
 
-import { elementBalance, birthMoonPhase, lifeMoments, PHASES } from './astro/personal.js?v=202611201846';
-import { ELEMENTS, ELEMENT_PAIRS, PHASE_TEXT, PHASE_LIFE, MOMENT_TEXT, RETURN_THEME } from './content/personal-texts.js?v=202611201846';
-import { PLANETS } from './content/basics.js?v=202611201846';
-import { termButton } from './glossary.js?v=202611201846';
+import { elementBalance, birthMoonPhase, lifeMoments, PHASES } from './astro/personal.js?v=202611201853';
+import { ELEMENTS, ELEMENT_PAIRS, PHASE_TEXT, PHASE_LIFE, MOMENT_TEXT, RETURN_THEME } from './content/personal-texts.js?v=202611201853';
+import { PLANETS } from './content/basics.js?v=202611201853';
+import { termButton, setUpGlossary } from './glossary.js?v=202611201853';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const make = (tag, className, text) => {
@@ -22,6 +22,39 @@ const make = (tag, className, text) => {
 };
 const listOf = (words) => (words.length < 2 ? words.join('') : `${words.slice(0, -1).join(', ')} and ${words.at(-1)}`);
 
+// Turns the astrology words in a text into dashed glossary words
+// (tap or hover to see what they mean). Each word is linked once per text.
+const TERMS = [
+  [/\b(sign)\b/i, 'sign'],
+  [/\b(elements?)\b/i, 'element'],
+  [/\b(planets)\b/i, 'planet'],
+  [/\b(Waxing|Waning)\b/i, 'waxing-waning'],
+  [/\b(gibbous)\b/i, 'gibbous'],
+  [/\b(crescent)\b/i, 'crescent'],
+  [/\b(quarter)\b/i, 'moon-quarter'],
+  [/\b(shape)\b/i, 'moon-phase'],
+  [/\b(return)\b/i, 'planetary-return'],
+  [/\b(opposition)\b/i, 'opposition-moment'],
+];
+function withTerms(text, keys = TERMS.map((t) => t[1])) {
+  let parts = [text];
+  for (const [pattern, key] of TERMS) {
+    if (!keys.includes(key)) continue;
+    const i = parts.findIndex((p) => typeof p === 'string' && pattern.test(p));
+    if (i < 0) continue;
+    const m = parts[i].match(pattern);
+    const before = parts[i].slice(0, m.index);
+    const after = parts[i].slice(m.index + m[0].length);
+    parts.splice(i, 1, before, termButton(key, m[0]), after);
+  }
+  return parts.filter((p) => p !== '');
+}
+const termed = (tag, className, text, keys) => {
+  const n = make(tag, className);
+  n.append(...withTerms(text, keys));
+  return n;
+};
+
 // A numbered section: on the left its number, title and a short
 // introduction; on the right ("body") the part about you.
 // Returns [section, body].
@@ -31,7 +64,7 @@ function section(id, number, title, intro) {
   const head = make('div', 'personal-head');
   const h2 = make('h2', 'section-title', title);
   h2.id = `${id}-title`;
-  head.append(make('p', 'personal-number', number), h2, make('p', 'lede', intro));
+  head.append(make('p', 'personal-number', number), h2, termed('p', 'lede', intro));
   const body = make('div', 'personal-body');
   box.append(head, body);
   return [box, body];
@@ -176,7 +209,7 @@ function moonSection(chart) {
   big.append(moonDrawing(angle, southern));
   inner.append(big);
   const text = make('div', 'moon-phase-text');
-  text.append(make('p', 'moon-phase-name', phases.join(' or ')));
+  text.append(termed('p', 'moon-phase-name', phases.join(' or '), ['waxing-waning', 'gibbous', 'crescent', 'moon-quarter']));
   text.append(make('p', 'quiet', `${chart.utcRange ? 'About ' : ''}${Math.round(lit * 100)}% lit${southern ? ', as seen from the southern half of the world, where you were born' : ''}.`));
   for (const name of phases) text.append(make('p', '', PHASE_TEXT[name]));
   // With one certain shape, add how it's said to show in everyday life.
@@ -209,10 +242,11 @@ function moonSection(chart) {
   choosable(buttons, (i) => {
     const name = PHASES[i];
     if (phases.includes(name)) {
-      panel.replaceChildren(make('strong', '', `${name}: `), 'your Moon. Tap the others to compare.');
+      panel.replaceChildren(termed('strong', '', name, ['waxing-waning', 'gibbous', 'crescent', 'moon-quarter']), ': your Moon. Tap the others to compare.');
     } else {
-      panel.replaceChildren(make('strong', '', `${name}: `), PHASE_TEXT[name].replace(/^.*?\. /, ''));
+      panel.replaceChildren(termed('strong', '', name, ['waxing-waning', 'gibbous', 'crescent', 'moon-quarter']), ': ', PHASE_TEXT[name].replace(/^.*?\. /, ''));
     }
+    setUpGlossary(panel);
   }, PHASES.indexOf(phases[0]));
   return box;
 }
@@ -250,7 +284,7 @@ const SHAPE = { 'jupiter-return': 'circle', 'saturn-return': 'square', 'uranus-o
 function momentsSection(chart, now = new Date()) {
   const all = lifeMoments(chart);
   const [box, body] = section('moments', '03', 'Your big life moments',
-    'The slow planets take years to travel around the sky. When one comes back to where it was when you were born, or reaches the opposite side, astrologers see a turning point in your life. These are your real dates.');
+    'The slow planets take years to travel around the sky. When one comes back to where it was when you were born (a return), or reaches the opposite side (an opposition), astrologers see a turning point in your life. These are your real dates.');
   if (!all.length) return box;
 
   // Only number a moment if it happens more than once (1st, 2nd Saturn return).
@@ -316,7 +350,7 @@ function momentsSection(chart, now = new Date()) {
     const content = make('div', 'moment-feature-content');
     content.append(
       make('p', 'eyebrow', label),
-      make('h3', 'moment-feature-name', nameOf(m)),
+      termed('h3', 'moment-feature-name', nameOf(m), ['planetary-return', 'opposition-moment']),
       make('p', 'moment-feature-when', `${datesOf(m)} · ${ageOf(m)} · ${past ? ago(m.end, now) : fromNow(m.start, now)}`),
       make('p', '', MOMENT_TEXT[m.id].what),
     );
@@ -328,6 +362,7 @@ function momentsSection(chart, now = new Date()) {
       content.append(make('p', 'moment-feature-theme', `Your ${m.body} is in ${natal.sign}, so for you this one is said to be about ${theme}.`));
     }
     feature.replaceChildren(content, steps);
+    setUpGlossary(feature);
     prev.disabled = i === 0;
     next.disabled = i === all.length - 1;
   };

@@ -13,8 +13,8 @@
 // the real planet positions. Nothing is made up.
 // ---------------------------------------------------------------
 
-import { bodyLongitude, positionsAt } from './chart.js?v=202611201846';
-import { normalize } from './zodiac.js?v=202611201846';
+import { bodyLongitude, positionsAt } from './chart.js?v=202611201853';
+import { normalize } from './zodiac.js?v=202611201853';
 
 // --- 1. Elements --------------------------------------------------
 

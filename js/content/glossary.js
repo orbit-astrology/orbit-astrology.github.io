@@ -104,4 +104,36 @@ export const GLOSSARY = {
     term: 'Why we need your birth time',
     text: 'The Moon moves through a whole sign in about two and a half days, and the Rising sign changes every two hours or so. Without your birth time, ORBIT can’t know these for sure, so it tells you instead of guessing.',
   },
+  element: {
+    term: 'Element',
+    text: 'The 12 signs are grouped into four elements: Fire, Earth, Air and Water. Signs of the same element share a basic way of meeting the world.',
+  },
+  'moon-phase': {
+    term: 'Moon phase',
+    text: 'The shape of the Moon we see from Earth. It depends on the angle between the Sun and the Moon, and goes from New to Full and back in about 29.5 days.',
+  },
+  'waxing-waning': {
+    term: 'Waxing and waning',
+    text: 'Waxing means the lit part of the Moon is growing, on its way to Full Moon. Waning means it is shrinking, on its way back to New Moon.',
+  },
+  gibbous: {
+    term: 'Gibbous',
+    text: 'A Moon that is more than half lit but not yet full (or just past full). The word comes from Latin for “humped”.',
+  },
+  crescent: {
+    term: 'Crescent',
+    text: 'A Moon that is less than half lit: a thin, curved sliver.',
+  },
+  'moon-quarter': {
+    term: 'Quarter Moon',
+    text: 'A Moon that is exactly half lit. It’s called a “quarter” because the Moon is a quarter of the way (first quarter) or three quarters of the way (last quarter) through its monthly cycle.',
+  },
+  'planetary-return': {
+    term: 'Planetary return',
+    text: 'When a planet, travelling around the sky, comes back to the exact spot where it was when you were born. Slow planets take years to do this, so astrologers see it as a turning point.',
+  },
+  'opposition-moment': {
+    term: 'Opposition',
+    text: 'When a planet reaches the exact opposite side of the sky from where it was when you were born (180° away). It’s said to bring a moment of tension and change.',
+  },
 };

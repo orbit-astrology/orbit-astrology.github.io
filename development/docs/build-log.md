@@ -1046,3 +1046,9 @@ Their code is gone too: the library part of `js/pages/explore.js`, the file `js/
 - **Gentle movement.** When you scroll to a section, it draws itself in once: the triangles draw their lines, the planet symbols, Moons and lifeline marks fade in one by one, and the lived part of the lifeline grows. With "reduce motion" turned on, everything simply appears.
 
 **AI vs me:** I gave the feedback: messy, dull, separate the sections, better visuals, less blank space, more engaging but not overwhelming. Claude chose how to do it, wrote the new texts and code, and tested it on computer and phone with three charts. All 83 accuracy checks pass.
+
+## 20 November 2026 (evening): Dashed glossary words in the "about you" sections
+
+**What changed:** Like the rest of the site, the astrology words in Explore's three new sections are now dashed. Hover over one or tap it to see a short plain explanation. The linked words are sign, elements, planets, shape (Moon phase), waxing/waning, gibbous, crescent, quarter, return and opposition. They also work in the parts that change when you tap something (the Moon shape you pick and the life moment you pick). New explanations were added to `js/content/glossary.js`: element, Moon phase, waxing and waning, gibbous, crescent, quarter Moon, planetary return and opposition. The life-moments introduction was reworded slightly ("…(a return)… (an opposition)") so the dashed words are short.
+
+**AI vs me:** I reminded Claude that every hard astrology word needs its dashed definition. Claude chose the words, wrote the explanations and tested them.

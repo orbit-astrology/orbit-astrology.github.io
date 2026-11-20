@@ -9,7 +9,7 @@
 // chart is recalculated from them every time, so it's always correct.
 // ---------------------------------------------------------------
 
-import { SETTINGS } from './astro/settings.js?v=202611201846';
+import { SETTINGS } from './astro/settings.js?v=202611201853';
 
 const KEY = 'orbit.birth';
 

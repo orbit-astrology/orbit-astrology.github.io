@@ -72,8 +72,8 @@
 .personal-summary { font: 500 clamp(1.5rem, 2.3vw, 2rem)/1.25 var(--serif); color: var(--bone); }
 .personal-text { max-width: 62ch; }
 /* Shared look for the tappable parts: plain, square, a thin line when chosen */
-.personal button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: inherit; }
-.personal button:focus-visible { outline: 1px solid var(--champagne); outline-offset: 3px; }
+.personal :where(button:not(.term)) { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: inherit; }
+.personal :where(button:not(.term)):focus-visible { outline: 1px solid var(--champagne); outline-offset: 3px; }
 
 /* Elements: four tappable columns */
 .element-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 8px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
