@@ -22,7 +22,7 @@
 .topic-head { padding-top: 28px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
 .topic-head .back { margin-bottom: 10px; }
 /* "Putting it together": the whole topic in one sentence */
-.topic-together { margin: 4px 0 0; max-width: 60ch; font: 500 clamp(1.15rem, 1.6vw, 1.35rem)/1.5 var(--serif); font-variation-settings: "opsz" 18; color: var(--bone); }
+.topic-together { margin: 4px 0 0; max-width: 60ch; font: 500 clamp(1.1rem, 1.5vw, 1.25rem)/1.55 var(--sans); color: var(--bone); }
 .topic-together:empty { display: none; }
 #topic-save { margin-top: 10px; }
 .topic-item-body .side { margin: 0 0 6px; color: var(--bone-soft); }
@@ -37,7 +37,7 @@
 .topic-item-meta { margin: 0; color: var(--bone-soft); font-size: 15px; }
 .topic-item-body { flex: 2 1 480px; min-width: 0; }
 .topic-item-body p { margin: 0 0 14px; max-width: 64ch; }
-.topic-item-body .lens { font: 500 clamp(1.1rem, 1.5vw, 1.3rem)/1.45 var(--serif); }
+.topic-item-body .lens { font: 500 clamp(1.1rem, 1.5vw, 1.25rem)/1.55 var(--sans); color: var(--bone); }
 .topic-item-body ul { list-style: none; margin: 0 0 14px; padding: 0; }
 .topic-item-body li { padding: 10px 0; border-top: 1px solid var(--line); }
 .topic-item-body li strong { font-weight: 650; }
@@ -69,7 +69,7 @@
 .personal .lede { max-width: 40ch; }
 .personal-body { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 .personal-body p { margin: 0; }
-.personal-summary { font: 500 clamp(1.5rem, 2.3vw, 2rem)/1.25 var(--serif); color: var(--bone); }
+.personal-summary { font: 600 clamp(1.2rem, 1.7vw, 1.4rem)/1.45 var(--sans); color: var(--bone); }
 .personal-text { max-width: 62ch; }
 /* Shared look for the tappable parts: plain, square, a thin line when chosen */
 .personal :where(button:not(.term)) { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: inherit; }

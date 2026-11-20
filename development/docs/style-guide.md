@@ -35,6 +35,7 @@ All text colours were checked for readability (contrast at least 4.5:1) on every
 ## Type
 
 - **Titles:** Bodoni Moda, regular, with *italic* for the emotional half of a title ("The sky you were *born under*").
+- **Never for explanations:** Bodoni Moda is only for titles and names (a heading, "Sun in Virgo", "Waning gibbous"). Any sentence that explains something, even a big one like "Your Sun in Virgo in your 11th house" or "You're a mix of Fire and Earth", is in Manrope, because Bodoni is hard to read in a sentence. (Salma, 20 Nov)
 - **Small labels:** Bodoni Moda in spaced capitals (S U N · W H O  Y O U  A R E), champagne.
 - **Reading text:** Manrope, 16–18 px, line height about 1.6.
 

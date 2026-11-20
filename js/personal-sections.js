@@ -8,10 +8,10 @@
 // js/content/personal-texts.js.
 // ---------------------------------------------------------------
 
-import { elementBalance, birthMoonPhase, lifeMoments, PHASES } from './astro/personal.js?v=202611201853';
-import { ELEMENTS, ELEMENT_PAIRS, PHASE_TEXT, PHASE_LIFE, MOMENT_TEXT, RETURN_THEME } from './content/personal-texts.js?v=202611201853';
-import { PLANETS } from './content/basics.js?v=202611201853';
-import { termButton, setUpGlossary } from './glossary.js?v=202611201853';
+import { elementBalance, birthMoonPhase, lifeMoments, PHASES } from './astro/personal.js?v=202611201854';
+import { ELEMENTS, ELEMENT_PAIRS, PHASE_TEXT, PHASE_LIFE, MOMENT_TEXT, RETURN_THEME } from './content/personal-texts.js?v=202611201854';
+import { PLANETS } from './content/basics.js?v=202611201854';
+import { termButton, setUpGlossary } from './glossary.js?v=202611201854';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const make = (tag, className, text) => {

@@ -1052,3 +1052,15 @@ Their code is gone too: the library part of `js/pages/explore.js`, the file `js/
 **What changed:** Like the rest of the site, the astrology words in Explore's three new sections are now dashed. Hover over one or tap it to see a short plain explanation. The linked words are sign, elements, planets, shape (Moon phase), waxing/waning, gibbous, crescent, quarter, return and opposition. They also work in the parts that change when you tap something (the Moon shape you pick and the life moment you pick). New explanations were added to `js/content/glossary.js`: element, Moon phase, waxing and waning, gibbous, crescent, quarter Moon, planetary return and opposition. The life-moments introduction was reworded slightly ("…(a return)… (an opposition)") so the dashed words are short.
 
 **AI vs me:** I reminded Claude that every hard astrology word needs its dashed definition. Claude chose the words, wrote the explanations and tested them.
+
+## 20 November 2026 (evening): The title font is only for titles
+
+**What changed:** Sentences that explain something are now in Manrope, not Bodoni Moda, because Bodoni is hard to read in a sentence. This changed in four places:
+- My Chart (and every page that uses the same reading layout): the line "Your Sun (who you are) in Virgo (carefully and helpfully) in your 11th house…"
+- Explore topics: the summary under the topic title ("You love carefully and helpfully…")
+- Explore topics: the first sentence of each part ("You love in a way that's thoughtful…")
+- Explore, Your elements: "You're a mix of Fire and Earth."
+
+Titles and names stay in Bodoni (for example "Sun in Virgo", "Waning gibbous", "Fire"). The rule is now written in the style guide, so it holds for anything added later.
+
+**AI vs me:** I noticed the explanations were hard to read in the title font and set the rule. Claude found every place it happened and changed them.

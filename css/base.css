@@ -80,8 +80,8 @@ h1 em, h2 em, h3 em { font-style: normal; }
 /* ("html" in front makes this rule win over the page CSS files, whose
    "font: …" shorthand would otherwise reset it.) */
 html :is(h1, h2, h3, .title, .section-title, .welcome-title, .welcome-tagline,
-  .placement-sign, .reading-title, .grammar, .topic-name, .topic-item-title,
-  .topic-big-question, .lens, .explore-name, .travel-date,
+  .placement-sign, .reading-title, .topic-name, .topic-item-title,
+  .topic-big-question, .explore-name, .travel-date,
   .term-popup strong) {
   font-variation-settings: "opsz" 18;
 }
