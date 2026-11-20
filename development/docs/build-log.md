@@ -978,3 +978,15 @@ Note: the final deadline moved to Monday 23 November.
 **What changed:** When you're logged in, the "Your universe is saved in your account" section at the end of My Universe is gone. It had nothing to do there: your chart is already saved, and you change your birth details in Profile. When you're not logged in, the section stays, because it invites you to create an account so you don't lose your chart.
 
 **AI vs me:** I suggested removing it. Claude kept it only for people without an account, so they still see the invitation.
+
+### 20 Nov: Adrián's feedback, birth date and "Back to the wheel"
+
+Adrián looked at the site with me and asked for three things:
+
+1. **"Back to the wheel" on My Chart.** After clicking a planet and jumping down to its reading, there was no quick way back up (we had removed the old link on 12 Nov). Now a small square button, "↑ Back to the wheel", appears in the bottom corner once the wheel is off the screen, and takes you straight back to it. In List view it says "↑ Back to the list". New code at the end of `js/pages/chart.js`.
+2. **The birth date, bigger, on My Universe.** The small line "Born 9 September 2006 · 08:53 · Lima" is now a block: a small gold "BORN" label, the date large in the title font, then the time and place under it.
+3. **The birth date on My Chart too,** in the same block, under the title.
+
+Both pages use one shared function (`js/born-line.js`) and one style (`.born` in `css/base.css`), so they always look the same.
+
+**AI vs me:** Adrián gave the feedback and I passed it on. Claude designed the date block and the button, wrote the code and checked it on computer and phone.

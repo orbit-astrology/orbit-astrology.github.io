@@ -2,23 +2,24 @@
 // ---------------------------------------------------------------
 // My Universe: reads your saved birth details, calculates your real
 // chart, and fills the page with it:
-//   - the line "Born 4 August 2001 · 14:30 · Valencia"
+//   - your birth date, big, with the time and place under it (js/born-line.js)
 //   - your chart wheel
 //   - your Big Three (Sun, Moon, Rising) with a short meaning each
 //   - this week's sky, matched against your chart
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611201626';
-import { weeklyEvents } from '../astro/sky.js?v=202611201626';
-import { risingText, marginText, placements, reading } from '../readings.js?v=202611201626';
-import { drawWheel } from '../wheel.js?v=202611201626';
-import { drawConstellation } from '../constellations.js?v=202611201626';
-import { setUpTimeTravel } from '../time-travel.js?v=202611201626';
-import { cloudReady, currentUser } from '../cloud.js?v=202611201626';
-import { setUpGlossary } from '../glossary.js?v=202611201626';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611201626';
-import { loadBirth } from '../store.js?v=202611201626';
-import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202611201626';
+import { calculateChart } from '../astro/chart.js?v=202611201655';
+import { weeklyEvents } from '../astro/sky.js?v=202611201655';
+import { risingText, placements, reading } from '../readings.js?v=202611201655';
+import { bornLine } from '../born-line.js?v=202611201655';
+import { drawWheel } from '../wheel.js?v=202611201655';
+import { drawConstellation } from '../constellations.js?v=202611201655';
+import { setUpTimeTravel } from '../time-travel.js?v=202611201655';
+import { cloudReady, currentUser } from '../cloud.js?v=202611201655';
+import { setUpGlossary } from '../glossary.js?v=202611201655';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611201655';
+import { loadBirth } from '../store.js?v=202611201655';
+import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202611201655';
 
 const $ = (id) => document.getElementById(id);
 
@@ -45,13 +46,8 @@ const body = (id) => chart.bodies.find((b) => b.id === id);
 
 // --- Born line ------------------------------------------------------
 
-const dateText = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
-  .format(new Date(Date.UTC(birth.year, birth.month - 1, birth.day)));
-const clock = `${String(birth.hour).padStart(2, '0')}:${String(birth.minute).padStart(2, '0')}`;
-const timeText = !birth.timeKnown ? 'time unknown'
-  : birth.margin ? `around ${clock} (${marginText(birth.margin)})` : clock;
-const who = birth.isSample ? `${birth.name} was born` : 'Born';
-$('born-line').textContent = `${who} ${dateText} · ${timeText} · ${birth.place.label}`;
+// Your date of birth, shown big (js/born-line.js)
+$('born-line').replaceWith(bornLine(birth));
 
 // --- Chart wheel ----------------------------------------------------
 

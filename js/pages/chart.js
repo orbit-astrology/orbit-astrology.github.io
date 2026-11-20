@@ -9,17 +9,18 @@
 //   4. write "Your chart, explained": one section per placement
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611201626';
-import { formatOffset } from '../astro/time.js?v=202611201626';
-import { drawWheel } from '../wheel.js?v=202611201626';
-import { placeTip } from '../tip-position.js?v=202611201626';
-import { setUpGlossary, termButton } from '../glossary.js?v=202611201626';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611201626';
-import { loadBirth } from '../store.js?v=202611201626';
-import { saveButton } from '../save-button.js?v=202611201626';
-import { runTour } from '../tour.js?v=202611201626';
-import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611201626';
-import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202611201626';
+import { calculateChart } from '../astro/chart.js?v=202611201655';
+import { formatOffset } from '../astro/time.js?v=202611201655';
+import { drawWheel } from '../wheel.js?v=202611201655';
+import { placeTip } from '../tip-position.js?v=202611201655';
+import { setUpGlossary, termButton } from '../glossary.js?v=202611201655';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611201655';
+import { loadBirth } from '../store.js?v=202611201655';
+import { saveButton } from '../save-button.js?v=202611201655';
+import { runTour } from '../tour.js?v=202611201655';
+import { bornLine } from '../born-line.js?v=202611201655';
+import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611201655';
+import { placements, reading, grammar, connections, degreeText, ordinal, orList, houseText } from '../readings.js?v=202611201655';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
@@ -40,6 +41,7 @@ if (!birth) {
   throw new Error('No birth details saved yet');
 }
 showSampleBanner(birth);
+$('born-line').replaceWith(bornLine(birth)); // your date of birth, shown big
 
 const result = calculateChart(birth);
 if (result.status !== 'ok') {
@@ -454,3 +456,23 @@ function startTour() {
 // runs when you press "Watch your chart build, step by step".
 $('replay-tour').addEventListener('click', startTour);
 
+
+// --- Back to the wheel ----------------------------------------------
+// Once the wheel (or list) is off the top of the screen, for example
+// after you click a planet and jump to its reading, a small button
+// appears in the corner to take you straight back up.
+
+const backButton = $('back-to-wheel');
+const stage = $('chart-stage');
+function updateBackButton() {
+  const below = stage.getBoundingClientRect().bottom < 0; // scrolled past it
+  backButton.hidden = !below;
+  backButton.textContent = $('list-area').hidden ? '↑ Back to the wheel' : '↑ Back to the list';
+}
+window.addEventListener('scroll', updateBackButton, { passive: true });
+updateBackButton();
+backButton.addEventListener('click', (e) => {
+  e.preventDefault();
+  const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  stage.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'start' });
+});
