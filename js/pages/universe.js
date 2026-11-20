@@ -8,17 +8,17 @@
 //   - this week's sky, matched against your chart
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611201625';
-import { weeklyEvents } from '../astro/sky.js?v=202611201625';
-import { risingText, marginText, placements, reading } from '../readings.js?v=202611201625';
-import { drawWheel } from '../wheel.js?v=202611201625';
-import { drawConstellation } from '../constellations.js?v=202611201625';
-import { setUpTimeTravel } from '../time-travel.js?v=202611201625';
-import { cloudReady, currentUser } from '../cloud.js?v=202611201625';
-import { setUpGlossary } from '../glossary.js?v=202611201625';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611201625';
-import { loadBirth } from '../store.js?v=202611201625';
-import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202611201625';
+import { calculateChart } from '../astro/chart.js?v=202611201626';
+import { weeklyEvents } from '../astro/sky.js?v=202611201626';
+import { risingText, marginText, placements, reading } from '../readings.js?v=202611201626';
+import { drawWheel } from '../wheel.js?v=202611201626';
+import { drawConstellation } from '../constellations.js?v=202611201626';
+import { setUpTimeTravel } from '../time-travel.js?v=202611201626';
+import { cloudReady, currentUser } from '../cloud.js?v=202611201626';
+import { setUpGlossary } from '../glossary.js?v=202611201626';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611201626';
+import { loadBirth } from '../store.js?v=202611201626';
+import { PLANETS, SIGNS, HOUSES, SUN_IN, MOON_IN, RISING_IN } from '../content/basics.js?v=202611201626';
 
 const $ = (id) => document.getElementById(id);
 
@@ -302,10 +302,11 @@ setUpTimeTravel({
 
 // --- Saved where? (accounts: js/cloud.js) ---------------------------------
 
+// Logged in: nothing to do here (it's already in your account, and you
+// change your details in Profile), so the whole section is hidden.
+// Not logged in: it invites you to create an account.
 if (currentUser() && !birth.isSample) {
-  $('save-where').textContent = 'in your account';
-  $('save-note').textContent = `It’s saved to ${currentUser().email}, so you can open it on any device where you log in.`;
-  $('save-account').hidden = true;
+  document.querySelector('.save').hidden = true;
 } else if (!cloudReady || birth.isSample) {
   $('save-account').hidden = true;
 }

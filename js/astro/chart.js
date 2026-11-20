@@ -10,12 +10,12 @@
 // object this file returns, so they always show the same data.
 // ---------------------------------------------------------------
 
-import * as Astronomy from '../vendor/astronomy.js?v=202611201625';
-import { SETTINGS, BODIES } from './settings.js?v=202611201625';
-import { normalize, signOf } from './zodiac.js?v=202611201625';
-import { localToUtc, isRealDate } from './time.js?v=202611201625';
-import { placidusHouses, houseOf } from './houses.js?v=202611201625';
-import { findAspects } from './aspects.js?v=202611201625';
+import * as Astronomy from '../vendor/astronomy.js?v=202611201626';
+import { SETTINGS, BODIES } from './settings.js?v=202611201626';
+import { normalize, signOf } from './zodiac.js?v=202611201626';
+import { localToUtc, isRealDate } from './time.js?v=202611201626';
+import { placidusHouses, houseOf } from './houses.js?v=202611201626';
+import { findAspects } from './aspects.js?v=202611201626';
 
 // --- 1. Raw astronomy ------------------------------------------
 

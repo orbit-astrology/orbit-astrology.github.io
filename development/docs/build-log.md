@@ -972,3 +972,9 @@ Note: the final deadline moved to Monday 23 November.
 **What changed:** Removed the second line. Now there's one line under the last reading, then "How we know all this", then the gold line before "Next".
 
 **AI vs me:** I spotted the double line. Claude removed it.
+
+### 20 Nov: My Universe, no "saved in your account" message when logged in
+
+**What changed:** When you're logged in, the "Your universe is saved in your account" section at the end of My Universe is gone. It had nothing to do there: your chart is already saved, and you change your birth details in Profile. When you're not logged in, the section stays, because it invites you to create an account so you don't lose your chart.
+
+**AI vs me:** I suggested removing it. Claude kept it only for people without an account, so they still see the invitation.
