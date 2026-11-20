@@ -1008,3 +1008,15 @@ Both pages use one shared function (`js/born-line.js`) and one style (`.born` in
 **What changed:** On My Chart, the birth date block moved from under the page title to under the wheel, on the left. The top of the page is calmer, and the date sits next to the chart it belongs to.
 
 **AI vs me:** I chose the new place. Claude moved it and checked it on computer and phone.
+
+### 20 Nov: Explore, only "Ask your chart"
+
+**What changed:** Explore is now just "Ask your chart": the five topics (Who you are, Your feelings, Love, Work and direction, How you grow), then "Next: You and your people". I removed two sections:
+- "All 12 signs and houses" (the fold-out library on a darker band)
+- "How two planets talk" (the circle where you drag the Moon around the Sun)
+
+Their code is gone too: the library part of `js/pages/explore.js`, the file `js/playground.js` and their styles in `css/explore.css`.
+
+**Why:** Explore was the one page made of three separate things stacked one after another, so it felt long and unclear. "Ask your chart" is the part that brings your chart together. The signs, houses and aspects are still explained on My Chart, in the readings and in the pop-ups.
+
+**AI vs me:** I decided "Ask your chart" stays and the other two go. Claude removed them and checked the page with and without a chart, on computer and phone.

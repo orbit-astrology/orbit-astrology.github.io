@@ -1,22 +1,21 @@
 // explore.js
 // ---------------------------------------------------------------
 // Explore has two views on one page:
-//   - the home: five topics, the astrology library, the playground
+//   - the home: five topics
 //   - one topic, when the address ends in #identity, #love, etc.
 // Switching between them uses the part of the address after "#",
 // so the browser's Back button works as expected.
 // ---------------------------------------------------------------
 
-import { calculateChart } from '../astro/chart.js?v=202611201658';
-import { setUpGlossary, termButton } from '../glossary.js?v=202611201658';
-import { setUpMenu, showSampleBanner } from '../layout.js?v=202611201658';
-import { loadBirth, saveBirth, SAMPLE_BIRTH } from '../store.js?v=202611201658';
-import { saveButton } from '../save-button.js?v=202611201658';
-import { setUpPlayground } from '../playground.js?v=202611201658';
-import { TOPICS, topicById } from '../content/topics.js?v=202611201658';
-import { STRENGTH, WATCH } from '../content/topic-texts.js?v=202611201658';
-import { SIGNS, SIGN_DETAIL, HOUSES } from '../content/basics.js?v=202611201658';
-import { placements, connections, ordinal, orList, houseText } from '../readings.js?v=202611201658';
+import { calculateChart } from '../astro/chart.js?v=202611201701';
+import { setUpGlossary, termButton } from '../glossary.js?v=202611201701';
+import { setUpMenu, showSampleBanner } from '../layout.js?v=202611201701';
+import { loadBirth, saveBirth, SAMPLE_BIRTH } from '../store.js?v=202611201701';
+import { saveButton } from '../save-button.js?v=202611201701';
+import { TOPICS, topicById } from '../content/topics.js?v=202611201701';
+import { STRENGTH, WATCH } from '../content/topic-texts.js?v=202611201701';
+import { HOUSES } from '../content/basics.js?v=202611201701';
+import { placements, connections, ordinal, orList, houseText } from '../readings.js?v=202611201701';
 
 const $ = (id) => document.getElementById(id);
 const make = (tag, className, text) => {
@@ -28,7 +27,7 @@ const make = (tag, className, text) => {
 
 setUpMenu();
 
-// The chart is optional here: the library and playground work without one.
+// Without a chart, the page explains how to make one (topics need it).
 const birth = loadBirth();
 showSampleBanner(birth);
 const result = birth ? calculateChart(birth) : null;
@@ -73,53 +72,6 @@ $('try-sample').addEventListener('click', (e) => {
   saveBirth(SAMPLE_BIRTH);
   location.reload();
 });
-
-// --- Library --------------------------------------------------------------
-
-function librarySection(name, sub, items) {
-  const details = make('details');
-  const summary = make('summary');
-  summary.append(make('span', 'lib-name', name), make('span', 'lib-sub', sub));
-  const grid = make('div', 'lib-items');
-  for (const item of items) {
-    const box = make('div', 'lib-item');
-    const h3 = make('h3');
-    if (item.symbol) h3.append(make('span', 'symbol', item.symbol + '︎'));
-    h3.append(item.title);
-    box.append(h3, make('p', '', item.text));
-    if (item.yours) box.append(make('span', 'yours', item.yours));
-    grid.append(box);
-  }
-  details.append(summary, grid);
-  return details;
-}
-
-const signItems = Object.keys(SIGNS).map((sign) => {
-  const mine = all.filter((p) => p.kind === 'planet' && !p.uncertain && p.sign === sign).map((p) => p.name);
-  return { symbol: SIGNS[sign].symbol, title: sign, text: `${SIGN_DETAIL[sign]} In a chart it means acting ${SIGNS[sign].how}.`, yours: mine.length ? `Your planets here: ${mine.join(', ')}` : null };
-});
-const houseItems = Object.entries(HOUSES).map(([n, text]) => {
-  const mine = all.filter((p) => p.kind === 'planet' && p.house === Number(n)).map((p) => p.name);
-  return { title: `${ordinal(Number(n))} house`, text: `The area of ${text}.`, yours: mine.length ? `Your planets here: ${mine.join(', ')}` : null };
-});
-// With a chart, each heading says something about YOURS.
-const count = (items) => items.filter((i) => i.yours).length;
-const sub = (general, mine) => (chart ? mine : general);
-$('library-sections').append(
-  librarySection('The signs', sub('The how: 12 styles', `The how: your planets are spread over ${count(signItems)} of the 12`), signItems),
-  librarySection('The houses', sub('The where: 12 areas of life', chart?.houses ? `The where: your planets are in ${count(houseItems)} of the 12 areas of life` : 'The where: 12 areas of life (yours need a birth time)'), houseItems),
-);
-if (!chart) $('library-lede').textContent = 'What each of the 12 signs and 12 houses means.';
-
-// --- Playground -------------------------------------------------------------
-
-// The Moon starts where YOUR Moon was, measured from your Sun (when we
-// know your Moon's position well enough). Otherwise any spot will do.
-const sunP = byId.sun;
-const moonP = byId.moon;
-const yours = sunP && moonP && !moonP.uncertain ? moonP.longitude - sunP.longitude : null;
-if (yours === null) $('pg-whose').textContent = 'just two planets: the Sun and the Moon';
-setUpPlayground($('playground-wheel'), $('playground-readout'), yours);
 
 // --- One topic --------------------------------------------------------------
 

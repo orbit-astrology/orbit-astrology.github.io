@@ -1,4 +1,4 @@
-/* explore.css: topics, the library and the aspect playground. */
+/* explore.css: the five topics, and one topic. */
 
 .explore-intro { padding-top: 32px; display: flex; flex-direction: column; gap: 12px; }
 
@@ -17,54 +17,6 @@
 .topic-link:hover .topic-name { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
 .topic-link:hover .topic-go { transform: translateX(4px); }
 .no-chart-note { margin: 20px 0 0; }
-
-/* --- Library --- */
-.library { background: rgba(0, 0, 0, 0.12); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding-block: 56px; }
-.library .lede { margin: 10px 0 24px; }
-.library-sections { border-top: 1px solid var(--champagne); }
-.library-sections details { border-bottom: 1px solid var(--line); }
-.library-sections summary {
-  display: flex; align-items: baseline; gap: 20px; cursor: pointer; list-style: none;
-  padding: 16px 0;
-}
-.library-sections summary::-webkit-details-marker { display: none; }
-.library-sections summary::after { content: '+'; margin-left: auto; font-size: 26px; color: var(--champagne); line-height: 1; }
-.library-sections details[open] summary::after { content: '−'; }
-.lib-name { font: 500 clamp(1.25rem, 1.9vw, 1.6rem)/1.15 var(--serif); }
-.lib-sub { color: var(--bone-soft); }
-.lib-items { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 0 40px; padding: 4px 0 32px; }
-.lib-item { padding: 16px 0; border-top: 1px solid var(--line); }
-.lib-item h3 { font: 500 19px/1.2 var(--serif); margin: 0 0 4px; display: flex; gap: 10px; align-items: baseline; }
-.lib-item h3 .symbol { color: var(--champagne); font-family: 'Segoe UI Symbol', 'Apple Symbols', 'Noto Sans Symbols', var(--serif); }
-.lib-item p { margin: 0; color: var(--bone-soft); font-size: 15px; }
-.lib-item .yours { display: inline-block; margin-top: 8px; color: var(--champagne); font-size: 15px; font-weight: 600; }
-.playground-readout .yours-note { color: var(--champagne); font-weight: 600; margin: 0 0 6px; }
-
-/* --- Aspect playground --- */
-.playground { display: flex; flex-wrap: wrap; align-items: center; gap: 32px 64px; padding-block: 56px 16px; }
-.playground-text { flex: 1 1 380px; display: flex; flex-direction: column; gap: 18px; }
-.playground-wheel { flex: 0 1 auto; width: min(420px, calc(100vh - 160px), 100%); margin-inline: auto; touch-action: none; }
-.playground-steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 6px; max-width: 62ch; }
-.playground-steps li::marker { color: var(--champagne); font-weight: 700; }
-.playground-link { margin: 0; font-size: 15px; max-width: 62ch; }
-.playground-readout { min-height: 150px; border-top: 1px solid var(--champagne); padding-top: 18px; }
-.playground-readout .angle { font: 500 34px/1 var(--serif); margin: 0 0 8px; }
-.playground-readout .aspect-name { font: 650 16px var(--sans); color: var(--champagne); margin: 0 0 4px; }
-.playground-readout p { margin: 0 0 6px; }
-
-.pg svg { width: 100%; height: auto; overflow: visible; }
-.pg .ring { fill: none; stroke: var(--bone); stroke-opacity: 0.5; }
-.pg .tick { stroke: var(--champagne); stroke-opacity: 0.7; }
-.pg .tick-label { fill: var(--bone-soft); font: 600 11px var(--sans); }
-.pg .fixed { fill: var(--champagne); }
-.pg .moving { fill: var(--page); stroke: var(--champagne); stroke-width: 2.5; cursor: grab; }
-.pg .moving:focus-visible { outline: none; stroke: var(--bone); stroke-width: 4; }
-.pg .moving-hit { fill: transparent; cursor: grab; }
-.pg .link { stroke: var(--champagne); stroke-width: 1.6; }
-.pg .link.soft { stroke-dasharray: 6 4; }
-.pg .link.off { stroke: var(--bone); stroke-opacity: 0.15; stroke-dasharray: 2 4; }
-.pg .glyph { fill: var(--ink); font: 18px 'Segoe UI Symbol', 'Apple Symbols', 'Noto Sans Symbols', var(--serif); pointer-events: none; }
-.pg .glyph.moving-glyph { fill: var(--champagne); }
 
 /* --- One topic --- */
 .topic-head { padding-top: 28px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
@@ -98,9 +50,3 @@
   .topic-go { display: none; }
 }
 
-/* Phones: "The signs" goes above its line instead of squeezed beside it. */
-@media (max-width: 600px) {
-  .library-sections summary { flex-wrap: wrap; gap: 4px 16px; }
-  .lib-name { flex: 1 0 auto; }
-  .lib-sub { order: 3; flex-basis: 100%; }
-}

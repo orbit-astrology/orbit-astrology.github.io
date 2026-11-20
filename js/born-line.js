@@ -9,7 +9,7 @@
 // Both pages use this same function, so they always look the same.
 // ---------------------------------------------------------------
 
-import { marginText } from './readings.js?v=202611201658';
+import { marginText } from './readings.js?v=202611201701';
 
 export function bornLine(birth) {
   const date = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })

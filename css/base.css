@@ -81,8 +81,8 @@ h1 em, h2 em, h3 em { font-style: normal; }
    "font: …" shorthand would otherwise reset it.) */
 html :is(h1, h2, h3, .title, .section-title, .welcome-title, .welcome-tagline,
   .placement-sign, .reading-title, .grammar, .topic-name, .topic-item-title,
-  .topic-big-question, .lens, .lib-name, .explore-name, .travel-date,
-  .playground-readout .angle, .term-popup strong) {
+  .topic-big-question, .lens, .explore-name, .travel-date,
+  .term-popup strong) {
   font-variation-settings: "opsz" 18;
 }
 /* The small spaced-out labels keep their own automatic setting. */
