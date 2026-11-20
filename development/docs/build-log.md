@@ -964,3 +964,11 @@ Note: the final deadline moved to Monday 23 November.
 **What changed:** The band is gone on all three pages. Each page is now one colour from top to bottom (as in the style guide), and a thin line still separates the sections.
 
 **AI vs me:** I noticed the odd colour change. Claude removed the band everywhere it was used and checked the three pages.
+
+### 20 Nov: My Chart, no double line
+
+**What was wrong:** At the end of the readings on My Chart, two grey lines sat one above the other: the line under the last reading, then another above "How we know all this".
+
+**What changed:** Removed the second line. Now there's one line under the last reading, then "How we know all this", then the gold line before "Next".
+
+**AI vs me:** I spotted the double line. Claude removed it.

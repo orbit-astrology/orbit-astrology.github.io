@@ -5,8 +5,8 @@
 // log out. The talking-to-the-server part is in cloud.js.
 // ---------------------------------------------------------------
 
-import { cloudReady, currentUser, signUp, logIn, logOut, sendPasswordReset, setNewPassword, deviceHasData, finishSignUp } from './cloud.js?v=202611201621';
-import { loadBirth } from './store.js?v=202611201621';
+import { cloudReady, currentUser, signUp, logIn, logOut, sendPasswordReset, setNewPassword, deviceHasData, finishSignUp } from './cloud.js?v=202611201625';
+import { loadBirth } from './store.js?v=202611201625';
 
 const $ = (id) => document.getElementById(id);
 
