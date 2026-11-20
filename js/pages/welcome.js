@@ -13,13 +13,13 @@
 // replaced by a "Welcome back" link to your universe.
 // ---------------------------------------------------------------
 
-import { skyAt } from '../astro/sky.js?v=202611201655';
-import { drawWheel } from '../wheel.js?v=202611201655';
-import { setUpGlossary } from '../glossary.js?v=202611201655';
-import { setUpBirthForm } from '../birth-form.js?v=202611201655';
-import { startCloud, currentUser, cloudReady } from '../cloud.js?v=202611201655';
-import { setUpAccountPanel } from '../account-panel.js?v=202611201655';
-import { saveBirth, loadBirth, sameBirth, startFresh, SAMPLE_BIRTH } from '../store.js?v=202611201655';
+import { skyAt } from '../astro/sky.js?v=202611201656';
+import { drawWheel } from '../wheel.js?v=202611201656';
+import { setUpGlossary } from '../glossary.js?v=202611201656';
+import { setUpBirthForm } from '../birth-form.js?v=202611201656';
+import { startCloud, currentUser, cloudReady } from '../cloud.js?v=202611201656';
+import { setUpAccountPanel } from '../account-panel.js?v=202611201656';
+import { saveBirth, loadBirth, sameBirth, startFresh, SAMPLE_BIRTH } from '../store.js?v=202611201656';
 
 const $ = (id) => document.getElementById(id);
 

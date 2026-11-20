@@ -3,13 +3,13 @@
 // The birth details, shown big at the top of My Universe and My Chart:
 //
 //   BORN
-//   9 September 2006          ← the date, large, in the title font
+//   9 September 2006          ← the date, a little bigger than normal text
 //   08:53 · Lima, Peru        ← time and place, smaller
 //
 // Both pages use this same function, so they always look the same.
 // ---------------------------------------------------------------
 
-import { marginText } from './readings.js?v=202611201655';
+import { marginText } from './readings.js?v=202611201656';
 
 export function bornLine(birth) {
   const date = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })

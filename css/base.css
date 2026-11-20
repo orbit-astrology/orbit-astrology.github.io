@@ -281,8 +281,8 @@ select {
 .next-step .quiet { margin: 0; max-width: 52ch; }
 
 /* Your birth details at the top of My Universe and My Chart (js/born-line.js):
-   a small label, the date large in the title font, then time and place. */
+   a small label, the date a little bigger than normal text, then time and place. */
 .born { margin: 4px 0 8px; display: flex; flex-direction: column; gap: 4px; }
 .born-label { font: 650 13px var(--sans); letter-spacing: 0.08em; text-transform: uppercase; color: var(--champagne); }
-.born-date { font: 500 clamp(1.7rem, 3vw, 2.4rem)/1.1 var(--serif); color: var(--bone); }
+.born-date { font: 600 clamp(1.15rem, 1.6vw, 1.35rem)/1.3 var(--sans); color: var(--bone); }
 .born-rest { font-size: 16px; color: var(--bone-soft); }

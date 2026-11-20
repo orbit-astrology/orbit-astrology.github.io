@@ -990,3 +990,9 @@ Adrián looked at the site with me and asked for three things:
 Both pages use one shared function (`js/born-line.js`) and one style (`.born` in `css/base.css`), so they always look the same.
 
 **AI vs me:** Adrián gave the feedback and I passed it on. Claude designed the date block and the button, wrote the code and checked it on computer and phone.
+
+### 20 Nov: Birth date, smaller and in the text font
+
+**What changed:** The birth date block was as big as the page title and in the same font, which competed with it. The date is now in Manrope (the text font), semi-bold and only a little bigger than normal text. The "BORN" label and the time and place stay as they were.
+
+**AI vs me:** I liked the idea but asked for it smaller and in a different font from the title. Claude changed the style.
